@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  Giorgi var Bagdavadze
+  baakuri shevcvale
   </body>
 </html>
