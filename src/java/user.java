@@ -28,4 +28,24 @@ public class user {
     private void setPassword(String password){
         this.password = password;
     }
+
+    /**
+     *
+     * @return User First Name
+     */
+    public String getFirstNme(){
+        return this.firstName;
+    }
+
+    /**
+     *
+     * @return user SecondName
+     */
+    public String getSecondName(){
+        return this.secondName;
+    }
+
+    public String getEmail(){
+        return this.email;
+    }
 }
