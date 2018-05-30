@@ -8,3 +8,7 @@ html, body {
     margin: 200px auto;
     width: 400px;
 }
+
+#login-page-login-button {
+    width: 100%;
+}
