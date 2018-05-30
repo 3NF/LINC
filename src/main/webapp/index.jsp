@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 
 <head>
@@ -34,7 +34,7 @@
         <button type="button" id = "login-page-login-button" class="btn btn-primary">Login</button>
         <br>
         <br>
-        <a class="btn btn-block btn-social btn-lg btn-google" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-lg']);"><i class="fa fa-google"></i>Sign in with Google</a>
+        <a class="btn btn-block btn-social btn-lg btn-google"><i class="fa fa-google"></i>Sign in with Google</a>
     </form>
 </div>
 </body>
