@@ -1,0 +1,14 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#form_login {
+    margin: 200px auto;
+    width: 400px;
+}
+
+#login-page-login-button {
+    width: 100%;
+}
