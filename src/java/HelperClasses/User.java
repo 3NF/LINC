@@ -1,3 +1,5 @@
+package HelperClasses;
+
 public abstract class User {
     public enum Role {
         admin,
@@ -7,24 +9,24 @@ public abstract class User {
     }
 
     /**
-     * @return User First Name
+     * @return HelperClasses.User First Name
      */
     public abstract String getFirstNme();
 
     /**
-     * @return User SecondName
+     * @return HelperClasses.User SecondName
      */
     public abstract String getLastName();
 
     /**
-     * @return User e-mail Adress
+     * @return HelperClasses.User e-mail Adress
      */
     public abstract String getEmail();
 
     /**
-     * Administrator,Lecturer,Student and etc. is the User role
+     * Administrator,HelperClasses.Lecturer,HelperClasses.Student and etc. is the HelperClasses.User role
      *
-     * @return The User Role
+     * @return The HelperClasses.User Role
      */
     public abstract Role getRole();
 }

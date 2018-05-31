@@ -48,7 +48,7 @@
         $.ajax({
             type: 'POST',
             data: {email:email, password:pass},
-            url:"loginCheck",
+            url:"LoginCheck",
             success: function (result) {
                 console.log(result);
             }

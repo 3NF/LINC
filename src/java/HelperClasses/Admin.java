@@ -1,3 +1,5 @@
+package HelperClasses;
+
 public  class Admin extends User{
     private String firstName;
     private String lastName;
@@ -13,7 +15,7 @@ public  class Admin extends User{
 
     /**
      *
-     * @return User First Name
+     * @return HelperClasses.User First Name
      */
     public  String getFirstNme(){
         return this.firstName;
@@ -21,7 +23,7 @@ public  class Admin extends User{
 
     /**
      *
-     * @return User SecondName
+     * @return HelperClasses.User SecondName
      */
     public  String getLastName(){
         return this.lastName;
@@ -29,7 +31,7 @@ public  class Admin extends User{
 
     /**
      *
-     * @return   User e-mail Adress
+     * @return   HelperClasses.User e-mail Adress
      */
     public  String getEmail(){
         return this.email;
@@ -38,7 +40,7 @@ public  class Admin extends User{
 
     /**
      * this is override of getRole function.
-     * @return The User Role
+     * @return The HelperClasses.User Role
      */
     @Override
     public Role getRole(){

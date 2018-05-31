@@ -1,3 +1,5 @@
+package HelperClasses;
+
 import Database.Config;
 
 import java.sql.Connection;
