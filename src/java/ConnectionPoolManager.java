@@ -1,14 +1,12 @@
+import Database.Config;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPoolManager {
-    public static final String databaseUrl = "jdbc:mysql://localhost:3306/myDatabase";
-    public static final String userName = "";
-    public static final String password = "";
     public static final int MAX_POOL_SIZE = 100;
 
     //private Vector connectionPool = new Vector();
@@ -45,7 +43,7 @@ public class ConnectionPoolManager {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(databaseUrl, userName, password);
+            connection = DriverManager.getConnection(Config.MYSQL_DATABASE_SERVER, Config.MYSQL_USERNAME, Config.MYSQL_PASSWORD);
             System.out.println("Connection: " + connection);
         } catch (SQLException sqle) {
             System.err.println("SQLException: " + sqle);
