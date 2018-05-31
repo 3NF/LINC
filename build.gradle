@@ -36,6 +36,7 @@ dependencies {
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     implementation 'mysql:mysql-connector-java:5.1.16'
+    implementation 'com.google.code.gson:gson:2.8.2'
 }
 
 tomcat {
