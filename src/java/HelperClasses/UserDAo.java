@@ -58,7 +58,7 @@ public class UserDAo {
         try {
             Statement statement = connection.createStatement();
             String query = "Select * FROM " + Config.MYSQL_DATABASE_NAME + "."
-                    + "users WHERE email=" + email + " AND password=" + password;
+                    + "users WHERE email=" +"'" + email +"'" + " AND password=" + "'" + password+ "'";
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String firstName = result.getString(1);

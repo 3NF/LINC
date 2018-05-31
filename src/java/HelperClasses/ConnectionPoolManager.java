@@ -1,3 +1,5 @@
+package HelperClasses;
+
 import Database.Config;
 
 import java.sql.Connection;
@@ -44,7 +46,6 @@ public class ConnectionPoolManager {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(Config.MYSQL_DATABASE_SERVER, Config.MYSQL_USERNAME, Config.MYSQL_PASSWORD);
-			System.out.println("Connection: " + connection);
 		} catch (SQLException sqle) {
 			System.err.println("SQLException: " + sqle);
 			return null;
