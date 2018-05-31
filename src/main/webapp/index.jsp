@@ -47,7 +47,11 @@
         let pass = $("#password").val();
         $.ajax({
             type: 'POST',
-
+            data: {email:email, password:pass},
+            url:"loginCheck",
+            success: function (result) {
+                console.log(result);
+            }
         });
     }
 
