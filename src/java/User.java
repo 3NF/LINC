@@ -1,51 +1,30 @@
-public class User {
-    private String firstName;
-    private String secondName;
-    private String email;
-    private String password;
-
-    /**
-     * seter of firstName
-     * @param firstName
-     *
-     */
-    private void setName(String firstName){
-        this.firstName = firstName;
+public abstract class User {
+    public enum Role {
+        admin,
+        lecturer,
+        seminarLeader,
+        student;
     }
 
     /**
-     * seter of secondname
-     * @param secondName
-     */
-    private void setSecondName(String secondName){
-        this.secondName = secondName;
-    }
-
-    /**
-     * seter of password
-     * @param password
-     */
-    private void setPassword(String password){
-        this.password = password;
-    }
-
-    /**
-     *
      * @return User First Name
      */
-    public String getFirstNme(){
-        return this.firstName;
-    }
+    public abstract String getFirstNme();
 
     /**
-     *
-     * @return user SecondName
+     * @return User SecondName
      */
-    public String getSecondName(){
-        return this.secondName;
-    }
+    public abstract String getLastName();
 
-    public String getEmail(){
-        return this.email;
-    }
+    /**
+     * @return User e-mail Adress
+     */
+    public abstract String getEmail();
+
+    /**
+     * Administrator,Lecturer,Student and etc. is the User role
+     *
+     * @return The User Role
+     */
+    public abstract Role getRole();
 }
