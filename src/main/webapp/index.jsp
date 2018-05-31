@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="Styles/assets/css/bootstrap.css" rel="stylesheet">
     <link href="Styles/assets/css/font-awesome.css" rel="stylesheet">
-    <link href="Styles/assets/css/docs.css" rel="stylesheet" >
-    <link href="Styles/bootstrap-social.css" rel="stylesheet" >
+    <link href="Styles/assets/css/docs.css" rel="stylesheet">
+    <link href="Styles/bootstrap-social.css" rel="stylesheet">
 
     <%--my css--%>
     <link rel="stylesheet" href="Styles/style.css">
@@ -31,12 +31,29 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
             <input id="password" type="password" class="form-control" name="password" placeholder="Password">
         </div>
-        <button type="button" id = "login-page-login-button" class="btn btn-primary">Login</button>
+        <button type="button" id="login-page-login-button" class="btn btn-primary" onclick="loginWithPassword()">Login
+        </button>
         <br>
         <br>
-        <a class="btn btn-block btn-social btn-lg btn-google"><i class="fa fa-google"></i>Sign in with Google</a>
+        <a class="btn btn-block btn-social btn-lg btn-google" onclick="loginWithGoogle()"><i class="fa fa-google"></i>Sign
+            in with Google</a>
     </form>
 </div>
 </body>
+
+<script>
+    function loginWithPassword() {
+        let email = $("#email").val();
+        let pass = $("#password").val();
+        $.ajax({
+            type: 'POST',
+
+        });
+    }
+
+    function loginWithGoogl() {
+
+    }
+</script>
 
 </html>
