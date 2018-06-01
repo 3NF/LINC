@@ -46,6 +46,6 @@ tomcat {
 }
 
 sourceSets {
-    main.java.srcDirs = ['src/java']
+    main.java.srcDirs = ['src/main/java']
     main.resources.srcDirs = ['src/resources']
 }
