@@ -22,8 +22,12 @@ public class ConnectionPoolManager {
 	private void initializeConnectionPool() {
 		while (!checkIfConnectionPoolIsFull()) {
 			//Adding new connection instance until the pool is full
-			connectionPool.add(createNewConnection());
-		}
+            try {
+                connectionPool.put(createNewConnection());
+            } catch (InterruptedException e) {
+                System.err.println("error in adding connection");
+            }
+        }
 		System.out.println("Connection Pool is full.");
 	}
 

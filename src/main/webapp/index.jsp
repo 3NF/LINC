@@ -1,6 +1,7 @@
+<%@ page import="HelperClasses.User" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
-
+<% User gio; %>
 <head>
     <title>LINC</title>
     <meta charset="utf-8">
@@ -43,8 +44,8 @@
 
 <script>
     function loginWithPassword() {
-        let email = $("#email").val();
-        let pass = $("#password").val();
+        var email = $("#email").val();
+        var pass = $("#password").val();
         $.ajax({
             type: 'POST',
             data: {email:email, password:pass},
