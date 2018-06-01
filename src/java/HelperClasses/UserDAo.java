@@ -32,19 +32,22 @@ public class UserDAo {
      * @return
      */
     private Object getUserClass(String email, String password, String firstName, String lastName, User.Role userRole){
-        if (userRole == User.Role.admin){
-            return new Admin(email,password,firstName,lastName);
+        switch (userRole) {
+            case admin:
+                return new Admin(email,password,firstName,lastName);
+
+            case student:
+                return new Student(email,password,firstName,lastName);
+
+            case seminarLeader:
+                return new SeminarLeader(email,password,firstName,lastName);
+
+            case lecturer:
+                return new Lecturer(email,password,firstName,lastName);
+
+            default:
+                return null;
         }
-        else if (userRole == User.Role.student){
-            return new Student(email,password,firstName,lastName);
-        }
-        else if (userRole == User.Role.seminarLeader){
-            return new SeminarLeader(email,password,firstName,lastName);
-        }
-        else if (userRole == User.Role.lecturer){
-            return new Lecturer(email,password,firstName,lastName);
-        }
-        return null;
     }
 
     /**
@@ -77,6 +80,6 @@ public class UserDAo {
     public static void main(String args[]){
         UserDAo user = new UserDAo(new ConnectionPoolManager());
         User u = user.getUser("prochi","traki");
-        System.out.println(u.getEmail());
+        //System.out.println(u.getEmail());
     }
 }

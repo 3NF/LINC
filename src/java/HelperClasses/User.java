@@ -5,7 +5,7 @@ public abstract class User {
         admin,
         lecturer,
         seminarLeader,
-        student;
+        student
     }
 
     /**
