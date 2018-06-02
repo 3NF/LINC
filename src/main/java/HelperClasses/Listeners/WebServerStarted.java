@@ -15,12 +15,12 @@ public class WebServerStarted implements ServletContextListener {
 	}
 
 	public void contextInitialized(ServletContextEvent sce) {
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl(Config.MYSQL_DATABASE_SERVER);
-        ds.setUsername(Config.MYSQL_USERNAME);
-        ds.setPassword(Config.MYSQL_PASSWORD);
-		sce.getServletContext().setAttribute("user", new UserDAo(ds));
+        BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setUrl(Config.MYSQL_DATABASE_SERVER);
+		dataSource.setUsername(Config.MYSQL_USERNAME);
+		dataSource.setPassword(Config.MYSQL_PASSWORD);
+		sce.getServletContext().setAttribute("UserDAo", new UserDAo(dataSource));
 	}
 
 	public void contextDestroyed(ServletContextEvent sce) {

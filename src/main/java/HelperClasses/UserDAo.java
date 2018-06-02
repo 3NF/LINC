@@ -35,16 +35,16 @@ public class UserDAo {
     private Object getUserClass(String email, String password, String firstName, String lastName, User.Role userRole){
         switch (userRole) {
             case admin:
-                return new Admin(email,password,firstName,lastName);
+                return new User(email,password,firstName,lastName);
 
             case student:
-                return new Student(email,password,firstName,lastName);
+                return new User(email,password,firstName,lastName);
 
             case seminarLeader:
-                return new SeminarLeader(email,password,firstName,lastName);
+                return new User(email,password,firstName,lastName);
 
             case lecturer:
-                return new Lecturer(email,password,firstName,lastName);
+                return new User(email,password,firstName,lastName);
 
             default:
                 return null;
@@ -89,9 +89,8 @@ public class UserDAo {
         ds.setUrl(Config.MYSQL_DATABASE_SERVER);
         ds.setUsername(Config.MYSQL_USERNAME);
         ds.setPassword(Config.MYSQL_PASSWORD);
-
-        UserDAo user = new UserDAo(new BasicDataSource());
+        UserDAo user = new UserDAo(ds);
         User u = user.getUser("prochi","traki");
-        //System.out.println(u.getEmail());
+        System.out.println(u.getEmail());
     }
 }
