@@ -34,32 +34,48 @@ public class UserDAo {
         System.out.println(u.getEmail());
     }
 
-    /**
-     * @param email
-     * @param password
-     * @return
-     */
-    public User getUser(String email, String password) {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-        } catch (SQLException e) {
-            System.err.println("error in getting connection");
-        }
-        try {
-            Statement statement = connection.createStatement();
-            String query = "Select * FROM " + Config.MYSQL_DATABASE_NAME + "." + "users WHERE email=" + "'" + email + "'" + " AND password=" + "'" + password + "'";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                String firstName = result.getString("firstname");
-                String lastName = result.getString("secondname");
-                String userRole = result.getString("userrole");
-                return (User) new User(email,firstName,lastName, User.Role.valueOf(userRole));
-            }
-            connection.close();
-        } catch (SQLException e) {
-            System.err.println("exception in creation statement");
-        }
-        return null;
-    }
+	/**
+	 * // TODO: 6/3/18
+	 *
+	 * @param email
+	 * @param password
+	 *
+	 * @return
+	 */
+	public User getUser(String email, String password) {
+		Connection connection = null;
+		try {
+			connection = connectionPool.getConnection();
+		} catch (SQLException e) {
+			System.err.println("error in getting connection");
+		}
+
+		if (connection == null) return null;
+
+		try {
+			Statement statement = connection.createStatement();
+			String query = "Select * FROM " + Config.MYSQL_DATABASE_NAME + "." + "users WHERE email=" + "'" + email + "'" + " AND password=" + "'" + password + "'";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				String firstName = result.getString("firstname");
+				String lastName = result.getString("secondname");
+				String userRole = result.getString("userrole");
+				connection.close();
+				return new User(email, firstName, lastName, User.Role.valueOf(userRole));
+			}
+		} catch (SQLException e) {
+			System.err.println("exception in creation statement");
+		}
+		return null;
+	}
+
+	/**
+	 * @param email
+	 *
+	 * @return
+	 */
+	public User getUserByEmail(String email) {
+		// TODO: 6/3/18 implement this method
+		return null;
+	}
 }

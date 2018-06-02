@@ -14,6 +14,7 @@ public class WebServerStarted implements ServletContextListener {
 	public WebServerStarted() {
 	}
 
+
 	public void contextInitialized(ServletContextEvent sce) {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -23,6 +24,8 @@ public class WebServerStarted implements ServletContextListener {
 		sce.getServletContext().setAttribute("UserDAo", new UserDAo(dataSource));
 	}
 
+
 	public void contextDestroyed(ServletContextEvent sce) {
+		sce.getServletContext().removeAttribute("UserDAo");
 	}
 }
