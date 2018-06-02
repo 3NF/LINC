@@ -34,48 +34,61 @@ public class UserDAo {
         System.out.println(u.getEmail());
     }
 
-	/**
-	 * // TODO: 6/3/18
-	 *
-	 * @param email
-	 * @param password
-	 *
-	 * @return
-	 */
-	public User getUser(String email, String password) {
-		Connection connection = null;
-		try {
-			connection = connectionPool.getConnection();
-		} catch (SQLException e) {
-			System.err.println("error in getting connection");
-		}
+    /**
+     * will get the user by following query
+     *
+     * @param query
+     * @return
+     */
+    private User getUserByQuery(String query) {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+        } catch (SQLException e) {
+            System.err.println("error in getting connection");
+        }
 
-		if (connection == null) return null;
+        if (connection == null) return null;
 
-		try {
-			Statement statement = connection.createStatement();
-			String query = "Select * FROM " + Config.MYSQL_DATABASE_NAME + "." + "users WHERE email=" + "'" + email + "'" + " AND password=" + "'" + password + "'";
-			ResultSet result = statement.executeQuery(query);
-			while (result.next()) {
-				String firstName = result.getString("firstname");
-				String lastName = result.getString("secondname");
-				String userRole = result.getString("userrole");
-				connection.close();
-				return new User(email, firstName, lastName, User.Role.valueOf(userRole));
-			}
-		} catch (SQLException e) {
-			System.err.println("exception in creation statement");
-		}
-		return null;
-	}
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                String email = result.getString("email");
+                String firstName = result.getString("firstname");
+                String lastName = result.getString("secondname");
+                String userRole = result.getString("userrole");
+                connection.close();
+                /**
+                 * enumi ar gamoiyenot awi, intad ar inaxavs.
+                 */
+                return new User(email, firstName, lastName, User.Role.valueOf(userRole));
+            }
+        } catch (SQLException e) {
+            System.err.println("exception in creation statement");
+        }
+        return null;
+    }
 
-	/**
-	 * @param email
-	 *
-	 * @return
-	 */
-	public User getUserByEmail(String email) {
-		// TODO: 6/3/18 implement this method
-		return null;
-	}
+    /**
+     * // TODO: 6/3/18
+     *
+     * @param email
+     * @param password
+     * @return
+     */
+    public User getUser(String email, String password) {
+        String query = "Select * FROM " + Config.MYSQL_DATABASE_NAME + "." + "users WHERE email=" + "'" + email + "'" + " AND password=" + "'" + password + "'";
+        return getUserByQuery(query);
+    }
+
+    /**
+     * @param email
+     * @return
+     */
+    public User getUserByEmail(String email) {
+        // TODO: 6/3/18 implement this method
+        String query = "Select * FROM " + Config.MYSQL_DATABASE_NAME + "." + "users WHERE email=" + "'" + email + "'";
+        return getUserByQuery(query);
+    }
 }
