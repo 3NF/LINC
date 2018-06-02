@@ -1,6 +1,7 @@
 package HelperClasses;
 
 import Database.Config;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,14 +12,14 @@ public class UserDAo {
     /*
         connection pull manager
      */
-    private final ConnectionPoolManager connectionPool;
+    private final BasicDataSource connectionPool;
 
     /**
      * contructor of StudentDAo class
      *
      * @param connectionPool
      */
-    public UserDAo(ConnectionPoolManager connectionPool) {
+    public UserDAo(BasicDataSource connectionPool) {
         this.connectionPool = connectionPool;
     }
 
@@ -57,7 +58,12 @@ public class UserDAo {
      * @return if user exist return the  User class object, if not exist return null
      */
     public User getUser(String email, String password) {
-        Connection connection = connectionPool.getConnectionFromPool();
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+        } catch (SQLException e) {
+            System.err.println("error in getting connection");
+        }
         try {
             Statement statement = connection.createStatement();
             String query = "Select * FROM " + Config.MYSQL_DATABASE_NAME + "."
@@ -70,7 +76,7 @@ public class UserDAo {
                 User.Role role =User.Role.student;
                 return (User) getUserClass(email, password, firstName, lastName, role);
             }
-            connectionPool.returnConnectionToPool(connection);
+            connection.close();
         } catch (SQLException e) {
             System.err.println("exception in creation statement");
         }
@@ -78,7 +84,13 @@ public class UserDAo {
     }
 
     public static void main(String args[]){
-        UserDAo user = new UserDAo(new ConnectionPoolManager());
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUrl(Config.MYSQL_DATABASE_SERVER);
+        ds.setUsername(Config.MYSQL_USERNAME);
+        ds.setPassword(Config.MYSQL_PASSWORD);
+
+        UserDAo user = new UserDAo(new BasicDataSource());
         User u = user.getUser("prochi","traki");
         //System.out.println(u.getEmail());
     }

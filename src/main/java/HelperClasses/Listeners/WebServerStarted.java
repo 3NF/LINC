@@ -1,7 +1,8 @@
 package HelperClasses.Listeners;
 
-import HelperClasses.ConnectionPoolManager;
+import Database.Config;
 import HelperClasses.UserDAo;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,8 +15,12 @@ public class WebServerStarted implements ServletContextListener {
 	}
 
 	public void contextInitialized(ServletContextEvent sce) {
-		ConnectionPoolManager connectionPoolManager = new ConnectionPoolManager();
-		sce.getServletContext().setAttribute("user", new UserDAo(connectionPoolManager));
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUrl(Config.MYSQL_DATABASE_SERVER);
+        ds.setUsername(Config.MYSQL_USERNAME);
+        ds.setPassword(Config.MYSQL_PASSWORD);
+		sce.getServletContext().setAttribute("user", new UserDAo(ds));
 	}
 
 	public void contextDestroyed(ServletContextEvent sce) {
