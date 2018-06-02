@@ -1,6 +1,6 @@
 package HelperClasses;
 
-public abstract class User {
+public class User {
     public enum Role {
         admin,
         lecturer,
@@ -8,25 +8,46 @@ public abstract class User {
         student
     }
 
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+
+    public User(String email, String Password, String FirstName, String LastName) {
+        this.firstName = FirstName;
+        this.password = password;
+        this.email = email;
+        this.lastName = lastName;
+    }
+
     /**
      * @return HelperClasses.User First Name
      */
-    public abstract String getFirstNme();
+    public String getFirstName() {
+        return this.firstName;
+    }
 
     /**
      * @return HelperClasses.User SecondName
      */
-    public abstract String getLastName();
+    public String getLastName() {
+        return this.lastName;
+    }
 
     /**
      * @return HelperClasses.User e-mail Adress
      */
-    public abstract String getEmail();
+    public String getEmail() {
+        return this.email;
+    }
+
 
     /**
-     * Administrator,HelperClasses.Lecturer,HelperClasses.Student and etc. is the HelperClasses.User role
+     * this is override of getRole function.
      *
      * @return The HelperClasses.User Role
      */
-    public abstract Role getRole();
+    public Role getRole() {
+        return Role.admin;
+    }
 }

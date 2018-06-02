@@ -28,10 +28,11 @@ public class LoginCheck extends HttpServlet {
 		String pass = request.getParameter("password");
 		User user = userDAo.getUser(email, pass);
 		if (user != null) {
+			System.out.println(user.getFirstName());
 			request.getSession().setAttribute("user", user);
 			response.sendRedirect("/dashboard.jsp");
 		} else {
-			request.setAttribute("wrong password", true);
+			request.setAttribute("wrongPassword", true);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 
