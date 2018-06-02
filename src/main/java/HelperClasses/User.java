@@ -5,19 +5,21 @@ public class User {
         admin,
         lecturer,
         seminarLeader,
-        student
+        student,
+        sectionLeader
     }
 
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-
-    public User(String email, String Password, String FirstName, String LastName) {
+    private Role userRole;
+    public User(String email, String Password, String FirstName, String lastName,Role userRole) {
         this.firstName = FirstName;
         this.password = password;
         this.email = email;
         this.lastName = lastName;
+        this.userRole = userRole;
     }
 
     /**
@@ -48,6 +50,6 @@ public class User {
      * @return The HelperClasses.User Role
      */
     public Role getRole() {
-        return Role.admin;
+        return userRole;
     }
 }

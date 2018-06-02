@@ -7,39 +7,61 @@ import static org.junit.Assert.*;
 
 public class UserTest {
 
-	private User user1;
-	private User user2;
-	private User user3;
-	private User user4;
-	private User user5;
+    private User user1;
+    private User user2;
+    private User user3;
+    private User user4;
+    private User user5;
 
-	@Before
-	public void biuld() {
-		user1 = new User("btsut16@freeuni.edu.ge", "matarebeli", "bakuri", "tsutskhashvili");
-		user2 = new User("lchum16@freeuni.edu.ge", "123", "luka", "chumburidze");
-		user3 = new User("gbagh16@freeuni.edu.ge", "giorgi12", "giorgi", "baghdavadze");
-		user4 = new User("gchkh16@freeuni.edu.ge", "dzliera", "giorgi", "chkhikvadze");
-		user5 = new User("gtsut16@freeuni.edu.ge", "green12", "gvantsa", "tsutskhashvili");
-	}
+    @Before
+    public void biuld() {
+        User.Role role;
+        role = User.Role.admin;
+        user1 = new User("btsut16@freeuni.edu.ge", "matarebeli", "bakuri", "tsutskhashvili", role);
+        role = User.Role.lecturer;
+        user2 = new User("lchum16@freeuni.edu.ge", "123", "luka", "chumburidze", role);
+        role = User.Role.seminarLeader;
+        user3 = new User("gbagh16@freeuni.edu.ge", "giorgi12", "giorgi", "baghdavadze", role);
+        role = User.Role.sectionLeader;
+        user4 = new User("gchkh16@freeuni.edu.ge", "dzliera", "giorgi", "chkhikvadze", role);
+        role = User.Role.student;
+        user5 = new User("gtsut16@freeuni.edu.ge", "green12", "gvantsa", "tsutskhashvili", role);
+    }
 
-	@Test
-	public void getFirstName() {
-		assertEquals(user1.getFirstName(), "bakuri");
-		assertEquals(user2.getFirstName(), "luka");
-		assertEquals(user3.getFirstName(), "giorgi");
-		assertEquals(user4.getFirstName(), "giorgi");
-		assertEquals(user5.getFirstName(), "gvantsa");
-	}
+    @Test
+    public void getFirstName() {
+        assertEquals(user1.getFirstName(), "bakuri");
+        assertEquals(user2.getFirstName(), "luka");
+        assertEquals(user3.getFirstName(), "giorgi");
+        assertEquals(user4.getFirstName(), "giorgi");
+        assertEquals(user5.getFirstName(), "gvantsa");
+    }
 
-	@Test
-	public void getLastName() {
-	}
+    @Test
+    public void getLastName() {
+        assertEquals(user1.getLastName(), "tsutskhashvili");
+        assertEquals(user2.getLastName(), "chumburidze");
+        assertEquals(user3.getLastName(), "baghdavadze");
+        assertEquals(user4.getLastName(), "chkhikvadze");
+        assertEquals(user5.getLastName(), "tsutskhashvili");
+    }
 
-	@Test
-	public void getEmail() {
-	}
+    @Test
+    public void getEmail() {
+        assertEquals(user1.getEmail(), "btsut16@freeuni.edu.ge");
+        assertEquals(user2.getEmail(), "lchum16@freeuni.edu.ge");
+        assertEquals(user3.getEmail(), "gbagh16@freeuni.edu.ge");
+        assertEquals(user4.getEmail(), "gchkh16@freeuni.edu.ge");
+        assertEquals(user5.getEmail(), "gtsut16@freeuni.edu.ge");
 
-	@Test
-	public void getRole() {
-	}
+    }
+
+    @Test
+    public void getRole() {
+        assertEquals(user1.getRole(), User.Role.admin);
+        assertEquals(user2.getRole(), User.Role.lecturer);
+        assertEquals(user3.getRole(), User.Role.seminarLeader);
+        assertEquals(user4.getRole(), User.Role.sectionLeader);
+        assertEquals(user5.getRole(), User.Role.student);
+    }
 }
