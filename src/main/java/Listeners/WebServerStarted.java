@@ -1,4 +1,4 @@
-package HelperClasses.Listeners;
+package Listeners;
 
 import Database.Config;
 import HelperClasses.UserDAo;
