@@ -19,11 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginCheck extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute("user");
-		response.setContentType("application/json");
-
+		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute("UserDAo");
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
 		User user = userDAo.getUser(email, pass);

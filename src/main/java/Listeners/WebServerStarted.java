@@ -15,7 +15,7 @@ public class WebServerStarted implements ServletContextListener {
 	}
 
 	public void contextInitialized(ServletContextEvent sce) {
-        BasicDataSource dataSource = new BasicDataSource();
+		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl(Config.MYSQL_DATABASE_SERVER);
 		dataSource.setUsername(Config.MYSQL_USERNAME);
