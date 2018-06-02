@@ -37,36 +37,6 @@ public class UserDAo {
     /**
      * @param email
      * @param password
-     * @param firstName
-     * @param lastName
-     * @param userRole
-     * @return
-     */
-    private Object getUserClass(String email, String password, String firstName, String lastName, String userRole) {
-        switch (userRole) {
-            case "admin":
-                return new User(email, password, firstName, lastName, User.Role.admin);
-
-            case "student":
-                return new User(email, password, firstName, lastName, User.Role.student);
-
-            case "seminarLeader":
-                return new User(email, password, firstName, lastName, User.Role.seminarLeader);
-
-            case "lecturer":
-                return new User(email, password, firstName, lastName, User.Role.lecturer);
-
-            case "sectionLeader":
-                return new User(email, password, firstName, lastName, User.Role.sectionLeader);
-
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * @param email
-     * @param password
      * @return
      */
     public User getUser(String email, String password) {
@@ -84,7 +54,7 @@ public class UserDAo {
                 String firstName = result.getString("firstname");
                 String lastName = result.getString("secondname");
                 String userRole = result.getString("userrole");
-                return (User) getUserClass(email, password, firstName, lastName, userRole);
+                return (User) new User(email,password,firstName,lastName, User.Role.valueOf(userRole));
             }
             connection.close();
         } catch (SQLException e) {
