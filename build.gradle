@@ -10,6 +10,7 @@ buildscript {
 }
 
 plugins {
+    id 'idea'
     id 'java'
     id 'war'
     id "com.bmuschko.tomcat" version "2.5"
@@ -19,6 +20,7 @@ group '3NF'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -32,6 +34,10 @@ dependencies {
 }
 
 dependencies {
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
+
     providedCompile group: 'javax', name: 'javaee-api', version: '8.0'
     def tomcatVersion = '9.0.1'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
@@ -51,4 +57,19 @@ tomcat {
 sourceSets {
     main.java.srcDirs = ['src/main/java']
     main.resources.srcDirs = ['src/resources']
+
+    new File('src/test/java').mkdirs()
+    integrationTest
+    test {
+        resources {
+            srcDir "src/test/java"
+        }
+    }
+}
+
+idea {
+    module {
+        testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
+        testSourceDirs += project.sourceSets.integrationTest.resources.srcDirs
+    }
 }
