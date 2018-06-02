@@ -54,7 +54,7 @@ public class UserDAo {
                 String firstName = result.getString("firstname");
                 String lastName = result.getString("secondname");
                 String userRole = result.getString("userrole");
-                return (User) new User(email,password,firstName,lastName, User.Role.valueOf(userRole));
+                return (User) new User(email,firstName,lastName, User.Role.valueOf(userRole));
             }
             connection.close();
         } catch (SQLException e) {

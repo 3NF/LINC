@@ -17,15 +17,15 @@ public class UserTest {
     public void biuld() {
         User.Role role;
         role = User.Role.admin;
-        user1 = new User("btsut16@freeuni.edu.ge", "matarebeli", "bakuri", "tsutskhashvili", role);
+        user1 = new User("btsut16@freeuni.edu.ge", "bakuri", "tsutskhashvili", role);
         role = User.Role.lecturer;
-        user2 = new User("lchum16@freeuni.edu.ge", "123", "luka", "chumburidze", role);
+        user2 = new User("lchum16@freeuni.edu.ge", "luka", "chumburidze", role);
         role = User.Role.seminarLeader;
-        user3 = new User("gbagh16@freeuni.edu.ge", "giorgi12", "giorgi", "baghdavadze", role);
+        user3 = new User("gbagh16@freeuni.edu.ge",  "giorgi", "baghdavadze", role);
         role = User.Role.sectionLeader;
-        user4 = new User("gchkh16@freeuni.edu.ge", "dzliera", "giorgi", "chkhikvadze", role);
+        user4 = new User("gchkh16@freeuni.edu.ge",  "giorgi", "chkhikvadze", role);
         role = User.Role.student;
-        user5 = new User("gtsut16@freeuni.edu.ge", "green12", "gvantsa", "tsutskhashvili", role);
+        user5 = new User("gtsut16@freeuni.edu.ge",  "gvantsa", "tsutskhashvili", role);
     }
 
     @Test
