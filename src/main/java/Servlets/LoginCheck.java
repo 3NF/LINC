@@ -42,7 +42,7 @@ public class LoginCheck extends HttpServlet {
 			response.sendRedirect("/dashboard.jsp");
 		} else {
 			request.setAttribute("wrongPassword", true);
-			request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 
 	}
