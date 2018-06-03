@@ -13,6 +13,7 @@ public class User {
     private String lastName;
     private String email;
     private Role userRole;
+
     public User(String email , String FirstName, String lastName,Role userRole) {
         this.firstName = FirstName;
         this.email = email;

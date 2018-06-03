@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public final class Utilities
 {
-    /**
+    /**TODO-Gchkh16 will be used for password hashing
      * @param data string to hash
      * @return hashed string
      */
