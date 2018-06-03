@@ -22,16 +22,16 @@ public class GoogleLogin extends HttpServlet {
 
 	private static final String CLIENT_ID = "108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com";
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute("UserDAo");
 
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).setAudience(Collections.singletonList(CLIENT_ID)).build();
 
-		String id_token = request.getParameter("id_token");
+		String token = request.getParameter("id_token");
 
 		GoogleIdToken idToken = null;
 		try {
-			idToken = verifier.verify(id_token);
+			idToken = verifier.verify(token);
 		} catch (GeneralSecurityException e) {
 			e.printStackTrace();
 		}
@@ -46,13 +46,12 @@ public class GoogleLogin extends HttpServlet {
 			if (!emailVerified) {
 				res = "Please verify email";
 			} else {
-				String familyName = (String) payload.get("family_name");
-				String givenName = (String) payload.get("given_name");
 				User user = userDAo.getUserByEmail(email);
 				if (user != null) {
 					request.getSession().setAttribute("user", user);
 					res = "success";
 				} else {
+					System.out.println("yrt");
 					res = "incorrect email";
 				}
 			}
@@ -61,7 +60,7 @@ public class GoogleLogin extends HttpServlet {
 		}
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-
+		System.out.println(res);
 		response.getWriter().write(new Gson().toJson(res));
 	}
 }
