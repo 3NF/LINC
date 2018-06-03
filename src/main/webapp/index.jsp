@@ -30,13 +30,13 @@
 <body>
 <div class="container">
 
-    <form id="form_login" action="/LoginCheck" method="post">
+    <form id="form_login" action="LoginCheck" method="post">
         <div hidden id="wrong-pass" class="alert alert-danger">
             Incorrect email or password.
         </div>
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+            <input id="email" type="email" class="form-control" name="email" placeholder="Email">
         </div>
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
