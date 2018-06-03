@@ -69,6 +69,7 @@ public class UserDAo {
 
     /**
      * // TODO: 6/3/18
+     * // TODO-GCHKH16 store and retrieve password hash from database instead of password.
      *
      * @param email User email
      * @param password User password
