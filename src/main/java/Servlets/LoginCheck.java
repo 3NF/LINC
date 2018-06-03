@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import netscape.javascript.JSObject;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -17,6 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "LoginCheck", urlPatterns = {"/LoginCheck"})
 public class LoginCheck extends HttpServlet {
+
+	/**
+	 * // TODO: 6/3/18
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute("UserDAo");
@@ -38,7 +47,4 @@ public class LoginCheck extends HttpServlet {
 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
 }
