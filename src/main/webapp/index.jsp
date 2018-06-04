@@ -44,6 +44,8 @@
         </div>
         <input type="submit" id="login-page-login-button" class="btn btn-primary" value="Login">
         <br>
+        <a href="Register">Don't Have account? Register now!</a>
+        <br>
         <br>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </form>
