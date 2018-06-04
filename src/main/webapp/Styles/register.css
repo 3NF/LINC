@@ -11,14 +11,13 @@ form
     height: 400px;
     display: inline-block;
     vertical-align: middle;
-    horiz-align: center;
     padding-top: 20px;
 }
 
 form input, form h2
 {
-    text-align: center;
-    margin-bottom: 20px;
+    text-align: left;
+    margin-bottom: 15px;
     padding: 5px;
     width: 300px;
 }
