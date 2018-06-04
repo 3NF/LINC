@@ -39,7 +39,7 @@ public class LoginCheck extends HttpServlet {
 		if (user != null) {
 			System.out.println(user.getFirstName());
 			request.getSession().setAttribute("user", user);
-			response.sendRedirect("/dashboard.jsp");
+			response.sendRedirect("/user/dashboard.jsp");
 		} else {
 			request.setAttribute("wrongPassword", true);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
