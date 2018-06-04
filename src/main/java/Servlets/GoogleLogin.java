@@ -27,13 +27,10 @@ public class GoogleLogin extends HttpServlet {
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).setAudience(Collections.singletonList(CLIENT_ID)).build();
 
 		String token = request.getParameter("id_token");
-
 		GoogleIdToken idToken = null;
 		try {
 			idToken = verifier.verify(token);
-		} catch (GeneralSecurityException e) {
-			System.err.println("can't verify the token");
-		}
+		} catch (GeneralSecurityException ignore) {}
 
 		String res;
 
@@ -50,17 +47,14 @@ public class GoogleLogin extends HttpServlet {
 					request.getSession().setAttribute("user", user);
 					res = "success";
 				} else {
-					System.out.println("yrt");
 					res = "incorrect email";
 				}
 			}
 		} else {
 			res = "Invalid ID token";
 		}
-		System.out.println("dedisdsd");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		System.out.println(res);
 		response.getWriter().write(new Gson().toJson(res));
 	}
 }
