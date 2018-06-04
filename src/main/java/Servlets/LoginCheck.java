@@ -18,14 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "LoginCheck", urlPatterns = {"/LoginCheck"})
 public class LoginCheck extends HttpServlet {
-
-	/**
-	 * // TODO: 6/3/18
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute("UserDAo");
