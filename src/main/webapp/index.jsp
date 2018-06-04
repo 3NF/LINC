@@ -67,7 +67,7 @@
             console.log(data);
             switch (data) {
                 case "success": {
-                    window.location.href = "dashboard.jsp";
+                    window.location.href = "user/dashboard.jsp";
                     break;
                 }
                 default: {
