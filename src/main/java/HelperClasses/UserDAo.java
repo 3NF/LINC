@@ -3,7 +3,6 @@ package HelperClasses;
 import Database.Config;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,13 +54,14 @@ public class UserDAo {
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
-			result.next();
-			String email = result.getString("email");
-			String firstName = result.getString("firstname");
-			String lastName = result.getString("secondname");
-			String userRole = result.getString("userrole");
-			connection.close();
-			return new User(email, firstName, lastName, User.Role.valueOf(userRole));
+			if (result.next()) {
+				String email = result.getString("email");
+				String firstName = result.getString("firstname");
+				String lastName = result.getString("secondname");
+				String userRole = result.getString("userrole");
+				connection.close();
+				return new User(email, firstName, lastName, User.Role.valueOf(userRole));
+			}
 		} catch (SQLException e) {
 			System.err.println("exception in creation statement");
 		}

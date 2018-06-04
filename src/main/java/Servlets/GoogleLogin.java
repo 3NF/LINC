@@ -8,7 +8,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.Gson;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +32,7 @@ public class GoogleLogin extends HttpServlet {
 		try {
 			idToken = verifier.verify(token);
 		} catch (GeneralSecurityException e) {
-			e.printStackTrace();
+			System.err.println("can't verify the token");
 		}
 
 		String res;
@@ -58,6 +57,7 @@ public class GoogleLogin extends HttpServlet {
 		} else {
 			res = "Invalid ID token";
 		}
+		System.out.println("dedisdsd");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		System.out.println(res);
