@@ -80,6 +80,11 @@ public class UserDAo {
 		return null;
 	}
 
+	// TODO: 6/4/18 impement this method
+	public boolean userExists(String email) {
+		return false;
+	}
+
 
 	/**
 	 * // TODO: 6/3/18 // TODO-GCHKH16 store and retrieve password hash from database instead of password.
