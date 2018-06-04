@@ -54,9 +54,12 @@
 
 <script>
     let wrongPass = <%= (request.getAttribute("wrongPassword") != null) %>;
-    if (wrongPass) {
-        $('#wrong-pass').show();
+    function checkWrong() {
+        if (wrongPass) {
+            $('#wrong-pass').show();
+        }
     }
+    checkWrong();
 
     function onSignIn(googleUser) {
         let id_token = googleUser.getAuthResponse().id_token;
@@ -68,9 +71,9 @@
                     break;
                 }
                 default: {
+                    wrongPass = true;
+                    checkWrong();
                     gapi.auth2.getAuthInstance().disconnect();
-                    location.reload();
-                    break;
                 }
             }
         });
