@@ -75,8 +75,9 @@ public class UserDAo {
 	* TODO-BAGHDAVADZE add addUser() method (from GCHKh)
 	*
 	* */
-	public boolean addUser(String firsName, String lastName, String email, String password) {
-		return false;
+	public User addUser(String firsName, String lastName, String email, String password) {
+
+		return null;
 	}
 
 
