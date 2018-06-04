@@ -117,8 +117,14 @@ public class UserDAo {
 		}
 	}
 
-	// TODO: 6/4/18 impement this method
+	/**
+	 *
+	 * @param email
+	 * @return a true if a account with this email exist
+	 */
 	public boolean userExists(String email) {
+		if (getUserByEmail(email) != null)
+			return true;
 		return false;
 	}
 

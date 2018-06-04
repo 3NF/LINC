@@ -28,7 +28,7 @@ public class UserDAoTest {
     }
 
     @Test
-    public void getUser_1() {
+    public void getUserTest() {
         Connection conn = null;
         try {
             conn = ds.getConnection();
@@ -74,7 +74,7 @@ public class UserDAoTest {
     }
 
     @Test
-    public void getUser_2() {
+    public void addUserTest() {
         Connection conn = null;
         try {
             conn = ds.getConnection();
@@ -85,6 +85,7 @@ public class UserDAoTest {
         userDAo.addUser("giorgi","bghdavadzse","gggg","lal");
         User user = userDAo.getUserByEmail("gggg");
         assertEquals(user.getFirstName(),"giorgi");
+        assertEquals(userDAo.userExists("gggg") ,true);
         String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".users WHERE email='gggg'";
         try {
             statement = conn.createStatement();
@@ -102,5 +103,4 @@ public class UserDAoTest {
             System.err.println("error in closing connection");
         }
     }
-
 }
