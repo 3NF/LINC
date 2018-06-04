@@ -1,5 +1,7 @@
 package Servlets;
 
+import HelperClasses.UserDAo;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,8 +13,17 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet
 {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+
+        UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute("userDAo");
+
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        userDAo.addUser(firstName, lastName, email, password);
+
 
     }
 
