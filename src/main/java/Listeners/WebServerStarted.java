@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 @WebListener()
-public class WebServerStarted implements ServletContextListener, HttpSessionListener {
+public class WebServerStarted implements ServletContextListener{
 
 	public WebServerStarted() {
 	}
@@ -27,11 +27,6 @@ public class WebServerStarted implements ServletContextListener, HttpSessionList
 		sce.getServletContext().setAttribute("UserDAo", new UserDAo(dataSource));
 		sce.getServletContext().setSessionTimeout(Constraints.SESSION_TIMEOUT);
 	}
-
-    @Override
-    public void sessionCreated(HttpSessionEvent se) {
-        se.getSession().setMaxInactiveInterval(Constraints.MAX_INACTIVE_TIME);
-    }
 
     public void contextDestroyed(ServletContextEvent sce) {
 		sce.getServletContext().removeAttribute("UserDAo");
