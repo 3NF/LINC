@@ -68,16 +68,53 @@ public class UserDAo {
 		return null;
 	}
 
-
+	/**
+	 *
+	 * @param toChange
+	 * @return the String with "toChange"
+	 */
+	private String change(String toChange){
+		toChange = '\'' + toChange + '\'';
+		return toChange;
+	}
 
 	/*
 	*
 	* TODO-BAGHDAVADZE add addUser() method (from GCHKh)
 	*
 	* */
-	public User addUser(String firsName, String lastName, String email, String password) {
-
-		return null;
+	public void addUser(String firstName, String lastName, String email, String password)  {
+		firstName = change(firstName);
+		lastName = change(lastName);
+		email = change(email);
+		password = change(password);
+		String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME +"." + "users (firstname,secondname,email,password,userrole)"
+							+ " VALUES(" + firstName + "," + lastName + ","
+									+ email + "," + password + ",'admin')";
+		System.out.println(query);
+		Connection connection = null;
+		try {
+			connection = connectionPool.getConnection();
+		} catch (SQLException e) {
+			System.err.println("error in getting connection");
+		}
+		if (connection == null) return;
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			System.err.println("exception in creation statement");
+		}
+		try {
+			statement.execute(query);
+		} catch (SQLException e) {
+			System.err.println("exception in executing query");
+		}
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			System.err.println("error in connection close");
+		}
 	}
 
 
