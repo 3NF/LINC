@@ -68,6 +68,15 @@ public class UserDAo {
 		return null;
 	}
 
+
+
+	/*
+	*
+	* TODO-BAGHDAVADZE add addUser() method (from GCHKh)
+	*
+	* */
+
+
 	/**
 	 * // TODO: 6/3/18 // TODO-GCHKH16 store and retrieve password hash from database instead of password.
 	 *
