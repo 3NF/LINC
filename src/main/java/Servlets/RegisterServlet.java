@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = "/Register")
@@ -23,7 +24,9 @@ public class RegisterServlet extends HttpServlet
         String password = request.getParameter("password");
 
         userDAo.addUser(firstName, lastName, email, password);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("user", userDAo.getUser(email,password));
+        response.sendRedirect("user/dashboard.jsp");
 
     }
 
