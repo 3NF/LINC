@@ -24,6 +24,13 @@ public class UserDAo {
         this.connectionPool = connectionPool;
     }
 
+
+    /*
+    *
+    * Todo-bagdavadze add addUser() method (From GCHKH)
+    *
+    * */
+
     public static void main(String args[]) {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("com.mysql.jdbc.Driver");
