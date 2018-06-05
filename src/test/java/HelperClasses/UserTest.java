@@ -17,15 +17,15 @@ public class UserTest {
     public void biuld() {
         User.Role role;
         role = User.Role.admin;
-        user1 = new User("btsut16@freeuni.edu.ge", "bakuri", "tsutskhashvili", role);
+        user1 = new User("btsut16@freeuni.edu.ge", "bakuri", "tsutskhashvili");
         role = User.Role.lecturer;
-        user2 = new User("lchum16@freeuni.edu.ge", "luka", "chumburidze", role);
+        user2 = new User("lchum16@freeuni.edu.ge", "luka", "chumburidze");
         role = User.Role.seminarLeader;
-        user3 = new User("gbagh16@freeuni.edu.ge",  "giorgi", "baghdavadze", role);
+        user3 = new User("gbagh16@freeuni.edu.ge",  "giorgi", "baghdavadze");
         role = User.Role.sectionLeader;
-        user4 = new User("gchkh16@freeuni.edu.ge",  "giorgi", "chkhikvadze", role);
+        user4 = new User("gchkh16@freeuni.edu.ge",  "giorgi", "chkhikvadze");
         role = User.Role.student;
-        user5 = new User("gtsut16@freeuni.edu.ge",  "gvantsa", "tsutskhashvili", role);
+        user5 = new User("gtsut16@freeuni.edu.ge",  "gvantsa", "tsutskhashvili");
     }
 
     @Test
@@ -54,14 +54,5 @@ public class UserTest {
         assertEquals(user4.getEmail(), "gchkh16@freeuni.edu.ge");
         assertEquals(user5.getEmail(), "gtsut16@freeuni.edu.ge");
 
-    }
-
-    @Test
-    public void getRole() {
-        assertEquals(user1.getRole(), User.Role.admin);
-        assertEquals(user2.getRole(), User.Role.lecturer);
-        assertEquals(user3.getRole(), User.Role.seminarLeader);
-        assertEquals(user4.getRole(), User.Role.sectionLeader);
-        assertEquals(user5.getRole(), User.Role.student);
     }
 }

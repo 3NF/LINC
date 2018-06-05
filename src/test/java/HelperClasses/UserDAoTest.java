@@ -44,11 +44,10 @@ public class UserDAoTest {
         } catch (SQLException e) {
             System.err.println("eror in creation statement");
         }
-        User user = userDAo.getUser("gbagh16@freeuni.edu.ge", "giorgi121");
+        User user = userDAo.getUserByEmail("gbagh16@freeuni.edu.ge");
         assertEquals(user.getEmail(), "gbagh16@freeuni.edu.ge");
         assertEquals(user.getLastName(), "baghdavadze");
         assertEquals(user.getFirstName(), "giorgi");
-        assertEquals(user.getRole(), User.Role.student);
 
         /**
          * deleting inserted row
@@ -63,9 +62,6 @@ public class UserDAoTest {
         /*
          check if after deletiong giorgi baghdavadze exist or not
          */
-
-        user = userDAo.getUser("gbagh16@freeuni.edu.ge", "giorgi121");
-        assertEquals(user, null);
         try {
             conn.close();
         } catch (SQLException e) {
@@ -73,34 +69,4 @@ public class UserDAoTest {
         }
     }
 
-    @Test
-    public void addUserTest() {
-        Connection conn = null;
-        try {
-            conn = ds.getConnection();
-        } catch (SQLException e) {
-            System.err.println("eror in get connection");
-        }
-        Statement statement = null;
-        userDAo.addUser("giorgi","bghdavadzse","gggg","lal");
-        User user = userDAo.getUserByEmail("gggg");
-        assertEquals(user.getFirstName(),"giorgi");
-        assertEquals(userDAo.userExists("gggg") ,true);
-        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".users WHERE email='gggg'";
-        try {
-            statement = conn.createStatement();
-        } catch (SQLException e) {
-            System.err.println("error in creation statement");
-        }
-        try {
-            statement.execute(query);
-        } catch (SQLException e) {
-            System.err.println("error in executing query");
-        }
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            System.err.println("error in closing connection");
-        }
-    }
 }

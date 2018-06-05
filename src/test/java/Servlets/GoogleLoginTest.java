@@ -27,7 +27,7 @@ public class GoogleLoginTest {
 
         //
         when(request.getParameter("id_token")).thenReturn("gbagh16@freeuni.edu.ge");
-        when(userDAo.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu", User.Role.admin));
+        when(userDAo.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu"));
 
         //for stringWriter
         StringWriter stringWriter = new StringWriter();
