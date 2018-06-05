@@ -78,11 +78,7 @@ public class UserDAo {
 		return toChange;
 	}
 
-	/*
-	*
-	* TODO-BAGHDAVADZE add addUser() method (from GCHKh)
-	*
-	* */
+
 	public void addUser(String firstName, String lastName, String email, String password)  {
 		firstName = change(firstName);
 		lastName = change(lastName);
