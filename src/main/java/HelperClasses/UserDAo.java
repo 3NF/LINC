@@ -78,6 +78,10 @@ public class UserDAo {
 		return toChange;
 	}
 
+	/*
+	* TODO-BAGDAVADZE user PreparedStatement instead of statement for preventing sql injection https://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html
+	*
+	* */
 
 	public void addUser(String firstName, String lastName, String email, String password)  {
 		firstName = change(firstName);
