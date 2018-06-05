@@ -79,11 +79,9 @@ public class UserDAo {
 
 	/*
 	* TODO-BAGDAVADZE user PreparedStatement instead of statement for preventing sql injection https://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html
-	* TODO-BAGDAVADZe create separate database and save unverified users there with addiotional fiel: uuid.
-	* TODO-BAGDAVADZE then create method verifyUser() for migrating user to original database.
 	* */
 
-	public void addUser(String firstName, String lastName, String email, String password, String uuid)  {
+	public void addUser(String firstName, String lastName, String email, String password)  {
 		firstName = change(firstName);
 		lastName = change(lastName);
 		email = change(email);
@@ -116,6 +114,39 @@ public class UserDAo {
 			System.err.println("error in connection close");
 		}
 	}
+
+
+    /** Adds unverified user to separate database, which
+     * will maintain that user until user will be verified.
+     *
+     * @param firstName User First Name
+     * @param lastName User Last Name
+     * @param email User Email
+     * @param password User Password
+     * @param uuid Universal id which randomly granted to user for email verification
+     */
+	public void addUnverifiedUser(String firstName, String lastName, String email, String password, String uuid)
+    {
+        //TODO-BAGDAVADZE implement
+    }
+
+
+    /**
+     * @param email user email for identification
+     * @param uuid user privided uuid to check if it matches uuid, that was sent by email
+     */
+    public void verifyUser(String email, String uuid)
+    {
+        //TODO-BAGDAVADZE implement
+    }
+
+
+    public void changeUUID(String email, String newUUID)
+    {
+        //TODO-BAGDAVADZE implement
+    }
+
+
 
 	/**
 	 *
