@@ -1,5 +1,6 @@
 package Servlets;
 
+import HelperClasses.Constraints;
 import HelperClasses.User;
 import HelperClasses.UserDAo;
 import com.google.gson.Gson;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginCheck extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute("UserDAo");
+		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute(Constraints.USERDAO_NAME);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

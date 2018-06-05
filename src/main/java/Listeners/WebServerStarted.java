@@ -24,7 +24,7 @@ public class WebServerStarted implements ServletContextListener{
 		dataSource.setUrl(Config.MYSQL_DATABASE_SERVER);
 		dataSource.setUsername(Config.MYSQL_USERNAME);
 		dataSource.setPassword(Config.MYSQL_PASSWORD);
-		sce.getServletContext().setAttribute("UserDAo", new UserDAo(dataSource));
+		sce.getServletContext().setAttribute(Constraints.USERDAO_NAME, new UserDAo(dataSource));
 		sce.getServletContext().setSessionTimeout(Constraints.SESSION_TIMEOUT);
 	}
 

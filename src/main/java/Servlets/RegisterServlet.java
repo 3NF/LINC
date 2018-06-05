@@ -1,5 +1,6 @@
 package Servlets;
 
+import HelperClasses.Constraints;
 import HelperClasses.UserDAo;
 
 import javax.servlet.ServletException;
@@ -14,9 +15,9 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet
 {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException  {
 
-        UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute("userDAo");
+        UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute(Constraints.USERDAO_NAME);
 
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
