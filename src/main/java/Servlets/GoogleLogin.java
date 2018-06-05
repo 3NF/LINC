@@ -1,8 +1,8 @@
 package Servlets;
 
-import HelperClasses.Constraints;
+import Data.Constraints;
 import HelperClasses.User;
-import HelperClasses.UserDAo;
+import Database.UserDAo;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -17,10 +17,11 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
+import static Data.Constraints.CLIENT_ID;
+
 @WebServlet(name = "GoogleLogin", urlPatterns = {"/GoogleLogin"})
 public class GoogleLogin extends HttpServlet {
 
-	private static final String CLIENT_ID = "108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com";
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute(Constraints.USERDAO_NAME);
@@ -28,6 +29,7 @@ public class GoogleLogin extends HttpServlet {
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).setAudience(Collections.singletonList(CLIENT_ID)).build();
 
 		String token = request.getParameter("id_token");
+		System.out.println(token);
 		GoogleIdToken idToken = null;
 		try {
 			idToken = verifier.verify(token);

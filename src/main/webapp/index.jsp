@@ -1,3 +1,4 @@
+<%@ page import="static Data.Constraints.CLIENT_ID" %>
 <html>
 
 <head>
@@ -23,7 +24,7 @@
     <%-- Google's authorization --%>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id"
-          content="108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com">
+          content=<%=CLIENT_ID%>>>
 
 </head>
 

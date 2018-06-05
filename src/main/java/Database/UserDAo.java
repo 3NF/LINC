@@ -1,9 +1,11 @@
-package HelperClasses;
+package Database;
 
-import Database.Config;
+import HelperClasses.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
+
+import static Database.Config.MYSQL_DATABASE_NAME;
 
 public class UserDAo {
 	/*
@@ -40,7 +42,7 @@ public class UserDAo {
 	public User getUserByEmail(String email) {
 		try {
 			Connection connection = connectionPool.getConnection();
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM "+Config.MYSQL_DATABASE_NAME+".users WHERE email=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM "+MYSQL_DATABASE_NAME+".users WHERE email=?");
 			statement.setString(1,email);
 			ResultSet result = statement.executeQuery();
 			if (result.next()) {

@@ -1,6 +1,7 @@
 package HelperClasses;
 
 import Database.Config;
+import Database.UserDAo;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
