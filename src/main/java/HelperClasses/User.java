@@ -12,13 +12,11 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private Role userRole;
 
-    public User(String email , String FirstName, String lastName,Role userRole) {
+    public User(String email , String FirstName, String lastName) {
         this.firstName = FirstName;
         this.email = email;
         this.lastName = lastName;
-        this.userRole = userRole;
     }
 
     /**
@@ -40,15 +38,5 @@ public class User {
      */
     public String getEmail() {
         return this.email;
-    }
-
-
-    /**
-     * this is override of getRole function.
-     *
-     * @return The HelperClasses.User Role
-     */
-    public Role getRole() {
-        return userRole;
     }
 }

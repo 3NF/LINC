@@ -58,9 +58,8 @@ public class UserDAo {
 				String email = result.getString("email");
 				String firstName = result.getString("firstname");
 				String lastName = result.getString("secondname");
-				String userRole = result.getString("userrole");
 				connection.close();
-				return new User(email, firstName, lastName, User.Role.valueOf(userRole));
+				return new User(email, firstName, lastName);
 			}
 		} catch (SQLException e) {
 			System.err.println("exception in creation statement");
@@ -80,10 +79,11 @@ public class UserDAo {
 
 	/*
 	* TODO-BAGDAVADZE user PreparedStatement instead of statement for preventing sql injection https://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html
-	*
+	* TODO-BAGDAVADZe create separate database and save unverified users there with addiotional fiel: uuid.
+	* TODO-BAGDAVADZE then create method verifyUser() for migrating user to original database.
 	* */
 
-	public void addUser(String firstName, String lastName, String email, String password)  {
+	public void addUser(String firstName, String lastName, String email, String password, String uuid)  {
 		firstName = change(firstName);
 		lastName = change(lastName);
 		email = change(email);
