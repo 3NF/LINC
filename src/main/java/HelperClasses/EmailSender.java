@@ -14,7 +14,7 @@ public class EmailSender
         String title = "Welcome to LINC, " + userFirstName + "!<br>";
         String body = "Your account was succesfully created! <br>" +
                 " Please go to following URL to confirm E-Mail: \n" +
-                "<a>" + UUID + "</a>";
+                "<a>" + uuid + "</a>";
 
         // Todo-Gchkh resume
     }
