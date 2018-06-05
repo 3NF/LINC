@@ -27,7 +27,7 @@ public class RegisterServlet extends HttpServlet
         String password = request.getParameter("password");
 
         String uuid = UUID.randomUUID().toString();
-        userDAo.addUser(firstName, lastName, email, password, uuid);
+        userDAo.addUnverifiedUser(firstName, lastName, email, password, uuid);
         request.getSession().setAttribute("user", new User(firstName,lastName,email));
         //TODO-show verification send to mail message
     }
