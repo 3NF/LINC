@@ -14,7 +14,7 @@ form
     padding-top: 20px;
 }
 
-form input, form h2
+.input-group > *
 {
     text-align: left;
     margin-bottom: 15px;
