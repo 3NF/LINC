@@ -1,35 +1,102 @@
 package HelperClasses;
 
+import java.io.*;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 /**
  * This class contains static methods as helper functions for various operations.
  */
-public final class Utilities
-{
-    /**TODO-Gchkh16 will be used for password hashing
-     * @param data string to hash
-     * @return hashed string
-     */
-    public static String md5Hash(String data)
-    {
+public final class Utilities {
+	/**
+	 * TODO-Gchkh16 will be used for password hashing
+	 *
+	 * @param data string to hash
+	 *
+	 * @return hashed string
+	 */
+	public static String md5Hash(String data) {
 
-        try
-        {
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            byte[] bytes = data.getBytes(Charset.defaultCharset());
-            byte[] hashed = digest.digest(bytes);
-            return new String(hashed,Charset.defaultCharset());
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
-        }
+		try {
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			byte[] bytes = data.getBytes(Charset.defaultCharset());
+			byte[] hashed = digest.digest(bytes);
+			return new String(hashed, Charset.defaultCharset());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 
 
-        return null;
-    }
+		return null;
+	}
+
+	public static void main(String args[]) {
+		unZip("/home/bakuri/Downloads/kanfetebi.zip");
+	}
+
+
+	private static final String subFolderName = "unzipedFiles";
+
+	/**
+	 * TODO only works for zip files
+	 *
+	 * This method extracts zip files
+	 *
+	 * @param fileZip zips location
+	 *
+	 * Method is written from
+	 * <href a="https://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/"
+	 */
+	public static void unZip(String fileZip) {
+		byte[] buffer = new byte[1024];
+		String dist = subFolderName + File.separator + new File(fileZip).getName();
+		System.out.println(dist);
+		try {
+
+			//create output directory is not exists
+			File folder = new File(dist);
+			if (!folder.exists()) {
+				folder.mkdir();
+			}
+
+			//get the zip file content
+			ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
+			//get the zipped file list entry
+			ZipEntry ze = zis.getNextEntry();
+
+			while (ze != null) {
+				String fileName = ze.getName();
+				if (!(fileName.endsWith(".txt") || fileName.endsWith(".cpp") || fileName.endsWith(".h"))) {
+					ze = zis.getNextEntry();
+					continue;
+				}
+
+				File newFile = new File(dist + File.separator + fileName);
+
+				new File(newFile.getParent()).mkdirs();
+
+				FileOutputStream fos = new FileOutputStream(newFile);
+
+				int len;
+				while ((len = zis.read(buffer)) > 0) {
+					fos.write(buffer, 0, len);
+				}
+
+				fos.close();
+				ze = zis.getNextEntry();
+			}
+
+			zis.closeEntry();
+			zis.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 }
+
+
+
