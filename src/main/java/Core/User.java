@@ -1,4 +1,4 @@
-package HelperClasses;
+package Core;
 
 public class User {
     public enum Role {
