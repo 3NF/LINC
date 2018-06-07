@@ -1,13 +1,12 @@
 package Listeners;
 
 import Data.Constraints;
-import Database.UserDAo;
+import Database.UserDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import javax.xml.crypto.Data;
 
 import static Data.Constraints.USERDAO_NAME;
 import static Database.Config.MYSQL_DATABASE_SERVER;
@@ -27,7 +26,7 @@ public class WebServerStarted implements ServletContextListener{
 		dataSource.setUrl(MYSQL_DATABASE_SERVER);
 		dataSource.setUsername(MYSQL_USERNAME);
 		dataSource.setPassword(MYSQL_PASSWORD);
-		sce.getServletContext().setAttribute(USERDAO_NAME, new UserDAo(dataSource));
+		sce.getServletContext().setAttribute(USERDAO_NAME, new UserDAO(dataSource));
 		sce.getServletContext().setSessionTimeout(Constraints.SESSION_TIMEOUT);
 	}
 

@@ -1,8 +1,8 @@
 package HelperClasses;
 
+import Database.UserDAO;
 import Models.User;
 import Database.Config;
-import Database.UserDAo;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,9 +13,9 @@ import java.sql.Statement;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserDAoTest {
+public class UserDAOTest {
 
-    private UserDAo userDAo;
+    private UserDAO userDAO;
     private BasicDataSource ds;
     private Connection conn;
     private Statement statement;
@@ -26,7 +26,7 @@ public class UserDAoTest {
         ds.setUrl(Config.MYSQL_DATABASE_SERVER);
         ds.setUsername(Config.MYSQL_USERNAME);
         ds.setPassword(Config.MYSQL_PASSWORD);
-        userDAo = new UserDAo(ds);
+        userDAO = new UserDAO(ds);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class UserDAoTest {
         } catch (SQLException e) {
             System.err.println("eror in creation statement");
         }
-        User user = userDAo.getUserByEmail("gbagh16@freeuni.edu.ge");
+        User user = userDAO.getUserByEmail("gbagh16@freeuni.edu.ge");
         assertEquals(user.getEmail(), "gbagh16@freeuni.edu.ge");
         assertEquals(user.getLastName(), "baghdavadze");
         assertEquals(user.getFirstName(), "giorgi");

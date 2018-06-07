@@ -1,7 +1,7 @@
 package Servlets;
 
 
-import Database.UserDAo;
+import Database.UserDAO;
 import Models.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import org.junit.Test;
@@ -23,12 +23,12 @@ public class GoogleLoginTest {
     public void testServlet() throws Exception {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
-        UserDAo userDAo = mock(UserDAo.class);
+        UserDAO userDAO = mock(UserDAO.class);
         GoogleIdTokenVerifier verifier = mock(GoogleIdTokenVerifier.class);
 
         //
         when(request.getParameter("id_token")).thenReturn("gbagh16@freeuni.edu.ge");
-        when(userDAo.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu"));
+        when(userDAO.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu"));
 
         //for stringWriter
         StringWriter stringWriter = new StringWriter();

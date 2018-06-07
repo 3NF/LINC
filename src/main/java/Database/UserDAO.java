@@ -7,7 +7,7 @@ import java.sql.*;
 
 import static Database.Config.MYSQL_DATABASE_NAME;
 
-public class UserDAo {
+public class UserDAO {
 	/*
 		connection pull manager
 	 */
@@ -18,7 +18,7 @@ public class UserDAo {
 	 *
 	 * @param connectionPool connecion source from which user data should be retrieved
 	 */
-	public UserDAo(BasicDataSource connectionPool) {
+	public UserDAO(BasicDataSource connectionPool) {
 		this.connectionPool = connectionPool;
 	}
 

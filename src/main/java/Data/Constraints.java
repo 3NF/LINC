@@ -10,7 +10,7 @@ public class Constraints {
     /**
      * Attribute name for userdao object in servlet context
      */
-    public static final String USERDAO_NAME = "UserDAo";
+    public static final String USERDAO_NAME = "UserDAO";
 
     /**
      * Google client ID
