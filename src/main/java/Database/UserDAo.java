@@ -1,6 +1,6 @@
 package Database;
 
-import HelperClasses.User;
+import Core.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
