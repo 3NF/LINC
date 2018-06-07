@@ -17,9 +17,9 @@ public class RoomDAO
 
     /**
      * @param userID unique user id obtained from google
-     * @return corresponding Room object
+     * @return Rooms in which user is joined
      */
-    public Room getRoomsByUser(String userID)
+    public Room[] getUserRooms(String userID)
     {
         return null;
     }
