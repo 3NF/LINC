@@ -1,7 +1,8 @@
 package Servlets;
 
-import HelperClasses.User;
+
 import Database.UserDAo;
+import Models.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import org.junit.Test;
 import org.mockito.Mockito;

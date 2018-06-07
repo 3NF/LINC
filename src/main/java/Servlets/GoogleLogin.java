@@ -24,7 +24,7 @@ public class GoogleLogin extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute(Constraints.USERDAO_ATTR_NAME);
+		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute(Constraints.USERDAO_NAME);
 
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).setAudience(Collections.singletonList(CLIENT_ID)).build();
 

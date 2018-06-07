@@ -1,6 +1,6 @@
 package Database;
 
-import Core.User;
+import Models.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;

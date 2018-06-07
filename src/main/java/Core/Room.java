@@ -1,5 +1,7 @@
 package Core;
 
+import Models.User;
+
 import java.util.ArrayList;
 
 public class Room
