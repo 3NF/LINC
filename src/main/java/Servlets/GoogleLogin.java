@@ -1,7 +1,7 @@
 package Servlets;
 
 import Data.Constraints;
-import HelperClasses.User;
+import Core.User;
 import Database.UserDAo;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
