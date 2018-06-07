@@ -33,7 +33,9 @@ public class GoogleLogin extends HttpServlet {
 		GoogleIdToken idToken = null;
 		try {
 			idToken = verifier.verify(token);
-		} catch (GeneralSecurityException ignore) {}
+		} catch (Exception e) {
+			System.err.println("error in using verify");
+		}
 
 		String res;
 
