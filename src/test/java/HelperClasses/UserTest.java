@@ -1,5 +1,6 @@
 package HelperClasses;
 
+import Models.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,16 +16,10 @@ public class UserTest {
 
     @Before
     public void biuld() {
-        User.Role role;
-        role = User.Role.admin;
         user1 = new User("btsut16@freeuni.edu.ge", "bakuri", "tsutskhashvili");
-        role = User.Role.lecturer;
         user2 = new User("lchum16@freeuni.edu.ge", "luka", "chumburidze");
-        role = User.Role.seminarLeader;
         user3 = new User("gbagh16@freeuni.edu.ge",  "giorgi", "baghdavadze");
-        role = User.Role.sectionLeader;
         user4 = new User("gchkh16@freeuni.edu.ge",  "giorgi", "chkhikvadze");
-        role = User.Role.student;
         user5 = new User("gtsut16@freeuni.edu.ge",  "gvantsa", "tsutskhashvili");
     }
 

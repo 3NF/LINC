@@ -1,5 +1,6 @@
 package HelperClasses;
 
+import Models.User;
 import Database.Config;
 import Database.UserDAo;
 import org.apache.commons.dbcp2.BasicDataSource;
