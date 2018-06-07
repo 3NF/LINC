@@ -13,7 +13,7 @@
     <link href="../Styles/assets/css/docs.css" rel="stylesheet">
     <link href="../Styles/bootstrap-social.css" rel="stylesheet">
 
-    <%@ page import="Core.User" %>
+    <%@ page import="Models.User" %>
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
