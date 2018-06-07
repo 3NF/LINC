@@ -1,7 +1,7 @@
 package Servlets;
 
 import Data.Constraints;
-import Core.User;
+import Models.User;
 import Database.UserDAo;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -24,7 +24,7 @@ public class GoogleLogin extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute(Constraints.USERDAO_NAME);
+		UserDAo userDAo = (UserDAo) request.getServletContext().getAttribute(Constraints.USERDAO_ATTR_NAME);
 
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).setAudience(Collections.singletonList(CLIENT_ID)).build();
 
