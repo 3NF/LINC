@@ -3,7 +3,6 @@ package Models;
 
 /**
  * represents classroom, but only contains basic information.
- * Mostly used as field of user object.
  */
 public class BasicRoomInfo
 {
