@@ -1,14 +1,6 @@
-package Core;
+package Models;
 
 public class User {
-    public enum Role {
-        admin,
-        lecturer,
-        seminarLeader,
-        student,
-        sectionLeader
-    }
-
     private String firstName;
     private String lastName;
     private String email;
