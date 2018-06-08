@@ -6,9 +6,18 @@ package Models;
  */
 public class BasicRoomInfo
 {
-    private String name;
+
+    /**
+     * Unique name of room.
+     */
+    private String id;
+
     private String title;
 
+
+    /**
+     * Full name of lecturer.
+     */
     private String lecturerName;
 
     public String getLecturerName() {
@@ -16,13 +25,14 @@ public class BasicRoomInfo
     }
 
 
-    public BasicRoomInfo(String name, String title, String coverImagePath) {
-        this.name = name;
+    public BasicRoomInfo(String name, String title, String lecturerName) {
+        this.id = name;
         this.title = title;
+        this.lecturerName = lecturerName;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {

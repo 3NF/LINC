@@ -15,8 +15,8 @@ public class Room extends BasicRoomInfo
     }
 
 
-    public Room(String name, String title, String coverImagePath, String backgroundImage, Member[] members, Assignment[] assignments) {
-        super(name, title, coverImagePath);
+    public Room(String id, String title, String coverImagePath, String backgroundImage, Member[] members, Assignment[] assignments) {
+        super(id, title, coverImagePath);
         this.members = members;
         this.assignments = assignments;
     }
