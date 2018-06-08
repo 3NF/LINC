@@ -65,7 +65,7 @@ public class ClassroomQuickstart {
 				.execute();
 		List<Course> courses = response.getCourses();
 		if (courses == null || courses.size() == 0) {
-			System.out.println("No courses found.");
+			System.err.println("No courses found.");
 		} else {
 
 			System.out.println("Courses:");
