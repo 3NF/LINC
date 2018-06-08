@@ -1,5 +1,38 @@
+
 body
 {
     text-align: center;
-    padding-top: 50px;
+    padding-top: 20%;
+}
+
+ul
+{
+    display: inline-block;
+    list-style-type: none;
+}
+
+li
+{
+    display: inline-block;
+    margin: 10px;
+    width: 30vw;
+    height: 20vh;
+    background: linear-gradient(to bottom right, cyan, darkcyan) ;
+}
+
+.name
+{
+    font-style: oblique;
+    font-size: 14px;
+    color: darkred;
+}
+
+.title
+{
+    font-size: 12px;
+}
+
+.lecturer
+{
+    font-style: italic;
 }
