@@ -23,7 +23,7 @@ import java.util.List;
 public class ClassroomQuickstart {
 	private static final String APPLICATION_NAME = "Google Classroom API Java Quickstart";
 	private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-	private static final String CREDENTIALS_FOLDER = "credentials"; // Directory to store user credentials.
+	private static final String CREDENTIALS_FOLDER = "classroom_credentials"; // Directory to store user credentials.
 
 	/**
 	 * Global instance of the scopes required by this quickstart.
