@@ -9,11 +9,11 @@ public class BasicRoomInfo
     private String name;
     private String title;
 
+    private String lecturerName;
+
     public String getLecturerName() {
         return lecturerName;
     }
-
-    private String lecturerName;
 
 
     public BasicRoomInfo(String name, String title, String coverImagePath) {
