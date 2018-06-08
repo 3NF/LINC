@@ -1,24 +1,29 @@
 <%@ page import="Models.User" %>
-<%@ page import="Data.Constraints" %>
-<%@ page import="Models.Room" %><%--
-  Created by IntelliJ IDEA.
-  User: giorg
-  Date: 07.06.2018
-  Time: 08:15
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="Models.Room" %>
+<%@ page import="Models.BasicRoomInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Enter To Room - LINC</title>
+    <link href="../Styles/chooseRoom.css" rel="stylesheet">
+    <title>Choose Room - LINC</title>
     <%
-        User user = (User) request.getServletContext().getAttribute(Constraints.USER_ATTR_NAME);
-    %>>
+        //for testing
+        User user = new User("g.chxikvadze.14.12@gmail.com", "Giorgi", "Chkhikvadze");
+        BasicRoomInfo[] roomInfos = {
+                new BasicRoomInfo("ChudoSchool", "ChudoSchool", "Giorgi Chkhivadze"),
+                new BasicRoomInfo("BezhoyStudy", "BezhoyStudy", "Davit Bezhanishvili")
+        };
+    %>
 </head>
-<body>
-<h1></h1>
-<div class="">
-
-</div>
+<body class="text-center">
+    <h3>Welcome <%=user.getFirstName()%>! Choose Room To Enter:</>
+    <ul>
+        <%for (BasicRoomInfo info : roomInfos)
+        {%>
+        <li>
+            <a class="title" href="rooms?name=<%=info.getId()%>"><%=info.getTitle()%></a><br>
+        </li><br>
+        <%}%>
+    </ul>
 </body>
 </html>
