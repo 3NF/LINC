@@ -1,35 +1,40 @@
 
 body
 {
-    text-align: center;
-    padding-top: 20%;
+   padding-top: 20vh;
+   width: fit-content;
+   margin: auto;
 }
+
 
 ul
 {
-    display: inline-block;
+    text-align: left;
     list-style-type: none;
+    padding-left: 0px;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
 }
 
 li
 {
     display: inline-block;
-    margin: 10px;
-    width: 30vw;
-    height: 20vh;
-    background: linear-gradient(to bottom right, cyan, darkcyan) ;
+    margin-bottom: 10px;
+    background: linear-gradient(to bottom right, whitesmoke, lightcyan) ;
 }
 
-.name
+li *
 {
-    font-style: oblique;
-    font-size: 14px;
-    color: darkred;
+    margin-bottom: 3px;
 }
+
 
 .title
 {
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    color: darkred;
 }
 
 .lecturer
