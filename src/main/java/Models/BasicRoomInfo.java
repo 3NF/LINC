@@ -8,13 +8,17 @@ public class BasicRoomInfo
 {
     private String name;
     private String title;
-    private String coverImagePath;
+
+    public String getLecturerName() {
+        return lecturerName;
+    }
+
+    private String lecturerName;
 
 
     public BasicRoomInfo(String name, String title, String coverImagePath) {
         this.name = name;
         this.title = title;
-        this.coverImagePath = coverImagePath;
     }
 
     public String getName() {
@@ -23,9 +27,5 @@ public class BasicRoomInfo
 
     public String getTitle() {
         return title;
-    }
-
-    public String getCoverImagePath() {
-        return coverImagePath;
     }
 }
