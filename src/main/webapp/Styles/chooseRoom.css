@@ -1,5 +1,43 @@
+
 body
 {
-    text-align: center;
-    padding-top: 50px;
+   padding-top: 20vh;
+   width: fit-content;
+   margin: auto;
+}
+
+
+ul
+{
+    text-align: left;
+    list-style-type: none;
+    padding-left: 0px;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
+}
+
+li
+{
+    display: inline-block;
+    margin-bottom: 10px;
+    background: linear-gradient(to bottom right, whitesmoke, lightcyan) ;
+}
+
+li *
+{
+    margin-bottom: 3px;
+}
+
+
+.title
+{
+    font-weight: bold;
+    font-size: 16px;
+    color: darkred;
+}
+
+.lecturer
+{
+    font-style: italic;
 }

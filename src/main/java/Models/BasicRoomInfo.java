@@ -6,26 +6,36 @@ package Models;
  */
 public class BasicRoomInfo
 {
-    private String name;
+
+    /**
+     * Unique name of room.
+     */
+    private String id;
+
     private String title;
-    private String coverImagePath;
 
 
-    public BasicRoomInfo(String name, String title, String coverImagePath) {
-        this.name = name;
-        this.title = title;
-        this.coverImagePath = coverImagePath;
+    /**
+     * Full name of lecturer.
+     */
+    private String lecturerName;
+
+    public String getLecturerName() {
+        return lecturerName;
     }
 
-    public String getName() {
-        return name;
+
+    public BasicRoomInfo(String name, String title, String lecturerName) {
+        this.id = name;
+        this.title = title;
+        this.lecturerName = lecturerName;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
-    }
-
-    public String getCoverImagePath() {
-        return coverImagePath;
     }
 }
