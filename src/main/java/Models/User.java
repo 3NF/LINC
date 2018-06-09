@@ -4,11 +4,13 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String userId;
 
-    public User(String email , String FirstName, String lastName) {
+    public User(String email , String FirstName, String lastName, String userId) {
         this.firstName = FirstName;
         this.email = email;
         this.lastName = lastName;
+        this.userId = userId;
     }
 
     /**

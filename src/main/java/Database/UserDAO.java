@@ -49,7 +49,7 @@ public class UserDAO {
 				String firstName = result.getString("firstname");
 				String lastName = result.getString("secondname");
 				connection.close();
-				return new User(email, firstName, lastName);
+				return new User(email, firstName, lastName, "1");
 			}
 		} catch (SQLException e) {
 			System.err.println("exception in executing query");
