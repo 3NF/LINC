@@ -16,6 +16,7 @@
     %>
 </head>
 <body class="text-center">
+    <iframe id="gClassroomFrame" style="display: none" src="https://classroom.google.com/u/0/h"></iframe>
     <h3>Welcome <%=user.getFirstName()%>! Choose Room To Enter:</>
     <ul>
         <%for (BasicRoomInfo info : roomInfos)
