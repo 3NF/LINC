@@ -58,10 +58,10 @@ public class GoogleLoginTest {
         when(request.getServletContext()).thenReturn(servletContext);
         when(request.getSession()).thenReturn(session);
         when(servletContext.getAttribute(Constraints.USERDAO_NAME)).thenReturn(userDAo);
-        when(userDAo.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu"));
+        when(userDAo.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu", "1"));
         //
         when(request.getParameter("id_token")).thenReturn("gbagh16@freeuni.edu.ge");
-        when(userDAO.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu"));
+        when(userDAO.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu", "1"));
 
         GoogleLogin someServlet = new GoogleLogin();
         someServlet.doPost(request,response);
@@ -79,7 +79,7 @@ public class GoogleLoginTest {
         when(request.getServletContext()).thenReturn(servletContext);
         when(request.getSession()).thenReturn(session);
         when(servletContext.getAttribute(Constraints.USERDAO_NAME)).thenReturn(userDAo);
-        when(userDAo.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu"));
+        when(userDAo.getUserByEmail(any(String.class))).thenReturn(new User("gbagh16@freeuni.edu.ge", "giorgi", "bagdu", "1"));
 
         GoogleLogin someServlet = new GoogleLogin();
         someServlet.doPost(request,response);

@@ -7,6 +7,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.webtoken.JsonWebToken;
 import com.google.gson.Gson;
 
 import javax.servlet.annotation.WebServlet;
@@ -36,25 +37,17 @@ public class GoogleLogin extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println("error in using verify");
 		}
-
 		String res;
-
 		if (idToken != null) {
 			GoogleIdToken.Payload payload = idToken.getPayload();
 			String userId = payload.getSubject();
 			String email = payload.getEmail();
-			boolean emailVerified = payload.getEmailVerified();
-			if (!emailVerified) {
-				res = "Please verify email";
-			} else {
-				User user = userDAO.getUserByEmail(email);
-				if (user != null) {
-					request.getSession().setAttribute("user", user);
-					res = "success";
-				} else {
-					res = "incorrect email";
-				}
-			}
+			String pictureUrl = (String) payload.get("picture");
+			String familyName = (String) payload.get("family_name");
+			String givenName = (String) payload.get("given_name");
+			User user = new User(email, givenName, familyName, userId);
+			request.getSession().setAttribute("user", user);
+			res = "success";
 		} else {
 			res = "Invalid ID token";
 		}
