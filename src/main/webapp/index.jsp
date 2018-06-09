@@ -22,7 +22,7 @@
 
 
     <%-- Google's authorization --%>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=load" async defer gapi_processed="true"></script>
     <meta name="google-signin-client_id"
           content=<%=CLIENT_ID%>>>
 
@@ -47,22 +47,30 @@
         <br>
         <a href="Register">Don't Have account? Register now!</a>
         <br>
-        <br>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div id="g-signin2"></div>
     </form>
 </div>
 </body>
 
 <script>
-    let wrongPass = <%= (request.getAttribute("wrongPassword") != null) %>;
-    function checkWrong() {
-        if (wrongPass) {
-            $('#wrong-pass').show();
-        }
-    }
-    checkWrong();
 
-    function onSignIn(googleUser) {
+    function load() {
+        gapi.signin2.render('g-signin2', {
+            'scope': 'profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.courses.readonly',
+            'width': 240,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSucces,
+            'onfailure': onFailure
+        });
+    }
+
+    function onFailure() {
+
+    }
+
+    function onSucces(googleUser) {
         let id_token = googleUser.getAuthResponse().id_token;
         $.post("/GoogleLogin", {id_token: id_token}, function (data) {
             console.log(data);
