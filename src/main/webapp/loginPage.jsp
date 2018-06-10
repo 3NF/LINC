@@ -29,26 +29,13 @@
 </head>
 
 <body>
-<div class="container">
-
-    <form id="form_login" action="LoginCheck" method="post">
-        <div hidden id="wrong-pass" class="alert alert-danger">
-            Incorrect email or password.
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="email" type="email" class="form-control" name="email" placeholder="Email">
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-        </div>
-        <input type="submit" id="login-page-login-button" class="btn btn-primary" value="Login">
-        <br>
-        <a href="Register">Don't Have account? Register now!</a>
-        <br>
-        <div id="g-signin2"></div>
-    </form>
+<div class="container" style="text-align: center; padding-top: 30vh">
+        <form id="signIn" action="GoogleLogin" method="post">
+            <input type="hidden" name="idToken" value="">
+        </form>
+            <h2>Welcome! Connect With Google To Start using LINC  </h2>
+            <br>
+            <div style="display: inline-block" id="g-signin2"></div>
 </div>
 </body>
 
@@ -72,21 +59,11 @@
 
     function onSucces(googleUser) {
         let id_token = googleUser.getAuthResponse().id_token;
-        $.post("/GoogleLogin", {id_token: id_token}, function (data) {
-            console.log(data);
-            switch (data) {
-                case "success": {
-                    window.location.href = "user/dashboard.jsp";
-                    break;
-                }
-                default: {
-                    wrongPass = true;
-                    checkWrong();
-                    gapi.auth2.getAuthInstance().disconnect();
-                }
-            }
-        });
+        let form = document.getElementById("signIn");
+        form.idToken.value = id_token;
+        form.submit();
     }
+
 </script>
 
 </html>
