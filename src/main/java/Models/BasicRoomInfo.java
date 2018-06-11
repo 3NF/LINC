@@ -14,7 +14,7 @@ public class BasicRoomInfo
 
     private String title;
 
-
+    private String imageSrc;
     /**
      * Full name of lecturer.
      */
@@ -25,10 +25,11 @@ public class BasicRoomInfo
     }
 
 
-    public BasicRoomInfo(String name, String title, String lecturerName) {
+    public BasicRoomInfo(String name, String title, String lecturerName, String imageSrc) {
         this.id = name;
         this.title = title;
         this.lecturerName = lecturerName;
+        this.imageSrc = imageSrc;
     }
 
     public String getId() {
@@ -38,4 +39,10 @@ public class BasicRoomInfo
     public String getTitle() {
         return title;
     }
+
+    public String getImageSrc(){
+        return imageSrc;
+    }
+
+
 }

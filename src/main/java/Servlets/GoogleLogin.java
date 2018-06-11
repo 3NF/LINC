@@ -29,7 +29,7 @@ public class GoogleLogin extends HttpServlet {
 
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).setAudience(Collections.singletonList(CLIENT_ID)).build();
 
-		String token = request.getParameter("id_token");
+		String token = request.getParameter("idToken");
 		System.out.println(token);
 		GoogleIdToken idToken = null;
 		try {
