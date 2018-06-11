@@ -24,7 +24,7 @@
     <%-- Google's authorization --%>
     <script src="https://apis.google.com/js/platform.js?onload=load" async defer gapi_processed="true"></script>
     <meta name="google-signin-client_id"
-          content=<%=CLIENT_ID%>>>
+          content=<%=CLIENT_ID%>>
 
 </head>
 
