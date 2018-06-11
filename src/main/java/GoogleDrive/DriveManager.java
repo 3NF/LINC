@@ -95,7 +95,7 @@ public class DriveManager {
                     .execute();
             List <com.google.api.services.drive.model.File> files = result.getFiles();
             for (int i = 0; i < files.size(); i ++) {
-                System.out.println(1);
+                System.out.println(files.get(i).getId() + " Main thread");
                 workers[i%nWorkers].addJob(files.get(i).getId());
             }
         } catch (IOException e) {
@@ -191,6 +191,7 @@ public class DriveManager {
                     Get file id and process it
                  */
                 fileID = pickJob();
+                System.out.println("||||||||File " + fileID + " " + name);
                 processJob (fileID);
             }
 
