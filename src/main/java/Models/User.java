@@ -1,36 +1,36 @@
 package Models;
 
+
 public class User {
     private String firstName;
     private String lastName;
     private String email;
     private String userId;
+    private String picturePath;
+    private String idToken;
 
-    public User(String email , String FirstName, String lastName, String userId) {
+    public User(String email , String FirstName, String lastName, String userId, String picturePath, String idToken) {
         this.firstName = FirstName;
         this.email = email;
         this.lastName = lastName;
         this.userId = userId;
+        this.picturePath = picturePath;
+        this.idToken = idToken;
     }
 
-    /**
-     * @return HelperClasses.User First Name
-     */
     public String getFirstName() {
         return this.firstName;
     }
 
-    /**
-     * @return HelperClasses.User SecondName
-     */
     public String getLastName() {
         return this.lastName;
     }
 
-    /**
-     * @return HelperClasses.User e-mail Adress
-     */
     public String getEmail() {
         return this.email;
     }
+
+    public String getUserId() { return userId; }
+
+    public String getPicturePath() { return picturePath; }
 }
