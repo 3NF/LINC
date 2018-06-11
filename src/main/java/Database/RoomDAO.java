@@ -1,8 +1,9 @@
 package Database;
 
 import Core.Room;
+import Models.BasicRoomInfo;
 
-public class RoomDAO
+public class RoomDAO implements RoomDAOI
 {
 
     /**
@@ -19,7 +20,7 @@ public class RoomDAO
      * @param userID unique user id obtained from google
      * @return Rooms in which user is joined
      */
-    public Room[] getUserRooms(String userID)
+    public BasicRoomInfo[] getUserBasicRooms(String userID)
     {
         return null;
     }
