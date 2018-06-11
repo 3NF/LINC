@@ -25,7 +25,6 @@ public class GoogleLogin extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		UserDAO userDAO = (UserDAO) request.getServletContext().getAttribute(Constraints.USERDAO_NAME);
 
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).setAudience(Collections.singletonList(CLIENT_ID)).build();
 
@@ -45,14 +44,9 @@ public class GoogleLogin extends HttpServlet {
 			String pictureUrl = (String) payload.get("picture");
 			String familyName = (String) payload.get("family_name");
 			String givenName = (String) payload.get("given_name");
-			User user = new User(email, givenName, familyName, userId);
+			User user = new User(email, givenName, familyName, userId, pictureUrl, token);
 			request.getSession().setAttribute("user", user);
 			res = "success";
-		} else {
-			res = "Invalid ID token";
 		}
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(res));
 	}
 }
