@@ -23,7 +23,7 @@ public class Validate {
     public static boolean isUserInClassroom(HttpSession session,String classromID){
         RoomDAO roomDAO = new RoomDAO();
         User user = (User) session.getAttribute("user");
-        List<BasicRoomInfo> basicRoom = roomDAO.getUserRooms(user.getEmail());
+        List<BasicRoomInfo> basicRoom = roomDAO.getUserRooms(user.getIdToken());
         for (BasicRoomInfo room : basicRoom){
             if (room.getId().equals(classromID)) return true;
         }

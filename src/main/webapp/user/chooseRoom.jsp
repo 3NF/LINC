@@ -1,17 +1,19 @@
 <%@ page import="Models.User" %>
-<%@ page import="Models.Room" %>
 <%@ page import="Models.BasicRoomInfo" %>
+<%@ page import="javax.validation.Valid" %>
+<%@ page import="HelperClasses.Validate" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link href="../Styles/chooseRoom.css" rel="stylesheet">
     <title>Choose Room - LINC</title>
     <%
+        if (!Validate.isSesion(session)) {response.sendRedirect("../loginPage.jsp"); return;}
         //for testing
-        User user = new User("g.chxikvadze.14.12@gmail.com", "Giorgi", "Chkhikvadze","g.chxikvadze.14.12@gmail.com");
+        User user = new User("g.chxikvadze.14.12@gmail.com", "Giorgi", "Chkhikvadze","g.chxikvadze.14.12@gmail.com","er","er");
         BasicRoomInfo[] roomInfos = {
-                new BasicRoomInfo("ChudoSchool", "ChudoSchool", "Giorgi Chkhivadze"),
-                new BasicRoomInfo("BezhoyStudy", "BezhoyStudy", "Davit Bezhanishvili")
+                new BasicRoomInfo("ChudoSchool", "ChudoSchool", "Giorgi Chkhivadze","er"),
+                new BasicRoomInfo("BezhoyStudy", "BezhoyStudy", "Davit Bezhanishvili","er")
         };
     %>
 </head>

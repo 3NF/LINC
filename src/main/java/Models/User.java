@@ -33,4 +33,6 @@ public class User {
     public String getUserId() { return userId; }
 
     public String getPicturePath() { return picturePath; }
+
+    public String getIdToken() { return idToken; }
 }

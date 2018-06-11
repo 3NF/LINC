@@ -1,6 +1,9 @@
 package Database;
 
 import Core.Room;
+import Models.BasicRoomInfo;
+
+import java.util.ArrayList;
 
 public class RoomDAO
 {
@@ -19,7 +22,7 @@ public class RoomDAO
      * @param userID unique user id obtained from google
      * @return Rooms in which user is joined
      */
-    public Room[] getUserRooms(String userID)
+    public ArrayList<BasicRoomInfo> getUserRooms(String userID)
     {
         return null;
     }
