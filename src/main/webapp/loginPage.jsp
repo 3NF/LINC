@@ -32,7 +32,6 @@
 
     function load()
     {
-        console.log("loaded")
         gapi.signin2.render('g-signin2', {
             'scope': 'profile email',
             'width': 240,
