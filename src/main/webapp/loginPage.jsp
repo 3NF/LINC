@@ -6,54 +6,60 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <%-- My css --%>
-    <link rel="stylesheet" href="Styles/style.css">
-
-
-    <%-- Google's authorization --%>
-    <script src="https://apis.google.com/js/platform.js" async defer gapi_processed="true"></script>
     <meta name="google-signin-client_id"
           content=<%=CLIENT_ID%>>
 
+    <link rel="stylesheet" href="Styles/style.css">
+    <link href="Styles/assets/css/bootstrap.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script>
+
+
+        function start()
+        {
+            gapi.load('auth2', function() {
+                auth2 = gapi.auth2.init({
+                    client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
+                    scope: "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.courses.readonly"
+                });
+            });
+
+        }
+
+        function finalCallback(authResult)
+        {
+            let code = authResult['code'];
+            if(code)
+            {
+                let form = document.forms[0];
+                form.auth_code.value = code;
+                form.submit();
+            }
+
+
+
+        }
+
+        function onSignIn()
+        {
+            auth2.grantOfflineAccess().then(finalCallback);
+        }
+
+    </script>
+
 </head>
 
-<body onload="load()">
+<body>
 <div class="container" style="text-align: center; padding-top: 30vh">
-        <form id="signIn" action="GoogleLogin" method="post">
-            <input type="hidden" name="idToken" value="">
-        </form>
-            <h2>Welcome! Connect With Google To Start using LINC  </h2>
-            <br>
-            <div style="display: inline-block; width: 300px; height: 300px" id="g-signin2"></div>
+    <form action="GoogleLogin" method="post">
+        <input type="hidden" name="auth_code" value="">
+    </form>
+    <h2>Welcome! Connect With Google To Start using LINC  </h2>
+    <br>
+    <button id="signin" onclick="onSignIn()"></button>
 </div>
 </body>
-
-<script>
-
-    function load() {
-        console.log("loaded")
-        gapi.signin2.render('g-signin2', {
-            'scope': 'profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.courses.readonly',
-            'width': 240,
-            'height': 50,
-            'longtitle': true,
-            'theme': 'dark',
-            'onsuccess': onSucces,
-            'onfailure': onFailure
-        });
-    }
-
-    function onFailure() {
-
-    }
-
-    function onSucces(googleUser) {
-        let id_token = googleUser.getAuthResponse().id_token;
-        let form = document.getElementById("signIn");
-        form.idToken.value = id_token;
-        form.submit();
-    }
-
-</script>
 
 </html>
