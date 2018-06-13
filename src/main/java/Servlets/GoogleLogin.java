@@ -44,7 +44,7 @@ public class GoogleLogin extends HttpServlet {
 			String pictureUrl = (String) payload.get("picture");
 			String familyName = (String) payload.get("family_name");
 			String givenName = (String) payload.get("given_name");
-			User user = new User(email, givenName, familyName, userId, pictureUrl, token);
+			User user = new User(email, givenName, familyName, userId, pictureUrl, null,null);
 			request.getSession().setAttribute("user", user);
 			res = "success";
 		}
