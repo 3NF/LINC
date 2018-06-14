@@ -10,7 +10,7 @@
     <%
         if (!Validate.isSesion(session)) {response.sendRedirect("../loginPage.jsp"); return;}
         //for testing
-        User user = new User("g.chxikvadze.14.12@gmail.com", "Giorgi", "Chkhikvadze","g.chxikvadze.14.12@gmail.com","er","er");
+        User user = new User("g.chxikvadze.14.12@gmail.com", "Giorgi", "Chkhikvadze","g.chxikvadze.14.12@gmail.com","er","er", "er");
         BasicRoomInfo[] roomInfos = {
                 new BasicRoomInfo("ChudoSchool", "ChudoSchool", "Giorgi Chkhivadze","er"),
                 new BasicRoomInfo("BezhoyStudy", "BezhoyStudy", "Davit Bezhanishvili","er")
@@ -24,7 +24,7 @@
         <%for (BasicRoomInfo info : roomInfos)
         {%>
         <li>
-            <a href="rooms?name=<%=info.getId()%>"><%=info.getTitle()%></a>
+            <a href="dashboard.jsp?name=<%=info.getId()%>"><%=info.getTitle()%></a>
         </li>
         <%}%>
     </ul>

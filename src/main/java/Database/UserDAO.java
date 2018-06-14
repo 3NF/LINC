@@ -23,14 +23,10 @@ public class UserDAO {
 	}
 
 	/**
-	 *
-	 * @param email
 	 * @return a true if a account with this email exist
 	 */
 	public boolean userExists(String email) {
-		if (getUserByEmail(email) != null)
-			return true;
-		return false;
+		return  (getUserByEmail(email) != null);
 	}
 
 
@@ -49,7 +45,7 @@ public class UserDAO {
 				String firstName = result.getString("firstname");
 				String lastName = result.getString("secondname");
 				connection.close();
-				return new User(email, firstName, lastName, "1","123" , "123");
+				return new User(email, firstName, lastName, "1","123" , "123", "123");
 			}
 		} catch (SQLException e) {
 			System.err.println("exception in executing query");
