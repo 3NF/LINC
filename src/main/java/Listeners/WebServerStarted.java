@@ -1,7 +1,6 @@
 package Listeners;
 
 import Data.Constraints;
-import Database.UserDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.servlet.ServletContextEvent;
@@ -26,7 +25,6 @@ public class WebServerStarted implements ServletContextListener{
 		dataSource.setUrl(MYSQL_DATABASE_SERVER);
 		dataSource.setUsername(MYSQL_USERNAME);
 		dataSource.setPassword(MYSQL_PASSWORD);
-		sce.getServletContext().setAttribute(USERDAO_NAME, new UserDAO(dataSource));
 	}
 
     public void contextDestroyed(ServletContextEvent sce) {
