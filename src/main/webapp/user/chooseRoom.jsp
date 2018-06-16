@@ -33,13 +33,13 @@
 </style>
 <div class="container">
     <form class="form-inline">
-
         <%for (Course info : (ArrayList<Course>) request.getAttribute("courses")) {%>
-        <div class="dodo">
-            <h3 align="center" style="padding-top: 100px; "><%=info.getName()%>
-            </h3>
+            <% if (info.getCourseState().equals("ACTIVE")) { %>
+                <div class="dodo">
+                    <h3 align="center" style="padding-top: 100px; "><%=info.getName()%></h3>
+                </div>
             <%}%>
-        </div>
+        <%}%>
     </form>
 </div>
 </html>
