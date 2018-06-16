@@ -12,6 +12,7 @@ import com.google.api.services.classroom.model.Course;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,22 +32,14 @@ public class GoogleLogin extends HttpServlet {
 
 	private static final String AUTH_CODE_NAME = "auth_code";
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String authCode = request.getParameter(AUTH_CODE_NAME);
 		User user = GAPIManager.getUser(authCode);
 		request.getSession().setAttribute("user", user);
 		List<Course> courses = GAPIManager.getUserRooms(user);
-		try
-		{
-			response.setCharacterEncoding("Unicode");
-			PrintWriter wr = response.getWriter();
-            assert courses != null;
-            wr.print(String.join(", ", Lists.transform(courses,Course::getName)));
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		response.setCharacterEncoding("UTF-8");
+		request.setAttribute("courses", courses);
+		request.getRequestDispatcher("/user/chooseRoom.jsp").forward(request,response);
 	}
 }

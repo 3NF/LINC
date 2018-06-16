@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <% if (!Validate.isSesion(request.getSession())) {
+    <% if (!Validate.isLogged(request.getSession())) {
             response.sendRedirect("../loginPage.jsp");
             return;
         };
@@ -34,7 +34,6 @@
 </head>
 
 <body>
-    <h1><%= "hello" + user.getFirstName()%> </h1>
 </body>
 
 </html>
