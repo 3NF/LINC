@@ -1,4 +1,6 @@
 <%@ page import="Models.User" %>
+<%@ page import="Models.BasicRoomInfo" %>
+<%@ page import="javax.validation.Valid" %>
 <%@ page import="HelperClasses.Validate" %>
 <%@ page import="Database.GAPIManager" %>
 <%@ page import="com.google.api.services.classroom.model.Course" %>
@@ -20,6 +22,7 @@
     }
 </style>
 <head>
+    <link href="../Styles/chooseRoom.css" rel="stylesheet">
     <title>Choose Room - LINC</title>
     <%
         if (!Validate.isLogged(session)) {
