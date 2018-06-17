@@ -1,6 +1,4 @@
 <%@ page import="Models.User" %>
-<%@ page import="Models.BasicRoomInfo" %>
-<%@ page import="javax.validation.Valid" %>
 <%@ page import="HelperClasses.Validate" %>
 <%@ page import="Database.GAPIManager" %>
 <%@ page import="com.google.api.services.classroom.model.Course" %>
@@ -10,7 +8,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
 <style>
-    .dodo {
+    .classRoom {
         border-radius: 7px;
         border-color: black;
         width: 272px;
@@ -45,14 +43,17 @@
             int element = 0;
             for (Course course : courses) {
         %>
-      <%
+        <%
+            if (course.getCourseState().equals("ARCHIVED"))
+                continue;
             if (element % 4 == 0 && element != 0) {
         %></tr>
     <tr><%
         }
         ++element;%>
         <td>
-            <div class="dodo" onclick="enterClasroom()" onmouseenter="myFunction(this)" onmouseleave="second(this)">
+            <div class="classRoom" onclick="enterClasroom()" onmouseenter="mouseEnter(this)"
+                 onmouseleave="mouseLeave(this)">
                 <h3 align="center" style="padding-top: 100px;"><%=course.getName()%>
                 </h3>
             </div>
@@ -70,13 +71,13 @@
         alert("ggs");
     }
 
-    function myFunction(r) {
+    function mouseEnter(r) {
         //r.style.backgroundColor="red";
         r.style.width = '300px';
         r.style.height = '250px';
     }
 
-    function second(r) {
+    function mouseLeave(r) {
         r.style.width = '272px';
         r.style.height = '200px';
     }
