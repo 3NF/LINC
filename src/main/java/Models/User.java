@@ -10,7 +10,9 @@ public class User {
     private String idToken;
     private String accessToken;
     private String refreshToken;
-    public User(String email , String FirstName, String lastName, String userId, String picturePath, String accessToken,String refreshToken) {
+
+    public User(String email, String FirstName, String lastName, String userId, String picturePath, String accessToken, String refreshToken)
+    {
         this.firstName = FirstName;
         this.email = email;
         this.lastName = lastName;
@@ -21,29 +23,43 @@ public class User {
         this.refreshToken = refreshToken;
     }
 
-    public String getFirstName() {
+    public String getFirstName()
+    {
         return this.firstName;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return this.lastName;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return this.email;
     }
 
-    public String getUserId() { return userId; }
+    public String getUserId()
+    {
+        return userId;
+    }
 
-    public String getPicturePath() { return picturePath; }
+    public String getPicturePath()
+    {
+        return picturePath;
+    }
 
-    public String getIdToken() { return idToken; }
+    public String getIdToken()
+    {
+        return idToken;
+    }
 
-    public String getAccessToken() {
+    public String getAccessToken()
+    {
         return accessToken;
     }
 
-    public String getRefreshToken() {
+    public String getRefreshToken()
+    {
         return refreshToken;
     }
 }
