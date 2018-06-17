@@ -1,6 +1,4 @@
 <%@ page import="Models.User" %>
-<%@ page import="Models.BasicRoomInfo" %>
-<%@ page import="javax.validation.Valid" %>
 <%@ page import="HelperClasses.Validate" %>
 <%@ page import="Database.GAPIManager" %>
 <%@ page import="com.google.api.services.classroom.model.Course" %>
@@ -44,8 +42,6 @@
         <%
             int element = 0;
             for (Course course : courses) {
-        %>
-      <%
             if (element % 4 == 0 && element != 0) {
         %></tr>
     <tr><%
