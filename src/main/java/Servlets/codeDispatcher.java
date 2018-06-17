@@ -4,6 +4,7 @@ import Database.CodeManager;
 import HelperClasses.Validate;
 import Models.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpStatus;
 
@@ -40,23 +41,22 @@ public class codeDispatcher extends HttpServlet
             }
 
             //Convert file data into JSON
-            String json = new Gson().toJson(codeManager.get(codeName));
+            String json = new GsonBuilder().disableHtmlEscaping().create().toJson(codeManager.get(codeName));
             System.out.println(json);
 
             //Send response to client
             response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF8");
             response.getWriter().write(json);
         } catch (NumberFormatException|NullPointerException e) {
             response.sendError(HttpStatus.SC_NOT_FOUND);
-            return;
         }
     }
 
     /*
         User must not access this with get request
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         response.sendError(HttpStatus.SC_NOT_FOUND);
     }

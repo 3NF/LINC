@@ -34,7 +34,10 @@ var fetchCode = function (name) {
 
 //AJAX successful response callback
 var loadCode = function (data, textStaus, jQxhr) {
-    $("#code-content").html(data.replace(/\n/g, "<br />"));
+    data = data.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;');
+    console.log(data);
+    $("#code-content").html(data);
+    hljs.highlightBlock($("#code-content").get(0));
 };
 
 //AJAX error response callback

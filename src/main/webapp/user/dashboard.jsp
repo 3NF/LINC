@@ -32,7 +32,10 @@
 
     <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 
     <% User user = (User) request.getSession().getAttribute("user");%>
 
@@ -54,7 +57,11 @@
             </ul>
 
             <div class="panel-body">
-                <div id = "code-content"> Code goes here!</div>
+                <pre>
+                    <code class="cpp" id = "code-content">
+                        #include &lt;iostream&gt;
+                    </code>
+                </pre>
             </div>
         </div>
     </div>
