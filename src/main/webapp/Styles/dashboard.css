@@ -1,0 +1,24 @@
+.fill {
+    min-height: 100%;
+    width: 80px;
+    position: fixed;
+    background-color: #b2b4ae;
+    text-align: center;
+}
+
+#user-panel-img {
+    width: 80%;
+    margin: auto;
+    margin-top: 5px;
+
+}
+
+#panel-swipe {
+    width: 80%;
+    position: relative;
+    bottom: 0px;
+}
+
+#content {
+    padding-left: 80px;
+}
