@@ -8,5 +8,7 @@ html, body {
 {
     width: 382px;
     height: 92px;
+    padding: 0px;
     background-image: url("assets/img/btn_google_signin_dark_normal_web@2x.png");
+    border-style: none;
 }
