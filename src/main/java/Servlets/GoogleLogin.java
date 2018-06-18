@@ -32,14 +32,17 @@ public class GoogleLogin extends HttpServlet {
 
 	private static final String AUTH_CODE_NAME = "auth_code";
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String authCode = request.getParameter(AUTH_CODE_NAME);
-		User user = GAPIManager.getUser(authCode);
-		request.getSession().setAttribute("user", user);
-		List<Course> courses = GAPIManager.getUserRooms(user);
-		response.setCharacterEncoding("UTF-8");
-		request.setAttribute("courses", courses);
-		request.getRequestDispatcher("/user/chooseRoom.jsp").forward(request,response);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+        response.sendRedirect("/user/chooseRoom.jsp");
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+        String authCode = request.getParameter(AUTH_CODE_NAME);
+        User user = GAPIManager.getUser(authCode);
+        request.getSession().setAttribute("user", user);
+        response.sendRedirect("/user/chooseRoom.jsp");
 	}
 }
