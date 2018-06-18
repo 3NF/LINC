@@ -57,12 +57,36 @@
             </ul>
 
             <div class="panel-body">
-                <pre>
-                    <code class="cpp" id = "code-content">
-                        #include &lt;iostream&gt;
-                    </code>
-                </pre>
+                <div id = "code-panel">
+                    <pre>
+                        <code class="cpp" id = "code-content">
+
+                        </code>
+                    </pre>
+                </div>
+                <div id = "comment-panel-wrapper">
+                    <div class = "media" id = "comment-panel">
+                        <img class = "media-object" class = "media-left" id = "comment-profile-picture" src="../Images/temp_user_icon.svg">
+                        <div class = "media-body" id = "comment-content">
+                            <p class = "media-heading" id = "comment-user-name"><b>Giorgi Baghdavadze</b></p>
+                            <p class = "media-body">კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა.
+                                კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა.</p>
+                        </div>
+                        <div id = "reply-panel-wrapper">
+                            <div class = "media" id = "reply-panel">
+                                <img class = "media-object" class = "media-left" id = "reply-profile-picture" src="../Images/temp_user_icon.svg">
+                                <div class = "media-body" id = "reply-content">
+                                    <p class = "media-heading" id = "reply-user-name"><b>Basil Iakobashvili</b></p>
+                                    <p class = "media-body">კარგი ვარ, კარგი ვარ, კარგი ვარ.
+                                                            კარგი ვარ, კარგი ვარ, კარგი ვარ.
+                                                            კარგი ვარ, კარგი ვარ, კარგი ვარ.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </body>
