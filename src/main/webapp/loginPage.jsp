@@ -9,15 +9,16 @@
     <meta name="google-signin-client_id"
           content=<%=CLIENT_ID%>>
 
-    <link rel="stylesheet" href="Styles/style.css">
-    <link href="Styles/assets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
+    <link href="${pageContext.request.contextPath}/Styles/assets/css/bootstrap.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script>
 
 
-        function start() {
+        function start()
+        {
             gapi.load('auth2', function () {
                 auth2 = gapi.auth2.init({
                     client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
@@ -27,7 +28,8 @@
 
         }
 
-        function finalCallback(authResult) {
+        function finalCallback(authResult)
+        {
             let code = authResult['code'];
             if (code) {
                 let form = document.forms[0];
@@ -38,7 +40,8 @@
 
         }
 
-        function onSignIn() {
+        function onSignIn()
+        {
             auth2.grantOfflineAccess().then(finalCallback);
         }
 
@@ -48,7 +51,7 @@
 
 <body>
 <div class="container" style="text-align: center; padding-top: 30vh">
-    <form action="GoogleLogin" method="post">
+    <form action="${pageContext.request.contextPath}/GoogleLogin" method="post">
         <input type="hidden" name="auth_code" value="">
     </form>
     <h2>Welcome! Connect With Google To Start using LINC </h2>
