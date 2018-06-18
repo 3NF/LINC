@@ -12,7 +12,7 @@
     <%
         //for testing
         User user = (User) session.getAttribute("user");
-        List<Course> courses = GAPIManager.getUserRooms(user);
+        List<Course> courses = GAPIManager.getActiveRooms(user);
     %>
 </head>
 <body>
@@ -21,14 +21,14 @@
 
 <div class="panel">
 
-    <%for (Course course : courses)
-    {%>
+    <%for (Course course : courses) {%>
 
-        <td>
-            <div class="classRoom" onclick="enterClasroom()">
-                <h3><%=course.getName()%></h3>
-            </div>
-        </td>
+    <td>
+        <div class="classRoom" onclick=<%="enterClasroom(" + course.getId() + ")"%>>
+            <h3><%=course.getName()%>
+            </h3>
+        </div>
+    </td>
 
     <%}%>
 </div>
@@ -36,8 +36,8 @@
 </body>
 
 <script>
-    function enterClasroom() {
-        alert("ggs");
+    function enterClasroom(id) {
+        window.location.assign("dashboard.jsp?id=" + id);
     }
 </script>
 </html>

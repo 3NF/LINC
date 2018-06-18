@@ -9,8 +9,7 @@ import java.io.IOException;
 @WebFilter(filterName = "SessionFilter", urlPatterns = "/user/*")
 public class SessionFilter implements Filter
 {
-    public void destroy()
-    {
+    public void destroy() {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException
