@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="HelperClasses.Validate" %>
+<%@ page import="Models.User" %>
+<%@ page import="HelperClasses.Validate" %>
+<%@ page import="static Data.Constraints.USER_IN_SESSION" %>
 <html>
 
 <head>
@@ -24,8 +27,7 @@
             crossorigin="anonymous"></script>
     <script src="../JavaScript/dashboard.js"></script>
 
-    <%@ page import="Models.User" %>
-    <%@ page import="HelperClasses.Validate" %>
+
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
@@ -37,13 +39,13 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    <% User user = (User) request.getSession().getAttribute("user");%>
+    <% User user = (User) request.getSession().getAttribute(USER_IN_SESSION);%>
 
 </head>
 
 <body onload="onLoad()">
     <div class="fill">
-        <img src="../Images/temp_user_icon.svg" id="user-panel-img">
+        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
         <%--<img src="../Images/panel-slide.png" id="panel-swipe">--%>
     </div>
 

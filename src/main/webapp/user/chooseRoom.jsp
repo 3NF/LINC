@@ -2,6 +2,7 @@
 <%@ page import="Database.GAPIManager" %>
 <%@ page import="com.google.api.services.classroom.model.Course" %>
 <%@ page import="java.util.List" %>
+<%@ page import="static Data.Constraints.USER_IN_SESSION" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link href="Styles/assets/css/bootstrap.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -10,8 +11,7 @@
     <link href="../Styles/chooseRoom.css" rel="stylesheet">
     <title>Choose Room - LINC</title>
     <%
-        //for testing
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(USER_IN_SESSION);
         List<Course> courses = GAPIManager.getActiveRooms(user);
     %>
 </head>
