@@ -39,6 +39,7 @@ public class GoogleLogin extends HttpServlet {
 		{
 			String idToken = request.getParameter(ID_TOKEN_NAME);
 			resultedUser = GAPIManager.getUser(idToken);
+			if(resultedUser == null) request.getRequestDispatcher("/firstLogin.jsp").forward(request,response);
 		}
 
 		request.getSession().setAttribute(USER_IN_SESSION, resultedUser);
