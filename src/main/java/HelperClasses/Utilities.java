@@ -100,6 +100,7 @@ public final class Utilities {
 	}
 
 
+
 	public static String capitalizeString(String source)
 	{
 		String firstChar = source.substring(0,1);
