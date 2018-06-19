@@ -1,5 +1,7 @@
 package HelperClasses;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -95,6 +97,14 @@ public final class Utilities {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+
+	public static String capitalizeString(String source)
+	{
+		String firstChar = source.substring(0,1);
+		if(!firstChar.matches("^[a-zA-Z]+$")) return source;
+		return firstChar.toUpperCase() + source.substring(1,source.length());
 	}
 }
 
