@@ -18,6 +18,8 @@
 
         function onSuccess(googleUser)
         {
+            $(".g-signin2").hide();
+            $("#loading").show();
             let id_token = googleUser.getAuthResponse().id_token;
             let form = document.forms[0];
             form.id_token.value = id_token;
@@ -37,6 +39,7 @@
     <h2>Welcome! Connect With Google To Start using LINC </h2>
     <br>
     <div style="text-align: center; margin: 0 auto; width: fit-content">
+        <img id="loading" src="Images/loading.gif" style="display: none">
         <div class="g-signin2" data-onsuccess="onSuccess"></div>
     </div>
 </div>
