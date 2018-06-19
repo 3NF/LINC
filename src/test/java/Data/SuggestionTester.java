@@ -12,9 +12,9 @@ public class SuggestionTester {
      */
     @Test
     public void test1 () {
-        Suggestion simpleSuggestion1 = new Suggestion(Suggestion.SuggestionType.Error, "1", null, 1, 2, "Bad Code", new Date());
+        Suggestion simpleSuggestion1 = new Suggestion(Suggestion.SuggestionType.Error, null, "1", "1", 1, 2, "Bad Code", new Date());
         System.out.println(simpleSuggestion1);
-        Suggestion simpleSuggestion2 = new Suggestion(Suggestion.SuggestionType.Warning, "2", null, 3, 4, "Not so bad", new Date());
+        Suggestion simpleSuggestion2 = new Suggestion(Suggestion.SuggestionType.Warning, null, "1", "1",  3, 4, "Not so bad", new Date());
         System.out.println(simpleSuggestion2);
     }
 }
