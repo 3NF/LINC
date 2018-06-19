@@ -23,6 +23,12 @@ public class User {
         this.refreshToken = refreshToken;
     }
 
+    public User(String userId,String email,String picturePath){
+        this.userId = userId;
+        this.email = email;
+        this.picturePath = picturePath;
+    }
+
     public String getFirstName()
     {
         return this.firstName;

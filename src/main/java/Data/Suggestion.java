@@ -33,35 +33,6 @@ public class Suggestion {
         this.timeStamp = timeStamp;
     }
 
-    public class Reply {
-
-        private String suggestionID;
-        private String replyID;
-
-        //Information about reply
-        private User user;
-        private String content;
-        private Date timeStamp;
-
-        public Reply (String suggestionID, String replyID, User user, String content, Date timeStamp) {
-            this.suggestionID = suggestionID;
-            this.replyID = replyID;
-            this.user = user;
-            this.content = content;
-            this.timeStamp = timeStamp;
-        }
-
-        /**
-         * Converts this object to JSON string
-         * @return JSON representation of the object
-         */
-        @Override
-        public String toString() {
-            return new Gson().toJson(this);
-        }
-    }
-
-
     /**
      * Converts this object to JSON string
      * @return JSON representation of the object
