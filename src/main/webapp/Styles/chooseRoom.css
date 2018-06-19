@@ -1,8 +1,9 @@
 
 body
 {
+   width: 100vw;
+   height: 100vh;
    padding-top: 20vh;
-   width: fit-content;
    margin: auto;
 }
 
@@ -17,8 +18,8 @@ body
 .panel
 {
     margin: 0 auto;
+    width: max-content;
     max-width: 80%;
-    max-height: 80%;
     background: -webkit-repeating-radial-gradient(lightcyan,goldenrod);
     border: black dotted thick;
 }
