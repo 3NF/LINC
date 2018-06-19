@@ -14,6 +14,7 @@ public class Suggestion {
     public SuggestionType type;
 
     private User user;
+    private String codeID;
     private String suggestionID;
 
     //Information about comment
@@ -23,10 +24,11 @@ public class Suggestion {
     private Date timeStamp;
 
 
-    public Suggestion (SuggestionType type, String suggestionID, User user, int startInd, int endInd, String content, Date timeStamp) {
+    public Suggestion (SuggestionType type, User user, String codeID, String suggestionID, int startInd, int endInd, String content, Date timeStamp) {
         this.type = type;
-        this.suggestionID = suggestionID;
         this.user = user;
+        this.suggestionID = suggestionID;
+        this.codeID = codeID;
         this.startInd = startInd;
         this.endInd = endInd;
         this.content = content;

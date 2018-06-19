@@ -15,7 +15,7 @@ public class Constraints {
     /**
      *
      */
-    public static final String USER_ATTR_NAME = "user";
+    public static final String USER_IN_SESSION = "user";
 
 
 }
