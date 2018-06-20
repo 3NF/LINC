@@ -7,5 +7,5 @@ package Models;
 public class CodeFile
 {
     private String filePath;
-    private CodeComment[] comments;
+   //private CodeComment[] comments;
 }
