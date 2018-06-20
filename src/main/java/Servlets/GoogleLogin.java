@@ -21,7 +21,7 @@ public class GoogleLogin extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-			response.sendRedirect("/user/chooseRoom.jsp");
+			response.sendRedirect("/user/choose-room.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -43,6 +43,6 @@ public class GoogleLogin extends HttpServlet {
 		}
 
 		request.getSession().setAttribute(USER_IN_SESSION, resultedUser);
-        response.sendRedirect("/user/chooseRoom.jsp");
+        response.sendRedirect("/user/choose-room.jsp");
 	}
 }
