@@ -33,7 +33,6 @@ public class CodeItem {
             return null;
         }
 
-        System.out.println(codeItem.data);
         return codeItem;
     }
 
