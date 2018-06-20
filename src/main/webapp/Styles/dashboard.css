@@ -8,8 +8,7 @@
 
 #user-panel-img {
     width: 80%;
-    margin: auto;
-    margin-top: 5px;
+    margin: 5px auto auto;
 
 }
 
@@ -32,14 +31,11 @@
     float: left;
     padding-left: 10px;
     width: 35%;
-
 }
 
 #comment-panel {
     background-color: #F5F5F5;
-    border-color: #CBCBCB;
-    border-style: solid;
-    border-width: 1px;
+    border: 1px solid #CBCBCB;
     border-radius: 3px;
 }
 
@@ -57,10 +53,7 @@
 }
 
 #reply-panel-wrapper {
-    padding: 5px;
-    padding-top: 20px;
-    padding-left: 15%;
-    padding-right: 5%;
+    padding: 20px 5% 5px 15%;
 }
 
 #reply-profile-picture {
@@ -74,11 +67,13 @@
     width: 70%;
 }
 
+.panel-body {
+    height: 100%;
+}
+
 #reply-panel {
     padding: 5px;
     background-color: #dcdcdc;
-    border-color: #CBCBCB;
-    border-style: solid;
-    border-width: 1px;
+    border: 1px solid #CBCBCB;
     border-radius: 3px;
 }

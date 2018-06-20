@@ -32,12 +32,11 @@
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
 
-    <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet"
-          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script src = "--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel = "stylesheet" href="../codemirror-5.39.0/lib/codemirror.css">
+    <script src = '../codemirror-5.39.0/lib/codemirror.js'></script>
+    <script src = '../codemirror-5.39.0/mode/clike/clike.js'></script>
 
     <% User user = (User) request.getSession().getAttribute(USER_IN_SESSION);%>
 
@@ -58,13 +57,12 @@
                 <li><a href="javascript:void(0)"  onclick="navbarOnClick()">not_found.cpp</a></li>
             </ul>
 
+
             <div class="panel-body">
                 <div id = "code-panel">
-                    <pre>
-                        <code class="cpp" id = "code-content">
+                    <textarea readonly id = "code-content">
 
-                        </code>
-                    </pre>
+                    </textarea>
                 </div>
                 <div id = "comment-panel-wrapper">
                     <div class = "media" id = "comment-panel">

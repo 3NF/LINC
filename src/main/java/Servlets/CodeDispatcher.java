@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "codeDispatcher", urlPatterns = "/user/code_dispatcher")
-public class codeDispatcher extends HttpServlet
+@WebServlet(name = "CodeDispatcher", urlPatterns = "/user/code_dispatcher")
+public class CodeDispatcher extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -42,7 +42,6 @@ public class codeDispatcher extends HttpServlet
 
             //Convert file data into JSON
             String json = new GsonBuilder().disableHtmlEscaping().create().toJson(codeManager.get(codeName));
-            System.out.println(json);
 
             //Send response to client
             response.setContentType("application/json");

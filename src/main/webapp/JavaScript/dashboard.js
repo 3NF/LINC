@@ -34,15 +34,14 @@ var fetchCode = function (name) {
 
 //AJAX successful response callback
 var loadCode = function (data, textStaus, jQxhr) {
-    data = data.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;');
-    console.log(data);
-    $("#code-content").html(data);
-    hljs.highlightBlock($("#code-content").get(0));
+    editor.setValue(data);
 };
+
+var editor;
 
 //AJAX error response callback
 var loadError = function (data, textStatus, jQxhr) {
-    $("#code-content").html("Couldn't find requested file!")
+    editor.setValue("Couldn't find requested file!");
 };
 
 var onLoad = function () {
@@ -51,5 +50,13 @@ var onLoad = function () {
         activated code
      */
     var name = $("#navbar").find(".active").find("a").text();
-    fetchCode(name)
+    fetchCode(name);
+
+
+    editor = CodeMirror.fromTextArea($("#code-content").get(0), {
+        lineNumbers: true,
+        mode: "text/x-c++src"
+    });
+
+    editor.setSize("100%", "100%");
 };
