@@ -95,7 +95,7 @@ public class DBManager
         }
     }
 
-    enum Role
+    public enum Role
     {
         Teacher,
         SeminarReader,

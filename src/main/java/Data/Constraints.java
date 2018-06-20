@@ -2,20 +2,25 @@ package Data;
 
 public class Constraints {
 
-    /**
-     * Attribute name for userdao object in servlet context
-     */
-    public static final String USERDAO_NAME = "UserDAO";
+	/**
+	 * Attribute name for userdao object in servlet context
+	 */
+	public static final String USERDAO_NAME = "UserDAO";
 
-    /**
-     * Google client ID
-     */
-    public static final String CLIENT_ID = "108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com";
+	/**
+	 * Google client ID
+	 */
+	public static final String CLIENT_ID = "108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com";
 
-    /**
-     *
-     */
-    public static final String USER_IN_SESSION = "user";
+	/**
+	 * User's attribute name in Session
+	 */
+	public static final String USER_IN_SESSION = "user";
+
+	/**
+	 * Course_id's parameter name in request
+	 */
+	public static final String COURSE_ID = "courseId";
 
 
 }
