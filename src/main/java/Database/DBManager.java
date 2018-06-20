@@ -95,18 +95,7 @@ public class DBManager
         }
     }
 
-    public enum Role
-    {
-        Teacher,
-        SeminarReader,
-        TeacherAssistant,
-        Pupil
-    }
 
-    // TODO: 6/20/18 dzlier midi
-    public static Role getRoleByCourse(User user, String courseId) {
-        return Role.Teacher;
-    }
 
 
 }
