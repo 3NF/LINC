@@ -1,5 +1,6 @@
 package Database;
 
+import Models.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.sql.Connection;
@@ -93,5 +94,19 @@ public class DBManager
             e.printStackTrace();
         }
     }
+
+    enum Role
+    {
+        Teacher,
+        SeminarReader,
+        TeacherAssistant,
+        Pupil
+    }
+
+    // TODO: 6/20/18 dzlier midi
+    public static Role getRoleByCourse(User user, String courseId) {
+        return Role.Teacher;
+    }
+
 
 }
