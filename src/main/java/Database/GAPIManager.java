@@ -11,9 +11,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.ListCoursesResponse;
-import javafx.util.Pair;
 
-import java.io.*;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,18 +129,5 @@ public class GAPIManager {
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	public enum Role
-	{
-		Teacher,
-		SeminarReader,
-		TeacherAssistant,
-		Pupil
-	}
-
-	// TODO: 6/20/18 dzlier midi
-	public static Role getRoleByCourse(User user, String courseId) {
-		return Role.Teacher;
 	}
 }
