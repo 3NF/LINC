@@ -16,33 +16,14 @@
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script>
 
-
-        function start()
+        function onSuccess(googleUser)
         {
-            gapi.load('auth2', function () {
-                auth2 = gapi.auth2.init({
-                    client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
-                    scope: "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.courses.readonly"
-                });
-            });
-
-        }
-
-        function finalCallback(authResult)
-        {
-            let code = authResult['code'];
-            if (code) {
-                let form = document.forms[0];
-                form.auth_code.value = code;
-                form.submit();
-            }
-
-
-        }
-
-        function onSignIn()
-        {
-            auth2.grantOfflineAccess().then(finalCallback);
+            $(".g-signin2").hide();
+            $("#loading").show();
+            let id_token = googleUser.getAuthResponse().id_token;
+            let form = document.forms[0];
+            form.id_token.value = id_token;
+            form.submit();
         }
 
     </script>
@@ -52,11 +33,15 @@
 <body>
 <div class="container" style="text-align: center; padding-top: 30vh">
     <form action="${pageContext.request.contextPath}/GoogleLogin" method="post">
-        <input type="hidden" name="auth_code" value="">
+        <input type="hidden" name="id_token" value="">
+        <input type="hidden" name="action" value="login">
     </form>
     <h2>Welcome! Connect With Google To Start using LINC </h2>
     <br>
-    <button id="signin" onclick="onSignIn()"></button>
+    <div style="text-align: center; margin: 0 auto; width: fit-content">
+        <img id="loading" src="Images/loading.gif" style="display: none">
+        <div class="g-signin2" data-onsuccess="onSuccess"></div>
+    </div>
 </div>
 </body>
 

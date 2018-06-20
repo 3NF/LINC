@@ -10,4 +10,8 @@
     <welcome-file-list>
         <welcome-file>loginPage.jsp</welcome-file>
     </welcome-file-list>
+
+    <listener>
+        <listener-class>Listeners.MainListener</listener-class>
+    </listener>
 </web-app>
