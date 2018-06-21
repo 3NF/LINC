@@ -77,3 +77,7 @@
     border: 1px solid #CBCBCB;
     border-radius: 3px;
 }
+
+#reply-editor-wrapper {
+    padding: 5px;
+}

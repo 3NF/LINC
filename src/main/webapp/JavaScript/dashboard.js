@@ -34,14 +34,15 @@ var fetchCode = function (name) {
 
 //AJAX successful response callback
 var loadCode = function (data, textStaus, jQxhr) {
-    editor.setValue(data);
+    codeMirror.setValue(data);
 };
 
-var editor;
+var codeMirror;
+var replyEditor;
 
 //AJAX error response callback
 var loadError = function (data, textStatus, jQxhr) {
-    editor.setValue("Couldn't find requested file!");
+    codeMirror.setValue("Couldn't find requested file!");
 };
 
 var onLoad = function () {
@@ -53,10 +54,21 @@ var onLoad = function () {
     fetchCode(name);
 
 
-    editor = CodeMirror.fromTextArea($("#code-content").get(0), {
+    codeMirror = CodeMirror.fromTextArea($("#code-content").get(0), {
         lineNumbers: true,
         mode: "text/x-c++src"
     });
 
-    editor.setSize("100%", "100%");
+    codeMirror.setSize("100%", "100%");
+    $("#reply-editor-content").markdown({
+        autofocus: true,
+        saveable: true,
+        onShow: function(e) {
+            replyEditor = e;
+        }
+    });
 };
+
+var onSubmit = function () {
+    console.log(replyEditor.parseContent());
+}

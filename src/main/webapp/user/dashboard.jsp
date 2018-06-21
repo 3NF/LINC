@@ -25,6 +25,7 @@
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/dashboard.js"></script>
 
 
@@ -37,6 +38,8 @@
     <link rel = "stylesheet" href="../codemirror-5.39.0/lib/codemirror.css">
     <script src = '../codemirror-5.39.0/lib/codemirror.js'></script>
     <script src = '../codemirror-5.39.0/mode/clike.js'></script>
+    <script src = '../bootstrap-markdown/js/bootstrap-markdown.js'></script>
+    <link rel = "stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
 
     <% User user = (User) request.getSession().getAttribute(USER_IN_SESSION);%>
 
@@ -69,8 +72,17 @@
                         <img class = "media-object" class = "media-left" id = "comment-profile-picture" src="../Images/temp_user_icon.svg">
                         <div class = "media-body" id = "comment-content">
                             <p class = "media-heading" id = "comment-user-name"><b>Giorgi Baghdavadze</b></p>
-                            <p class = "media-body">კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა.
-                                კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა.</p>
+                            <p class = "media-body" data-provide = "markdown">```
+                                for (int k=1;k<=n-1;++k){
+                                int x,y;
+                                cin>>x>>y;
+                                g[x].push_back(y);
+                                g[y].push_back(x);
+                                }
+                                ```
+
+                                კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა.
+                            </p>
                         </div>
                         <div id = "reply-panel-wrapper">
                             <div class = "media" id = "reply-panel">
@@ -82,6 +94,13 @@
                                                             კარგი ვარ, კარგი ვარ, კარგი ვარ.</p>
                                 </div>
                             </div>
+                        </div>
+                        <div id = "reply-editor-wrapper">
+                            <form onsubmit="onSubmit(); return false;">
+                                <textarea id = "reply-editor-content" name="content"></textarea>
+                                <br>
+                                <button type="submit" class="btn">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
