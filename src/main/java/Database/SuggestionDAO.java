@@ -1,18 +1,19 @@
 package Database;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+
+import static Database.Config.*;
 
 public class SuggestionDAO {
 
-    private final BasicDataSource connectionPool;
+    private final MysqlDataSource connectionPool;
 
     /**
      * contructor of StudentDAo class
@@ -21,13 +22,13 @@ public class SuggestionDAO {
      */
 
 
-    public SuggestionDAO(BasicDataSource connectionPool) {
+    public SuggestionDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
     }
 
     public List<Reply> getSuggestionReplys(String id){
-        Connection connection = null;
-        ArrayList<Reply> suggestionsReply = new ArrayList<Reply>();
+        Connection connection;
+        ArrayList<Reply> suggestionsReply = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
@@ -45,7 +46,7 @@ public class SuggestionDAO {
                 String content = result.getString("text");
                 String suggestionId = result.getString("suggestionID");
                 Date date = new Date(result.getDate("date").getTime());
-                suggestionsReply.add(new Reply(suggestionId,replyId,userId,content,date));
+                    suggestionsReply.add(new Reply(suggestionId,replyId,userId,content,date));
             }
             connection.close();
         } catch (SQLException e) {
@@ -63,12 +64,12 @@ public class SuggestionDAO {
     }
 
     public static void main(String args[]) {
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl(Config.MYSQL_DATABASE_SERVER);
-        ds.setUsername(Config.MYSQL_USERNAME);
-        ds.setPassword(Config.MYSQL_PASSWORD);
-        SuggestionDAO DAO= new SuggestionDAO(ds);
+        MysqlDataSource source = new MysqlDataSource();
+        source.setServerName(MYSQL_DATABASE_SERVER);
+        source.setDatabaseName(MYSQL_DATABASE_NAME);
+        source.setUser(MYSQL_USERNAME);
+        source.setPassword(MYSQL_PASSWORD);
+        SuggestionDAO DAO= new SuggestionDAO(source);
         DAO.getSuggestionReplys("1");
         //System.out.println(u.getEmail());
     }
