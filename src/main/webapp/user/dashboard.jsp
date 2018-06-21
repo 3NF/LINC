@@ -36,7 +36,7 @@
     <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel = "stylesheet" href="../codemirror-5.39.0/lib/codemirror.css">
     <script src = '../codemirror-5.39.0/lib/codemirror.js'></script>
-    <script src = '../codemirror-5.39.0/mode/clike/clike.js'></script>
+    <script src = '../codemirror-5.39.0/mode/clike.js'></script>
 
     <% User user = (User) request.getSession().getAttribute(USER_IN_SESSION);%>
 

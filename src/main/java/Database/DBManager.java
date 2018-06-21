@@ -36,17 +36,13 @@ public class DBManager
 
 
 
-    private static MysqlDataSource source;
+    private static ConnectionPool source;
     private static final String SELECT_TOKENS_FORMAT = "SELECT aToken, rToken FROM usertokens WHERE sub=?";
     private static final String INSERT_TOKENS_FORMAT = "INSERT INTO usertokens (sub, aToken, rToken) VALUES (?,?,?)";
 
     public static void initDataSource()
     {
-        source = new MysqlDataSource();
-        source.setServerName(MYSQL_DATABASE_SERVER);
-        source.setDatabaseName(MYSQL_DATABASE_NAME);
-        source.setUser(MYSQL_USERNAME);
-        source.setPassword(MYSQL_PASSWORD);
+        source = ConnectionPool.getInstance();
     }
 
     public static UserCredential getUserCredential(String sub)

@@ -1,31 +1,45 @@
 package Listeners;
 
-import Data.Constraints;
 import Database.DBManager;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlPooledConnection;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
-import static Data.Constraints.USERDAO_NAME;
-import static Database.Config.*;
 
 @WebListener()
-public class MainListener implements ServletContextListener{
+public class MainListener implements ServletContextListener {
 
 	public MainListener() {
 	}
 
 
 	public void contextInitialized(ServletContextEvent sce) {
-
-	    System.out.println("init");
+		System.out.println("init");
 		DBManager.initDataSource();
+
+		final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+		final ScheduledFuture<?> beepHandler = scheduler.scheduleAtFixedRate(new AssignmentDownloader(), 2, 2, TimeUnit.SECONDS);
+
+
 	}
 
-    public void contextDestroyed(ServletContextEvent sce) {
+	public void contextDestroyed(ServletContextEvent sce) {
 	}
+
+
+	private class AssignmentDownloader implements Runnable {
+
+		@Override
+		public void run() {
+
+		}
+	}
+
+
 }
