@@ -72,16 +72,7 @@
                         <img class = "media-object" class = "media-left" id = "comment-profile-picture" src="../Images/temp_user_icon.svg">
                         <div class = "media-body" id = "comment-content">
                             <p class = "media-heading" id = "comment-user-name"><b>Giorgi Baghdavadze</b></p>
-                            <p class = "media-body" data-provide = "markdown">```
-                                for (int k=1;k<=n-1;++k){
-                                int x,y;
-                                cin>>x>>y;
-                                g[x].push_back(y);
-                                g[y].push_back(x);
-                                }
-                                ```
-
-                                კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა.
+                            <p class = "media-body" data-provide = "markdown">კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა.
                             </p>
                         </div>
                         <div id = "reply-panel-wrapper">
