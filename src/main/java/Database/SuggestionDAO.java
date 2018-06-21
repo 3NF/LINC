@@ -33,7 +33,6 @@ public class SuggestionDAO {
 			connection = connectionPool.getConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 			return null;
 		}
 
@@ -62,11 +61,5 @@ public class SuggestionDAO {
 
 
 		return suggestionsReply;
-	}
-
-	public static void main(String args[]) {
-		SuggestionDAO DAO = new SuggestionDAO(ConnectionPool.getInstance());
-		DAO.getSuggestionReplys("1");
-		//System.out.println(u.getEmail());
 	}
 }

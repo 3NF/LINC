@@ -12,7 +12,7 @@ var navbarOnClick = function () {
 };
 
 //Writes loading message
-var showLoading = function (fileName) {
+var showLoading = function (fileName) { 
     $("#code-content").html("Loading " + fileName + "...");
 };
 
