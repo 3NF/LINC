@@ -1,5 +1,6 @@
 package Database;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class SuggestionDAO {
 
-	private final BasicDataSource connectionPool;
+	private final MysqlDataSource connectionPool;
 
 	/**
 	 * contructor of StudentDAo class
@@ -22,12 +23,12 @@ public class SuggestionDAO {
 	 */
 
 
-	public SuggestionDAO(BasicDataSource connectionPool) {
+	public SuggestionDAO(MysqlDataSource connectionPool) {
 		this.connectionPool = connectionPool;
 	}
 
 	public List<Reply> getSuggestionReplys(String id) {
-		Connection connection = null;
+		Connection connection;
 		ArrayList<Reply> suggestionsReply = new ArrayList<Reply>();
 		try {
 			connection = connectionPool.getConnection();

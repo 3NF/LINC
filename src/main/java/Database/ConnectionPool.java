@@ -1,12 +1,13 @@
 package Database;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 
 /**
  * Singleton class for connection pool
  */
-public class ConnectionPool extends BasicDataSource {
+public class ConnectionPool extends MysqlDataSource {
 	private static final ConnectionPool ourInstance = new ConnectionPool();
 
 	public static ConnectionPool getInstance() {
@@ -14,9 +15,9 @@ public class ConnectionPool extends BasicDataSource {
 	}
 
 	private ConnectionPool() {
-		this.setDriverClassName("com.mysql.jdbc.Driver");
-		this.setUrl(Config.MYSQL_DATABASE_SERVER);
-		this.setUsername(Config.MYSQL_USERNAME);
+		this.setServerName(Config.MYSQL_DATABASE_SERVER);
+		this.setDatabaseName(Config.MYSQL_DATABASE_NAME);
+		this.setUser(Config.MYSQL_USERNAME);
 		this.setPassword(Config.MYSQL_PASSWORD);
 	}
 }
