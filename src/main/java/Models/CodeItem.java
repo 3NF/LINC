@@ -1,6 +1,4 @@
-package Database;
-
-import Models.User;
+package Models;
 
 import java.io.File;
 import java.io.FileNotFoundException;

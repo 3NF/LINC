@@ -1,14 +1,14 @@
 package Database;
 
+import Models.Reply;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public class SuggestionDAO {

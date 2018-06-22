@@ -1,11 +1,11 @@
 package Database;
 
+import Models.Reply;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static Database.Config.*;
