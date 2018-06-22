@@ -21,7 +21,7 @@ public class Validate {
 
     public static boolean isUserInClassroom(User user,String classromID){
 
-        List<Course> courses = GAPIManager.getUserRooms(user);
+        List<Course> courses = GAPIManager.getAllRooms(user);
         assert courses != null;
         for (Course course : courses)
         {

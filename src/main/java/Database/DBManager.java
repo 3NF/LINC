@@ -36,20 +36,14 @@ public class DBManager
 
 
 
-    private static ConnectionPool source;
     private static final String SELECT_TOKENS_FORMAT = "SELECT aToken, rToken FROM usertokens WHERE sub=?";
     private static final String INSERT_TOKENS_FORMAT = "INSERT INTO usertokens (sub, aToken, rToken) VALUES (?,?,?)";
-
-    public static void initDataSource()
-    {
-        source = ConnectionPool.getInstance();
-    }
 
     public static UserCredential getUserCredential(String sub)
     {
         try
         {
-            Connection conn =  source.getConnection();
+            Connection conn =  ConnectionPool.getInstance().getConnection();
             PreparedStatement st = conn.prepareStatement(SELECT_TOKENS_FORMAT);
             st.setString(1, sub);
 
@@ -76,7 +70,7 @@ public class DBManager
     {
         try
         {
-            Connection conn = source.getConnection();
+            Connection conn = ConnectionPool.getInstance().getConnection();
             PreparedStatement st  = conn.prepareStatement(INSERT_TOKENS_FORMAT);
             st.setString(1, sub);
             st.setString(2, accessToken);
@@ -99,7 +93,8 @@ public class DBManager
     }
 
     // TODO: 6/20/18 dzlier midi
-    public static Role getRoleByCourse(User user, String courseId) {
+    public static Role getRoleByCourse(User user, String courseId)
+    {
         return Role.Teacher;
     }
 }

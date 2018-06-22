@@ -14,6 +14,7 @@ import com.google.api.services.classroom.model.ListCoursesResponse;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,7 +92,28 @@ public class GAPIManager {
 	}
 
 
-	public static List<Course> getUserRooms(User user) {
+
+	public static List<Course> getActiveRooms(User user)
+	{
+		return getUserRooms(user, true);
+	}
+
+	public static List<Course> getAllRooms(User user)
+	{
+		return getUserRooms(user,false);
+	}
+
+
+	public static DBManager.Role getRoleByCourse(User user, String courseId)
+	{
+		return DBManager.Role.Teacher;
+	}
+
+
+
+
+	private static List<Course> getUserRooms(User user, boolean activeOnly)
+	{
 		try {
 			Reader reader = new InputStreamReader(GAPIManager.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE));
 			GoogleClientSecrets secrets = GoogleClientSecrets.load(JACKSON_FACTORY, reader);
@@ -100,30 +122,12 @@ public class GAPIManager {
 
 			Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
 
-			ListCoursesResponse listCourses = service.courses().list().execute();
+			ListCoursesResponse listCourses =
+					activeOnly?
+							service.courses().list().setCourseStates(Collections.singletonList("ACTIVE")).execute() :
+							service.courses().list().execute();
 
 			return listCourses.getCourses();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public static List<Course> getActiveRooms(User user) {
-		try {
-			Reader reader = new InputStreamReader(GAPIManager.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE));
-			GoogleClientSecrets secrets = GoogleClientSecrets.load(JACKSON_FACTORY, reader);
-			String accessToken = user.getAccessToken();
-			GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).
-					setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().
-					setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
-
-			Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-
-			ListCoursesResponse listCourses = service.courses().list().execute();
-
-			return (listCourses.getCourses().stream().filter(s -> s.getCourseState().equals("ACTIVE")).collect(Collectors.toList()));
 
 		} catch (Exception e) {
 			e.printStackTrace();

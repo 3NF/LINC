@@ -20,8 +20,6 @@ public class MainListener implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent sce) {
 		System.out.println("init");
-		DBManager.initDataSource();
-
 		final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 		final ScheduledFuture<?> beepHandler = scheduler.scheduleAtFixedRate(new AssignmentDownloader(), 2, 2, TimeUnit.SECONDS);
