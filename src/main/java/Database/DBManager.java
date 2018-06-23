@@ -99,11 +99,12 @@ public class DBManager
         Teacher,
         SeminarReader,
         TeacherAssistant,
-        Pupil
+        Pupil,
+        Guest
     }
 
     // TODO: 6/20/18 dzlier midi
     public static Role getRoleByCourse(User user, String courseId) {
-        return Role.Teacher;
+        return Role.Pupil;
     }
 }

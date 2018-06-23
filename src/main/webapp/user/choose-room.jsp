@@ -6,6 +6,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link href="Styles/assets/css/bootstrap.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../JavaScript/script.js"></script>
 <html>
 <head>
     <link href="../Styles/chooseRoom.css" rel="stylesheet">
@@ -34,10 +37,4 @@
 </div>
 
 </body>
-
-<script>
-    function enterClasroom(id) {
-        window.location.assign("dashboard.jsp?id=" + id);
-    }
-</script>
 </html>
