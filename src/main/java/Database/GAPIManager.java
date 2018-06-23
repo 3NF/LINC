@@ -65,7 +65,7 @@ public class GAPIManager {
             String givenName = Utilities.capitalizeString((String) payload.get("given_name"));
             DBManager.UserCredential credential = DBManager.getUserCredential(sub);
             User us = new User(email, givenName, familyName, sub, pictureUrl, credential.getAccessToken(), credential.getRefreshToken());
-            downloadAssignments(us, "", "");
+            //downloadAssignments(us, "", "");
             return us;
         } catch (Exception e) {
             e.printStackTrace();
