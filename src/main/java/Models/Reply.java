@@ -1,4 +1,4 @@
-package Database;
+package Models;
 
 import Models.User;
 import com.google.gson.Gson;
@@ -22,6 +22,13 @@ public class Reply {
         this.timeStamp = timeStamp;
     }
 
+    public String getSuggestionID(){
+        return suggestionID;
+    }
+
+    public String getReplyID(){
+        return replyID;
+    }
     /**
      * Converts this object to JSON string
      * @return JSON representation of the object

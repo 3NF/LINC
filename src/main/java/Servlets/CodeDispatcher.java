@@ -42,7 +42,6 @@ public class CodeDispatcher extends HttpServlet
 
             //Convert file data into JSON
             String json = new GsonBuilder().disableHtmlEscaping().create().toJson(codeManager.get(codeName));
-            System.out.println(json);
 
             //Send response to client
             response.setContentType("application/json");

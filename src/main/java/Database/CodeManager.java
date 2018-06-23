@@ -1,6 +1,11 @@
 package Database;
 
+import Data.Suggestion;
+import Models.CodeItem;
 import Models.User;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class CodeManager {
@@ -10,12 +15,17 @@ public class CodeManager {
         This way only first file creates CodeItem object.
      */
     private HashMap <String, CodeItem> codeItems;
+    //private HashMap <String, CodeFile> codeFiles;
     private User user;
 
     public CodeManager (User user) {
         this.user = user;
         this.codeItems = new HashMap<>();
     }
+
+//    private CodeFile codeFileGenerator (int startLine, int endLine) {
+//        CodeFile codefile;
+//    }
 
 
     /**

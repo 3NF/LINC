@@ -1,6 +1,4 @@
-package Database;
-
-import Models.User;
+package Models;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,7 +31,6 @@ public class CodeItem {
             return null;
         }
 
-        System.out.println(codeItem.data);
         return codeItem;
     }
 
