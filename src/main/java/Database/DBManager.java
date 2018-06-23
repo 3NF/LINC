@@ -36,14 +36,24 @@ public class DBManager
 
 
 
+    private static MysqlDataSource source;
     private static final String SELECT_TOKENS_FORMAT = "SELECT aToken, rToken FROM usertokens WHERE sub=?";
     private static final String INSERT_TOKENS_FORMAT = "INSERT INTO usertokens (sub, aToken, rToken) VALUES (?,?,?)";
+
+    public static void initDataSource()
+    {
+        source = new MysqlDataSource();
+        source.setServerName(MYSQL_DATABASE_SERVER);
+        source.setDatabaseName(MYSQL_DATABASE_NAME);
+        source.setUser(MYSQL_USERNAME);
+        source.setPassword(MYSQL_PASSWORD);
+    }
 
     public static UserCredential getUserCredential(String sub)
     {
         try
         {
-            Connection conn =  ConnectionPool.getInstance().getConnection();
+            Connection conn =  source.getConnection();
             PreparedStatement st = conn.prepareStatement(SELECT_TOKENS_FORMAT);
             st.setString(1, sub);
 
@@ -70,7 +80,7 @@ public class DBManager
     {
         try
         {
-            Connection conn = ConnectionPool.getInstance().getConnection();
+            Connection conn = source.getConnection();
             PreparedStatement st  = conn.prepareStatement(INSERT_TOKENS_FORMAT);
             st.setString(1, sub);
             st.setString(2, accessToken);
@@ -89,12 +99,12 @@ public class DBManager
         Teacher,
         SeminarReader,
         TeacherAssistant,
-        Pupil
+        Pupil,
+        Guest
     }
 
     // TODO: 6/20/18 dzlier midi
-    public static Role getRoleByCourse(User user, String courseId)
-    {
-        return Role.Teacher;
+    public static Role getRoleByCourse(User user, String courseId) {
+        return Role.Pupil;
     }
 }
