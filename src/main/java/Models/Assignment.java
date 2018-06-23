@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 
 /**
- * Class that represents info of already corrected assigment
+ * Class that represents info of already corrected assignment
  */
 public class Assignment
 {

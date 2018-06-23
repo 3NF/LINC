@@ -3,6 +3,8 @@
 <%@ page import="Models.User" %>
 <%@ page import="HelperClasses.Validate" %>
 <%@ page import="static Data.Constraints.USER_IN_SESSION" %>
+<%@ page import="Database.GAPIManager" %>
+<%@ page import="Data.Constraints" %>
 <html>
 
 <head>
@@ -42,6 +44,8 @@
     <link rel = "stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
 
     <% User user = (User) request.getSession().getAttribute(USER_IN_SESSION);%>
+    <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
+    <%--<% GAPIManager.getAllAssignments(user, courseId);%>--%>
 
 </head>
 

@@ -14,30 +14,29 @@ import java.util.concurrent.TimeUnit;
 @WebListener()
 public class MainListener implements ServletContextListener {
 
-	public MainListener() {
-	}
+    public MainListener() {
+    }
 
 
-	public void contextInitialized(ServletContextEvent sce) {
-		System.out.println("init");
-		final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    public void contextInitialized(ServletContextEvent sce) {
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-		final ScheduledFuture<?> beepHandler = scheduler.scheduleAtFixedRate(new AssignmentDownloader(), 2, 2, TimeUnit.SECONDS);
-
-
-	}
-
-	public void contextDestroyed(ServletContextEvent sce) {
-	}
+        final ScheduledFuture<?> beepHandler = scheduler.scheduleAtFixedRate(new AssignmentDownloader(), 2, 2, TimeUnit.SECONDS);
 
 
-	private class AssignmentDownloader implements Runnable {
+    }
 
-		@Override
-		public void run() {
+    public void contextDestroyed(ServletContextEvent sce) {
+    }
 
-		}
-	}
+
+    private class AssignmentDownloader implements Runnable {
+
+        @Override
+        public void run() {
+
+        }
+    }
 
 
 }
