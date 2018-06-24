@@ -12,6 +12,7 @@ import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.ListCoursesResponse;
 import com.google.api.services.classroom.model.ListStudentSubmissionsResponse;
+import com.google.api.services.classroom.model.Teacher;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -187,10 +188,8 @@ public class GAPIManager {
         }
     }
 
-    public void downloadAssignments(User teacher, String courseId, String assignmentId)
+    public void downloadAssignments(User teacher, String courseID, String assignmentId)
     {
-        courseId = "15887333289";
-        assignmentId = "0Byq5fnxbYJBlfmpuQl9wcTE1TGM5UkNVMkN2WFFHY2loY2JqZFlqTFNjUG83R2s5eHlRX0U";
         try
         {
             String accessToken = teacher.getAccessToken();
@@ -198,13 +197,32 @@ public class GAPIManager {
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
 
-            ListStudentSubmissionsResponse assignments = service.courses().courseWork().studentSubmissions().list(courseId, assignmentId).execute();
+            ListStudentSubmissionsResponse assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute();
 
             System.out.println(assignments);
 
         } catch (Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+
+    public List<Teacher> getTeachers(User user, String courseID) {
+        try
+        {
+            String accessToken = user.getAccessToken();
+            GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
+
+            Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+
+            List<Teacher> teachers = service.courses().teachers().list(courseID).execute().getTeachers();
+
+            return teachers;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
         }
     }
 }
