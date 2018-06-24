@@ -13,7 +13,7 @@
     <title>Choose Room - LINC</title>
     <%
         User user = (User) session.getAttribute(USER_IN_SESSION);
-        List<Course> courses = GAPIManager.getActiveRooms(user);
+        List<Course> courses = GAPIManager.getInstance().getActiveRooms(user);
     %>
 </head>
 <body>

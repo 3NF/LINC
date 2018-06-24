@@ -32,13 +32,13 @@ public class GoogleLogin extends HttpServlet {
 		if(action.equals("register"))
 		{
 			String authCode = request.getParameter(AUTH_CODE_NAME);
-			resultedUser = GAPIManager.registerUser(authCode);
+			resultedUser = GAPIManager.getInstance().registerUser(authCode);
 			request.getSession().setAttribute(USER_IN_SESSION, resultedUser);
 
 		}else if(action.equals("login"))
 		{
 			String idToken = request.getParameter(ID_TOKEN_NAME);
-			resultedUser = GAPIManager.getUser(idToken);
+			resultedUser = GAPIManager.getInstance().getUser(idToken);
 			if(resultedUser == null) request.getRequestDispatcher("/firstLogin.jsp").forward(request,response);
 		}
 
