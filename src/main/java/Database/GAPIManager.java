@@ -38,12 +38,12 @@ public class GAPIManager {
 
 
 
-    public GAPIManager()
+    private GAPIManager()
     {
         Reader reader = new InputStreamReader(GAPIManager.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE));
         try
         {
-            GoogleClientSecrets secrets = GoogleClientSecrets.load(JACKSON_FACTORY, reader);
+            secrets = GoogleClientSecrets.load(JACKSON_FACTORY, reader);
         } catch (IOException e)
         {
             e.printStackTrace();
