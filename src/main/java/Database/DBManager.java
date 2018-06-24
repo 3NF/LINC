@@ -1,13 +1,10 @@
 package Database;
 
 import Models.User;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import static Database.Config.*;
 
 public class DBManager
 {
@@ -92,10 +89,17 @@ public class DBManager
         Pupil,
         Guest
     }
+    
+    public static Role getRoleByCourse(User user, String courseId) {
+        Role role = Role.Pupil;// = GAPIManager.getRoleByCourse(user , courseId);
+        if (role != Role.Guest)
+            return role;
+        if (isTeacherAssistant(user , courseId))
+            return Role.TeacherAssistant;
+        return Role.Guest;
+    }
 
-    // TODO: 6/20/18 dzlier midi
-    public static Role getRoleByCourse(User user, String courseId)
-    {
-        return Role.Pupil;
+    private static boolean isTeacherAssistant(User user, String courseId){
+        return false;
     }
 }
