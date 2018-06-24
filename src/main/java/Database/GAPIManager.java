@@ -9,7 +9,6 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
-import com.google.api.services.classroom.model.Assignment;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.ListCoursesResponse;
 import com.google.api.services.classroom.model.ListStudentSubmissionsResponse;
@@ -19,7 +18,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class GAPIManager {
@@ -130,9 +128,21 @@ public class GAPIManager {
     }
 
 
-    public static DBManager.Role getRoleByCourse(User user, String courseId)
-    {
-        return DBManager.Role.Teacher;
+    public DBManager.Role getRoleByCourse(User user, String courseId) {
+        try {
+            String accessToken = user.getAccessToken();
+            GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
+
+            Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+            Course course = service.courses().get(courseId).execute();
+
+            if (course.getOwnerId() == user.getUserId()){
+                return DBManager.Role.Teacher;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return DBManager.Role.Guest;
     }
 
 
