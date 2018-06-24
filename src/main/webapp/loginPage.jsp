@@ -31,13 +31,13 @@
 </head>
 
 <body>
-<div class="container" style="text-align: center; padding-top: 30vh">
-    <form action="${pageContext.request.contextPath}/GoogleLogin" method="post">
+<div class="container" style="text-align: center; padding-top: 20vh">
+    <form style="display: none" action="${pageContext.request.contextPath}/GoogleLogin" method="post">
         <input type="hidden" name="id_token" value="">
         <input type="hidden" name="action" value="login">
     </form>
+    <img src="${pageContext.request.contextPath}/Images/logo@500-min.png"><br>
     <h2>Welcome! Connect With Google To Start using LINC </h2>
-    <br>
     <div style="text-align: center; margin: 0 auto; width: fit-content">
         <img id="loading" src="${pageContext.request.contextPath}/Images/loading.gif" style="display: none">
         <div class="g-signin2" data-onsuccess="onSuccess"></div>
