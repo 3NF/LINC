@@ -61,6 +61,10 @@ dependencies {
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+
+
+    //Jackson
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 }
 
 tomcat {

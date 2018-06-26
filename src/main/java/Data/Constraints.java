@@ -15,12 +15,17 @@ public class Constraints {
 	/**
 	 * User's attribute name in Session
 	 */
-	public static final String USER_IN_SESSION = "user";
+	public static final String USER = "user";
 
 	/**
 	 * Course_id's parameter name in request
 	 */
 	public static final String COURSE_ID = "courseId";
+
+	/**
+	 *
+	 */
+	public static final String ASSIGNMENT = "assignment";
 
 
 }

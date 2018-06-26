@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static Data.Constraints.USER_IN_SESSION;
+import static Data.Constraints.USER;
 
 @WebServlet(name = "GoogleLogin", urlPatterns = {"/GoogleLogin"})
 public class GoogleLogin extends HttpServlet {
@@ -33,7 +33,7 @@ public class GoogleLogin extends HttpServlet {
 		{
 			String authCode = request.getParameter(AUTH_CODE_NAME);
 			resultedUser = GAPIManager.getInstance().registerUser(authCode);
-			request.getSession().setAttribute(USER_IN_SESSION, resultedUser);
+			request.getSession().setAttribute(USER, resultedUser);
 
 		}else if(action.equals("login"))
 		{
@@ -42,7 +42,7 @@ public class GoogleLogin extends HttpServlet {
 			if(resultedUser == null) request.getRequestDispatcher("/firstLogin.jsp").forward(request,response);
 		}
 
-		request.getSession().setAttribute(USER_IN_SESSION, resultedUser);
+		request.getSession().setAttribute(USER, resultedUser);
         response.sendRedirect("/user/choose-room.jsp");
 	}
 }

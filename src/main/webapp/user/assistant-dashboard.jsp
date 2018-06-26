@@ -5,7 +5,7 @@
 <html>
 <head>
     <%
-        User user = (User) request.getSession().getAttribute(Constraints.USER_IN_SESSION);
+        User user = (User) request.getSession().getAttribute(Constraints.USER);
         String courseId = request.getParameter(Constraints.COURSE_ID);
 
         if (DBManager.getRoleByCourse(user, courseId) != DBManager.Role.TeacherAssistant) {

@@ -8,14 +8,41 @@ import java.util.ArrayList;
 
 public class CodeFile {
 
+    public enum Lang {
+        c,
+        cpp,
+        java,
+        undefined
+    }
+
     private ArrayList<Suggestion> suggestions;
     private String code;
-    private String lang;
+    private String fileName;
+    private Lang lang;
 
-    public CodeFile (String lang, String code, ArrayList<Suggestion> suggestions) {
+    public CodeFile (String code, String fileName, ArrayList<Suggestion> suggestions) {
         this.code = code;
-        this.lang = lang;
+        this.fileName = fileName;
         this.suggestions = suggestions;
+
+        try {
+            lang = Lang.valueOf(fileName.substring(fileName.lastIndexOf(".") + 1));
+        } catch (IllegalArgumentException e) {
+            lang = Lang.undefined;
+        }
+
+    }
+
+    public Lang getLang() {
+        return lang;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Suggestion> arrayList = new ArrayList<>();
+        arrayList.add(new Suggestion());
+        CodeFile codeFile = new CodeFile("12", "bakuri.cpp", null);
+        System.out.println(codeFile.getLang());
+        System.out.println(codeFile);
     }
 
     /**
