@@ -13,13 +13,17 @@ import static Database.Config.*;
 import static org.junit.Assert.*;
 
 public class ReplyDAOTest {
-    private ConnectionPool source;
+    private MysqlDataSource source;
     private ReplyDAO DAO;
     private Connection connection;
 
     @Before
     public void createSuggestionDAO() {
-        source = ConnectionPool.getInstance();
+        source = new MysqlDataSource();
+        source.setServerName(MYSQL_DATABASE_SERVER);
+        source.setDatabaseName(MYSQL_DATABASE_NAME);
+        source.setUser(MYSQL_USERNAME);
+        source.setPassword(MYSQL_PASSWORD);
         DAO = new ReplyDAO(source);
         DAO.getSuggestionReplies("1");
         try {
@@ -50,7 +54,7 @@ public class ReplyDAOTest {
     }
 
     @Test
-    public void testGetSuggestionReplies() throws SQLException {
+    public void testGetSuggestionReplys() throws SQLException {
         insertIntoDataBase("-1", "2323", "232", "-1");
         insertIntoDataBase("-2", "2323", "232", "-1");
         insertIntoDataBase("-3", "2323", "232", "-1");

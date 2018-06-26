@@ -1,6 +1,8 @@
 package Database;
 
 import Models.Reply;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +10,7 @@ import java.util.List;
 
 public class ReplyDAO {
 
-    private final ConnectionPool connectionPool;
+    private final MysqlDataSource connectionPool;
 
     /**
      * Constructor of StudentDAo class
@@ -17,13 +19,13 @@ public class ReplyDAO {
      */
 
 
-    public ReplyDAO(ConnectionPool connectionPool) {
+    public ReplyDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
     }
 
     public List<Reply> getSuggestionReplies(String id) {
         Connection connection;
-        ArrayList<Reply> suggestionsReply = new ArrayList<Reply>();
+        ArrayList<Reply> suggestionsReply = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
@@ -61,7 +63,7 @@ public class ReplyDAO {
 
     public void addReply(String text, String userId, String suggestionId, Date date) {
         Connection connection;
-        ArrayList<Reply> suggestionsReply = new ArrayList<Reply>();
+        ArrayList<Reply> suggestionsReply = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
@@ -82,12 +84,13 @@ public class ReplyDAO {
         } catch (SQLException e) {
             System.err.println("error in creation statement");
             e.printStackTrace();
+            return;
         }
     }
 
-    public void deleteReply(String replyId){
+    public void deleteReply(String replyId) {
         Connection connection;
-        ArrayList<Reply> suggestionsReply = new ArrayList<Reply>();
+        ArrayList<Reply> suggestionsReply = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
@@ -98,7 +101,7 @@ public class ReplyDAO {
         String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE id=?";
         try {
             statement = connection.prepareStatement(query);
-            statement.setString(1 ,replyId);
+            statement.setString(1, replyId);
             statement.execute();
             connection.close();
         } catch (SQLException e) {

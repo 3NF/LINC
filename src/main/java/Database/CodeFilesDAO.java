@@ -2,9 +2,6 @@ package Database;
 
 import Data.Suggestion;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
-
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +35,7 @@ public class CodeFilesDAO {
         statement.setString(1,codeFileId);
         //System.err.println(query);
         result = statement.executeQuery();
-        List<Suggestion> suggestions = new ArrayList<Suggestion>();
+        List<Suggestion> suggestions = new ArrayList<>();
         while (result.next()){
             String suggestionId = result.getString("suggestionID");
             String uId = result.getString("uid");
