@@ -39,7 +39,6 @@ public class CodeFile {
 
     public static void main(String[] args) {
         ArrayList<Suggestion> arrayList = new ArrayList<>();
-        arrayList.add(new Suggestion());
         CodeFile codeFile = new CodeFile("12", "bakuri.cpp", null);
         System.out.println(codeFile.getLang());
         System.out.println(codeFile);

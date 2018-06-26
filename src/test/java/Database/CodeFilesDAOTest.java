@@ -11,16 +11,12 @@ import java.sql.SQLException;
 import static org.junit.Assert.*;
 
 public class CodeFilesDAOTest {
-    private MysqlDataSource source;
+    private ConnectionPool source;
     private CodeFilesDAO DAO;
     private Connection connection;
     @Before
     public void createSuggestionDAO(){
-        source = new MysqlDataSource();
-        source.setServerName(MYSQL_DATABASE_SERVER);
-        source.setDatabaseName(MYSQL_DATABASE_NAME);
-        source.setUser(MYSQL_USERNAME);
-        source.setPassword(MYSQL_PASSWORD);
+        source = ConnectionPool.getInstance();
         DAO = new CodeFilesDAO(source);
         try {
             connection = source.getConnection();

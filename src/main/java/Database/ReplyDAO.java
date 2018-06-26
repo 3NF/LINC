@@ -1,8 +1,6 @@
 package Database;
 
 import Models.Reply;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,20 +8,20 @@ import java.util.List;
 
 public class ReplyDAO {
 
-    private final MysqlDataSource connectionPool;
+    private final ConnectionPool connectionPool;
 
     /**
-     * contructor of StudentDAo class
+     * Constructor of StudentDAo class
      *
      * @param connectionPool
      */
 
 
-    public ReplyDAO(MysqlDataSource connectionPool) {
+    public ReplyDAO(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
-    public List<Reply> getSuggestionReplys(String id) {
+    public List<Reply> getSuggestionReplies(String id) {
         Connection connection;
         ArrayList<Reply> suggestionsReply = new ArrayList<Reply>();
         try {
@@ -84,7 +82,6 @@ public class ReplyDAO {
         } catch (SQLException e) {
             System.err.println("error in creation statement");
             e.printStackTrace();
-            return;
         }
     }
 
