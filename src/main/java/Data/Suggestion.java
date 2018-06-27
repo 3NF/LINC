@@ -13,7 +13,8 @@ public class Suggestion {
     }
     public SuggestionType type;
 
-    private User user;
+    private String user;
+    private String imgSrc;
     private String codeID;
     private String suggestionID;
 
@@ -24,9 +25,10 @@ public class Suggestion {
     private Date timeStamp;
 
 
-    public Suggestion (SuggestionType type, User user, String codeID, String suggestionID, int startInd, int endInd, String content, Date timeStamp) {
+    public Suggestion (SuggestionType type, String user, String imgSrc, String codeID, String suggestionID, int startInd, int endInd, String content, Date timeStamp) {
         this.type = type;
         this.user = user;
+        this.imgSrc = imgSrc;
         this.suggestionID = suggestionID;
         this.codeID = codeID;
         this.startInd = startInd;

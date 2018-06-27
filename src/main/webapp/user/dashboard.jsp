@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="HelperClasses.Validate" %>
 <%@ page import="Models.User" %>
-<%@ page import="static Data.Constraints.USER" %>
-<%@ page import="Database.GAPIManager" %>
+<%@ page import="HelperClasses.Validate" %>
 <%@ page import="Data.Constraints" %>
+<%@ page import="static Data.Constraints.USER" %>
 <html>
 
 <head>
@@ -29,6 +29,9 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/dashboard.js"></script>
 
+    <%--Comment following line if you want to view as Student--%>
+    <script src="../JavaScript/dashboard-instructor.js"></script>
+
 
 
     <%--my css--%>
@@ -44,7 +47,6 @@
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
     <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
-    <%--<% GAPIManager.getAllAssignments(user, courseId);%>--%>
 
 </head>
 
@@ -70,32 +72,33 @@
 
                     </textarea>
                 </div>
+                <div id = "notification-div">
+                    <h1 id = "notification-text">Please select code interval!</h1>
+                </div>
                 <div id = "comment-panel-wrapper">
-                    <div class = "media" id = "comment-panel">
-                        <img class = "media-object" class = "media-left" id = "comment-profile-picture" src="../Images/temp_user_icon.svg">
+                    <div class = "media" id = "comment-panel" hidden>
+                        <img class = "media-object media-left" id = "comment-profile-picture" src="../Images/temp_user_icon.svg">
                         <div class = "media-body" id = "comment-content">
-                            <p class = "media-heading" id = "comment-user-name"><b>Giorgi Baghdavadze</b></p>
-                            <p class = "media-body" data-provide = "markdown">კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა. კარგი ხარ, ბასა.
-                            </p>
+                            <p class = "media-heading" id = "comment-user-name">Fname Lname</p>
+                            <p class = "media-body" id = "comment-text">Suggestion Text</p>
+                            <p id = "comment-date">Here goes Precise Date</p>
                         </div>
-                        <div id = "reply-panel-wrapper">
-                            <div class = "media" id = "reply-panel">
-                                <img class = "media-object" class = "media-left" id = "reply-profile-picture" src="../Images/temp_user_icon.svg">
-                                <div class = "media-body" id = "reply-content">
-                                    <p class = "media-heading" id = "reply-user-name"><b>Basil Iakobashvili</b></p>
-                                    <p class = "media-body">კარგი ვარ, კარგი ვარ, კარგი ვარ.
-                                                            კარგი ვარ, კარგი ვარ, კარგი ვარ.
-                                                            კარგი ვარ, კარგი ვარ, კარგი ვარ.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id = "reply-editor-wrapper">
-                            <form onsubmit="onSubmit(); return false;">
-                                <textarea id = "reply-editor-content" name="content"></textarea>
-                                <br>
-                                <button type="submit" class="btn">Submit</button>
-                            </form>
-                        </div>
+                    </div>
+                    <div id = "comment-editor-wrapper" class = "editor-wrapper" hidden>
+                        <form onsubmit="submitSuggestion(); return false;">
+                            <textarea id = "comment-editor-content" class="editor-content" name="content"></textarea>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-default" onclick="clearInterval()">Clear Suggestion</button>
+                            <button type="button" class="btn btn-warning" onclick="toggleSuggestionType()">Warning</button>
+                        </form>
+                    </div>
+                    <div id = "reply-editor-wrapper" class = "editor-wrapper" hidden>
+                        <form onsubmit="submitComment(); return false;">
+                            <textarea id = "reply-editor-content" class = "editor-content" name="content"></textarea>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>

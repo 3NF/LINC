@@ -43,7 +43,7 @@ public class ReplyDAO {
                 String content = result.getString("text");
                 String suggestionId = result.getString("suggestionID");
                 Date date = new Date(result.getDate("date").getTime());
-                suggestionsReply.add(new Reply(suggestionId, replyId, userId, content, date));
+                suggestionsReply.add(new Reply(suggestionId, replyId, userId, null/*imgsrc*/, content, date));
             }
             connection.close();
         } catch (SQLException e) {
