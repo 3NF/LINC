@@ -11,13 +11,15 @@ public class Reply {
 
     //Information about reply
     private String user;
+    private String imgSrc;
     private String content;
     private Date timeStamp;
 
-    public Reply (String suggestionID, String replyID, String user, String content, Date timeStamp) {
+    public Reply (String suggestionID, String replyID, String user, String imgSrc, String content, Date timeStamp) {
         this.suggestionID = suggestionID;
         this.replyID = replyID;
         this.user = user;
+        this.imgSrc = imgSrc;
         this.content = content;
         this.timeStamp = timeStamp;
     }
