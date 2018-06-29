@@ -32,7 +32,7 @@ public class CodeFilesDAO {
         if (result.next()){
             codeContent = result.getString("content");
             fileName = result.getString("name");
-            codeLang = result.getString("type");
+            codeLang = result.getString("lang");
         }
 
         query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE fileId=?";
