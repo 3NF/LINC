@@ -53,4 +53,18 @@ public class CodeFilesDAO {
         connection.close();
         return new CodeFile(codeContent,codeFileId,fileName,suggestions,codeLang);
     }
+
+    public void tempSave (long userId, long fileID, String content) throws SQLException {
+        Connection connection = connectionPool.getConnection();
+
+        String query = "INSERT INTO code_files (userID, filesID, content) VALUES\n" +
+                "  (?, ?, ?);";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, userId);
+        statement.setLong(2, fileID);
+        statement.setString(3, content);
+
+        statement.executeUpdate();
+
+    }
 }
