@@ -31,7 +31,7 @@ public class CodeFilesDAO {
         String codeLang = "";
         if (result.next()){
             codeContent = result.getString("content");
-            fileName = result.getString("filename");
+            fileName = result.getString("name");
             codeLang = result.getString("type");
         }
 
