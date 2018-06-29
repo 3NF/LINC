@@ -18,7 +18,7 @@ public class Suggestion {
     private String codeID;
     private String suggestionID;
 
-    //Information about comment
+    //Information about commentList
     private Integer startInd;
     private Integer endInd;
     private String content;

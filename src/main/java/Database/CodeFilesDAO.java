@@ -45,7 +45,7 @@ public class CodeFilesDAO {
             String type = result.getString("type");
             Date date = new Date(result.getDate("time").getTime());
             Suggestion.SuggestionType suggestionType = Suggestion.SuggestionType.valueOf(type);
-            suggestions.add(new Suggestion(suggestionType,uId,codeFileId,suggestionId,0,0,text,date));
+            suggestions.add(new Suggestion(suggestionType,uId,"sds",codeFileId,suggestionId,0,0,text,date));
         }
         connection.close();
         return new CodeFile(codeContent,codeFileId,fileName,suggestions);
