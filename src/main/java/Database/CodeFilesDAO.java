@@ -66,5 +66,7 @@ public class CodeFilesDAO {
 
         statement.executeUpdate();
 
+        connection.close();
+
     }
 }
