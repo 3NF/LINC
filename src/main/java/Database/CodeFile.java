@@ -21,28 +21,21 @@ public class CodeFile {
     private String fileName;
     private String fileId;
     private Lang lang;
-    public CodeFile (String code, String fileId, String fileName, List<Suggestion> suggestions) {
+    public CodeFile (String code, String fileId, String fileName, List<Suggestion> suggestions,String lang) {
         this.code = code;
         this.fileName = fileName;
         this.suggestions = suggestions;
         this.fileId = fileId;
         try {
-            lang = Lang.valueOf(fileName.substring(fileName.lastIndexOf(".") + 1));
+            this.lang = Lang.valueOf(lang);
         } catch (IllegalArgumentException e) {
-            lang = Lang.undefined;
+            this.lang = Lang.undefined;
         }
 
     }
 
     public Lang getLang() {
         return lang;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Suggestion> arrayList = new ArrayList<>();
-        CodeFile codeFile = new CodeFile("12", "1","bakuri.cpp", null);
-        System.out.println(codeFile.getLang());
-        System.out.println(codeFile);
     }
 
     /**

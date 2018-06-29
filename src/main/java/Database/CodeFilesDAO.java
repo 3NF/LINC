@@ -20,16 +20,19 @@ public class CodeFilesDAO {
     public CodeFile getFilesContent(String userId,String codeFileId) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
-        String query = "SELECT filename,content FROM code_files where userID=? AND filesID=?";
+        String query = "SELECT assignment_files.lang,assignment_files.name,code_files.content FROM assignment_files inner join " +
+                "code_files on assignment_files.id=code_files.filesID where code_files.userID=? AND code_files.filesID=?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1,userId);
         statement.setString(2,codeFileId);
         ResultSet result = statement.executeQuery();
         String codeContent = "";
         String fileName = "";
+        String codeLang = "";
         if (result.next()){
             codeContent = result.getString("content");
             fileName = result.getString("filename");
+            codeLang = result.getString("type");
         }
 
         query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE fileId=?";
@@ -48,6 +51,6 @@ public class CodeFilesDAO {
             suggestions.add(new Suggestion(suggestionType,uId,"sds",codeFileId,suggestionId,0,0,text,date));
         }
         connection.close();
-        return new CodeFile(codeContent,codeFileId,fileName,suggestions);
+        return new CodeFile(codeContent,codeFileId,fileName,suggestions,codeLang);
     }
 }
