@@ -24,7 +24,7 @@ public class Suggestion {
     private Date timeStamp;
 
 
-    public Suggestion (SuggestionType type, User user, String codeID, String suggestionID, int startInd, int endInd, String content, Date timeStamp) {
+    public Suggestion (SuggestionType type, String userId, String codeID, String suggestionID, int startInd, int endInd, String content, Date timeStamp) {
         this.type = type;
         this.user = user;
         this.suggestionID = suggestionID;

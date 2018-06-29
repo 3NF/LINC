@@ -17,7 +17,7 @@ public class CodeFileTester {
         System.out.println(simpleSuggestion2);
         suggestions.add(simpleSuggestion1);
         suggestions.add(simpleSuggestion2);
-        CodeFile codeFile = new CodeFile("cpp", "int a;", suggestions);
+        CodeFile codeFile = new CodeFile("cpp", "123","int a;", suggestions);
         System.out.println(codeFile);
     }
 }

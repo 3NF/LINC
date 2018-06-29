@@ -63,7 +63,6 @@ public class ReplyDAO {
 
     public void addReply(String text, String userId, String suggestionId, Date date) {
         Connection connection;
-        ArrayList<Reply> suggestionsReply = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
@@ -90,7 +89,6 @@ public class ReplyDAO {
 
     public void deleteReply(String replyId) {
         Connection connection;
-        ArrayList<Reply> suggestionsReply = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
