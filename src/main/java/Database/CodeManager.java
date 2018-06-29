@@ -134,7 +134,7 @@ public class CodeManager {
         Suggestion simpleSuggestion2 = new Suggestion(Suggestion.SuggestionType.Warning, "Bakur Tsutskhashvili", "https://api.adorable.io/avatars/285/bakuri-tsutskhashvili.png", "1", "2",  3, 4, "Not so bad", new Date());
         suggestions.add(simpleSuggestion1);
         suggestions.add(simpleSuggestion2);
-        CodeFile codeFile = new CodeFile(code, "code_file1.cpp", suggestions);
+        CodeFile codeFile = new CodeFile(code, "sd","code_file1.cpp", suggestions);
 
         this.user = user;
         this.codeItems = new HashMap<>();
