@@ -1,10 +1,8 @@
 package Database;
 
 import Data.Suggestion;
-import Models.User;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CodeFile {

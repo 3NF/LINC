@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="HelperClasses.Validate" %>
 <%@ page import="Models.User" %>
-<%@ page import="HelperClasses.Validate" %>
 <%@ page import="Data.Constraints" %>
 <%@ page import="static Data.Constraints.USER" %>
 <html>
@@ -46,7 +45,7 @@
     <link rel = "stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
-    <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
+    <% String courseId = request.getParameter(Constraints.ROOM_ID); %>
 
 </head>
 

@@ -1,6 +1,5 @@
 package Data;
 
-import Models.User;
 import com.google.gson.Gson;
 import java.util.Date;
 

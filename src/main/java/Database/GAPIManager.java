@@ -90,7 +90,6 @@ public class GAPIManager {
             DBManager.UserCredential credential = DBManager.getUserCredential(sub);
             if(credential == null) return null;
             User us = new User(email, givenName, familyName, sub, pictureUrl, credential.getAccessToken(), credential.getRefreshToken());
-            //downloadAssignments(us, "", "");
             return us;
         } catch (Exception e) {
             e.printStackTrace();
@@ -225,4 +224,11 @@ public class GAPIManager {
             return null;
         }
     }
+
+    // TODO: 6/30/18 implement this method 
+    public boolean isInRoom(String userID, String classRoomID) {
+        return true;
+    }
+
+
 }

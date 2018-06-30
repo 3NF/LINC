@@ -38,7 +38,7 @@
 
 <script>
     function enterClasroom(id) {
-        window.location.assign("dashboard.jsp?<%=Constraints.COURSE_ID%>=" + id);
+        window.location.assign("dashboard.jsp?<%=Constraints.ROOM_ID%>=" + id);
     }
 </script>
 </html>

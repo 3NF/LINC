@@ -6,7 +6,7 @@
 <head>
     <%
         User user = (User) request.getSession().getAttribute(Constraints.USER);
-        String courseId = request.getParameter(Constraints.COURSE_ID);
+        String courseId = request.getParameter(Constraints.ROOM_ID);
 
         if (DBManager.getRoleByCourse(user, courseId) != DBManager.Role.TeacherAssistant) {
             response.sendRedirect("choose-room.jsp");

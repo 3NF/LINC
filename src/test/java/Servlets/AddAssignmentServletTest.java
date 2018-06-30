@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static Data.Constraints.*;
 import static org.junit.Assert.assertEquals;
@@ -32,7 +30,7 @@ public class AddAssignmentServletTest {
 
         AssignmentInfoDAO dao = mock(AssignmentInfoDAO.class);
         GAPIManager gapiManager = mock(GAPIManager.class);
-        Set<String> st = new HashSet<String>();
+        List<String> st = new ArrayList<>();
         st.addAll(Arrays.asList(new String[] {"sample.h", "sample.cpp", "main.c"}));
         when(dao.getAssignmentFilesNames("-", "-")).thenReturn(st);
         when(gapiManager.getUser("-")).thenReturn(null);

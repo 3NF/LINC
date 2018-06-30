@@ -18,7 +18,7 @@ public class RoomServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String courseId = (String) request.getAttribute(Constraints.COURSE_ID);
+        String courseId = (String) request.getAttribute(Constraints.ROOM_ID);
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         DBManager.Role userRole = DBManager.getRoleByCourse(user , courseId);
         String url = "";
