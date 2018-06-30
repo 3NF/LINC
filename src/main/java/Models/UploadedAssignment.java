@@ -7,11 +7,18 @@ import java.util.Set;
 
 public class UploadedAssignment implements Iterable{
 
+    String assignmentID;
+    public String getAssignmentID() {
+        return assignmentID;
+    }
+
     HashMap<String, String> data;
 
     public void addAssignment(String fileName, String content) {
         data.put(fileName, content);
     }
+
+
 
     @Override
     public Iterator iterator() {
