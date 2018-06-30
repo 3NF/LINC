@@ -37,10 +37,10 @@ public class CodeFile {
     }
 
     public static class Info {
-        public int id;
+        public String id;
         public String name;
 
-        public Info (int id, String name) {
+        public Info (String id, String name) {
             this.id = id;
             this.name = name;
         }

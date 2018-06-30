@@ -78,7 +78,7 @@ public class CodeFilesDAO {
         ResultSet result = statement.executeQuery();
         List <CodeFile.Info> codeFileNames = new ArrayList<CodeFile.Info>();
         while (result.next()){
-            codeFileNames.add(new CodeFile.Info(result.getInt("id"),result.getString("name")));
+            codeFileNames.add(new CodeFile.Info(result.getString("id"),result.getString("name")));
         }
         return codeFileNames;
     }
