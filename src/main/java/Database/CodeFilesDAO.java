@@ -1,6 +1,7 @@
 package Database;
 
 import Data.Suggestion;
+import Models.UploadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,6 +67,11 @@ public class CodeFilesDAO {
 
         statement.executeUpdate();
         connection.close();
+    }
+
+    // TODO: 6/30/18 giorgi 
+    public void addAssignments(String userID, UploadedAssignment assignment) {
+        
     }
 
 
