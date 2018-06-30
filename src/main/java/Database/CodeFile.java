@@ -38,6 +38,16 @@ public class CodeFile {
         return lang;
     }
 
+    public static class Info {
+        public int id;
+        public String name;
+
+        public Info (int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+    }
+
     /**
      * Converts this object to JSON string
      * @return JSON representation of the object
