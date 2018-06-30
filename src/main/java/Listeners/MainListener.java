@@ -1,5 +1,7 @@
 package Listeners;
 
+import Database.CodeFilesDAO;
+import Database.ConnectionPool;
 import Database.DBManager;
 
 import javax.servlet.ServletContextEvent;
@@ -22,8 +24,7 @@ public class MainListener implements ServletContextListener {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         final ScheduledFuture<?> beepHandler = scheduler.scheduleAtFixedRate(new AssignmentDownloader(), 2, 2, TimeUnit.SECONDS);
-
-
+        sce.getServletContext().setAttribute("CodeFilesDAO", new CodeFilesDAO(ConnectionPool.getInstance()));
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
