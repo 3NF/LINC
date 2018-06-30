@@ -58,10 +58,7 @@
     <div id="content">
         <div class="panel panel-default">
             <ul class="nav nav-tabs" id = "navbar">
-                <li class="active"><a href="javascript:void(0)" onclick="navbarOnClick()">code_file1.cpp</a></li>
-                <li><a href="javascript:void(0)" onclick="navbarOnClick()">code_file2.cpp</a></li>
-                <li><a href="javascript:void(0)" onclick="navbarOnClick()">big_file.cpp</a></li>
-                <li><a href="javascript:void(0)"  onclick="navbarOnClick()">not_found.cpp</a></li>
+                <li id = "navbar-element" class="active"><a href="javascript:void(0)" onclick="navbarOnClick()" hidden></a></li>
             </ul>
 
 

@@ -3,6 +3,7 @@ var codeMirror;
 var suggestionEditor;
 var replyEditor;
 
+var codeIDs;
 //Array for storing suggestion objects
 var suggestions = [];
 //HTML line element array
@@ -120,6 +121,27 @@ function navbarOnClick () {
 //Writes loading message
 function showLoading (fileName) {
     $("#code-content").html("Loading " + fileName + "...");
+}
+
+//Sends AJAX request to fetch code names
+function fetchCodesInfo () {
+    showLoading(name);
+    $.ajax({
+        url: "/user/code_dispatcher",
+        method: "POST",
+        contentType: 'application/json',
+        data: JSON.stringify({assignmentID: 1}),
+        success: function( data, textStatus, jQxhr ){
+            loadCodeInfo(data, textStatus, jQxhr);
+        },
+        error: function (data, textStatus, jQxhr) {
+            loadCodeInfoError(data, textStatus, jQxhr);
+        }});
+}
+
+//AJAX successful code info loading response callback
+function loadCodeInfo (data) {
+    console.log(data);
 }
 
 //Sends AJAX request to load code
@@ -249,6 +271,7 @@ function onLoad () {
     Gets initial data for already
     activated code
     */
+    fetchCodesInfo ();
     var name = $("#navbar").find(".active").find("a").text();
     fetchCode(name);
 }
