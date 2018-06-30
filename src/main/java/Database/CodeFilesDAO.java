@@ -70,8 +70,8 @@ public class CodeFilesDAO {
 
 
 
-    public List<CodeFile.Info> getAssignmentCodesNames(String id) throws SQLException {
-        String query = "Select id,name FROM assignment_files where id=?";
+    public List<CodeFile.Info> getAssignmentCodeNames(String id) throws SQLException {
+        String query = "Select id,name FROM assignment_files where assignmentID=?";
         Connection connection = connectionPool.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1,id);

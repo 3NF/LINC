@@ -26,10 +26,10 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../JavaScript/dashboard.js"></script>
+    <script src="../JavaScript/dashboard.js?newversione"></script>
 
     <%--Comment following line if you want to view as Student--%>
-    <script src="../JavaScript/dashboard-instructor.js"></script>
+    <script src="../JavaScript/dashboard-instructor.js?newversion"></script>
 
 
 
@@ -58,7 +58,7 @@
     <div id="content">
         <div class="panel panel-default">
             <ul class="nav nav-tabs" id = "navbar">
-                <li id = "navbar-element" class="active"><a href="javascript:void(0)" onclick="navbarOnClick()" hidden></a></li>
+                <li id = "navbar-element" hidden><a href="javascript:void(0)" onclick="navbarOnClick()"></a></li>
             </ul>
 
 

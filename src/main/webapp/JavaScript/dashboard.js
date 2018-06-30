@@ -9,6 +9,8 @@ var suggestions = [];
 //HTML line element array
 var lines = [];
 
+var codeInfos =[];
+
 //New reply block
 var replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
     "                            <div class = \"reply-panel\">\n" +
@@ -28,7 +30,7 @@ const warningColor = "#efcf4f";
 
 //AJAX successful code loading response callback
 function loadCode (data, textStaus, jQxhr) {
-    var receivedData = $.parseJSON(data);
+    var receivedData = data;
     suggestions = receivedData.suggestions;
 
     console.log (receivedData);
@@ -125,14 +127,15 @@ function showLoading (fileName) {
 
 //Sends AJAX request to fetch code names
 function fetchCodesInfo () {
-    showLoading(name);
+    console.log("YEAS");
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
-        contentType: 'application/json',
+        contentType: 'alpplication/json',
         data: JSON.stringify({assignmentID: 1}),
+        //must be changed!!!!
         success: function( data, textStatus, jQxhr ){
-            loadCodeInfo(data, textStatus, jQxhr);
+            loadCodesInfo(data, textStatus, jQxhr);
         },
         error: function (data, textStatus, jQxhr) {
             loadCodeInfoError(data, textStatus, jQxhr);
@@ -140,18 +143,44 @@ function fetchCodesInfo () {
 }
 
 //AJAX successful code info loading response callback
-function loadCodeInfo (data) {
-    console.log(data);
+function loadCodesInfo (data) {
+    codeInfos = data;
+    addCodes ();
+    getFirstCode ();
+}
+
+function addCodes() {
+    console.log(codeInfos);
+    for (var i = 0; i < codeInfos.length; i ++) {
+        console.log(codeInfos[i]);
+        var newElement = $("#navbar-element").clone(true);
+        $(newElement).removeAttr("id");
+        $(newElement).find("a").html(codeInfos[i].name);
+        $(newElement).show();
+        $(newElement).appendTo("#navbar");
+    }
+    $("#navbar-element").remove();
+    $("#navbar li:first-child").addClass("active");
+}
+
+function getFirstCode () {
+    var name = $("#navbar").find(".active").find("a").text();
+    fetchCode(name);
+}
+
+function loadCodeInfoError () {
+    console.log ("Error in loading file information");
 }
 
 //Sends AJAX request to load code
 function fetchCode (name) {
     showLoading(name);
+    id = getCodeInd (name);
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
         contentType: 'application/json',
-        data: JSON.stringify({codeName: name}),
+        data: JSON.stringify({codeID: id}),
         success: function( data, textStatus, jQxhr ){
             loadCode(data, textStatus, jQxhr);
         },
@@ -160,6 +189,14 @@ function fetchCode (name) {
         }});
 }
 
+function getCodeInd (name) {
+    for (var i = 0; i < codeInfos.length; i ++) {
+        if (codeInfos[i].name == name) {
+            return codeInfos[i].id;
+        }
+    }
+    return undefined;
+}
 
 
 //Sends AJAX request to fetch new replies
@@ -272,8 +309,6 @@ function onLoad () {
     activated code
     */
     fetchCodesInfo ();
-    var name = $("#navbar").find(".active").find("a").text();
-    fetchCode(name);
 }
 
 function onSubmit () {

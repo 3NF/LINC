@@ -1,5 +1,6 @@
 package Servlets;
 
+import Database.CodeFile;
 import Database.CodeFilesDAO;
 import Database.CodeManager;
 import HelperClasses.Validate;
@@ -30,19 +31,21 @@ public class CodeDispatcher extends HttpServlet
 
             //Get request data
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-            String json = null;
-            if (data.has("assigmentID")){
+            String json;
+            System.out.println(1);
+            if (data.has("assignmentID")){
                 json = loadCodeNames(data,request);
             }
-            else
-              json = loadCodeWithID(data,request);
-            //System.err.println(json);
+            else {
+                json = loadCodeWithID(data,request);
+            }
 
             //Send response to client
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF8");
             response.getWriter().write(json);
         } catch (NumberFormatException|NullPointerException e) {
+            e.printStackTrace();
             response.sendError(HttpStatus.SC_NOT_FOUND);
         }
     }
@@ -51,7 +54,7 @@ public class CodeDispatcher extends HttpServlet
         String codeId = data.get("codeID").getAsString();
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute("CodeFilesDAO");
         try {
-            return new GsonBuilder().disableHtmlEscaping().create().toJson(codeFilesDAO.getFilesContent("1", codeId));
+            return new GsonBuilder().create().toJson(codeFilesDAO.getFilesContent("1", codeId));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -59,10 +62,10 @@ public class CodeDispatcher extends HttpServlet
     }
 
     private String loadCodeNames(JsonObject data,HttpServletRequest request){
-        String codeId = data.get("assigmentID").getAsString();
+        String assignmentID = data.get("assignmentID").getAsString();
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute("CodeFilesDAO");
         try {
-            return new GsonBuilder().disableHtmlEscaping().create().toJson(codeFilesDAO.getFilesContent("1", codeId));
+            return new GsonBuilder().disableHtmlEscaping().create().toJson(codeFilesDAO.getAssignmentCodeNames(assignmentID));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
