@@ -65,7 +65,10 @@ public class CodeFilesDAO {
         statement.setString(3, content);
 
         statement.executeUpdate();
+        connection.close();
     }
+
+
 
     public List<String> getAssignmentCodesNames(String id) throws SQLException {
         String query = "Select id,name FROM assignment_files where id=?";
