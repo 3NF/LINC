@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class UploadedAssignment implements Iterable{
 
+
     String assignmentID;
     public String getAssignmentID() {
         return assignmentID;
@@ -14,24 +15,43 @@ public class UploadedAssignment implements Iterable{
 
     HashMap<String, String> data;
 
-    public void addAssignment(String fileName, String content) {
-        data.put(fileName, content);
+    public UploadedAssignment() {
+        data = new HashMap<>();
     }
 
+    public void addAssignmentFile(File file) {
+        data.put(file.getFileName(), file.getContent());
+    }
 
+    public static void main(String[] args) {
+        UploadedAssignment ass = new UploadedAssignment();
+        ass.addAssignmentFile(new File("1", "2"));
+        ass.addAssignmentFile(new File("2", "3"));
+        ass.addAssignmentFile(new File("3", "4"));
+
+        for (Object file: ass) {
+            System.out.println(((File)file).getContent());
+        }
+
+    }
 
     @Override
     public Iterator iterator() {
-        Set<String> keys = data.keySet();
+        Iterator it = data.keySet().iterator();
         return new Iterator() {
             @Override
             public boolean hasNext() {
-                return !keys.isEmpty();
+                return it.hasNext();
             }
 
             @Override
-            public Object next() {
-                return null;
+            public File next() {
+                if (it.hasNext()) {
+                    String fileName = (String) it.next();
+                    return new File(fileName, data.get(fileName));
+                } else {
+                    return null;
+                }
             }
         };
     }

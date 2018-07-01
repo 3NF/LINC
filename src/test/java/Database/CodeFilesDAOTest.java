@@ -35,7 +35,7 @@ public class CodeFilesDAOTest {
     public void testGetFilesContent() {
         try {
             CodeFile codeFile = DAO.getFilesContent("1", "1");
-            DAO.getAssignmentCodesNames("1");
+            DAO.getAssignmentCodeNames("1");
         } catch (SQLException e) {
             e.printStackTrace();
         }
