@@ -35,7 +35,6 @@
 </div>
 
 <script>
-/*    $.post( "/add-assignment", JSON.stringify({ name: "John", time: "2pm" }) );*/
     $.ajax({
         type: "POST",
         url: "add-assignment",
@@ -70,9 +69,6 @@
             console.log(response);
         }
     });
-/*
-    $.post("/add-assignment", {siri : "123", yle: "123" })
-    $.post( "/add-assignment", { 'choices[]': [ "Jon", "Susan" ] } );*/
 
 </script>
 </body>
