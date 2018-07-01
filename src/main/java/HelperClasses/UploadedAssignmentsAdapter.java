@@ -16,8 +16,8 @@ public class UploadedAssignmentsAdapter extends TypeAdapter<UploadedAssignment> 
     @Override
     public UploadedAssignment read(JsonReader in) throws IOException {
 
-        UploadedAssignment res = new UploadedAssignment();
-        return new UploadedAssignment();
+        UploadedAssignment res = new UploadedAssignment("1");
+        return new UploadedAssignment("1");
 
     }
 }

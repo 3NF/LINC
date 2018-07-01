@@ -15,8 +15,9 @@ public class UploadedAssignment implements Iterable{
 
     HashMap<String, String> data;
 
-    public UploadedAssignment() {
+    public UploadedAssignment(String assignmentID) {
         data = new HashMap<>();
+        this.assignmentID = assignmentID;
     }
 
     public void addAssignmentFile(File file) {
@@ -24,7 +25,7 @@ public class UploadedAssignment implements Iterable{
     }
 
     public static void main(String[] args) {
-        UploadedAssignment ass = new UploadedAssignment();
+        UploadedAssignment ass = new UploadedAssignment("1");
         ass.addAssignmentFile(new File("1", "2"));
         ass.addAssignmentFile(new File("2", "3"));
         ass.addAssignmentFile(new File("3", "4"));
