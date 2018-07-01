@@ -66,7 +66,7 @@ public class ReplyDAO {
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
-            System.err.println("error in getting connection");
+            System.err.println("error in getting conne  ction");
             return;
         }
         PreparedStatement statement;
