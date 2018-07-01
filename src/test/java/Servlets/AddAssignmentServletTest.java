@@ -41,7 +41,6 @@ public class AddAssignmentServletTest {
         when(req.getParameter(ASSIGNMENT)).thenReturn("-");
         when(req.getParameter(ROOM_ID)).thenReturn("-");
         when(req.getParameter(ASSIGNMENT_ID)).thenReturn("-");
-        
         ServletContext context = mock(ServletContext.class);
         when(context.getAttribute(ASSIGNMENT_INFO_DAO)).thenReturn(dao);
         when(context.getAttribute(GAPI_MANAGER)).thenReturn(gapiManager);

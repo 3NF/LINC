@@ -36,9 +36,10 @@ public class CodeFilesDAO {
             codeLang = result.getString("lang");
         }
 
-        query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE fileId=?";
+        query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE fileId=? AND userId=?";
         statement = connection.prepareStatement(query);
         statement.setString(1,codeFileId);
+        statement.setString(2,userId);
         //System.err.println(query);
         result = statement.executeQuery();
         List<Suggestion> suggestions = new ArrayList<>();
