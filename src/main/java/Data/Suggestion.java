@@ -12,24 +12,24 @@ public class Suggestion {
     }
     public SuggestionType type;
 
-    private String user;
-    private String imgSrc;
-    private String codeID;
-    private String suggestionID;
+    public String userID;
+    public String imgSrc;
+    public String fileID;
+    public String suggestionID;
 
     //Information about commentList
-    private Integer startInd;
-    private Integer endInd;
-    private String content;
-    private Date timeStamp;
+    public String content;
+    public Date timeStamp;
+    public Integer startInd;
+    public Integer endInd;
 
 
-    public Suggestion (SuggestionType type, String user, String imgSrc, String codeID, String suggestionID, int startInd, int endInd, String content, Date timeStamp) {
+    public Suggestion (SuggestionType type, String userID, String imgSrc, String fileID, String suggestionID, int startInd, int endInd, String content, Date timeStamp) {
         this.type = type;
-        this.user = user;
+        this.userID = userID;
         this.imgSrc = imgSrc;
         this.suggestionID = suggestionID;
-        this.codeID = codeID;
+        this.fileID = fileID;
         this.startInd = startInd;
         this.endInd = endInd;
         this.content = content;
