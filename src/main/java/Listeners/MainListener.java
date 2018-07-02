@@ -3,6 +3,7 @@ package Listeners;
 import Database.CodeFilesDAO;
 import Database.ConnectionPool;
 import Database.DBManager;
+import Database.ReplyDAO;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -25,6 +26,7 @@ public class MainListener implements ServletContextListener {
 
         final ScheduledFuture<?> beepHandler = scheduler.scheduleAtFixedRate(new AssignmentDownloader(), 2, 2, TimeUnit.SECONDS);
         sce.getServletContext().setAttribute("CodeFilesDAO", new CodeFilesDAO(ConnectionPool.getInstance()));
+        sce.getServletContext().setAttribute("ReplyDAO", new ReplyDAO(ConnectionPool.getInstance()));
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

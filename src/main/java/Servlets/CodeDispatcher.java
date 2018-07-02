@@ -1,9 +1,6 @@
 package Servlets;
 
-import Database.CodeFile;
 import Database.CodeFilesDAO;
-import Database.CodeManager;
-import HelperClasses.Validate;
 import Models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,7 +29,6 @@ public class CodeDispatcher extends HttpServlet
             //Get request data
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
             String json;
-            System.out.println(1);
             if (data.has("assignmentID")){
                 json = loadCodeNames(data,request);
             }
