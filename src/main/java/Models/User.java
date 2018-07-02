@@ -29,6 +29,9 @@ public class User {
         this.picturePath = picturePath;
     }
 
+    public User(String userId){
+        this.userId = userId;
+    }
     public String getFirstName()
     {
         return this.firstName;

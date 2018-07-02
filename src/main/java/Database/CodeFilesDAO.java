@@ -91,6 +91,7 @@ public class CodeFilesDAO {
         statement.setInt(7, suggestion.endInd);
 
         statement.executeUpdate();
+        statement.close();
         connection.close();
     }
 

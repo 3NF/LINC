@@ -76,7 +76,7 @@ public class CodeFilesDAOTest {
 
     @Test
     public void addSuggestions2() {
-        try {
+          try {
             Suggestion s1 = new Suggestion(Suggestion.SuggestionType.Error, "1",  "2", "", 1, 50, "Text1", new java.util.Date());
             Suggestion s2 = new Suggestion(Suggestion.SuggestionType.Warning, "1",  "2", "", 7, 10, "Text2", new java.util.Date());
             Suggestion s3 = new Suggestion(Suggestion.SuggestionType.Error, "1",  "2", "", 15, 100, "Text3", new java.util.Date());
