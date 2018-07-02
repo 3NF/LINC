@@ -36,7 +36,7 @@ public class CodeFilesDAO {
             codeLang = result.getString("lang");
         }
 
-        query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE fileId=? AND userId=?";
+        query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE fileId=? AND uid = ?";
         statement = connection.prepareStatement(query);
         statement.setString(1,codeFileId);
         statement.setString(2,userId);
@@ -56,7 +56,7 @@ public class CodeFilesDAO {
         return new CodeFile(codeContent,codeFileId,fileName,suggestions,codeLang);
     }
 
-    public void tempSave (long userId, long fileID, String content) throws SQLException {
+    public void tempSaveCodeFile (long userId, long fileID, String content) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
         String query = "INSERT INTO code_files (userID, filesID, content) VALUES\n" +
@@ -70,9 +70,27 @@ public class CodeFilesDAO {
         connection.close();
     }
 
+    public void tempSaveSuggestion (Suggestion suggestion) throws SQLException {
+        Connection connection = connectionPool.getConnection();
+
+        String query = "INSERT INTO suggestions (userID, fileId, text, time, type, startInd, endInd) VALUES\n" +
+                "  (?, ?, ?, ?, ? ? ?);";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, suggestion.userID);
+        statement.setInt(2, suggestion.fileID);
+        statement.setString(3, );
+        statement.setDate(4, content);
+        statement.setString(5, content);
+        statement.setInt(6, content);
+        statement.setInt(7, content);
+
+        statement.executeUpdate();
+        connection.close();
+    }
+
     // TODO: 6/30/18 giorgi 
     public void addAssignments(String userID, UploadedAssignment assignment) {
-        
+
     }
 
 
