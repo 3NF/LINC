@@ -1,5 +1,7 @@
 package Database;
 
+import Models.File;
+import Models.UploadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +37,20 @@ public class CodeFilesDAOTest {
     public void testGetFilesContent() {
         try {
             CodeFile codeFile = DAO.getFilesContent("1", "1");
-            DAO.getAssignmentCodesNames("1");
+            DAO.getAssignmentCodeNames("1");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testAddAssigment() {
+        try {
+
+            UploadedAssignment assignment = new UploadedAssignment("1");
+            assignment.addAssignmentFile(new File("temp_code1.cpp","sdsdsdsdss"));
+            assignment.addAssignmentFile(new File("temp_code2.cpp","sdsdsdsssdss"));
+            DAO.addAssignments("23",assignment);
         } catch (SQLException e) {
             e.printStackTrace();
         }

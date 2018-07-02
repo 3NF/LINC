@@ -1,15 +1,14 @@
 package Database;
 
 import Data.Suggestion;
+import Models.File;
 import Models.UploadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class CodeFilesDAO {
     private final MysqlDataSource connectionPool;
@@ -18,45 +17,51 @@ public class CodeFilesDAO {
         this.connectionPool = connectionPool;
     }
 
-    public CodeFile getFilesContent(String userId,String codeFileId) throws SQLException {
+    public CodeFile getFilesContent(String userId,String FileId) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
-        String query = "SELECT assignment_files.lang,assignment_files.name,code_files.content FROM assignment_files inner join " +
+        String query = "SELECT assignment_files.lang,assignment_files.name,code_files.content,code_files.id FROM assignment_files inner join " +
                 "code_files on assignment_files.id=code_files.filesID where code_files.userID=? AND code_files.filesID=?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1,userId);
-        statement.setString(2,codeFileId);
+        statement.setString(2,FileId);
         ResultSet result = statement.executeQuery();
         String codeContent = "";
         String fileName = "";
         String codeLang = "";
+        String codeFileId = "";
         if (result.next()){
             codeContent = result.getString("content");
             fileName = result.getString("name");
             codeLang = result.getString("lang");
+            codeFileId = result.getString("id");
+            //System.out.println(codeFileId);
         }
 
-        query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE fileId=? AND uid = ?";
+        query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE Code_FileID=?";
         statement = connection.prepareStatement(query);
         statement.setString(1,codeFileId);
-        statement.setString(2,userId);
         //System.err.println(query);
         result = statement.executeQuery();
         List<Suggestion> suggestions = new ArrayList<>();
         while (result.next()){
             String suggestionId = result.getString("suggestionID");
-            String uId = result.getString("uid");
+            String uId = result.getString("userId");
             String text = result.getString("text");
             String type = result.getString("type");
             Date date = new Date(result.getDate("time").getTime());
             Suggestion.SuggestionType suggestionType = Suggestion.SuggestionType.valueOf(type);
-            suggestions.add(new Suggestion(suggestionType,uId,"sds",codeFileId,suggestionId,0,0,text,date));
+            int startInd = result.getInt("startInd");
+            int endInd = result.getInt("endInd");
+            //System.err.println(suggestionId + ' ' + uId + ' ' + type);
+            suggestions.add(new Suggestion(suggestionType,uId,"sds",codeFileId,suggestionId,startInd,endInd,text,date));
         }
+        statement.close();
         connection.close();
         return new CodeFile(codeContent,codeFileId,fileName,suggestions,codeLang);
     }
 
-    public void tempSaveCodeFile (long userId, long fileID, String content) throws SQLException {
+    public void tempSave (long userId, long fileID, String content) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
         String query = "INSERT INTO code_files (userID, filesID, content) VALUES\n" +
@@ -67,30 +72,44 @@ public class CodeFilesDAO {
         statement.setString(3, content);
 
         statement.executeUpdate();
+        statement.close();
         connection.close();
     }
 
-    public void tempSaveSuggestion (Suggestion suggestion) throws SQLException {
+    private HashMap<String,String> getIdNameMap(UploadedAssignment assignment) throws SQLException {
+        HashMap<String,String> fileId = new HashMap<String,String>();
         Connection connection = connectionPool.getConnection();
-
-        String query = "INSERT INTO suggestions (userID, fileId, text, time, type, startInd, endInd) VALUES\n" +
-                "  (?, ?, ?, ?, ? ? ?);";
+        String query = "SELECT * FROM assignment_files WHERE assignmentID=?";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, suggestion.userID);
-        statement.setInt(2, suggestion.fileID);
-        statement.setString(3, );
-        statement.setDate(4, content);
-        statement.setString(5, content);
-        statement.setInt(6, content);
-        statement.setInt(7, content);
-
-        statement.executeUpdate();
+        statement.setString(1,assignment.getAssignmentID());
+        ResultSet result = statement.executeQuery();
+        while (result.next()){
+            String id = result.getString("id");
+            String name = result.getString("name");
+            fileId.put(name,id);
+        }
+        statement.close();
         connection.close();
+        return fileId;
     }
 
     // TODO: 6/30/18 giorgi 
-    public void addAssignments(String userID, UploadedAssignment assignment) {
-
+    public void addAssignments(String userID, UploadedAssignment assignment) throws SQLException {
+        HashMap<String,String> fileId = getIdNameMap(assignment);
+        Connection connection = connectionPool.getConnection();
+        String query = "INSERT INTO code_files(userID,filesID,content) VALUES(?,?,?)";
+        PreparedStatement statement = connection.prepareStatement(query);
+        boolean isFirst = true;
+        for (Object file: assignment) {
+            statement.setString(1, userID);
+            statement.setString(2, fileId.get(((File) file).getFileName()));
+            statement.setString(3, ((File)file).getContent());
+            statement.addBatch();
+        }
+        statement.executeBatch();
+        statement.close();
+        connection.close();
+        //connection.createStatement().execute(query);
     }
 
 
@@ -105,6 +124,8 @@ public class CodeFilesDAO {
         while (result.next()){
             codeFileNames.add(new CodeFile.Info(result.getString("id"),result.getString("name")));
         }
+        statement.close();
+        connection.close();
         return codeFileNames;
     }
 }

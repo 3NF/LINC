@@ -1,4 +1,5 @@
-<%--
+<%@ page import="static Data.Constraints.USER_ID_TOKEN" %>
+<%@ page import="static Data.Constraints.ROOM_ID" %><%--
   Created by IntelliJ IDEA.
   User: Luka Tchumburidze
   Date: 6/9/18
@@ -32,5 +33,43 @@
 <div class="fill">
     <i class="glyphicon si-glyph-two-arrow-right" id = "panel-swipe-left"></i>
 </div>
+
+<script>
+    $.ajax({
+        type: "POST",
+        url: "add-assignment",
+        contentType: "application/json", // NOT dataType!
+        data: JSON.stringify({
+
+            "user_id_token" : "-",
+            "room-id" : "-",
+            "assignment-id" : "-",
+
+
+            "assignment": [
+                {
+                    "file-name": "sample.h",
+                    "content": "asdasd"
+                },
+                {
+                    "file-name": "main.h",
+                    "content": "asdasd"
+                },
+                {
+                    "file-name": "main.c",
+                    "content": "asdasd"
+                },
+                {
+                    "file-name": "sample.h",
+                    "content": "asdasd"
+                }
+            ]
+        }),
+        success: function(response) {
+            console.log(response);
+        }
+    });
+
+</script>
 </body>
 </html>

@@ -45,6 +45,7 @@ public class ReplyDAO {
                 Date date = new Date(result.getDate("date").getTime());
                 suggestionsReply.add(new Reply(suggestionId, replyId, userId, null/*imgsrc*/, content, date));
             }
+            statement.close();
             connection.close();
         } catch (SQLException e) {
             System.err.println("error in creation statement");
@@ -79,6 +80,7 @@ public class ReplyDAO {
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
             statement.setDate(4, sqlDate);
             statement.executeUpdate();
+            statement.close();
             connection.close();
         } catch (SQLException e) {
             System.err.println("error in creation statement");
@@ -101,6 +103,7 @@ public class ReplyDAO {
             statement = connection.prepareStatement(query);
             statement.setString(1, replyId);
             statement.execute();
+            statement.close();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
