@@ -27,14 +27,14 @@ public class RoomServlet extends HttpServlet {
                 url = "choose-room.jsp";
                 break;
             case Pupil:
-                url = "/user/dashboard.jsp";
+                url = "/user/dashboard.jsp?" + Constraints.ROOM_ID + "=" + courseId;
                 break;
             case Teacher:
-                url = "teacher-dashboard.jsp";
+                url = "teacher-dashboard.jsp?" + Constraints.ROOM_ID + "=" + courseId;
                 break;
             case SeminarReader :
             case TeacherAssistant :
-                url = "assistant-dashboard.jsp";
+                url = "assistant-dashboard.jsp?" + Constraints.ROOM_ID + "=" + courseId;
                 break;
         }
         response.setContentType("text/html;charset = UTF-8");
