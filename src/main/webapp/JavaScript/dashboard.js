@@ -97,8 +97,8 @@ function viewSuggestion (eventHandler) {
     var suggestion = suggestions[eventHandler.data];
     $("#comment-content").css("border-right-color", suggestion.color);
     $("#comment-text").html(suggestion.content);
-    $("#comment-user-name").html(suggestion.user);
-    $("#comment-profile-picture").attr("src", suggestion.imgSrc);
+    $("#comment-user-name").html(suggestion.user.firstName + " " + suggestion.user.lastName);
+    $("#comment-profile-picture").attr("src", suggestion.user.picturePath);
     $("#comment-date").html(suggestion.timeStamp);
 
     fetchReplies (suggestion.suggestionID);
@@ -201,7 +201,6 @@ function getCodeInd (name) {
 
 //Sends AJAX request to fetch new replies
 function fetchReplies (id) {
-    //showSuggestionsLoading();
     console.log(id);
     $.ajax({
         url: "/user/reply_dispatcher",
@@ -239,8 +238,10 @@ function clearReplies () {
 //Draws one new reply in the suggestion panel
 function drawReply (reply) {
     var newBlock = $(replyBlock).closest(".reply-panel-wrapper");
-    $(newBlock).find(".reply-user-name").html(reply.user);
-    $(newBlock).find(".reply-profile-picture").attr("src", reply.imgSrc);
+    console.log (reply);
+
+    $(newBlock).find(".reply-user-name").html(reply.user.firstName + " " + reply.user.lastName);
+    $(newBlock).find(".reply-profile-picture").attr("src", reply.user.picturePath);
     $(newBlock).find(".reply-text").html(reply.content);
     $(newBlock).find(".reply-date").html(reply.timeStamp);
 

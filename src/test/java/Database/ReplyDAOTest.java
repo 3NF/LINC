@@ -72,17 +72,22 @@ public class ReplyDAOTest {
     }
 
     @Test
-    public void testAddReply() throws SQLException {
+    public void testAddReply() {
         java.util.Date date = new java.util.Date();
-        DAO.addReply("jondo-123", "lalu", "87", date);
-        String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE userId='lalu'";
-        ResultSet resultSet = connection.createStatement().executeQuery(query);
-        if (resultSet.next()) {
-            String userId = resultSet.getString("userId");
-            assertEquals(userId, "lalu");
-        }
-        query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE userId='lalu'";
-        connection.createStatement().execute(query);
+        DAO.addReply("ვერ გავიგე", "2", "6", date);
+        DAO.addReply("მაინც ვერ გავიგე", "2", "6", date);
+
+        DAO.addReply("ვერ გავიგე", "2", "7", date);
+        DAO.addReply("Reply2 sugg2", "2", "7", date);
+
+        DAO.addReply("ვერ გავიგე", "2", "8", date);
+        DAO.addReply("Reply2 sugg3", "2", "8", date);
+
+        DAO.addReply("ვერ გავიგე", "2", "9", date);
+        DAO.addReply("Reply2 sugg4", "2", "9", date);
+
+        DAO.addReply("ვერ გავიგე", "2", "10", date);
+        DAO.addReply("Reply2 sugg5", "2", "10", date);
     }
 
     @Test

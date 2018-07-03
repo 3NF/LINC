@@ -1,5 +1,6 @@
 package Database;
 
+import Data.Suggestion;
 import Models.File;
 import Models.UploadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import static Database.Config.*;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
@@ -37,6 +39,7 @@ public class CodeFilesDAOTest {
     public void testGetFilesContent() {
         try {
             CodeFile codeFile = DAO.getFilesContent("1", "1");
+            System.out.println(codeFile);
             DAO.getAssignmentCodeNames("1");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,6 +54,36 @@ public class CodeFilesDAOTest {
             assignment.addAssignmentFile(new File("temp_code1.cpp","sdsdsdsdss"));
             assignment.addAssignmentFile(new File("temp_code2.cpp","sdsdsdsssdss"));
             DAO.addAssignments("23",assignment);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void addSuggestions1() {
+        try {
+            Suggestion s1 = new Suggestion(Suggestion.SuggestionType.Warning, "1",  "1", "", 1, 4, "Wow, tourist", new java.util.Date());
+            Suggestion s2 = new Suggestion(Suggestion.SuggestionType.Warning, "1",  "1", "", 7, 10, "Good job, tourist", new java.util.Date());
+            Suggestion s3 = new Suggestion(Suggestion.SuggestionType.Error, "1",  "1", "", 15, 100, "This is error, tourist", new java.util.Date());
+
+            DAO.tempSaveSuggestion(s1);
+            DAO.tempSaveSuggestion(s2);
+            DAO.tempSaveSuggestion(s3);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void addSuggestions2() {
+          try {
+            Suggestion s1 = new Suggestion(Suggestion.SuggestionType.Error, "1",  "2", "", 1, 50, "Text1", new java.util.Date());
+            Suggestion s2 = new Suggestion(Suggestion.SuggestionType.Warning, "1",  "2", "", 7, 10, "Text2", new java.util.Date());
+            Suggestion s3 = new Suggestion(Suggestion.SuggestionType.Error, "1",  "2", "", 15, 100, "Text3", new java.util.Date());
+
+            DAO.tempSaveSuggestion(s1);
+            DAO.tempSaveSuggestion(s2);
+            DAO.tempSaveSuggestion(s3);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,2 +1,2 @@
 # LINC
-LINC is a google classroom integrated envirovment for programming courses. It provides flexible way to to correct assagnments for teachers, while also making it easy for students to view corrected assagnment and scores.
+LINC is a Google Classroom integrated environment for programming courses. It provides flexible way for teachers, making it easier to evaluate assignments, while also enhancing suggestion and score viewing experience for students.

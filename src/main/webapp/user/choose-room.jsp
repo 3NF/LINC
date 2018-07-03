@@ -6,6 +6,7 @@
 <%@ page import="Data.Constraints" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link href="Styles/assets/css/bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
 <head>
@@ -35,10 +36,19 @@
 </div>
 
 </body>
-
 <script>
     function enterClasroom(id) {
-        window.location.assign("dashboard.jsp?<%=Constraints.ROOM_ID%>=" + id);
+        $.ajax({
+            url: 'rooms',
+            data: {courseId : id},
+            type: 'GET',
+            success: function (data) {
+                window.location.assign(data);
+            },
+            error: function () {
+                alert('error');
+            }
+        });
     }
 </script>
 </html>

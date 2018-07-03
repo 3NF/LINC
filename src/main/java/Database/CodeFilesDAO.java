@@ -54,14 +54,14 @@ public class CodeFilesDAO {
             int startInd = result.getInt("startInd");
             int endInd = result.getInt("endInd");
             //System.err.println(suggestionId + ' ' + uId + ' ' + type);
-            suggestions.add(new Suggestion(suggestionType,uId,"sds",codeFileId,suggestionId,startInd,endInd,text,date));
+            suggestions.add(new Suggestion(suggestionType,uId, codeFileId,suggestionId,startInd,endInd,text,date));
         }
         statement.close();
         connection.close();
         return new CodeFile(codeContent,codeFileId,fileName,suggestions,codeLang);
     }
 
-    public void tempSave (long userId, long fileID, String content) throws SQLException {
+    public void tempSaveCodeFile (long userId, long fileID, String content) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
         String query = "INSERT INTO code_files (userID, filesID, content) VALUES\n" +
@@ -70,6 +70,25 @@ public class CodeFilesDAO {
         statement.setLong(1, userId);
         statement.setLong(2, fileID);
         statement.setString(3, content);
+
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
+    public void tempSaveSuggestion (Suggestion suggestion) throws SQLException {
+        Connection connection = connectionPool.getConnection();
+
+        String query = "INSERT INTO suggestions (userID, Code_FileID, text, time, type, startInd, endInd) VALUES\n" +
+                "  (?, ?, ?, ?, ?, ?, ?);";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, suggestion.userID);
+        statement.setString(2, suggestion.fileID);
+        statement.setString(3, suggestion.content);
+        statement.setDate(4, new java.sql.Date(suggestion.timeStamp.getTime()));
+        statement.setString(5, suggestion.type.toString());
+        statement.setInt(6, suggestion.startInd);
+        statement.setInt(7, suggestion.endInd);
 
         statement.executeUpdate();
         statement.close();
@@ -111,8 +130,6 @@ public class CodeFilesDAO {
         connection.close();
         //connection.createStatement().execute(query);
     }
-
-
 
     public List<CodeFile.Info> getAssignmentCodeNames(String id) throws SQLException {
         String query = "Select id,name FROM assignment_files where assignmentID=?";

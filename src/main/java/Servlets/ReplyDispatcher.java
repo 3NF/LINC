@@ -1,12 +1,10 @@
 package Servlets;
 
-import Database.CodeManager;
-import HelperClasses.Validate;
+import Database.ReplyDAO;
 import Models.Reply;
 import Models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpStatus;
 
@@ -35,16 +33,11 @@ public class ReplyDispatcher extends HttpServlet
             System.out.println(data);
             String suggestionID = data.get("suggestionID").getAsString();
 
+            //Get ReplyDAO
+            ReplyDAO replyDAO = (ReplyDAO)request.getServletContext().getAttribute("ReplyDAO");
+
             //Get replies from database
-            //TODO: Get replies from DAO
-
-            //Temporary, works while implementation with DAO
-
-            ArrayList<Reply> replies = new ArrayList<>();
-            Reply reply1 = new Reply("123", "123", "Gvantsa Tsutskhashvili", "https://api.adorable.io/avatars/285/gvantsa-tsutskhashvili.png", "ვერ გავგე", new Date());
-            Reply reply2 = new Reply("123", "123", "Gvantsa Tsutskhashvili", "https://api.adorable.io/avatars/285/gvantsa-tsutskhashvili.png", "*ვერ გავიგე", new Date());
-            replies.add(reply1);
-            replies.add(reply2);
+            List<Reply> replies = replyDAO.getSuggestionReplies(suggestionID);
 
             //Convert file data into JSON
             String json = new GsonBuilder().disableHtmlEscaping().create().toJson(replies);

@@ -1,9 +1,6 @@
 package Servlets;
 
-import Database.CodeFile;
 import Database.CodeFilesDAO;
-import Database.CodeManager;
-import HelperClasses.Validate;
 import Models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,12 +16,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static Data.Constraints.USER;
+
 @WebServlet(name = "CodeDispatcher", urlPatterns = "/user/code_dispatcher")
 public class CodeDispatcher extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-
         try {
             //Temporary
             User user = null;
@@ -32,7 +29,6 @@ public class CodeDispatcher extends HttpServlet
             //Get request data
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
             String json;
-            System.out.println(1);
             if (data.has("assignmentID")){
                 json = loadCodeNames(data,request);
             }
@@ -52,9 +48,11 @@ public class CodeDispatcher extends HttpServlet
 
     private String loadCodeWithID(JsonObject data,HttpServletRequest request){
         String codeId = data.get("codeID").getAsString();
+        HttpSession session = request.getSession();
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute("CodeFilesDAO");
         try {
-            return new GsonBuilder().create().toJson(codeFilesDAO.getFilesContent("1", codeId));
+            User user = (User) session.getAttribute(USER);
+            return new GsonBuilder().create().toJson(codeFilesDAO.getFilesContent(user.getUserId(), codeId));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

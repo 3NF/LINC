@@ -9,10 +9,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
-import com.google.api.services.classroom.model.Course;
-import com.google.api.services.classroom.model.ListCoursesResponse;
-import com.google.api.services.classroom.model.ListStudentSubmissionsResponse;
-import com.google.api.services.classroom.model.Teacher;
+import com.google.api.services.classroom.model.*;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -138,6 +135,14 @@ public class GAPIManager {
             if (course.getOwnerId() == user.getUserId()){
                 return DBManager.Role.Teacher;
             }
+
+            List<Teacher> teachers = getTeachers(user, courseId);
+            for (Teacher teacher : teachers){
+                if (teacher.getUserId() == user.getUserId())
+                    return DBManager.Role.TeacherAssistant;
+            }
+
+            return DBManager.Role.Guest;
         } catch (Exception e) {
             e.printStackTrace();
         }
