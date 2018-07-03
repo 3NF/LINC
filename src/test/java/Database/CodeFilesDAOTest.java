@@ -1,7 +1,8 @@
 package Database;
 
-import Data.Suggestion;
+import Models.CodeFile;
 import Models.File;
+import Models.Suggestion;
 import Models.UploadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;

@@ -71,6 +71,7 @@ public class ReplyDAOTest {
         deleteFromDataBase("-3");
     }
 
+    /*
     @Test
     public void testAddReply() {
         java.util.Date date = new java.util.Date();

@@ -3,6 +3,7 @@ package Servlets;
 import Database.AssignmentInfoDAO;
 import Database.GAPIManager;
 import Models.User;
+import com.google.api.services.classroom.model.Course;
 import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -40,7 +41,7 @@ public class AddAssignmentServletTest {
         HttpServletRequest req = mock(HttpServletRequest.class);
         when(req.getParameter(USER_ID_TOKEN)).thenReturn("-");
         when(req.getParameter(ASSIGNMENT)).thenReturn("-");
-        when(req.getParameter(ROOM_ID)).thenReturn("-");
+        when(req.getParameter(COURSE_ID)).thenReturn("-");
         when(req.getParameter(ASSIGNMENT_ID)).thenReturn("-");
 
         ServletContext context = mock(ServletContext.class);
@@ -75,7 +76,7 @@ public class AddAssignmentServletTest {
         HttpServletRequest req = mock(HttpServletRequest.class);
         when(req.getParameter(USER_ID_TOKEN)).thenReturn("-");
         when(req.getParameter(ASSIGNMENT)).thenReturn("-");
-        when(req.getParameter(ROOM_ID)).thenReturn("-");
+        when(req.getParameter(COURSE_ID)).thenReturn("-");
         when(req.getParameter(ASSIGNMENT_ID)).thenReturn("-");
 
         ServletContext context = mock(ServletContext.class);
@@ -110,7 +111,7 @@ public class AddAssignmentServletTest {
         HttpServletRequest req = mock(HttpServletRequest.class);
         when(req.getParameter(USER_ID_TOKEN)).thenReturn("-");
         when(req.getParameter(ASSIGNMENT)).thenReturn("");
-        when(req.getParameter(ROOM_ID)).thenReturn("-");
+        when(req.getParameter(COURSE_ID)).thenReturn("-");
         when(req.getParameter(ASSIGNMENT_ID)).thenReturn("-");
 
         ServletContext context = mock(ServletContext.class);
