@@ -215,7 +215,6 @@ public class GAPIManager {
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-
             List<Teacher> teachers = service.courses().teachers().list(courseID).execute().getTeachers();
 
             return teachers;
