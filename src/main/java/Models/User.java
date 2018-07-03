@@ -1,45 +1,34 @@
 package Models;
 
 
-public class User {
-    private String firstName;
-    private String lastName;
+public class User extends UserMini {
     private String email;
     private String userId;
-    private String picturePath;
     private String idToken;
     private String accessToken;
     private String refreshToken;
 
-    public User(String email, String FirstName, String lastName, String userId, String picturePath, String accessToken, String refreshToken)
+    public User(String email, String firstName, String lastName, String userId, String picturePath, String accessToken, String refreshToken)
     {
-        this.firstName = FirstName;
-        this.email = email;
-        this.lastName = lastName;
+        super(firstName, lastName, picturePath);
         this.userId = userId;
-        this.picturePath = picturePath;
+
+
+        this.email = email;
         this.idToken = idToken;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
 
     public User(String userId,String email,String picturePath){
+        super( null, null, picturePath);
         this.userId = userId;
         this.email = email;
-        this.picturePath = picturePath;
     }
 
-    public User(String userId){
+    public User(String userId) {
+        super(null, null, null);
         this.userId = userId;
-    }
-    public String getFirstName()
-    {
-        return this.firstName;
-    }
-
-    public String getLastName()
-    {
-        return this.lastName;
     }
 
     public String getEmail()
@@ -50,11 +39,6 @@ public class User {
     public String getUserId()
     {
         return userId;
-    }
-
-    public String getPicturePath()
-    {
-        return picturePath;
     }
 
     public String getIdToken()
