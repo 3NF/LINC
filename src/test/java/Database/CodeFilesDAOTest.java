@@ -61,6 +61,7 @@ public class CodeFilesDAOTest {
         }
     }
 
+    /*
     @Test
     public void addSuggestions1() {
         try {
@@ -91,6 +92,7 @@ public class CodeFilesDAOTest {
         }
     }
 
+*/
 
     private void deleteAllUserAssigment(String userID) throws SQLException {
         connection = source.getConnection();
