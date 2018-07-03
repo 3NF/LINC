@@ -229,9 +229,20 @@ public class GAPIManager {
         }
     }
 
-    // TODO: 6/30/18 implement this method 
-    public boolean isInRoom(String userID, String classRoomID) {
-        return true;
+    public boolean isInRoom(User user, String courseID) {
+        try
+        {
+            String accessToken = user.getAccessToken();
+            GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
+            Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+
+            System.out.println(service.courses().students().list(courseID));
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 

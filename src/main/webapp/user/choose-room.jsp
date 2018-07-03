@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="static Data.Constraints.USER" %>
 <%@ page import="Data.Constraints" %>
+<%@ page import="static Data.Constraints.COURSE_ID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link href="Styles/assets/css/bootstrap.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -38,9 +39,10 @@
 </body>
 <script>
     function enterClasroom(id) {
+        console.log(id);
         $.ajax({
             url: 'rooms',
-            data: {courseId : id},
+            data: {room : id},
             type: 'GET',
             success: function (data) {
                 window.location.assign(data);

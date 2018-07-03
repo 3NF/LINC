@@ -20,7 +20,7 @@ public class Constraints {
 	/**
 	 *
 	 */
-	public static final String ROOM_ID = "room-id";
+	public static final String COURSE_ID = "room-id";
 	public static final String ASSIGNMENT_ID = "assignment-id";
 
 	/**
@@ -30,13 +30,5 @@ public class Constraints {
 	public static final String USER = "user";
 	public static final String USER_ID_TOKEN = "user_id_token";
 
-
-
-	/**
-	 *
-	 */
-	public static final String MISSING_FILES = "missing";
-	public static final String EXTRA_FILES = "extra";
-	public static final String ERROR_MESSAGE = "error-message";
 
 }

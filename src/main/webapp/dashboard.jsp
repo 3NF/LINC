@@ -1,5 +1,5 @@
 <%@ page import="static Data.Constraints.USER_ID_TOKEN" %>
-<%@ page import="static Data.Constraints.ROOM_ID" %><%--
+<%@ page import="static Data.Constraints.COURSE_ID" %><%--
   Created by IntelliJ IDEA.
   User: Luka Tchumburidze
   Date: 6/9/18

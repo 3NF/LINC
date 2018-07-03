@@ -29,13 +29,4 @@ public class MainListener implements ServletContextListener {
     }
 
 
-    private class AssignmentDownloader implements Runnable {
-
-        @Override
-        public void run() {
-
-        }
-    }
-
-
 }

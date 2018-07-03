@@ -7,15 +7,19 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import static Data.Constraints.*;
 
 public class AddAssignmentResponse {
 
+    public static final String MISSING_FILES = "missing";
+    public static final String EXTRA_FILES = "extra";
+    public static final String ERROR_MESSAGE = "error-message";
+
+
     public enum ErrorMessage {
         InvalidUser,
-        AssignmentForbidden
+        AssignmentForbidden,
+        WrongFiles,
+        Success
     }
 
     /**

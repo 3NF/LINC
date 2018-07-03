@@ -3,14 +3,10 @@
 <%@ page import="Models.User" %>
 <%@ page import="Data.Constraints" %>
 <%@ page import="static Data.Constraints.USER" %>
+<%@ page import="Database.GAPIManager" %>
 <html>
 
 <head>
-    <% if (!Validate.isLogged(request.getSession())) {
-            response.sendRedirect("../loginPage.jsp");
-            return;
-        };
-    %>
     <title>LINC Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +41,10 @@
     <link rel = "stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
-    <% String courseId = request.getParameter(Constraints.ROOM_ID); %>
+    <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
+    <%
+        GAPIManager.getInstance().isInRoom(user, courseId);
+    %>
 
 </head>
 
