@@ -59,7 +59,7 @@ public class CodeFilesDAOTest {
         }
     }
 
-    @Test
+/*    @Test
     public void addSuggestions1() {
         try {
             Suggestion s1 = new Suggestion(Suggestion.SuggestionType.Warning, "1",  "1", "", 1, 4, "Wow, tourist", new java.util.Date());
@@ -87,5 +87,5 @@ public class CodeFilesDAOTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

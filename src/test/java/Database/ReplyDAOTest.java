@@ -52,7 +52,7 @@ public class ReplyDAOTest {
         statement.execute(query);
     }
 
-    @Test
+/*    @Test
     public void testGetSuggestionReplys() throws SQLException {
         insertIntoDataBase("-1", "2323", "232", "-1");
         insertIntoDataBase("-2", "2323", "232", "-1");
@@ -87,7 +87,7 @@ public class ReplyDAOTest {
 
         DAO.addReply("ვერ გავიგე", "2", "10", date);
         DAO.addReply("Reply2 sugg5", "2", "10", date);
-    }
+    }*/
 
     @Test
     public void testDeleteReply() throws SQLException {

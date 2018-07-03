@@ -45,7 +45,7 @@ public class CodeFilesDAO {
         result = statement.executeQuery();
         List<Suggestion> suggestions = new ArrayList<>();
         while (result.next()){
-            String suggestionId = result.getString("suggestionID");
+            String suggestionId = result.getString("id");
             String uId = result.getString("userId");
             String text = result.getString("text");
             String type = result.getString("type");
