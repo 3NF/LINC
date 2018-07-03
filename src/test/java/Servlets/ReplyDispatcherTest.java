@@ -5,7 +5,12 @@ import Database.ConnectionPool;
 import Database.ReplyDAO;
 import Models.Reply;
 import Models.User;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static Data.Constraints.USER;
 import static Database.Config.*;
@@ -46,8 +52,10 @@ public class ReplyDispatcherTest {
     }
 
     @Test
-    public void test1() throws ServletException, IOException {
-        String json = "{\"suggestionID\":6, \"amount\":222}";
+    public void test1() throws ServletException, IOException, SQLException, JSONException {
+        ReplyDAO DAO = new ReplyDAO(source);
+        DAO.addReply("asdd","asd","-12");
+        String json = "{\"suggestionID\":-12, \"amount\":222}";
         when(request.getSession()).thenReturn(session);
         when(request.getReader()).thenReturn(
                 new BufferedReader(new StringReader(json)));
@@ -58,6 +66,11 @@ public class ReplyDispatcherTest {
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
         new ReplyDispatcher().doPost(request, response);
         System.out.println(response_writer.toString());
-
+        JSONArray array = new JSONArray(response_writer.toString());
+        JSONObject jsonobject = array.getJSONObject(0);
+        assertEquals(jsonobject.get("suggestionID"),"-12");
+        assertEquals(jsonobject.get("userID"),"asd");
+        String query = "DELETE FROM replies WHERE suggestionID=-12";
+        source.getConnection().createStatement().execute(query);
     }
 }
