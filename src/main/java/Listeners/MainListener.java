@@ -1,18 +1,14 @@
 package Listeners;
 
 import Database.*;
+import Database.CodeFilesDAO;
+import Database.ConnectionPool;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
-import static Data.Constraints.ASSIGNMENT_INFO_DAO;
-import static Data.Constraints.CODE_FILES_DAO;
-import static Data.Constraints.GAPI_MANAGER;
+import static Data.Constraints.*;
 
 
 @WebListener()
@@ -26,6 +22,7 @@ public class MainListener implements ServletContextListener {
         sce.getServletContext().setAttribute(CODE_FILES_DAO, new CodeFilesDAO(ConnectionPool.getInstance()));
         sce.getServletContext().setAttribute(GAPI_MANAGER, GAPIManager.getInstance());
         sce.getServletContext().setAttribute(ASSIGNMENT_INFO_DAO, new AssignmentInfoDAO(ConnectionPool.getInstance()));
+        sce.getServletContext().setAttribute(REPLY_DAO, new ReplyDAO(ConnectionPool.getInstance()));
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

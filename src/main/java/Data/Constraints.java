@@ -3,11 +3,13 @@ package Data;
 public class Constraints {
 
 	/**
-	 * Attribute name for userdao object in servlet context
+	 *
 	 */
 	public static final String USERDAO_NAME = "UserDAO";
 	public static final String ASSIGNMENT_INFO_DAO = "ass_info_dao";
 	public static final String GAPI_MANAGER = "GAPIManager";
+	public static final String CODE_FILES_DAO = "CodeFilesDAO";
+	public static final String REPLY_DAO = "ReplyDAO";
 
 	/**
 	 * Google client ID
@@ -16,10 +18,10 @@ public class Constraints {
 
 
 	/**
-	 * Course_id's parameter name in request
+	 *
 	 */
-	public static final String ROOM_ID = "roomID";
-	public static final String ASSIGNMENT_ID = "assignmentID";
+	public static final String ROOM_ID = "room-id";
+	public static final String ASSIGNMENT_ID = "assignment-id";
 
 	/**
 	 *
