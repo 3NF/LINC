@@ -30,6 +30,9 @@ public class Reply {
         this.user = new User("gtsut16@freeuni.edu.ge", "Gvantsa",  "Tsutskhashvili", userID, "https://api.adorable.io/avatars/285/gvantsa-tsutskhashvili.png", "0", "0");
     }
 
+    public Date getDate(){
+        return timeStamp;
+    }
     public String getSuggestionID(){
         return suggestionID;
     }

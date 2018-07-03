@@ -11,7 +11,7 @@ import java.util.List;
 public class ReplyDAO {
 
     private final MysqlDataSource connectionPool;
-
+    private final String replies = "replies";
     /**
      * Constructor of StudentDAo class
      *
@@ -35,7 +35,7 @@ public class ReplyDAO {
 
         try {
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE suggestionID=" + id + " order by id";
+            String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE suggestionID=" + id + " order by id";
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String replyId = result.getString("id");
@@ -62,7 +62,7 @@ public class ReplyDAO {
     }
 
 
-    public void addReply(String text, String userId, String suggestionId, Date date) {
+    public void addReply(String text, String userId, String suggestionId) {
         Connection connection;
         try {
             connection = connectionPool.getConnection();
@@ -71,14 +71,14 @@ public class ReplyDAO {
             return;
         }
         PreparedStatement statement;
-        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".replies(userid,text,suggestionid,date) VALUES(?,?,?,?)";
+        String query = "INSERT INTO " + replies + " (userid,text,suggestionid,date) VALUES(?,?,?,?)";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, userId);
             statement.setString(2, text);
             statement.setString(3, suggestionId);
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            statement.setDate(4, sqlDate);
+            java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            statement.setTimestamp(4, timestamp);
             statement.executeUpdate();
             statement.close();
             connection.close();
@@ -98,7 +98,7 @@ public class ReplyDAO {
             return;
         }
         PreparedStatement statement;
-        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE id=?";
+        String query = "DELETE FROM " + replies +  " WHERE id=?";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, replyId);

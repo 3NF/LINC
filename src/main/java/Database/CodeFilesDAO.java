@@ -1,24 +1,22 @@
 package Database;
 
-import Models.Suggestion;
-import Models.CodeFile;
-import Models.File;
-import Models.UploadedAssignment;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
+        import Data.Suggestion;
+        import Models.File;
+        import Models.UploadedAssignment;
+        import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+        import java.sql.Connection;
+        import java.sql.PreparedStatement;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.util.*;
 
 public class CodeFilesDAO {
     private final MysqlDataSource connectionPool;
-
     public CodeFilesDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
     }
 
-    public CodeFile getFilesContent(String userId, String FileId) throws SQLException {
+    public CodeFile getFilesContent(String userId,String FileId) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
         String query = "SELECT assignment_files.lang,assignment_files.name,code_files.content,code_files.id FROM assignment_files inner join " +
@@ -86,7 +84,7 @@ public class CodeFilesDAO {
         statement.setString(1, suggestion.userID);
         statement.setString(2, suggestion.fileID);
         statement.setString(3, suggestion.content);
-        statement.setDate(4, new java.sql.Date(suggestion.timeStamp.getTime()));
+        statement.setTimestamp(4, new java.sql.Timestamp(suggestion.timeStamp.getTime()));
         statement.setString(5, suggestion.type.toString());
         statement.setInt(6, suggestion.startInd);
         statement.setInt(7, suggestion.endInd);
@@ -113,13 +111,12 @@ public class CodeFilesDAO {
         return fileId;
     }
 
-    // TODO: 6/30/18 giorgi 
+    // TODO: 6/30/18 giorgi
     public void addAssignments(String userID, UploadedAssignment assignment) throws SQLException {
         HashMap<String,String> fileId = getIdNameMap(assignment);
         Connection connection = connectionPool.getConnection();
         String query = "INSERT INTO code_files(userID,filesID,content) VALUES(?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
-        boolean isFirst = true;
         for (Object file: assignment) {
             statement.setString(1, userID);
             statement.setString(2, fileId.get(((File) file).getFileName()));
@@ -132,11 +129,11 @@ public class CodeFilesDAO {
         //connection.createStatement().execute(query);
     }
 
-    public List<CodeFile.Info> getAssignmentCodeNames(String id) throws SQLException {
+    public List<CodeFile.Info> getAssignmentCodeNames(String assigmentId) throws SQLException {
         String query = "Select id,name FROM assignment_files where assignmentID=?";
         Connection connection = connectionPool.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1,id);
+        statement.setString(1,assigmentId);
         ResultSet result = statement.executeQuery();
         List <CodeFile.Info> codeFileNames = new ArrayList<CodeFile.Info>();
         while (result.next()){

@@ -52,6 +52,7 @@ public class CodeDispatcher extends HttpServlet
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute("CodeFilesDAO");
         try {
             User user = (User) session.getAttribute(USER);
+            // in userid "1" should be a user.getUserId
             return new GsonBuilder().create().toJson(codeFilesDAO.getFilesContent("1", codeId));
         } catch (SQLException e) {
             e.printStackTrace();
