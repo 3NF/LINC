@@ -9,7 +9,7 @@ public class Reply {
     private String suggestionID;
     private String replyID;
     private String userID;
-    private User user;
+    private UserMini user;
 
     //Information about reply
     private String content;
@@ -26,8 +26,8 @@ public class Reply {
     }
 
     private void getUserObject () {
-        //Tempprary
-        this.user = new User("gtsut16@freeuni.edu.ge", "Gvantsa",  "Tsutskhashvili", userID, "https://api.adorable.io/avatars/285/gvantsa-tsutskhashvili.png", "0", "0");
+        //Temporary
+        this.user = (UserMini)new User("gtsut16@freeuni.edu.ge", "Gvantsa",  "Tsutskhashvili", userID, "https://api.adorable.io/avatars/285/gvantsa-tsutskhashvili.png", "0", "0");
     }
 
     public Date getDate(){
