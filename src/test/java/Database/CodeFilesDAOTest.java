@@ -11,6 +11,7 @@ import static Database.Config.*;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
@@ -40,7 +41,6 @@ public class CodeFilesDAOTest {
         try {
             CodeFile codeFile = DAO.getFilesContent("1", "1");
             System.out.println(codeFile);
-            DAO.getAssignmentCodeNames("1");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,7 +53,8 @@ public class CodeFilesDAOTest {
             UploadedAssignment assignment = new UploadedAssignment("1");
             assignment.addAssignmentFile(new File("temp_code1.cpp","sdsdsdsdss"));
             assignment.addAssignmentFile(new File("temp_code2.cpp","sdsdsdsssdss"));
-            DAO.addAssignments("23",assignment);
+            DAO.addAssignments("-1",assignment);
+            deleteAllUserAssigment("-1");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -87,5 +88,14 @@ public class CodeFilesDAOTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void deleteAllUserAssigment(String userID) throws SQLException {
+        connection = source.getConnection();
+        String query = "DELETE FROM code_files WHERE userID=?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1,userID);
+        statement.executeUpdate();
     }
 }
