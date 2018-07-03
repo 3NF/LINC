@@ -1,6 +1,7 @@
 package Database;
 
-import Data.Suggestion;
+import Models.Suggestion;
+import Models.CodeFile;
 import Models.File;
 import Models.UploadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
@@ -17,7 +18,7 @@ public class CodeFilesDAO {
         this.connectionPool = connectionPool;
     }
 
-    public CodeFile getFilesContent(String userId,String FileId) throws SQLException {
+    public CodeFile getFilesContent(String userId, String FileId) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
         String query = "SELECT assignment_files.lang,assignment_files.name,code_files.content,code_files.id FROM assignment_files inner join " +
