@@ -35,14 +35,14 @@ public class ReplyDAO {
 
         try {
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM " + replies + " WHERE suggestionID=" + id + " order by id";
+            String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE suggestionID=" + id + " order by id";
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String replyId = result.getString("id");
                 String userId = result.getString("userId");
                 String content = result.getString("text");
                 String suggestionId = result.getString("suggestionID");
-                Date date = new Date(result.getTimestamp("date").getTime());
+                Date date = new Date(result.getDate("date").getTime());
                 suggestionsReply.add(new Reply(suggestionId, replyId, userId, content, date));
             }
             statement.close();

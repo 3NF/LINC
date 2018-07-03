@@ -91,7 +91,8 @@ public class DBManager
     }
     
     public static Role getRoleByCourse(User user, String courseId) {
-        Role role = Role.Pupil;// = GAPIManager.getRoleByCourse(user , courseId);
+        GAPIManager gp = GAPIManager.getInstance();
+        Role role = gp.getRoleByCourse(user , courseId);
         if (role != Role.Guest)
             return role;
         if (isTeacherAssistant(user , courseId))

@@ -40,7 +40,7 @@
     function enterClasroom(id) {
         $.ajax({
             url: 'rooms',
-            data: {courseId : id},
+            data: {courseID : id},
             type: 'GET',
             success: function (data) {
                 window.location.assign(data);

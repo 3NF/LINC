@@ -34,7 +34,7 @@ public class ReplyDAOTest {
     }
 
     private void insertIntoDataBase(String id, String userId, String text, String suggestionId) throws SQLException {
-        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".replies(id,userid,text,suggestionid,date) VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".reply(id,userid,text,suggestionid,date) VALUES(?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, id);
         statement.setString(2, userId);
@@ -42,14 +42,14 @@ public class ReplyDAOTest {
         statement.setString(4, suggestionId);
 
         java.util.Date date = new java.util.Date();
-        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
-        statement.setTimestamp(5, sqlDate);
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        statement.setDate(5, sqlDate);
         statement.executeUpdate();
     }
 
     private void deleteFromDataBase(String id) throws SQLException {
         Statement statement = connection.createStatement();
-        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE id=" + id;
+        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE id=" + id;
         statement.execute(query);
     }
 
@@ -74,21 +74,21 @@ public class ReplyDAOTest {
     @Test
     public void testAddReply() {
         java.util.Date date = new java.util.Date();
-        DAO.addReply("ვერ გავიგე", "2", "6");
-        DAO.addReply("მაინც ვერ გავიგე", "2", "6");
+        DAO.addReply("ვერ გავიგე", "2", "6", date);
+        DAO.addReply("მაინც ვერ გავიგე", "2", "6", date);
 
-        DAO.addReply("ვერ გავიგე", "2", "7");
-        DAO.addReply("Reply2 sugg2", "2", "7");
+        DAO.addReply("ვერ გავიგე", "2", "7", date);
+        DAO.addReply("Reply2 sugg2", "2", "7", date);
 
-        DAO.addReply("ვერ გავიგე", "2", "8");
-        DAO.addReply("Reply2 sugg3", "2", "8");
+        DAO.addReply("ვერ გავიგე", "2", "8", date);
+        DAO.addReply("Reply2 sugg3", "2", "8", date);
 
-        DAO.addReply("ვერ გავიგე", "2", "9");
-        DAO.addReply("Reply2 sugg4", "2", "9");
+        DAO.addReply("ვერ გავიგე", "2", "9", date);
+        DAO.addReply("Reply2 sugg4", "2", "9", date);
 
-        DAO.addReply("ვერ გავიგე", "2", "10");
-        DAO.addReply("Reply2 sugg5", "2", "10");
-    }
+        DAO.addReply("ვერ გავიგე", "2", "10", date);
+        DAO.addReply("Reply2 sugg5", "2", "10", date);
+    }*/
 
     @Test
     public void testDeleteReply() throws SQLException {

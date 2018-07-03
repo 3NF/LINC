@@ -3,7 +3,7 @@ package Data;
 public class Constraints {
 
 	/**
-	 *
+	 * Attribute name for userdao object in servlet context
 	 */
 	public static final String USERDAO_NAME = "UserDAO";
 	public static final String ASSIGNMENT_INFO_DAO = "ass_info_dao";
@@ -18,10 +18,10 @@ public class Constraints {
 
 
 	/**
-	 *
+	 * Course_id's parameter name in request
 	 */
-	public static final String ROOM_ID = "room-id";
-	public static final String ASSIGNMENT_ID = "assignment-id";
+	public static final String COURSE_ID = "courseID";
+	public static final String ASSIGNMENT_ID = "assignmentID";
 
 	/**
 	 *

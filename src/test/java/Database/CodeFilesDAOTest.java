@@ -41,6 +41,7 @@ public class CodeFilesDAOTest {
         try {
             CodeFile codeFile = DAO.getFilesContent("1", "1");
             System.out.println(codeFile);
+            DAO.getAssignmentCodeNames("1");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,8 +54,7 @@ public class CodeFilesDAOTest {
             UploadedAssignment assignment = new UploadedAssignment("1");
             assignment.addAssignmentFile(new File("temp_code1.cpp","sdsdsdsdss"));
             assignment.addAssignmentFile(new File("temp_code2.cpp","sdsdsdsssdss"));
-            DAO.addAssignments("-1",assignment);
-            deleteAllUserAssigment("-1");
+            DAO.addAssignments("23",assignment);
         } catch (SQLException e) {
             e.printStackTrace();
         }

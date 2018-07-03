@@ -18,7 +18,7 @@ public class RoomServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String courseId = (String) request.getAttribute(Constraints.ROOM_ID);
+        String courseId = (String) request.getParameter(Constraints.COURSE_ID);
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         DBManager.Role userRole = DBManager.getRoleByCourse(user , courseId);
         String url = "";
@@ -27,14 +27,14 @@ public class RoomServlet extends HttpServlet {
                 url = "choose-room.jsp";
                 break;
             case Pupil:
-                url = "/user/dashboard.jsp?" + Constraints.ROOM_ID + "=" + courseId;
+                url = "/user/dashboard.jsp?" + Constraints.COURSE_ID + "=" + courseId;
                 break;
             case Teacher:
-                url = "teacher-dashboard.jsp?" + Constraints.ROOM_ID + "=" + courseId;
+                url = "teacher-dashboard.jsp?" + Constraints.COURSE_ID + "=" + courseId;
                 break;
             case SeminarReader :
             case TeacherAssistant :
-                url = "assistant-dashboard.jsp?" + Constraints.ROOM_ID + "=" + courseId;
+                url = "assistant-dashboard.jsp?" + Constraints.COURSE_ID + "=" + courseId;
                 break;
         }
         response.setContentType("text/html;charset = UTF-8");
