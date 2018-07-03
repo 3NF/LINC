@@ -4,12 +4,13 @@ package Models;
 public class User {
     private String firstName;
     private String lastName;
-    private String email;
-    private String userId;
     private String picturePath;
-    private String idToken;
-    private String accessToken;
-    private String refreshToken;
+
+    private transient String email;
+    private transient String userId;
+    private transient String idToken;
+    private transient String accessToken;
+    private transient String refreshToken;
 
     public User(String email, String FirstName, String lastName, String userId, String picturePath, String accessToken, String refreshToken)
     {
