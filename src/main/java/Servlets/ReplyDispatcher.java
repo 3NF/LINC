@@ -35,12 +35,16 @@ public class ReplyDispatcher extends HttpServlet
 
             //Get ReplyDAO
             ReplyDAO replyDAO = (ReplyDAO)request.getServletContext().getAttribute("ReplyDAO");
+            System.out.println(1);
 
             //Get replies from database
             List<Reply> replies = replyDAO.getSuggestionReplies(suggestionID);
 
+            System.out.println(2);
             //Convert file data into JSON
             String json = new GsonBuilder().disableHtmlEscaping().create().toJson(replies);
+
+            System.out.println(3);
 
             //Send response to client
             response.setContentType("application/json");
