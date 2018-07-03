@@ -16,7 +16,7 @@ public class Suggestion {
     public String userID;
     public String fileID;
     public String suggestionID;
-    private UserMini user;
+    private User user;
 
     //Information about suggestion content
     public String content;
@@ -40,7 +40,7 @@ public class Suggestion {
 
     private void getUserObject () {
         //Temporary
-        this.user = (UserMini)new User("lchum16@freeuni.edu.ge", "Luka",  "Tchumburidze", userID, "https://api.adorable.io/avatars/285/luka-tchumburidze.png", "0", "0");
+        this.user = new User("lchum16@freeuni.edu.ge", "Luka",  "Tchumburidze", userID, "https://api.adorable.io/avatars/285/luka-tchumburidze.png", "0", "0");
     }
 
     /**
