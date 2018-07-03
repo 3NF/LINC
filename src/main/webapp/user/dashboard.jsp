@@ -45,7 +45,7 @@
     <link rel = "stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
-    <% String courseId = request.getParameter(Constraints.ROOM_ID); %>
+    <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
 
 </head>
 

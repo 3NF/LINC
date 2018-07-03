@@ -18,7 +18,7 @@ public class Constraints {
 	/**
 	 * Course_id's parameter name in request
 	 */
-	public static final String ROOM_ID = "roomID";
+	public static final String COURSE_ID = "courseID";
 	public static final String ASSIGNMENT_ID = "assignmentID";
 
 	/**

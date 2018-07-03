@@ -9,7 +9,10 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
-import com.google.api.services.classroom.model.*;
+import com.google.api.services.classroom.model.Course;
+import com.google.api.services.classroom.model.ListCoursesResponse;
+import com.google.api.services.classroom.model.ListStudentSubmissionsResponse;
+import com.google.api.services.classroom.model.Teacher;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -131,25 +134,19 @@ public class GAPIManager {
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-            Course course = service.courses().get(courseId).execute();
-
-            if (course.getOwnerId() == user.getUserId()){
-                return DBManager.Role.Teacher;
-            }
-
             List<Teacher> teachers = getTeachers(user, courseId);
-            for (Teacher teacher : teachers){
-                if (teacher.getUserId() == user.getUserId())
-                    return DBManager.Role.TeacherAssistant;
+            if(teachers != null) {
+                for (Teacher teacher : teachers) {
+                    if (teacher.getUserId() == user.getUserId())
+                        return DBManager.Role.Teacher;
+                }
             }
-
-            return DBManager.Role.Guest;
+            return DBManager.Role.Pupil;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return DBManager.Role.Guest;
     }
-
 
     private List<Course> getUserRooms(User user, boolean activeOnly)
     {
@@ -219,7 +216,6 @@ public class GAPIManager {
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-
             List<Teacher> teachers = service.courses().teachers().list(courseID).execute().getTeachers();
 
             return teachers;

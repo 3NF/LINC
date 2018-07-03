@@ -65,7 +65,7 @@ public class AddAssignmentServlet extends HttpServlet {
         AssignmentInfoDAO dao = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO);
         User user = gapiManager.getUser((String) request.getAttribute(USER_ID_TOKEN));
         String assignment = (String) request.getAttribute(ASSIGNMENT);
-        String roomID = (String) request.getAttribute(ROOM_ID);
+        String courseID = (String) request.getAttribute(COURSE_ID);
         String assignmentID = (String) request.getAttribute(ASSIGNMENT_ID);
 
         AddAssignmentResponse res = new AddAssignmentResponse();
@@ -77,7 +77,7 @@ public class AddAssignmentServlet extends HttpServlet {
             return;
         }
 
-        if (!gapiManager.isInRoom(user.getUserId(), roomID)) {
+        if (!gapiManager.isInRoom(user.getUserId(), courseID)) {
             res.setMessage(AddAssignmentResponse.ErrorMessage.AssignmentForbidden);
             response.getWriter().write(res.toString());
             return;
@@ -87,7 +87,7 @@ public class AddAssignmentServlet extends HttpServlet {
         JsonArray assignmentJSON = parser.parse(assignment).getAsJsonArray();
 
         List<String> uploadedFiles = JSONArrayToList(assignmentJSON);
-        List<String> assignmentFiles = dao.getAssignmentFilesNames(roomID, assignmentID);
+        List<String> assignmentFiles = dao.getAssignmentFilesNames(courseID, assignmentID);
 
         res.setExtraFiles(getMissingFiles(assignmentFiles, uploadedFiles));
         res.setMissingFiles(getMissingFiles(uploadedFiles, assignmentFiles));
