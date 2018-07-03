@@ -1,6 +1,5 @@
-package Database;
+package Models;
 
-import Data.Suggestion;
 import com.google.gson.Gson;
 
 import java.util.List;

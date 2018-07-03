@@ -39,10 +39,9 @@
 </body>
 <script>
     function enterClasroom(id) {
-        console.log(id);
         $.ajax({
             url: 'rooms',
-            data: {room : id},
+            data: {courseID : id},
             type: 'GET',
             success: function (data) {
                 window.location.assign(data);

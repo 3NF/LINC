@@ -62,7 +62,8 @@ import static Data.Constraints.*;
  */
 
 
-@WebServlet(name = "AddAssignmentServlet")
+
+@WebServlet(name = "AddAssignmentServlet", urlPatterns = {"/add-assignment"})
 public class AddAssignmentServlet extends HttpServlet {
 
 	private List<String> JSONArrayToList(JsonArray arr) {
@@ -90,7 +91,7 @@ public class AddAssignmentServlet extends HttpServlet {
         GAPIManager gapiManager = (GAPIManager) request.getServletContext().getAttribute(GAPI_MANAGER);
         AssignmentInfoDAO dao = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO);
         User user = gapiManager.getUser((String) request.getParameter(USER_ID_TOKEN));
-        String roomID = (String) request.getParameter(COURSE_ID);
+        String courseID = (String) request.getParameter(COURSE_ID);
         String assignmentID = (String) request.getParameter(ASSIGNMENT_ID);
 
         AddAssignmentResponse res = new AddAssignmentResponse();
@@ -101,7 +102,7 @@ public class AddAssignmentServlet extends HttpServlet {
             return;
         }
 
-        if (!gapiManager.isInRoom(user, roomID)) {
+        if (!gapiManager.isInRoom(user, courseID)) {
             res.setMessage(AddAssignmentResponse.ErrorMessage.AssignmentForbidden);
             response.getWriter().write(res.toString());
             return;
@@ -111,7 +112,7 @@ public class AddAssignmentServlet extends HttpServlet {
         JsonArray assignmentJSON = parser.parse(assignment).getAsJsonArray();
 
         List<String> uploadedFiles = JSONArrayToList(assignmentJSON);
-        List<String> assignmentFiles = dao.getAssignmentFilesNames(roomID, assignmentID);
+        List<String> assignmentFiles = dao.getAssignmentFilesNames(courseID, assignmentID);
 
         List<String> missingFiles = getMissingFiles(assignmentFiles, uploadedFiles);
         List<String> extraFiles = getMissingFiles(uploadedFiles, assignmentFiles);

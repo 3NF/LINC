@@ -1,7 +1,8 @@
 package Database;
 
-import Data.Suggestion;
+import Models.CodeFile;
 import Models.File;
+import Models.Suggestion;
 import Models.UploadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
@@ -11,6 +12,7 @@ import static Database.Config.*;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
@@ -59,6 +61,7 @@ public class CodeFilesDAOTest {
         }
     }
 
+    /*
     @Test
     public void addSuggestions1() {
         try {
@@ -87,5 +90,15 @@ public class CodeFilesDAOTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+*/
+
+    private void deleteAllUserAssigment(String userID) throws SQLException {
+        connection = source.getConnection();
+        String query = "DELETE FROM code_files WHERE userID=?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1,userID);
+        statement.executeUpdate();
     }
 }
