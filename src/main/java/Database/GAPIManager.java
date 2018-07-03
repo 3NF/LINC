@@ -92,7 +92,6 @@ public class GAPIManager {
             User us = new User(email, givenName, familyName, sub, pictureUrl, credential.getAccessToken(), credential.getRefreshToken());
             return us;
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

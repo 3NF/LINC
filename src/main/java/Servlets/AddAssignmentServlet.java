@@ -25,24 +25,52 @@ import static Data.Constraints.*;
  * This servlet is for adding assignment files in database
  * You could enter data following way:
  * <p>
- * Attribute USER_ID_TOKEN    -  represents google's token
- * Attribute ASSIGNMENT       -  Json object that stores :
+ * Property user_id_token    -  represents google's token
+ * Property room-id          -  represents google classrooms id
+ * Property assignment-id    -  represents assignment id
+ * Property assignment       -  JsonArray of {file-name, content}
+ *
+ *
+ *
+ * example:
  * {
- * Classroom ID
- * Assignment ID
- * JsonArray of {fileName, content}
+ *
+ *   "user_id_token" : "-",
+ *   "room-id" : "-",
+ *   "assignment-id" : "-",
+ *
+ *
+ *   "assignment": [
+ *     {
+ *       "file-name": "sample.h",
+ *       "content": "asdasd"
+ *     },
+ *     {
+ *       "file-name": "main.h",
+ *       "content": "asdasd"
+ *     },
+ *     {
+ *       "file-name": "main.c",
+ *       "content": "asdasd"
+ *     },
+ *     {
+ *       "file-name": "sample.h",
+ *       "content": "asdasd"
+ *     }
+ *   ]
  * }
  */
 
 
-@WebServlet(name = "AddAssignmentServlet")
+
+@WebServlet(name = "AddAssignmentServlet", urlPatterns = {"/add-assignment"})
 public class AddAssignmentServlet extends HttpServlet {
 
 
-    private List<String> JSONArrayToList(JsonArray arr) {
+    private List<String> getFileNames(JsonArray arr) {
         ArrayList<String> res = new ArrayList<>();
-        for (JsonElement fileName : arr) {
-            res.add(fileName.getAsString());
+        for (JsonElement elem : arr) {
+            res.add(elem.getAsJsonObject().get("file-name").getAsString());
         }
         return res;
     }
@@ -61,15 +89,20 @@ public class AddAssignmentServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
+
+
+        JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+        System.out.println(data);
+
         GAPIManager gapiManager = (GAPIManager) request.getServletContext().getAttribute(GAPI_MANAGER);
         AssignmentInfoDAO dao = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO);
-        User user = gapiManager.getUser((String) request.getAttribute(USER_ID_TOKEN));
-        String assignment = (String) request.getAttribute(ASSIGNMENT);
-        String courseID = (String) request.getAttribute(COURSE_ID);
-        String assignmentID = (String) request.getAttribute(ASSIGNMENT_ID);
+        User user = gapiManager.getUser(data.get(USER_ID_TOKEN).getAsString());
+
+        JsonArray assignment = data.get(ASSIGNMENT).getAsJsonArray();
+        String courseID = data.get(COURSE_ID).getAsString();
+        String assignmentID = data.get(ASSIGNMENT_ID).getAsString();
 
         AddAssignmentResponse res = new AddAssignmentResponse();
-
 
         if (user == null) {
             res.setMessage(AddAssignmentResponse.ErrorMessage.InvalidUser);
@@ -83,10 +116,7 @@ public class AddAssignmentServlet extends HttpServlet {
             return;
         }
 
-        JsonParser parser = new JsonParser();
-        JsonArray assignmentJSON = parser.parse(assignment).getAsJsonArray();
-
-        List<String> uploadedFiles = JSONArrayToList(assignmentJSON);
+        List<String> uploadedFiles = getFileNames(assignment);
         List<String> assignmentFiles = dao.getAssignmentFilesNames(courseID, assignmentID);
 
         res.setExtraFiles(getMissingFiles(assignmentFiles, uploadedFiles));

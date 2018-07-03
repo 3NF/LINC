@@ -35,7 +35,7 @@ public class ReplyDAO {
 
         try {
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE suggestionID=" + id + " order by id";
+            String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE suggestionID=" + id + " order by id";
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String replyId = result.getString("id");
@@ -71,7 +71,7 @@ public class ReplyDAO {
             return;
         }
         PreparedStatement statement;
-        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".reply(userid,text,suggestionid,date) VALUES(?,?,?,?)";
+        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".replies(userid,text,suggestionid,date) VALUES(?,?,?,?)";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, userId);
@@ -98,7 +98,7 @@ public class ReplyDAO {
             return;
         }
         PreparedStatement statement;
-        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE id=?";
+        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE id=?";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, replyId);

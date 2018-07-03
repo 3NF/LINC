@@ -8,6 +8,8 @@ public class Constraints {
 	public static final String USERDAO_NAME = "UserDAO";
 	public static final String ASSIGNMENT_INFO_DAO = "ass_info_dao";
 	public static final String GAPI_MANAGER = "GAPIManager";
+	public static final String CODE_FILES_DAO = "CodeFilesDAO";
+	public static final String REPLY_DAO = "ReplyDAO";
 
 	/**
 	 * Google client ID
