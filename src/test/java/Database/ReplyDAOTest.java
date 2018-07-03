@@ -5,7 +5,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class ReplyDAOTest {
     }
 
     private void insertIntoDataBase(String id, String userId, String text, String suggestionId) throws SQLException {
-        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".reply(id,userid,text,suggestionid,date) VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".replies(id,userid,text,suggestionid,date) VALUES(?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, id);
         statement.setString(2, userId);
@@ -49,7 +48,7 @@ public class ReplyDAOTest {
 
     private void deleteFromDataBase(String id) throws SQLException {
         Statement statement = connection.createStatement();
-        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE id=" + id;
+        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE id=" + id;
         statement.execute(query);
     }
 
@@ -94,7 +93,7 @@ public class ReplyDAOTest {
     public void testDeleteReply() throws SQLException {
         insertIntoDataBase("-1", "2323", "232", "-1");
         DAO.deleteReply("-1");
-        String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE userId='-1'";
+        String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE userId='-1'";
         ResultSet resultSet = connection.createStatement().executeQuery(query);
         if (resultSet.next()) {
             assertEquals(1, 2);
