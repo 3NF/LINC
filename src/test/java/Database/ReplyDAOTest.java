@@ -34,7 +34,7 @@ public class ReplyDAOTest {
     }
 
     private void insertIntoDataBase(String id, String userId, String text, String suggestionId) throws SQLException {
-        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".reply(id,userid,text,suggestionid,date) VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".replies(id,userid,text,suggestionid,date) VALUES(?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, id);
         statement.setString(2, userId);
@@ -49,7 +49,7 @@ public class ReplyDAOTest {
 
     private void deleteFromDataBase(String id) throws SQLException {
         Statement statement = connection.createStatement();
-        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".reply WHERE id=" + id;
+        String query = "DELETE FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE id=" + id;
         statement.execute(query);
     }
 
