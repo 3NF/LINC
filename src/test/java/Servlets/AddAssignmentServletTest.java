@@ -126,8 +126,6 @@ public class AddAssignmentServletTest {
 
         when(req.getParameter(ASSIGNMENT)).thenReturn(String.valueOf(jaB));
         when(req.getParameter(COURSE_ID)).thenReturn("-");
-        when(req.getParameter(ASSIGNMENT)).thenReturn("");
-        when(req.getParameter(COURSE_ID)).thenReturn("-");
         when(req.getParameter(ASSIGNMENT_ID)).thenReturn("-");
 
         ServletContext context = mock(ServletContext.class);
