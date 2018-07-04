@@ -31,7 +31,7 @@ const warningColor = "#efcf4f";
 
 
 //AJAX successful code loading response callback
-function loadCode (data, textStaus, jQxhr) {
+function loadCode (data) {
     var receivedData = data;
     suggestions = receivedData.suggestions;
 
@@ -227,6 +227,7 @@ function loadReplies (data) {
 
 //AJAX error callback for receiving reply data
 function loadReplyError (data) {
+    console.log(data);
     console.log ("Reply error");
 }
 
@@ -271,8 +272,8 @@ function mapCodeLines() {
 }
 
 //AJAX error callback for receiving code data
-function loadCodeError (data) {
-    codeMirror.setValue("Couldn't find requested file!");
+function loadCodeError () {
+    codeMirror.setValue("Couldn't load requested file!");
 }
 
 /*

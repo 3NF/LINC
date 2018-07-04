@@ -30,12 +30,11 @@ public class ReplyDispatcher extends HttpServlet
         HttpSession session = request.getSession();
 
         try {
-            User user = null;
+            User user = (User) session.getAttribute(USER);
 
             //Get request data
             String json;
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-            user = (User) session.getAttribute(USER);
             String courseID = data.get("courseID").getAsString();
             ValidateDAO validateDAO = (ValidateDAO) request.getServletContext().getAttribute("ValidateDAO");
             //Get ReplyDAO
@@ -43,7 +42,7 @@ public class ReplyDispatcher extends HttpServlet
             String suggestionID = data.get("suggestionID").getAsString();
 
             if (!validateDAO.isValidate(user,suggestionID,courseID)){
-                //erroris dabruneba minda
+                response.sendError(HttpStatus.SC_FORBIDDEN);
                 return;
             }
 

@@ -23,6 +23,7 @@ public class MainListener implements ServletContextListener {
         sce.getServletContext().setAttribute(GAPI_MANAGER, GAPIManager.getInstance());
         sce.getServletContext().setAttribute(ASSIGNMENT_INFO_DAO, new AssignmentInfoDAO(ConnectionPool.getInstance()));
         sce.getServletContext().setAttribute(REPLY_DAO, new ReplyDAO(ConnectionPool.getInstance()));
+        sce.getServletContext().setAttribute(VALIDATE_DAO, new ValidateDAO(ConnectionPool.getInstance()));
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

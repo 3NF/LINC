@@ -10,6 +10,7 @@ public class Constraints {
 	public static final String GAPI_MANAGER = "GAPIManager";
 	public static final String CODE_FILES_DAO = "CodeFilesDAO";
 	public static final String REPLY_DAO = "ReplyDAO";
+	public static final String VALIDATE_DAO = "ValidateDAO";
 
 	/**
 	 * Google client ID
