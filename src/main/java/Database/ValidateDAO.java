@@ -14,7 +14,39 @@ public class ValidateDAO {
         this.connectionPool = connectionPool;
     }
 
-    public boolean isAnswer(String query,User user, String suggestionID){
+
+    public boolean hasAccessInstructor(User user, String suggestionID,String courseID){
+        String query = "SELECT Instructors.userID,Instructors.classroomID,sections.InstructorID,sections.studentID,suggestions.id FROM Instructors inner join " +
+                "sections on instructors.id=sections.InstructorID " +
+                "inner join code_files on code_files.userID = sections.studentID " +
+                "inner join suggestions on suggestions.Code_FileID=code_files.id " +
+                "WHERE Instructors.userID=? AND suggestions.id=? AND Instructors.classroomID=?";
+        try {
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,user.getUserId());
+            statement.setString(2,suggestionID);
+            statement.setString(3,courseID);
+            ResultSet result = statement.executeQuery();
+            if (result.next()){
+                statement.close();
+                connection.close();
+                return true;
+            }
+            statement.close();
+            connection.close();
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public boolean hasAccessStudent(User user, String suggestionID){
+        String query = "SELECT suggestions.id,code_files.userId FROM  code_files " +
+                "inner join suggestions on suggestions.Code_FileID=code_files.id " +
+                "WHERE code_files.userId=? AND suggestions.id=?";
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -35,23 +67,7 @@ public class ValidateDAO {
         return false;
     }
 
-    public boolean hasAccessInstructor(User user, String suggestionID){
-        String query = "SELECT sections.InstructorID,sections.studentID,suggestions.id FROM sections " +
-                "inner join code_files on code_files.userID = sections.studentID " +
-                "inner join suggestions on suggestions.Code_FileID=code_files.id " +
-                "WHERE sections.InstructorID=? AND suggestions.id=?";
-        return isAnswer(query,user,suggestionID);
-    }
-
-
-    public boolean hasAccessStudent(User user, String suggestionID){
-        String query = "SELECT suggestions.id,code_files.userId FROM  code_files " +
-                "inner join suggestions on suggestions.Code_FileID=code_files.id " +
-                "WHERE code_files.userId=? AND suggestions.id=?";
-        return isAnswer(query,user,suggestionID);
-    }
-
-    public boolean isValidate(User user, String suggestionID){
-        return hasAccessInstructor(user,suggestionID) || hasAccessStudent(user,suggestionID);
+    public boolean isValidate(User user, String suggestionID,String courseID){
+        return hasAccessInstructor(user,suggestionID,courseID) || hasAccessStudent(user,suggestionID);
     }
 }

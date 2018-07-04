@@ -33,6 +33,6 @@ public class ValidateDAOTest {
 
     @Test
     public void testValidation(){
-       System.err.println(DAO.isValidate(new User("105303857051815287047"),"9"));
+       System.err.println(DAO.isValidate(new User("114260512501360115146"),"9","15887333289"));
     }
 }
