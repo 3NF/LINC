@@ -23,9 +23,6 @@ public class CodeDispatcher extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Temporary
-            User user = null;
-
             //Get request data
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
             String json;
@@ -35,6 +32,8 @@ public class CodeDispatcher extends HttpServlet
             else {
                 json = loadCodeWithID(data,request);
             }
+
+
 
             //Send response to client
             response.setContentType("application/json");
@@ -52,8 +51,7 @@ public class CodeDispatcher extends HttpServlet
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute("CodeFilesDAO");
         try {
             User user = (User) session.getAttribute(USER);
-            // in userid "1" should be a user.getUserId
-            return new GsonBuilder().create().toJson(codeFilesDAO.getFilesContent("1", codeId));
+            return new GsonBuilder().create().toJson(codeFilesDAO.getFilesContent(user.getUserId(), codeId));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
