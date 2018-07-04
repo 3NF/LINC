@@ -178,6 +178,7 @@ public class GAPIManager {
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+            courseId = "15887333289";
             System.out.println(courseId);
             System.out.println(service.courses().courseWork().list(courseId).execute());
 
@@ -232,7 +233,7 @@ public class GAPIManager {
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
 
-            System.out.println(service.courses().students().list(courseID));
+            System.out.println(service.courses().students().list(courseID).execute().getStudents());
             return true;
 
         } catch (Exception e) {

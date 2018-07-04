@@ -42,6 +42,7 @@
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
     <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
+    <% GAPIManager.getInstance().isInRoom(user, courseId); %>
 
 </head>
 
