@@ -90,6 +90,8 @@ function lineOnClick (eventHandler) {
         If new interval is already chosen
         this function should do nothing
      */
+    activeSuggestionID = -1;
+
     if (lastMarker != -1) {
         return;
     }

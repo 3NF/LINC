@@ -27,8 +27,6 @@
     <%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor.js?newversion"></script>
 
-
-
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
 
@@ -87,7 +85,7 @@
                         </form>
                     </div>
                     <div id = "reply-editor-wrapper" class = "editor-wrapper" hidden>
-                        <form onsubmit="submitComment(); return false;">
+                        <form onsubmit="submitReply(); return false;">
                             <textarea id = "reply-editor-content" class = "editor-content" name="content"></textarea>
                             <br>
                             <button type="submit" class="btn btn-primary">Submit</button>

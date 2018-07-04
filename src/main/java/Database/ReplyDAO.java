@@ -42,7 +42,7 @@ public class ReplyDAO {
                 String userId = result.getString("userId");
                 String content = result.getString("text");
                 String suggestionId = result.getString("suggestionID");
-                Date date = new Date(result.getDate("date").getTime());
+                Date date = result.getTimestamp("date");
                 suggestionsReply.add(new Reply(suggestionId, replyId, userId, content, date));
             }
             statement.close();
@@ -62,13 +62,15 @@ public class ReplyDAO {
     }
 
 
-    public void addReply(String text, String userId, String suggestionId) {
+    public Reply addReply(String text, String userId, String suggestionId) {
         Connection connection;
+        java.sql.Timestamp timestamp;
+
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
             System.err.println("error in getting connection");
-            return;
+            return null;
         }
         PreparedStatement statement;
         String query = "INSERT INTO " + replies + " (userid,text,suggestionid,date) VALUES(?,?,?,?)";
@@ -77,16 +79,17 @@ public class ReplyDAO {
             statement.setString(1, userId);
             statement.setString(2, text);
             statement.setString(3, suggestionId);
-            java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            timestamp = new Timestamp(System.currentTimeMillis());
             statement.setTimestamp(4, timestamp);
             statement.executeUpdate();
             statement.close();
-            connection.close();
         } catch (SQLException e) {
             System.err.println("error in creation statement");
             e.printStackTrace();
-            return;
+            return null;
         }
+
+        return new Reply(suggestionId, "", userId, text, timestamp);
     }
 
     public void deleteReply(String replyId) {

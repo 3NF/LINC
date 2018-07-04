@@ -6,7 +6,7 @@
 <%@ page import="Data.Constraints" %>
 <%@ page import="static Data.Constraints.COURSE_ID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link href="Styles/assets/css/bootstrap.css" rel="stylesheet">
+<link href="../Styles/assets/css/bootstrap.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
@@ -16,6 +16,7 @@
     <%
         User user = (User) session.getAttribute(USER);
         List<Course> courses = GAPIManager.getInstance().getActiveRooms(user);
+        System.out.println(user.getUserId());
     %>
 </head>
 <body>

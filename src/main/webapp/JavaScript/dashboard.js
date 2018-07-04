@@ -11,6 +11,8 @@ var lines = [];
 
 var codeInfos =[];
 
+var activeSuggestionID = -1;
+
 //New reply block
 var replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
     "                            <div class = \"reply-panel\">\n" +
@@ -87,7 +89,6 @@ function viewSuggestion (eventHandler) {
 
     }
     if ($("#notification-div").is(":visible")) {
-        console.log("abc");
         $("#notification-div").hide();
         $("#comment-panel").show();
         $("#reply-editor-wrapper").show();
@@ -100,6 +101,8 @@ function viewSuggestion (eventHandler) {
     $("#comment-user-name").html(suggestion.user.firstName + " " + suggestion.user.lastName);
     $("#comment-profile-picture").attr("src", suggestion.user.picturePath);
     $("#comment-date").html(suggestion.timeStamp);
+    activeSuggestionID = suggestion.suggestionID;
+    console.log(activeSuggestionID);
 
     fetchReplies (suggestion.suggestionID);
 }
@@ -127,12 +130,11 @@ function showLoading (fileName) {
 
 //Sends AJAX request to fetch code names
 function fetchCodesInfo () {
-    console.log("YEAS");
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
-        contentType: 'alpplication/json',
-        data: JSON.stringify({assignmentID: 1}),
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({courseID: getParameter("courseID"), assignmentID: 1}),
         //must be changed!!!!
         success: function( data, textStatus, jQxhr ){
             loadCodesInfo(data, textStatus, jQxhr);
@@ -150,7 +152,6 @@ function loadCodesInfo (data) {
 }
 
 function addCodes() {
-    console.log(codeInfos);
     for (var i = 0; i < codeInfos.length; i ++) {
         console.log(codeInfos[i]);
         var newElement = $("#navbar-element").clone(true);
@@ -179,8 +180,8 @@ function fetchCode (name) {
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
-        contentType: 'application/json',
-        data: JSON.stringify({codeID: id}),
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({courseID: getParameter("courseID"), codeID: id}),
         success: function( data, textStatus, jQxhr ){
             loadCode(data, textStatus, jQxhr);
         },
@@ -205,8 +206,8 @@ function fetchReplies (id) {
     $.ajax({
         url: "/user/reply_dispatcher",
         method: "POST",
-        contentType: 'application/json',
-        data: JSON.stringify({suggestionID: id}),
+        contentType: 'application/json; charset=UTF-8/json',
+        data: JSON.stringify({courseID: getParameter("courseID"), suggestionID: id}),
         success: function( data, textStatus, jQxhr ){
             loadReplies(data, textStatus, jQxhr);
         },
@@ -217,10 +218,9 @@ function fetchReplies (id) {
 
 //AJAX successful callback for receiving reply data
 function loadReplies (data) {
-    console.log(data.length);
+    console.log(data);
     clearReplies();
     for (var i = 0; i < data.length; i ++) {
-        console.log(data[i]);
         drawReply(data[i]);
     }
 }
@@ -271,7 +271,7 @@ function mapCodeLines() {
 }
 
 //AJAX error callback for receiving code data
-function loadCodeError (data, textStatus, jQxhr) {
+function loadCodeError (data) {
     codeMirror.setValue("Couldn't find requested file!");
 }
 
@@ -312,6 +312,26 @@ function onLoad () {
     fetchCodesInfo ();
 }
 
-function onSubmit () {
+function submitReply () {
     console.log(replyEditor.parseContent());
+    $.ajax({
+        url: "/user/reply_dispatcher",
+        method: "POST",
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({courseID: getParameter("courseID"), suggestionID: activeSuggestionID, content: replyEditor.parseContent()}),
+        success: function( data){
+            drawReply(data);
+        },
+        error: function (data, textStatus, jQxhr) {
+            showReplyAdditionError(data, textStatus, jQxhr);
+        }});
+}
+
+function showReplyAdditionError () {
+    alert("Couldn't add new reply, please make sure that correct suggestion is chosen!")
+}
+
+function getParameter (name) {
+    results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return results[1] || 0;
 }

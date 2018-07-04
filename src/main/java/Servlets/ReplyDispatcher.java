@@ -24,27 +24,28 @@ import static Data.Constraints.USER;
 @WebServlet(name = "ReplyDispatcher", urlPatterns = "/user/reply_dispatcher")
 public class ReplyDispatcher extends HttpServlet
 {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
 
         try {
             User user = null;
 
             //Get request data
-            String json = "";
+            String json;
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
 
             String courseID = data.get("courseID").getAsString();
 
+            //Get ReplyDAO
             ReplyDAO replyDAO = (ReplyDAO) request.getServletContext().getAttribute("ReplyDAO");
             String suggestionID = data.get("suggestionID").getAsString();
             if (data.has("content")){
                 String UserID = ((User) session.getAttribute(USER)).getUserId();
-                replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
-                return;
+                Reply reply = replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
+
+                json = new GsonBuilder().disableHtmlEscaping().create().toJson(reply);
             }
             else {
-                //Get ReplyDAO
                 //Get replies from database
                 List<Reply> replies = replyDAO.getSuggestionReplies(suggestionID);
 
