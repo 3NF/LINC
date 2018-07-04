@@ -3,6 +3,7 @@ package Servlets;
 import Database.CodeFilesDAO;
 import Database.ConnectionPool;
 import Database.ReplyDAO;
+import Database.ValidateDAO;
 import Models.Reply;
 import Models.User;
 import com.google.gson.JsonObject;
@@ -84,6 +85,7 @@ public class ReplyDispatcherTest {
         // define return value for method getUniqueId()
         when(request.getServletContext()).thenReturn(servletContext);
         when(servletContext.getAttribute("ReplyDAO")).thenReturn(new ReplyDAO(source));
+        when(servletContext.getAttribute("ValidateDAO")).thenReturn(new ValidateDAO(source));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
         new ReplyDispatcher().doPost(request, response);

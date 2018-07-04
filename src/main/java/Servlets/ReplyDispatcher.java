@@ -1,6 +1,8 @@
 package Servlets;
 
 import Database.ReplyDAO;
+import Database.ValidateDAO;
+import HelperClasses.Validate;
 import Models.Reply;
 import Models.User;
 import com.google.gson.Gson;
@@ -33,12 +35,18 @@ public class ReplyDispatcher extends HttpServlet
             //Get request data
             String json;
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-
+            user = (User) session.getAttribute(USER);
             String courseID = data.get("courseID").getAsString();
-
+            ValidateDAO validateDAO = (ValidateDAO) request.getServletContext().getAttribute("ValidateDAO");
             //Get ReplyDAO
             ReplyDAO replyDAO = (ReplyDAO) request.getServletContext().getAttribute("ReplyDAO");
             String suggestionID = data.get("suggestionID").getAsString();
+
+            if (!validateDAO.isValidate(user,suggestionID,courseID)){
+                //erroris dabruneba minda
+                return;
+            }
+
             if (data.has("content")){
                 String UserID = ((User) session.getAttribute(USER)).getUserId();
                 Reply reply = replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
