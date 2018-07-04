@@ -89,8 +89,7 @@ public class GAPIManager {
             String givenName = Utilities.capitalizeString((String) payload.get("given_name"));
             DBManager.UserCredential credential = DBManager.getUserCredential(sub);
             if(credential == null) return null;
-            User us = new User(email, givenName, familyName, sub, pictureUrl, credential.getAccessToken(), credential.getRefreshToken());
-            return us;
+            return new User(email, givenName, familyName, sub, pictureUrl, credential.getAccessToken(), credential.getRefreshToken());
         } catch (Exception e) {
             return null;
         }
@@ -136,7 +135,7 @@ public class GAPIManager {
             List<Teacher> teachers = getTeachers(user, courseId);
             if(teachers != null) {
                 for (Teacher teacher : teachers) {
-                    if (teacher.getUserId() == user.getUserId())
+                    if (teacher.getUserId().equals(user.getUserId()))
                         return DBManager.Role.Teacher;
                 }
             }
@@ -224,20 +223,22 @@ public class GAPIManager {
         }
     }
 
+    /**
+     * Checks if user is in classroom
+     */
     public boolean isInRoom(User user, String courseID) {
         try
         {
             String accessToken = user.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-
-            courseID = "15887333289";
-            System.out.println(courseID);
-            System.out.println(service.courses().students().list(courseID).execute().getStudents());
-            return true;
-
+            try {
+                service.courses().students().list(courseID).execute();
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
