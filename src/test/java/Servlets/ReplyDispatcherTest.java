@@ -76,7 +76,7 @@ public class ReplyDispatcherTest {
 
     @Test
     public void test2() throws ServletException, IOException, SQLException, JSONException {
-        String json = "{\"suggestionID\":-12, \"content\":222}";
+        String json = "{\"suggestionID\":-12, \"content\":222,\"courseID\":222}";
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(USER)).thenReturn(new User("105303857051815287047"));
         when(request.getReader()).thenReturn(

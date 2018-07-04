@@ -74,14 +74,20 @@ public class ReplyDAO {
         }
         PreparedStatement statement;
         String query = "INSERT INTO " + replies + " (userid,text,suggestionid,date) VALUES(?,?,?,?)";
+        String replyID = "";
         try {
-            statement = connection.prepareStatement(query);
+            String generatedColumns[] = { "id" };
+            statement = connection.prepareStatement(query,generatedColumns);
             statement.setString(1, userId);
             statement.setString(2, text);
             statement.setString(3, suggestionId);
             timestamp = new Timestamp(System.currentTimeMillis());
             statement.setTimestamp(4, timestamp);
-            statement.executeUpdate();
+            if (statement.executeUpdate() > 0){
+                ResultSet result = statement.getGeneratedKeys();
+                if (result.next())
+                    replyID = result.getString(1);
+            }
             statement.close();
         } catch (SQLException e) {
             System.err.println("error in creation statement");
@@ -89,7 +95,7 @@ public class ReplyDAO {
             return null;
         }
 
-        return new Reply(suggestionId, "", userId, text, timestamp);
+        return new Reply(suggestionId, replyID, userId, text, timestamp);
     }
 
     public void deleteReply(String replyId) {
