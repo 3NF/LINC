@@ -73,4 +73,21 @@ public class ReplyDispatcherTest {
         String query = "DELETE FROM replies WHERE suggestionID=-12";
         source.getConnection().createStatement().execute(query);
     }
+
+    @Test
+    public void test2() throws ServletException, IOException, SQLException, JSONException {
+        String json = "{\"suggestionID\":-12, \"content\":222}";
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute(USER)).thenReturn(new User("105303857051815287047"));
+        when(request.getReader()).thenReturn(
+                new BufferedReader(new StringReader(json)));
+        // define return value for method getUniqueId()
+        when(request.getServletContext()).thenReturn(servletContext);
+        when(servletContext.getAttribute("ReplyDAO")).thenReturn(new ReplyDAO(source));
+        response_writer = new StringWriter();
+        when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
+        new ReplyDispatcher().doPost(request, response);
+        String query = "DELETE FROM replies WHERE suggestionID=-12";
+        source.getConnection().createStatement().execute(query);
+    }
 }

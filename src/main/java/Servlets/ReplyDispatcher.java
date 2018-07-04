@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static Data.Constraints.USER;
+
 @WebServlet(name = "ReplyDispatcher", urlPatterns = "/user/reply_dispatcher")
 public class ReplyDispatcher extends HttpServlet
 {
@@ -29,18 +31,26 @@ public class ReplyDispatcher extends HttpServlet
             User user = null;
 
             //Get request data
+            String json = "";
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+
+            String courseID = data.get("courseID").getAsString();
+
+            ReplyDAO replyDAO = (ReplyDAO) request.getServletContext().getAttribute("ReplyDAO");
             String suggestionID = data.get("suggestionID").getAsString();
+            if (data.has("content")){
+                String UserID = ((User) session.getAttribute(USER)).getUserId();
+                replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
+                return;
+            }
+            else {
+                //Get ReplyDAO
+                //Get replies from database
+                List<Reply> replies = replyDAO.getSuggestionReplies(suggestionID);
 
-            //Get ReplyDAO
-            ReplyDAO replyDAO = (ReplyDAO)request.getServletContext().getAttribute("ReplyDAO");
-
-            //Get replies from database
-            List<Reply> replies = replyDAO.getSuggestionReplies(suggestionID);
-
-            //Convert file data into JSON
-            String json = new GsonBuilder().disableHtmlEscaping().create().toJson(replies);
-
+                //Convert file data into JSON
+                json = new GsonBuilder().disableHtmlEscaping().create().toJson(replies);
+            }
 
             //Send response to client
             response.setContentType("application/json");
