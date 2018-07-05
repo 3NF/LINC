@@ -4,6 +4,7 @@
     position: fixed;
     background-color: #b2b4ae;
     text-align: center;
+    z-index: 101;
 }
 
 #user-panel-img {
@@ -15,7 +16,7 @@
 #panel-swipe {
     width: 80%;
     position: relative;
-    bottom: 0px;
+    bottom: 0;
 }
 
 #content {
