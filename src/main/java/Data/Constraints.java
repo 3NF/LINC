@@ -11,6 +11,7 @@ public class Constraints {
 	public static final String CODE_FILES_DAO = "CodeFilesDAO";
 	public static final String REPLY_DAO = "ReplyDAO";
 	public static final String VALIDATE_DAO = "ValidateDAO";
+	public static final String SUGGESTION_DAO = "SuggestionDAO";
 
 
 	/**

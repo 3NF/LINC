@@ -35,4 +35,22 @@ public class ValidateDAOTest {
     public void testValidation(){
        System.err.println(DAO.isValidate(new User("114260512501360115146"),"9","15887333289"));
     }
+
+    @Test
+    public void testHasSuggestionWritePermissionLuka () {
+        User user = new User("", "", "", "114260512501360115146", "", "", "");
+        String courseID = "15887333289";
+        String codeFileID = "1";
+
+        assertTrue(DAO.hasSuggestionWritePermission(user, courseID, codeFileID));
+    }
+
+    @Test
+    public void testHasSuggestionWritePermissionGiorgi () {
+        User user = new User("", "", "", "105303857051815287047", "", "", "");
+        String courseID = "15887333289";
+        String codeFileID = "1";
+
+        assertFalse(DAO.hasSuggestionWritePermission(user, courseID, codeFileID));
+    }
 }
