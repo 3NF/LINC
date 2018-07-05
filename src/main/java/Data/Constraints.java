@@ -12,6 +12,7 @@ public class Constraints {
 	public static final String REPLY_DAO = "ReplyDAO";
 	public static final String VALIDATE_DAO = "ValidateDAO";
 
+
 	/**
 	 * Google client ID
 	 */
@@ -21,6 +22,8 @@ public class Constraints {
 
 	public static final String COURSE_ID = "courseID";
 	public static final String ASSIGNMENT_ID = "assignmentID";
+	public static final String SUGGESTION_ID = "suggestionID";
+    public static final String CODE_ID = "codeID";
 
 
 	public static final String ASSIGNMENT = "assignment";
