@@ -51,6 +51,7 @@ public class SuggestionDispatcher extends HttpServlet
                 json = addSuggestion(data, codeFileID, user, suggestionDAO);
             }
             else {
+                suggestionDAO.deleteSuggestion(data.get("suggestionID").getAsString());
                 json = "";//deleteSuggestion(data,request);
             }
 
