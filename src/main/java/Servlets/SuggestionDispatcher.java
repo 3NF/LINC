@@ -39,7 +39,8 @@ public class SuggestionDispatcher extends HttpServlet
             String codeFileID = data.get("codeFileID").getAsString();
 
             ValidateDAO validateDAO = (ValidateDAO)request.getServletContext().getAttribute(VALIDATE_DAO);
-            SuggestionDAO suggestionDAO = (SuggestionDAO)request.getServletContext().getAttribute(SUGGESTION_DAO);
+            SuggestionDAO suggestionDAO;
+            suggestionDAO = (SuggestionDAO)request.getServletContext().getAttribute(SUGGESTION_DAO);
 
             if (!validateDAO.hasSuggestionWritePermission(user, courseID, codeFileID)){
                 response.sendError(HttpStatus.SC_FORBIDDEN);
