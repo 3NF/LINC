@@ -9,9 +9,10 @@ var suggestions = [];
 //HTML line element array
 var lines = [];
 
-var codeInfos =[];
+var codeInfo =[];
 
 var activeSuggestionID = -1;
+var activeCodeFileID = -1;
 
 //New reply block
 var replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
@@ -36,6 +37,7 @@ function loadCode (data) {
     suggestions = receivedData.suggestions;
 
     console.log (receivedData);
+    activeCodeFileID = receivedData.fileId;
     codeMirror.setValue(receivedData.code);
 
     mapCodeLines ();
@@ -146,17 +148,17 @@ function fetchCodesInfo () {
 
 //AJAX successful code info loading response callback
 function loadCodesInfo (data) {
-    codeInfos = data;
+    codeInfo = data;
     addCodes ();
     getFirstCode ();
 }
 
 function addCodes() {
-    for (var i = 0; i < codeInfos.length; i ++) {
-        console.log(codeInfos[i]);
+    for (var i = 0; i < codeInfo.length; i ++) {
+        console.log(codeInfo[i]);
         var newElement = $("#navbar-element").clone(true);
         $(newElement).removeAttr("id");
-        $(newElement).find("a").html(codeInfos[i].name);
+        $(newElement).find("a").html(codeInfo[i].name);
         $(newElement).show();
         $(newElement).appendTo("#navbar");
     }
@@ -191,9 +193,9 @@ function fetchCode (name) {
 }
 
 function getCodeInd (name) {
-    for (var i = 0; i < codeInfos.length; i ++) {
-        if (codeInfos[i].name == name) {
-            return codeInfos[i].id;
+    for (var i = 0; i < codeInfo.length; i ++) {
+        if (codeInfo[i].name == name) {
+            return codeInfo[i].id;
         }
     }
     return undefined;

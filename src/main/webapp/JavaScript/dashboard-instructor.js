@@ -160,3 +160,27 @@ function clearInterval () {
     $("#notification-div").show();
     $("#comment-editor-wrapper").hide();
 }
+
+function submitSuggestion () {
+    suggestionContent = console.log(suggestionEditor.parseContent());
+    suggestionType = $("#suggestion-type").html();
+
+
+    console.log(suggestionContent);
+    console.log(suggestionType);
+    $.ajax({
+        url: "/user/suggestion_dispatcher",
+        method: "POST",
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({courseID: getParameter("courseID"), codeFileID: activeCodeFileID, content: suggestionContent, startInd: firstMarker, endInd: lastMarker}),
+        success: function( data, textStatus, jQxhr ){
+            viewSuggestion(data);
+        },
+        error: function (data, textStatus, jQxhr) {
+            suggestionAdditionError(data, textStatus, jQxhr);
+        }});
+}
+
+function suggestionAdditionError () {
+    alert ("Couldn't add new suggestion");
+}

@@ -35,7 +35,6 @@ public class CodeFilesDAO {
             fileName = result.getString("name");
             codeLang = result.getString("lang");
             codeFileId = result.getString("id");
-            //System.out.println(codeFileId);
         }
 
         query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE Code_FileID=?";
@@ -112,7 +111,6 @@ public class CodeFilesDAO {
         return fileId;
     }
 
-    // TODO: 6/30/18 giorgi
     public void addAssignments(String userID, UploadedAssignment assignment) throws SQLException {
         HashMap<String,String> fileId = getIdNameMap(assignment);
         Connection connection = connectionPool.getConnection();
@@ -130,11 +128,11 @@ public class CodeFilesDAO {
         //connection.createStatement().execute(query);
     }
 
-    public List<CodeFile.Info> getAssignmentCodeNames(String assigmentId) throws SQLException {
+    public List<CodeFile.Info> getAssignmentCodeNames(String assignmentID) throws SQLException {
         String query = "Select id,name FROM assignment_files where assignmentID=?";
         Connection connection = connectionPool.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1,assigmentId);
+        statement.setString(1, assignmentID);
         ResultSet result = statement.executeQuery();
         List <CodeFile.Info> codeFileNames = new ArrayList<CodeFile.Info>();
         while (result.next()){

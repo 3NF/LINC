@@ -77,19 +77,19 @@
                         </div>
                     </div>
                     <div id = "comment-editor-wrapper" class = "editor-wrapper" hidden>
-                        <form onsubmit="submitSuggestion(); return false;">
+                        <form>
                             <textarea id = "comment-editor-content" class="editor-content" name="content"></textarea>
                             <br>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="reset" class="btn btn-default" onclick="clearInterval()">Clear Suggestion</button>
-                            <button type="button" class="btn btn-warning" onclick="toggleSuggestionType()">Warning</button>
+                            <button type="button" class="btn btn-primary" onclick="submitSuggestion()">Submit</button>
+                            <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion</button>
+                            <button id = "suggestion-type" type="button" class="btn btn-warning" onclick="toggleSuggestionType()">Warning</button>
                         </form>
                     </div>
                     <div id = "reply-editor-wrapper" class = "editor-wrapper" hidden>
-                        <form onsubmit="submitReply(); return false;">
+                        <form>
                             <textarea id = "reply-editor-content" class = "editor-content" name="content"></textarea>
                             <br>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" onclick="submitReply()">Submit</button>
                         </form>
                     </div>
                 </div>

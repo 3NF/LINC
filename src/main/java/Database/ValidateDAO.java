@@ -1,5 +1,6 @@
 package Database;
 
+import Models.Reply;
 import Models.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
@@ -14,6 +15,31 @@ public class ValidateDAO {
         this.connectionPool = connectionPool;
     }
 
+
+    public boolean hasSuggestionWritePermission (User user, String courseID, String codeFileID) {
+        String query = "Select * FROM (SELECT  INSID, studentID FROM (SELECT id as INSID FROM instructors WHERE classroomID = ? AND userID = ?) T, sections\n" +
+                "WHERE T.INSID = sections.instructorID) M, code_files WHERE code_files.id=? AND code_files.userID=M.studentID;";
+        PreparedStatement statement;
+
+        try {
+            Connection connection =connectionPool.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, courseID);
+            statement.setString(2, user.getUserId());
+            statement.setString(3, codeFileID);
+            ResultSet result = statement.executeQuery();
+
+            boolean rtn = result.next();
+            statement.close();
+            connection.close();
+
+            return rtn;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
     public boolean hasAccessInstructor(User user, String suggestionID,String courseID){
         String query = "SELECT Instructors.userID,Instructors.classroomID,sections.InstructorID,sections.studentID,suggestions.id FROM Instructors inner join " +

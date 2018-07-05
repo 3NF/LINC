@@ -1,8 +1,8 @@
 package Servlets;
 
+import Data.Constraints;
 import Database.ReplyDAO;
 import Database.ValidateDAO;
-import HelperClasses.Validate;
 import Models.Reply;
 import Models.User;
 import com.google.gson.Gson;
@@ -10,15 +10,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpStatus;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static Data.Constraints.USER;
@@ -35,11 +32,11 @@ public class ReplyDispatcher extends HttpServlet
             //Get request data
             String json;
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-            String courseID = data.get("courseID").getAsString();
-            ValidateDAO validateDAO = (ValidateDAO) request.getServletContext().getAttribute("ValidateDAO");
+            String courseID = data.get(Constraints.COURSE_ID).getAsString();
+            ValidateDAO validateDAO = (ValidateDAO) request.getServletContext().getAttribute(Constraints.VALIDATE_DAO);
             //Get ReplyDAO
-            ReplyDAO replyDAO = (ReplyDAO) request.getServletContext().getAttribute("ReplyDAO");
-            String suggestionID = data.get("suggestionID").getAsString();
+            ReplyDAO replyDAO = (ReplyDAO) request.getServletContext().getAttribute(Constraints.REPLY_DAO);
+            String suggestionID = data.get(Constraints.SUGGESTION_ID).getAsString();
 
             if (!validateDAO.isValidate(user,suggestionID,courseID)){
                 response.sendError(HttpStatus.SC_FORBIDDEN);

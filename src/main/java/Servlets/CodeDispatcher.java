@@ -1,5 +1,6 @@
 package Servlets;
 
+import Data.Constraints;
 import Database.CodeFilesDAO;
 import Models.User;
 import com.google.gson.Gson;
@@ -26,7 +27,7 @@ public class CodeDispatcher extends HttpServlet
             //Get request data
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
             String json;
-            if (data.has("assignmentID")){
+            if (data.has(Constraints.ASSIGNMENT_ID)){
                 json = loadCodeNames(data,request);
             }
             else {
@@ -46,9 +47,9 @@ public class CodeDispatcher extends HttpServlet
     }
 
     private String loadCodeWithID(JsonObject data,HttpServletRequest request){
-        String codeId = data.get("codeID").getAsString();
+        String codeId = data.get(Constraints.CODE_ID).getAsString();
         HttpSession session = request.getSession();
-        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute("CodeFilesDAO");
+        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
         try {
             User user = (User) session.getAttribute(USER);
             return new GsonBuilder().create().toJson(codeFilesDAO.getFilesContent(user.getUserId(), codeId));
@@ -59,8 +60,8 @@ public class CodeDispatcher extends HttpServlet
     }
 
     private String loadCodeNames(JsonObject data,HttpServletRequest request){
-        String assignmentID = data.get("assignmentID").getAsString();
-        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute("CodeFilesDAO");
+        String assignmentID = data.get(Constraints.ASSIGNMENT_ID).getAsString();
+        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
         try {
             return new GsonBuilder().disableHtmlEscaping().create().toJson(codeFilesDAO.getAssignmentCodeNames(assignmentID));
         } catch (SQLException e) {
