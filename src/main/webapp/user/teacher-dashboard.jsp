@@ -64,49 +64,96 @@
 </head>
 <body>
     <div id="content">
-        <table class="table" id="usersTable" style="width:100%">
-            <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>E-mail</th>
-            </tr>
-            <tr>
-                <td>Giorgi var</td>
-                <td>Bagdavadze</td>
-                <td>gbagh16@freeuni.edu.ge</td>
-                <td>
-                    <div>
-                        <a href="#" data-toggle="popover">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </a>
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a data-toggle="collapse" href="#semReaderCol">Seminar Readers</a>
+                    </h3>
+                    <div id="semReaderCol" class="panel-collapse collapse">
+                        <table class="table" id="semReadersTable" style="width:100%">
+                            <tr>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>E-mail</th>
+                            </tr>
+                            <tr>
+                                <td>Irakli</td>
+                                <td>Freeuni</td>
+                                <td>irakli.freeuni@freeuni.edu.ge</td>
+                                <td>
+                                    <div>
+                                        <a href="#" data-toggle="popover">
+                                            <span class="glyphicon glyphicon-option-vertical"></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                </td>
-            </tr>
-            <tr class="success">
-                <td>Irakli</td>
-                <td>Freeuni</td>
-                <td>irakli.freeuni@freeuni.edu.ge</td>
-                <td>
-                    <div>
-                        <a href="#" data-toggle="popover">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </a>
+                </div>
+            </div>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a data-toggle="collapse" href="#teacherAssCol">Teacher Assistants</a>
+                    </h3>
+                    <div id="teacherAssCol" class="panel-collapse collapse">
+                        <table class="table" id="teacherAssTable" style="width:100%">
+                            <tr>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>E-mail</th>
+                            </tr>
+                            <tr>
+                                <td>Davit</td>
+                                <td>Bezhanishvili</td>
+                                <td>dbezh16@freeuni.edu.ge</td>
+                                <td>
+                                    <div>
+                                        <a href="#" data-toggle="popover">
+                                            <span class="glyphicon glyphicon-option-vertical"></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                </td>
-            </tr>
-            <tr class="Danger">
-                <td>Davit</td>
-                <td>Bezhanishvili</td>
-                <td>dbezh16@freeuni.edu.ge</td>
-                <td>
-                    <div>
-                        <a href="#" data-toggle="popover">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </a>
+                </div>
+            </div>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a data-toggle="collapse" href="#studentsCol">Students</a>
+                    </h3>
+                    <div id="studentsCol" class="panel-collapse collapse">
+                        <table class="table" id="studentsTable" style="width:100%">
+                            <tr>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>E-mail</th>
+                            </tr>
+                            <tr>
+                                <td>Giorgi var</td>
+                                <td>Bagdavadze</td>
+                                <td>gbagh16@freeuni.edu.ge</td>
+                                <td>
+                                    <div>
+                                        <a href="#" data-toggle="popover">
+                                            <span class="glyphicon glyphicon-option-vertical"></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                </td>
-            </tr>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
