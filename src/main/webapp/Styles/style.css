@@ -50,3 +50,33 @@ html, body {
     left: 20px;
     cursor: pointer;
 }
+
+.sidenav .logout {
+    position: absolute;
+    bottom: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    color: blue;
+}
+
+.fill {
+    min-height: 100%;
+    width: 80px;
+    position: fixed;
+    background-color: #b2b4ae;
+    text-align: center;
+    z-index: 101;
+}
+
+#user-panel-img {
+    width: 80%;
+    margin: 5px auto auto;
+
+}
+
+#panel-swipe {
+    width: 80%;
+    position: relative;
+    bottom: 0;
+}

@@ -1,31 +1,27 @@
 
-body
-{
-   width: 100vw;
-   height: 100vh;
-   padding-top: 20vh;
-   margin: auto;
+/* todo ეს მოაშორე ძლიერ*/
+body {
+    width: 100vw;
+    height: 100vh;
+    padding-top: 20vh;
+    margin: auto;
 }
 
-
-.welcomeText
-{
+.welcomeText {
     color: darkcyan;
     text-align: center;
     margin: 10px auto;
 }
 
-.panel
-{
+.panel {
     margin: 0 auto;
     width: max-content;
     max-width: 80%;
-    background: -webkit-repeating-radial-gradient(lightcyan,goldenrod);
+    background: -webkit-repeating-radial-gradient(lightcyan, goldenrod);
     border: black dotted thick;
 }
 
-.classRoom h3
-{
+.classRoom h3 {
     position: absolute;
     text-align: center;
     width: 272px;
@@ -47,9 +43,7 @@ body
     transition-duration: 1s;
 }
 
-
-.classRoom:hover
-{
+.classRoom:hover {
     cursor: pointer;
     width: 292px;
     height: 218px;

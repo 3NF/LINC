@@ -28,13 +28,13 @@
 
     <%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor.js?newversion"></script>
-    <script src="../JavaScript/panel.js"></script>
+    <script src="JavaScript/panel.js"></script>
 
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
 
-    <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../codemirror-5.39.0/lib/codemirror.css">
     <script src='../codemirror-5.39.0/lib/codemirror.js'></script>
@@ -46,24 +46,13 @@
     <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
     <% GAPIManager.getInstance().isInRoom(user, courseId); %>
 
+    <script>
+        let userProfilePicture = '<%=user.getPicturePath()%>';
+    </script>
+
 </head>
 
 <body onload="onLoad()">
-<div id="mySidenav" class="sidenav">
-    <a href="#">Classes</a>
-    <a href="#">Teacing</a>
-    <a href="#">Assignments</a>
-    <a onclick="signOut()">Logout</a>
-</div>
-
-<div class="fill">
-    <div style="cursor:pointer" onclick="togleNav()">
-        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img" >
-    </div>
-    <div id = "menuBar" onclick="togleNav()">
-        <span class="glyphicon">&#xe236;</span>
-    </div>
-</div>
 
 <div id="content">
     <div class="panel panel-default">

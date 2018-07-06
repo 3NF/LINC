@@ -6,18 +6,33 @@
 <%@ page import="Data.Constraints" %>
 <%@ page import="static Data.Constraints.COURSE_ID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link href="../Styles/assets/css/bootstrap.css" rel="stylesheet">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <html>
 <head>
+    <!-- css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="../Styles/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../Styles/style.css" rel="stylesheet">
     <link href="../Styles/chooseRoom.css" rel="stylesheet">
-    <title>Choose Room - LINC</title>
+
+    <!-- javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../JavaScript/panel.js"></script>
+
+
+
     <%
         User user = (User) session.getAttribute(USER);
         List<Course> courses = GAPIManager.getInstance().getActiveRooms(user);
         System.out.println(user.getUserId());
     %>
+    <script>
+        let userProfilePicture = '<%=user.getPicturePath()%>';
+    </script>
+
+
+    <title>Choose Room - LINC</title>
 </head>
 <body>
 <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose ClassRoom To Enter:</h1>
@@ -42,7 +57,7 @@
     function enterClasroom(id) {
         $.ajax({
             url: 'rooms',
-            data: {courseID : id},
+            data: {courseID: id},
             type: 'GET',
             success: function (data) {
                 window.location.assign(data);
