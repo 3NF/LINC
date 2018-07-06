@@ -29,8 +29,9 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/panel.js?newversione"></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
-    <%--my css--%>
+<%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
 
     <script src = "--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
