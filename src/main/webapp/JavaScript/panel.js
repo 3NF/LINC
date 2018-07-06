@@ -5,8 +5,9 @@ $(document).ready(function () {
 
     let dvSlider = "<div id=\"mySidenav\" class=\"sidenav\"\> <a class=\"logout\" onclick=\"signOut()\">Logout</a></div>";
     let dvPn = `<div class="fill"> <div style="cursor:pointer" onclick="togleNav()"> <img src=${userProfilePicture} class="img-circle" alt="Cinque Terre" id="user-panel-img" > </div> <div id = "menuBar" onclick="togleNav()"> <span class="glyphicon">&#xe236;</span> </div></div>`;
-    $("body").prepend(dvSlider);
-    $("body").prepend(dvPn);
+    let body = $("body");
+    body.prepend(dvSlider);
+    body.prepend(dvPn);
 });
 
 function togleNav() {
@@ -25,6 +26,8 @@ function start() {
 }
 
 function signOut() {
-    gapi.load('client', start);
-    $.post()
+    $.post( "logout", function() {
+        gapi.load('client', start);
+        location.assign("loginPage.jsp");
+    });
 }
