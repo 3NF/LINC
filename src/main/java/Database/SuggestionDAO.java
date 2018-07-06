@@ -53,4 +53,19 @@ public class SuggestionDAO {
         }
     }
 
+    public void deleteSuggestion(String suggestionID){
+        String query = "DELETE suggestions.*,replies.*" +
+                "FROM suggestions " +
+                "INNER JOIN replies ON suggestions.id= replies.suggestionID where suggestions.id=?";
+        PreparedStatement statement;
+        try {
+            Connection connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1,suggestionID);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -19,11 +19,17 @@ public class ValidateDAO {
     public boolean hasSuggestionWritePermission (User user, String courseID, String codeFileID) {
         String query = "Select * FROM (SELECT  INSID, studentID FROM (SELECT id as INSID FROM instructors WHERE classroomID = ? AND userID = ?) T, sections\n" +
                 "WHERE T.INSID = sections.instructorID) M, code_files WHERE code_files.id=? AND code_files.userID=M.studentID;";
+
+        String q = "SELECT instructors.userID,instructors.classroomID,code_files.id FROM instructors inner join" +
+                " sections on instructors.id=sections.instructorID inner join code_files " +
+                "on code_files.userID=sections.studentID " +
+                "where instructors.classroomID=?  AND instructors.userID=? and code_files.id=?";
+
         PreparedStatement statement;
 
         try {
             Connection connection =connectionPool.getConnection();
-            statement = connection.prepareStatement(query);
+            statement = connection.prepareStatement(q);
             statement.setString(1, courseID);
             statement.setString(2, user.getUserId());
             statement.setString(3, codeFileID);

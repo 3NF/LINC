@@ -1,5 +1,6 @@
 package Servlets;
 
+import Data.Constraints;
 import Database.CodeFilesDAO;
 import Database.ConnectionPool;
 import Database.ReplyDAO;
@@ -55,18 +56,19 @@ public class ReplyDispatcherTest {
     @Test
     public void test1() throws ServletException, IOException, SQLException, JSONException {
         ReplyDAO DAO = new ReplyDAO(source);
-        DAO.addReply("asdd","asd","-12");
-        String json = "{\"suggestionID\":-12, \"amount\":222}";
+        DAO.addReply("asdd","105303857051815287047","-12");
+        String json = "{\"suggestionID\":-12, \"amount\":222,\"courseID\":222}";
         when(request.getSession()).thenReturn(session);
         when(request.getReader()).thenReturn(
                 new BufferedReader(new StringReader(json)));
         // define return value for method getUniqueId()
         when(request.getServletContext()).thenReturn(servletContext);
+        when(servletContext.getAttribute("ValidateDAO")).thenReturn(new ValidateDAO(source));
         when(servletContext.getAttribute("ReplyDAO")).thenReturn(new ReplyDAO(source));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
+        when(session.getAttribute("user")).thenReturn(new User("105303857051815287047"));
         new ReplyDispatcher().doPost(request, response);
-        System.out.println(response_writer.toString());
         JSONArray array = new JSONArray(response_writer.toString());
         JSONObject jsonobject = array.getJSONObject(0);
         assertEquals(jsonobject.get("suggestionID"),"-12");
