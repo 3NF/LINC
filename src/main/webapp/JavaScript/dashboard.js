@@ -132,6 +132,7 @@ function showLoading (fileName) {
 
 //Sends AJAX request to fetch code names
 function fetchCodesInfo () {
+    toggleLoading();
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
@@ -139,9 +140,11 @@ function fetchCodesInfo () {
         data: JSON.stringify({courseID: getParameter("courseID"), assignmentID: 1}),
         //must be changed!!!!
         success: function( data, textStatus, jQxhr ){
+            toggleLoading();
             loadCodesInfo(data, textStatus, jQxhr);
         },
         error: function (data, textStatus, jQxhr) {
+            toggleLoading();
             loadCodeInfoError(data, textStatus, jQxhr);
         }});
 }
@@ -172,12 +175,12 @@ function getFirstCode () {
 }
 
 function loadCodeInfoError () {
-    console.log ("Error in loading file information");
+    alert("Error in loading file information");
 }
 
 //Sends AJAX request to load code
 function fetchCode (name) {
-    showLoading(name);
+    toggleLoading();
     id = getCodeInd (name);
     $.ajax({
         url: "/user/code_dispatcher",
@@ -185,9 +188,11 @@ function fetchCode (name) {
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify({courseID: getParameter("courseID"), codeID: id}),
         success: function( data, textStatus, jQxhr ){
+            toggleLoading();
             loadCode(data, textStatus, jQxhr);
         },
         error: function (data, textStatus, jQxhr) {
+            toggleLoading();
             loadCodeError(data, textStatus, jQxhr);
         }});
 }
@@ -204,6 +209,7 @@ function getCodeInd (name) {
 
 //Sends AJAX request to fetch new replies
 function fetchReplies (id) {
+    toggleLoading();
     console.log(id);
     $.ajax({
         url: "/user/reply_dispatcher",
@@ -211,9 +217,11 @@ function fetchReplies (id) {
         contentType: 'application/json; charset=UTF-8/json',
         data: JSON.stringify({courseID: getParameter("courseID"), suggestionID: id}),
         success: function( data, textStatus, jQxhr ){
+            toggleLoading();
             loadReplies(data, textStatus, jQxhr);
         },
         error: function (data, textStatus, jQxhr) {
+            toggleLoading();
             loadReplyError(data, textStatus, jQxhr);
         }});
 }
@@ -230,7 +238,7 @@ function loadReplies (data) {
 //AJAX error callback for receiving reply data
 function loadReplyError (data) {
     console.log(data);
-    console.log ("Reply error");
+    alert("Couldn't get replies");
 }
 
 //Clears all current replies
@@ -275,7 +283,7 @@ function mapCodeLines() {
 
 //AJAX error callback for receiving code data
 function loadCodeError () {
-    codeMirror.setValue("Couldn't load requested file!");
+    alert("Couldn't load requested file!");
 }
 
 /*
@@ -313,9 +321,11 @@ function onLoad () {
     activated code
     */
     fetchCodesInfo ();
+    toggleLoading();
 }
 
 function submitReply () {
+    toggleLoading();
     console.log(replyEditor.parseContent());
     $.ajax({
         url: "/user/reply_dispatcher",
@@ -323,9 +333,11 @@ function submitReply () {
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify({courseID: getParameter("courseID"), suggestionID: activeSuggestionID, content: replyEditor.parseContent()}),
         success: function( data){
+            toggleLoading();
             drawReply(data);
         },
         error: function (data, textStatus, jQxhr) {
+            toggleLoading();
             showReplyAdditionError(data, textStatus, jQxhr);
         }});
 }
@@ -337,4 +349,8 @@ function showReplyAdditionError () {
 function getParameter (name) {
     results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     return results[1] || 0;
+}
+
+function toggleLoading () {
+    $("#loader-wrapper").fadeToggle();
 }

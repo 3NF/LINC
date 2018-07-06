@@ -55,11 +55,13 @@
 
 
 <div id="content">
+    <div id = "loader-wrapper">
+        <div class="loader"></div>
+    </div>
     <div class="panel panel-default">
         <ul class="nav nav-tabs" id="navbar">
             <li id="navbar-element" hidden><a href="javascript:void(0)" onclick="navbarOnClick()"></a></li>
         </ul>
-
 
         <div class="panel-body">
             <div id="code-panel">
@@ -96,7 +98,7 @@
                     <form>
                         <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
                         <br>
-                        <button type="submit" class="btn btn-primary" onclick="submitReply()">Submit</button>
+                        <button type="button" class="btn btn-primary" onclick="submitReply()">Submit</button>
                     </form>
                 </div>
             </div>
