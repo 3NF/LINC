@@ -11,6 +11,7 @@ import java.util.List;
 public class ReplyDAO {
 
     private final MysqlDataSource connectionPool;
+    private final UserStorage userStorage;
     private final String replies = "replies";
     /**
      * Constructor of StudentDAo class
@@ -19,8 +20,9 @@ public class ReplyDAO {
      */
 
 
-    public ReplyDAO(MysqlDataSource connectionPool) {
+    public ReplyDAO(MysqlDataSource connectionPool, UserStorage userStorage) {
         this.connectionPool = connectionPool;
+        this.userStorage = userStorage;
     }
 
     public List<Reply> getSuggestionReplies(String id) {

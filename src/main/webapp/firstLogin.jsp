@@ -23,7 +23,8 @@
                     client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
                     scope: "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.courses.readonly " +
                     "https://www.googleapis.com/auth/classroom.coursework.students.readonly https://www.googleapis.com/auth/classroom.coursework.students " +
-                    "https://www.googleapis.com/auth/classroom.rosters"
+                    "https://www.googleapis.com/auth/classroom.rosters " +
+                    "https://www.googleapis.com/auth/classroom.profile.photos"
                 });
 
                 auth2.grantOfflineAccess().then(finalCallback);

@@ -34,8 +34,6 @@ public class CodeDispatcher extends HttpServlet
                 json = loadCodeWithID(data,request);
             }
 
-
-
             //Send response to client
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF8");

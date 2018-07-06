@@ -34,6 +34,7 @@ public class ReplyDispatcher extends HttpServlet
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
             String courseID = data.get(Constraints.COURSE_ID).getAsString();
             ValidateDAO validateDAO = (ValidateDAO) request.getServletContext().getAttribute(Constraints.VALIDATE_DAO);
+
             //Get ReplyDAO
             ReplyDAO replyDAO = (ReplyDAO) request.getServletContext().getAttribute(Constraints.REPLY_DAO);
             String suggestionID = data.get(Constraints.SUGGESTION_ID).getAsString();

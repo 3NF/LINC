@@ -80,6 +80,7 @@ public class GAPIManager {
 
     public User getUser(String idToken)
     {
+        System.out.println("ye");
         try {
             GoogleIdToken googleIdToken = GoogleIdToken.parse(JACKSON_FACTORY, idToken);
 
@@ -130,6 +131,7 @@ public class GAPIManager {
             e.printStackTrace();
         }
 
+        System.out.println(profile.getPhotoUrl());
         return new User(profile.getEmailAddress(), profile.getName().getGivenName(), profile.getName().getFamilyName(), id, profile.getPhotoUrl(), "", "");
     }
 

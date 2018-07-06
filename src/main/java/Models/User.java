@@ -1,6 +1,8 @@
 package Models;
 
 
+import com.google.gson.Gson;
+
 public class User {
     private String firstName;
     private String lastName;
@@ -71,5 +73,10 @@ public class User {
     public String getRefreshToken()
     {
         return refreshToken;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

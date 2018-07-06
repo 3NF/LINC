@@ -9,8 +9,11 @@ import java.sql.*;
 public class SuggestionDAO {
 
     private final MysqlDataSource connectionPool;
-    public SuggestionDAO(MysqlDataSource connectionPool) {
+    private final UserStorage userStorage;
+
+    public SuggestionDAO(MysqlDataSource connectionPool, UserStorage userStorage) {
         this.connectionPool = connectionPool;
+        this.userStorage = userStorage;
     }
 
 

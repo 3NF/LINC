@@ -1,6 +1,7 @@
 package Servlets;
 
 import Database.GAPIManager;
+import Database.ReplyDAO;
 import Models.User;
 
 import javax.servlet.ServletException;
@@ -34,7 +35,11 @@ public class GoogleLogin extends HttpServlet {
         } else if (action.equals("login")) {
             String idToken = request.getParameter(ID_TOKEN_NAME);
             resultedUser = GAPIManager.getInstance().getUser(idToken);
-            if (resultedUser == null) request.getRequestDispatcher("/firstLogin.jsp").forward(request, response);
+            if (resultedUser == null)  {
+                request.getSession().setAttribute(USER, resultedUser);
+                request.getRequestDispatcher("/firstLogin.jsp").forward(request, response);
+                return;
+            }
         }
 
         request.getSession().setAttribute(USER, resultedUser);
