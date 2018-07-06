@@ -28,7 +28,7 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../JavaScript/dashboard.js?newversione"></script>
+    <script src="../JavaScript/panel.js?newversione"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
@@ -42,10 +42,71 @@
        String courseId = request.getParameter(Constraints.COURSE_ID);
     %>
 
+    <script>
+
+        let userProfilePicture = '<%=user.getPicturePath()%>';
+
+        var content = ['<div class="btn-group-vertical">',
+                       '<button type="button" class="btn btn-light">Add as seminar reader</button>',
+                       '<button type="button" class="btn btn-light">Add as teacher assistant</button>',
+                        '</div>'].join('');
+
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover({
+                html:true,
+                placement : 'bottom',
+                content: content,
+                trigger : 'click'
+            });
+    });
+</script>
+
 </head>
 <body>
-  <div class="fill">
-      <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
-  </div>
+    <div id="content">
+        <table class="table" id="usersTable" style="width:100%">
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>E-mail</th>
+            </tr>
+            <tr>
+                <td>Giorgi var</td>
+                <td>Bagdavadze</td>
+                <td>gbagh16@freeuni.edu.ge</td>
+                <td>
+                    <div>
+                        <a href="#" data-toggle="popover">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>Irakli</td>
+                <td>Freeuni</td>
+                <td>irakli.freeuni@freeuni.edu.ge</td>
+                <td>
+                    <div>
+                        <a href="#" data-toggle="popover">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="Danger">
+                <td>Davit</td>
+                <td>Bezhanishvili</td>
+                <td>dbezh16@freeuni.edu.ge</td>
+                <td>
+                    <div>
+                        <a href="#" data-toggle="popover">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
