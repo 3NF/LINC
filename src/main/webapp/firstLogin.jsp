@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <head>
     <script>
 
@@ -10,8 +10,7 @@
             let code = authResult['code'];
             if (code) {
                 let form = document.forms[0];
-                form.auth_code.value = code;
-                form.submit();
+                form.auth_code = code;
             }
 
         }

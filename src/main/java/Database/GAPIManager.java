@@ -4,16 +4,19 @@ import Core.Room;
 import HelperClasses.Utilities;
 import Models.User;
 import com.google.api.client.auth.oauth2.TokenResponse;
+import com.google.api.client.auth.openidconnect.IdToken;
 import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
-import com.google.api.services.classroom.model.Course;
-import com.google.api.services.classroom.model.ListCoursesResponse;
-import com.google.api.services.classroom.model.ListStudentSubmissionsResponse;
-import com.google.api.services.classroom.model.Teacher;
+import com.google.api.services.classroom.model.*;
+import com.sun.mail.auth.OAuth2SaslClient;
+import com.sun.org.apache.xpath.internal.operations.Plus;
 
+import javax.validation.Payload;
+import javax.validation.constraints.NotNull;
+import javax.xml.ws.Service;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -26,6 +29,7 @@ public class GAPIManager {
     private static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String CLIENT_SECRET_FILE = "client_secret.json";
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+    private static final String APPNAME = "LINC";
 
     private static final GAPIManager instance = new GAPIManager();
 
@@ -96,6 +100,40 @@ public class GAPIManager {
     }
 
 
+    public User getUserById(@NotNull String id , String classroomId) {
+
+        DBManager.UserCredential cred = DBManager.getUserCredential(id);
+        String accessToken = cred.getAccessToken();
+        String refreshToken = cred.getRefreshToken();
+        GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).
+                setClientSecrets(secrets).
+                setTransport(HTTP_TRANSPORT).build().
+                setAccessToken(accessToken).setRefreshToken(refreshToken);
+
+        Classroom room = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APPNAME).build();
+
+        UserProfile profile = null;
+
+        try
+        {
+           Student student =  room.courses().students().get(classroomId,id).execute();
+           profile = student.getProfile();
+
+           if(student == null)
+           {
+                Teacher teacher = room.courses().teachers().get(classroomId,id).execute();
+                profile = teacher.getProfile();
+           }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return new User(profile.getEmailAddress(), profile.getName().getGivenName(), profile.getName().getFamilyName(), id, profile.getPhotoUrl(), "", "");
+    }
+
+
     public User registerUser(String authCode)
     {
         try
@@ -126,24 +164,25 @@ public class GAPIManager {
     }
 
 
-    public DBManager.Role getRoleByCourse(User user, String courseId) {
-        try {
+    public DBManager.Role getRoleByCourse(User user, String courseId)
+    {
+        try
+        {
             String accessToken = user.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-            List<Teacher> teachers = getTeachers(user, courseId);
-            if(teachers != null) {
-                for (Teacher teacher : teachers) {
-                    if (teacher.getUserId().equals(user.getUserId()))
-                        return DBManager.Role.Teacher;
-                }
-            }
-            return DBManager.Role.Pupil;
-        } catch (Exception e) {
-            e.printStackTrace();
+            Teacher teachers = null;
+
+            Teacher teacher = service.courses().teachers().get(courseId, user.getUserId()).execute();
+
+            return teacher == null? DBManager.Role.Pupil : DBManager.Role.Teacher;
         }
-        return DBManager.Role.Guest;
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private List<Course> getUserRooms(User user, boolean activeOnly)
@@ -204,25 +243,6 @@ public class GAPIManager {
             e.printStackTrace();
         }
     }
-
-
-    public List<Teacher> getTeachers(User user, String courseID) {
-        try
-        {
-            String accessToken = user.getAccessToken();
-            GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
-
-            Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-            List<Teacher> teachers = service.courses().teachers().list(courseID).execute().getTeachers();
-
-            return teachers;
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     /**
      * Checks if user is in classroom
      */
