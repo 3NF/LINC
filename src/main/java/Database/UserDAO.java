@@ -133,5 +133,8 @@ public class UserDAO
     public static List<User> getSeminarReaders() {
         return null;
     }
+	public static List<User> getTeacherAssistants() {
+		return null;
+	}
 
 }
