@@ -122,12 +122,11 @@ public class UserDAO
                 String userID = result.getString("userID");
                 users.add(userID);
             }
+            connection.close();
             return users;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return users;
     }
-
-
 }
