@@ -31,9 +31,11 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/panel.js?newversione"></script>
+    <script src="../JavaScript/teacher-dashboard.js?newversione"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
+    <link rel="stylesheet" href="../Styles/teacher-dashboard.css">
 
     <script src = "--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -48,30 +50,7 @@
 
         let userProfilePicture = '<%=user.getPicturePath()%>';
 
-        var contentForStudents = ['<div class="btn-group-vertical">',
-                                  '<button type="button" class="btn btn-light">Add as seminar reader</button>',
-                                  '<button type="button" class="btn btn-light">Add as teacher assistant</button>',
-                                  '</div>'].join('');
-
-        var content = ['<div class="btn-group-vertical">',
-                        '<button type="button" class="btn btn-light">Remove</button>',
-                        '</div>'].join('');
-
-        $(document).ready(function(){
-            $('[data-toggle="popover"]').popover({
-                html:true,
-                placement : 'bottom',
-                content: content,
-                trigger : 'click'
-            });
-            $('[data-toggle="studentPopover"]').popover({
-                html:true,
-                placement : 'bottom',
-                content: contentForStudents,
-                trigger : 'click'
-            });
-    });
-</script>
+    </script>
 
 </head>
 <body>
@@ -89,6 +68,12 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
+                            <tr id = "empty-tr">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="display: none"></td>
+                            </tr>
                             <% List<User> semReaders = UserDAO.getSeminarReaders();
                                 for(User semReader : semReaders){ %>
                             <tr>
@@ -97,11 +82,12 @@
                                 <td><%=semReader.getEmail()%></td>
                                 <td>
                                     <div>
-                                        <a href="#" data-toggle="popover">
+                                        <a href="#" data-toggle="popover" data-popover-content="#popContent">
                                             <span class="glyphicon glyphicon-option-vertical"></span>
                                         </a>
                                     </div>
                                 </td>
+                                <td style="display: none"><%=semReader.getUserId()%></td>
                             </tr>
                             <%}%>
                         </table>
@@ -130,11 +116,12 @@
                                 <td><%=assistant.getEmail()%></td>
                                 <td>
                                     <div>
-                                        <a href="#" data-toggle="popover">
+                                        <a href="#" data-toggle="popover" data-popover-content="#popContent">
                                             <span class="glyphicon glyphicon-option-vertical"></span>
                                         </a>
                                     </div>
                                 </td>
+                                <td style="display: none"><%=assistant.getUserId()%></td>
                             </tr>
                             <%}%>
                         </table>
@@ -164,16 +151,26 @@
                                 <td><%=student.getProfile().getEmailAddress()%></td>
                                 <td>
                                     <div>
-                                        <a href="#" data-toggle="studentPopover">
+                                        <a href="#" data-toggle="studentPopover" data-popover-content="#popContentStudents">
                                             <span class="glyphicon glyphicon-option-vertical"></span>
                                         </a>
                                     </div>
                                 </td>
+                                <td style="display: none"><%=student.getUserId()%></td>
                             </tr>
                             <%}%>
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div style="display:none">
+            <div class="btn-group-vertical" id="popContent">
+                <button type="button" class="btn btn-light">Remove</button>
+            </div>
+            <div class="btn-group-vertical" id="popContentStudents">
+                <button type="button" class="btn btn-light">Add as seminar reader</button>
+                <button type="button" class="btn btn-light">Add as teacher assistant</button>
             </div>
         </div>
     </div>
