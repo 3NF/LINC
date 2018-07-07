@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBManager
+public class UserDAO
 {
 
     static class UserCredential

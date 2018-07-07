@@ -5,7 +5,7 @@
 <%@ page import="com.google.api.services.classroom.model.Teacher" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.api.services.classroom.model.Student" %>
-<%@ page import="Database.DBManager" %>
+<%@ page import="Database.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -89,7 +89,7 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
-                            <% List<User> semReaders = DBManager.getSeminarReaders();
+                            <% List<User> semReaders = UserDAO.getSeminarReaders();
                                 for(User semReader : semReaders){ %>
                             <tr>
                                 <td><%=semReader.getFirstName()%></td>
@@ -122,7 +122,7 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
-                            <% List<User> assistants = DBManager.getTeacherAssistants();
+                            <% List<User> assistants = UserDAO.getTeacherAssistants();
                                 for(User assistant : assistants){ %>
                             <tr>
                                 <td><%=assistant.getFirstName()%></td>

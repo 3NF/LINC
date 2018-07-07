@@ -1,5 +1,5 @@
 <%@ page import="Data.Constraints" %>
-<%@ page import="Database.DBManager" %>
+<%@ page import="Database.UserDAO" %>
 <%@ page import="Models.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -8,7 +8,7 @@
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         String courseId = request.getParameter(Constraints.COURSE_ID);
 
-        if (DBManager.getRoleByCourse(user, courseId) != DBManager.Role.TeacherAssistant) {
+        if (UserDAO.getRoleByCourse(user, courseId) != UserDAO.Role.TeacherAssistant) {
             response.sendRedirect("choose-room.jsp");
             return;
         }
