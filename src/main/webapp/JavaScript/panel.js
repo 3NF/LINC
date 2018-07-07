@@ -1,13 +1,8 @@
 let isVisible = false;
 
 $(document).ready(function () {
-    console.log("123");
-
-    let dvSlider = `<div id="mySidenav" class="sidenav"\> <a class="logout" href='../logout' onclick="signOut()">Logout</a></div>`;
-    let dvPn = `<div class="fill"> <div style="cursor:pointer" onclick="togleNav()"> <img src=${userProfilePicture} class="img-circle" alt="Cinque Terre" id="user-panel-img" > </div> <div id = "menuBar" onclick="togleNav()"> <span class="glyphicon">&#xe236;</span> </div></div>`;
-    let body = $("body");
-    body.prepend(dvSlider);
-    body.prepend(dvPn);
+    $(".fill").css("display", "block");
+    $(".sidenav").css("display", "block");
 });
 
 function togleNav() {

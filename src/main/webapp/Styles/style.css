@@ -5,6 +5,7 @@ html, body {
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
 .sidenav {
+    display: none;
     height: 100%;
     width: 0;
     position: fixed;
@@ -61,6 +62,7 @@ html, body {
 }
 
 .fill {
+    display: none;
     min-height: 100%;
     width: 80px;
     position: fixed;

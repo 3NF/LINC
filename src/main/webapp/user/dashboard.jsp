@@ -53,7 +53,17 @@
 </head>
 
 <body onload="onLoad()">
-
+<div class="fill">
+    <div style="cursor:pointer" onclick="togleNav()">
+        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
+    </div>
+    <div id="menuBar" onclick="togleNav()">
+        <span class="glyphicon">&#xe236;</span>
+    </div>
+</div>
+<div id="mySidenav" class="sidenav">
+    <a class="logout" href='../logout' onclick="signOut()">Logout</a>
+</div>
 
 <div id="content">
     <div id = "loader-wrapper">
