@@ -238,6 +238,24 @@ public class GAPIManager {
             e.printStackTrace();
         }
     }
+
+    public List<Student> getStudents(User user, String courseID) {
+        try
+        {
+            String accessToken = user.getAccessToken();
+            GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
+
+            Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+            List<Student> students = service.courses().students().list(courseID).execute().getStudents();
+
+            return students;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Checks if user is in classroom
      */

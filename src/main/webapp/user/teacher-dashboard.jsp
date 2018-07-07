@@ -4,6 +4,7 @@
 <%@ page import="Models.User" %>
 <%@ page import="com.google.api.services.classroom.model.Teacher" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.google.api.services.classroom.model.Student" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -29,9 +30,8 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/panel.js?newversione"></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
-<%--my css--%>
+    <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
 
     <script src = "--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -138,10 +138,13 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
+                            <% GAPIManager gapi = GAPIManager.getInstance();
+                                List<Student> students = gapi.getStudents(user , courseId);
+                                for(Student student : students){ %>
                             <tr>
-                                <td>Giorgi var</td>
-                                <td>Bagdavadze</td>
-                                <td>gbagh16@freeuni.edu.ge</td>
+                                <td><%=student.getProfile().getName().getGivenName()%></td>
+                                <td><%=student.getProfile().getName().getFamilyName()%></td>
+                                <td><%=student.getProfile().getEmailAddress()%></td>
                                 <td>
                                     <div>
                                         <a href="#" data-toggle="popover">
@@ -150,6 +153,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <%}%>
                         </table>
                     </div>
                 </div>
