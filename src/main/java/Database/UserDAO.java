@@ -108,7 +108,7 @@ public class UserDAO
         return false;
     }
 
-    //TODO 3NF-Bagdu maqsimaluri komunicireba bazebtan
+
     public static List<String> getUsersByRole(String classroomID,Role role){
         List<String> users = new ArrayList<String>();
         try {
@@ -129,5 +129,9 @@ public class UserDAO
         return users;
     }
 
+	// TODO: 7/7/18 გვანცას უნდა, რაში არ ვიცი მარა იყოს მაინც
+    public static List<User> getSeminarReaders() {
+        return null;
+    }
 
 }
