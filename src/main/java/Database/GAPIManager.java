@@ -161,19 +161,30 @@ public class GAPIManager {
 
     public DBManager.Role getRoleByCourse(User user, String courseId)
     {
+        Classroom service = null;
+
         try
         {
             String accessToken = user.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
-            Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+            service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
             Teacher teachers = null;
 
-            Teacher teacher = service.courses().teachers().get(courseId, user.getUserId()).execute();
+            try
+            {
+                Student student = service.courses().students().get(courseId, user.getUserId()).execute();
 
-            return teacher == null? DBManager.Role.Pupil : DBManager.Role.Teacher;
+                return DBManager.Role.Pupil;
+            }
+            catch (Exception e)
+            {
+                Teacher teacher = service.courses().teachers().get(courseId, user.getUserId()).execute();
+                return DBManager.Role.Teacher;
+            }
+            
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             e.printStackTrace();
             return null;

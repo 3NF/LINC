@@ -26,7 +26,8 @@ public class SuggestionDAO {
 
         try {
             Connection connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(query);
+            String generatedColumns[] = { "id" };
+            statement = connection.prepareStatement(query,generatedColumns);
             statement.setString(1, user.getUserId());
             statement.setString(2, codeFileID);
             statement.setString(3, content);
