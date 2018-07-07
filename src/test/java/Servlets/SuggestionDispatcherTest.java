@@ -1,6 +1,5 @@
 package Servlets;
 
-import Database.ReplyDAO;
 import Database.SuggestionDAO;
 import Database.ValidateDAO;
 import Models.User;

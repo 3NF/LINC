@@ -287,5 +287,23 @@ public class GAPIManager {
         }
     }
 
+    public void getUserAssigments(User user, String courseID){
+        String accessToken = user.getAccessToken();
+        GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
+        Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+        String courseWork;
+        try {
+            String userID = user.getUserId();
+            String id = "daduna";
+            courseWork = service.courses().courseWork().list(courseID).execute().getCourseWork().get(0).getAlternateLink();
+            System.err.println(courseWork);
+            //courseWork = service.courses().courseWork().modifyAssignees(courseID,"","");
+            return;
+        } catch (IOException e) {
+            return;
+        }  catch (Exception e) {
+            return;
+        }
+    }
 
 }
