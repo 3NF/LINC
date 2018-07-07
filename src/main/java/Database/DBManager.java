@@ -5,6 +5,8 @@ import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBManager
 {
@@ -102,5 +104,21 @@ public class DBManager
 
     private static boolean isTeacherAssistant(User user, String courseId){
         return false;
+    }
+
+    //TODO 3NF-Bagdu maqsimaluri komunicireba bazebtan
+    public static List<User> getTeacherAssistants(){
+        List<User> users = new ArrayList<User>();
+        User u = new User("mtekt16@freeuni.edu.ge" , "Mikheil" , "Tektumanidze" , " " , " " , " " , "");
+        users.add(u);
+        return users;
+    }
+
+    //TODO 3NF-Bagdu maqsimaluri komunicireba bazebtan aqac
+    public static List<User> getSeminarReaders(){
+        List<User> users = new ArrayList<User>();
+        User u = new User("iraklifreeuni@freeuni.edu.ge" , "Irakli" , "Qavtaradze" , " " , " " , " " , "");
+        users.add(u);
+        return users;
     }
 }
