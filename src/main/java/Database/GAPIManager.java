@@ -2,6 +2,7 @@ package Database;
 
 import Core.Room;
 import HelperClasses.Utilities;
+import Models.Assignment;
 import Models.User;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.*;
@@ -29,7 +30,7 @@ public class GAPIManager {
 
 
 
-    private GoogleClientSecrets secrets;
+    private static GoogleClientSecrets secrets;
 
     public static GAPIManager getInstance(){ return instance;}
 
@@ -281,22 +282,24 @@ public class GAPIManager {
         }
     }
 
-    public void getUserAssigments(User user, String courseID){
+    public static String getUserAssignments(User user, String courseID){
         String accessToken = user.getAccessToken();
         GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
         Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-        String courseWork;
+        com.google.api.services.classroom.model.Assignment courseWork;
         try {
             String userID = user.getUserId();
             String id = "daduna";
-            courseWork = service.courses().courseWork().list(courseID).execute().getCourseWork().get(0).getAlternateLink();
-            System.err.println(courseWork);
-            //courseWork = service.courses().courseWork().modifyAssignees(courseID,"","");
-            return;
+            courseWork = service.courses().courseWork().list(courseID).execute().getCourseWork().get(0).getAssignment();
+            //courseWork.
+            if (courseWork == null) {System.err.println("tqveni deda sheveci");return null;}
+            return  courseWork.getStudentWorkFolder().getAlternateLink();
         } catch (IOException e) {
-            return;
+            e.printStackTrace();
+            return null;
         }  catch (Exception e) {
-            return;
+            e.printStackTrace();
+            return null;
         }
     }
 
