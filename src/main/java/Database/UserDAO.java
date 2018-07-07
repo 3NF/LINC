@@ -2,9 +2,11 @@ package Database;
 
 import Models.User;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,18 +109,25 @@ public class UserDAO
     }
 
     //TODO 3NF-Bagdu maqsimaluri komunicireba bazebtan
-    public static List<User> getTeacherAssistants(){
-        List<User> users = new ArrayList<User>();
-        User u = new User("mtekt16@freeuni.edu.ge" , "Mikheil" , "Tektumanidze" , " " , " " , " " , "");
-        users.add(u);
+    public static List<String> getUsersByRole(String classroomID,Role role){
+        List<String> users = new ArrayList<String>();
+        try {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            String query="SELECT * FROM instructors WHERE classroomID=? AND Type=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,classroomID);
+            statement.setString(2,role.toString());
+            ResultSet result = statement.executeQuery();
+            while (result.next()){
+                String userID = result.getString("userID");
+                users.add(userID);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return users;
     }
 
-    //TODO 3NF-Bagdu maqsimaluri komunicireba bazebtan aqac
-    public static List<User> getSeminarReaders(){
-        List<User> users = new ArrayList<User>();
-        User u = new User("iraklifreeuni@freeuni.edu.ge" , "Irakli" , "Qavtaradze" , " " , " " , " " , "");
-        users.add(u);
-        return users;
-    }
+
 }
