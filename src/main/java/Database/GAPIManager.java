@@ -101,9 +101,9 @@ public class GAPIManager {
     }
 
 
-    public User getUserById(@NotNull String id , String classroomId) {
+    public User getUserById(String requesterId, String targetId) {
 
-        DBManager.UserCredential cred = DBManager.getUserCredential(id);
+        DBManager.UserCredential cred = DBManager.getUserCredential(requesterId);
         String accessToken = cred.getAccessToken();
         String refreshToken = cred.getRefreshToken();
         GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).
@@ -117,14 +117,7 @@ public class GAPIManager {
 
         try
         {
-           Student student =  room.courses().students().get(classroomId,id).execute();
-           profile = student.getProfile();
-
-           if(student == null)
-           {
-                Teacher teacher = room.courses().teachers().get(classroomId,id).execute();
-                profile = teacher.getProfile();
-           }
+           profile =  room.userProfiles().get(targetId).execute();
         }
         catch (IOException e)
         {
@@ -132,7 +125,7 @@ public class GAPIManager {
         }
 
         System.out.println(profile.getPhotoUrl());
-        return new User(profile.getEmailAddress(), profile.getName().getGivenName(), profile.getName().getFamilyName(), id, profile.getPhotoUrl(), "", "");
+        return new User(profile.getEmailAddress(), profile.getName().getGivenName(), profile.getName().getFamilyName(), targetId, profile.getPhotoUrl(), "", "");
     }
 
 

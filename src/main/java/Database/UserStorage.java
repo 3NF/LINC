@@ -17,12 +17,12 @@ public class UserStorage {
         users = new HashMap<>();
     }
 
-    public User getUserWithID (String id, String classroomID) {
+    public User getUserWithID (String requesterID, String targetId) {
         System.out.println("YES" + users);
-        if (!users.containsKey(id)) {
-            User ad = gapiManager.getUserById(id, classroomID);
-            users.put(id, ad);
+        if (!users.containsKey(targetId)) {
+            User ad = gapiManager.getUserById(requesterID, targetId);
+            users.put(targetId, ad);
         }
-        return users.get(id);
+        return users.get(targetId);
     }
 }

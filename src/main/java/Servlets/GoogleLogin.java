@@ -24,7 +24,8 @@ public class GoogleLogin extends HttpServlet {
         response.sendRedirect("/user/choose-room.jsp");
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         String action = request.getParameter("action");
         User resultedUser = null;
 
@@ -36,8 +37,7 @@ public class GoogleLogin extends HttpServlet {
             String idToken = request.getParameter(ID_TOKEN_NAME);
             resultedUser = GAPIManager.getInstance().getUser(idToken);
             if (resultedUser == null)  {
-                request.getSession().setAttribute(USER, resultedUser);
-                request.getRequestDispatcher("/firstLogin.jsp").forward(request, response);
+                response.sendRedirect("/firstLogin.jsp");
                 return;
             }
         }
