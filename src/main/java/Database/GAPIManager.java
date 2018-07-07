@@ -9,10 +9,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
-import com.google.api.services.classroom.model.Course;
-import com.google.api.services.classroom.model.ListCoursesResponse;
-import com.google.api.services.classroom.model.ListStudentSubmissionsResponse;
-import com.google.api.services.classroom.model.Teacher;
+import com.google.api.services.classroom.model.*;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -216,6 +213,23 @@ public class GAPIManager {
             List<Teacher> teachers = service.courses().teachers().list(courseID).execute().getTeachers();
 
             return teachers;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Student> getStudents(User user, String courseID) {
+        try
+        {
+            String accessToken = user.getAccessToken();
+            GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
+
+            Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+            List<Student> students = service.courses().students().list(courseID).execute().getStudents();
+
+            return students;
         } catch (Exception e)
         {
             e.printStackTrace();
