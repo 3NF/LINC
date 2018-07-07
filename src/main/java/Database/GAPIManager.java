@@ -4,19 +4,13 @@ import Core.Room;
 import HelperClasses.Utilities;
 import Models.User;
 import com.google.api.client.auth.oauth2.TokenResponse;
-import com.google.api.client.auth.openidconnect.IdToken;
 import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.*;
-import com.sun.mail.auth.OAuth2SaslClient;
-import com.sun.org.apache.xpath.internal.operations.Plus;
 
-import javax.validation.Payload;
-import javax.validation.constraints.NotNull;
-import javax.xml.ws.Service;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -92,7 +86,7 @@ public class GAPIManager {
             String pictureUrl = (String) payload.get("picture");
             String familyName = Utilities.capitalizeString((String) payload.get("family_name"));
             String givenName = Utilities.capitalizeString((String) payload.get("given_name"));
-            DBManager.UserCredential credential = DBManager.getUserCredential(sub);
+            UserDAO.UserCredential credential = UserDAO.getUserCredential(sub);
             if(credential == null) return null;
             return new User(email, givenName, familyName, sub, pictureUrl, credential.getAccessToken(), credential.getRefreshToken());
         } catch (Exception e) {
@@ -103,7 +97,7 @@ public class GAPIManager {
 
     public User getUserById(String requesterId, String targetId) {
 
-        DBManager.UserCredential cred = DBManager.getUserCredential(requesterId);
+        UserDAO.UserCredential cred = UserDAO.getUserCredential(requesterId);
         String accessToken = cred.getAccessToken();
         String refreshToken = cred.getRefreshToken();
         GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).
@@ -141,7 +135,7 @@ public class GAPIManager {
 
             String sub = idToken.getPayload().getSubject();
 
-            DBManager.saveUserCredentials(sub, accessToken, refreshToken);
+            UserDAO.saveUserCredentials(sub, accessToken, refreshToken);
             return getUser(tokenResponse.getIdToken());
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,7 +153,7 @@ public class GAPIManager {
     }
 
 
-    public DBManager.Role getRoleByCourse(User user, String courseId)
+    public UserDAO.Role getRoleByCourse(User user, String courseId)
     {
         Classroom service = null;
 
@@ -175,12 +169,12 @@ public class GAPIManager {
             {
                 Student student = service.courses().students().get(courseId, user.getUserId()).execute();
 
-                return DBManager.Role.Pupil;
+                return UserDAO.Role.Pupil;
             }
             catch (Exception e)
             {
                 Teacher teacher = service.courses().teachers().get(courseId, user.getUserId()).execute();
-                return DBManager.Role.Teacher;
+                return UserDAO.Role.Teacher;
             }
             
         }

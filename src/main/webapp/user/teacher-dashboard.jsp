@@ -5,6 +5,7 @@
 <%@ page import="com.google.api.services.classroom.model.Teacher" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.api.services.classroom.model.Student" %>
+<%@ page import="Database.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -47,9 +48,13 @@
 
         let userProfilePicture = '<%=user.getPicturePath()%>';
 
+        var contentForStudents = ['<div class="btn-group-vertical">',
+                                  '<button type="button" class="btn btn-light">Add as seminar reader</button>',
+                                  '<button type="button" class="btn btn-light">Add as teacher assistant</button>',
+                                  '</div>'].join('');
+
         var content = ['<div class="btn-group-vertical">',
-                       '<button type="button" class="btn btn-light">Add as seminar reader</button>',
-                       '<button type="button" class="btn btn-light">Add as teacher assistant</button>',
+                        '<button type="button" class="btn btn-light">Remove</button>',
                         '</div>'].join('');
 
         $(document).ready(function(){
@@ -57,6 +62,12 @@
                 html:true,
                 placement : 'bottom',
                 content: content,
+                trigger : 'click'
+            });
+            $('[data-toggle="studentPopover"]').popover({
+                html:true,
+                placement : 'bottom',
+                content: contentForStudents,
                 trigger : 'click'
             });
     });
@@ -78,10 +89,12 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
+                            <% List<User> semReaders = UserDAO.getSeminarReaders();
+                                for(User semReader : semReaders){ %>
                             <tr>
-                                <td>Irakli</td>
-                                <td>Freeuni</td>
-                                <td>irakli.freeuni@freeuni.edu.ge</td>
+                                <td><%=semReader.getFirstName()%></td>
+                                <td><%=semReader.getLastName()%></td>
+                                <td><%=semReader.getEmail()%></td>
                                 <td>
                                     <div>
                                         <a href="#" data-toggle="popover">
@@ -90,6 +103,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <%}%>
                         </table>
                     </div>
                 </div>
@@ -108,10 +122,12 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
+                            <% List<User> assistants = UserDAO.getTeacherAssistants();
+                                for(User assistant : assistants){ %>
                             <tr>
-                                <td>Davit</td>
-                                <td>Bezhanishvili</td>
-                                <td>dbezh16@freeuni.edu.ge</td>
+                                <td><%=assistant.getFirstName()%></td>
+                                <td><%=assistant.getLastName()%></td>
+                                <td><%=assistant.getEmail()%></td>
                                 <td>
                                     <div>
                                         <a href="#" data-toggle="popover">
@@ -120,6 +136,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <%}%>
                         </table>
                     </div>
                 </div>
@@ -147,7 +164,7 @@
                                 <td><%=student.getProfile().getEmailAddress()%></td>
                                 <td>
                                     <div>
-                                        <a href="#" data-toggle="popover">
+                                        <a href="#" data-toggle="studentPopover">
                                             <span class="glyphicon glyphicon-option-vertical"></span>
                                         </a>
                                     </div>
