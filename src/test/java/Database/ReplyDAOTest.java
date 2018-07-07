@@ -24,7 +24,7 @@ public class ReplyDAOTest {
         source.setDatabaseName(MYSQL_DATABASE_NAME);
         source.setUser(MYSQL_USERNAME);
         source.setPassword(MYSQL_PASSWORD);
-        DAO = new ReplyDAO(source);
+        DAO = new ReplyDAO(source, new UserStorage(GAPIManager.getInstance()));
         DAO.getSuggestionReplies("1");
         try {
             connection = source.getConnection();

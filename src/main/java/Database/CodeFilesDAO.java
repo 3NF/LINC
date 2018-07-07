@@ -1,9 +1,6 @@
 package Database;
 
-        import Models.CodeFile;
-        import Models.Suggestion;
-        import Models.File;
-        import Models.UploadedAssignment;
+        import Models.*;
         import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
         import java.sql.Connection;
         import java.sql.PreparedStatement;
@@ -13,8 +10,11 @@ package Database;
 
 public class CodeFilesDAO {
     private final MysqlDataSource connectionPool;
-    public CodeFilesDAO(MysqlDataSource connectionPool) {
+    private final UserStorage userStorage;
+
+    public CodeFilesDAO(MysqlDataSource connectionPool, UserStorage userStorage) {
         this.connectionPool = connectionPool;
+        this.userStorage = userStorage;
     }
 
     public CodeFile getFilesContent(String userId, String FileId) throws SQLException {

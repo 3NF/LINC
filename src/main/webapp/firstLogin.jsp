@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://apis.google.com/js/client:platform.js" async defer></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <head>
     <script>
 
@@ -24,7 +24,9 @@
                     client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
                     scope: "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.courses.readonly " +
                     "https://www.googleapis.com/auth/classroom.coursework.students.readonly https://www.googleapis.com/auth/classroom.coursework.students " +
-                    "https://www.googleapis.com/auth/classroom.rosters"
+                    "https://www.googleapis.com/auth/classroom.rosters " +
+                    "https://www.googleapis.com/auth/classroom.profile.photos " +
+                    "https://www.googleapis.com/auth/classroom.profile.emails"
                 });
 
                 auth2.grantOfflineAccess().then(finalCallback);
@@ -36,7 +38,7 @@
 </head>
 
 
-<body>
+<body onload="start()">
     <form action="${pageContext.request.contextPath}/GoogleLogin" method="post">
         <input type="hidden" name="auth_code" value="">
         <input type="hidden" name="action" value="register">

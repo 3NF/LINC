@@ -23,8 +23,9 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/dashboard.js?newversione"></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
-    <%--Comment following line if you want to view as Student--%>
+<%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor.js?newversion"></script>
 
     <%--my css--%>
