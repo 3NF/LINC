@@ -4,6 +4,9 @@ import Models.User;
 import org.junit.Before;
 import org.junit.Test;
 
+
+import static org.junit.Assert.*;
+
 public class UserStorageTester {
 
     UserStorage userStorage;
@@ -22,12 +25,16 @@ public class UserStorageTester {
     public void checkLuka () {
         User user = userStorage.getUserWithID(bakurID, lukaID);
         System.out.println(user);
+        assertEquals(user.getFirstName(), "Luka");
+        assertEquals(user.getLastName(), "Tchumburidze");
     }
 
     @Test
     public void checkGiorgi () {
         User user = userStorage.getUserWithID(dzlieraID, giorgiID);
         System.out.println(user);
+        assertEquals(user.getFirstName(), "giorgi");
+        assertEquals(user.getLastName(), "baghdavadze");
     }
 
     @Test
@@ -35,11 +42,15 @@ public class UserStorageTester {
     {
         User user = userStorage.getUserWithID(bakurID, dzlieraID);
         System.out.println(user);
+        assertEquals(user.getFirstName(), "giorgi");
+        assertEquals(user.getLastName(), "chkhikvadze");
     }
 
     @Test
     public void checkBakur() {
         User user = userStorage.getUserWithID(dzlieraID, bakurID);
         System.out.println(user);
+        assertEquals(user.getFirstName(), "Bakur");
+        assertEquals(user.getLastName(), "Tsutskhashvili");
     }
 }

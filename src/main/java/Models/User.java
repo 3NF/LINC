@@ -20,8 +20,7 @@ public class User {
         this.email = email;
         this.lastName = lastName;
         this.userId = userId;
-        this.picturePath = picturePath;
-        this.idToken = idToken;
+        this.picturePath = processPictureLink(picturePath);
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
@@ -73,6 +72,13 @@ public class User {
     public String getRefreshToken()
     {
         return refreshToken;
+    }
+
+    public String processPictureLink (String picturePath) {
+        if (picturePath.charAt(0) == '/' && picturePath.charAt(1) =='/') {
+            return "https:" + picturePath;
+        }
+        return picturePath;
     }
 
     @Override
