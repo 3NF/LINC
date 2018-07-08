@@ -2,6 +2,8 @@ package Servlets;
 
 import Data.Constraints;
 import Database.CodeFilesDAO;
+import Database.UserStorage;
+import Models.CodeFile;
 import Models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static Data.Constraints.USER;
+import static Data.Constraints.USER_STORAGE;
 
 @WebServlet(name = "CodeDispatcher", urlPatterns = "/user/code_dispatcher")
 public class CodeDispatcher extends HttpServlet
@@ -50,7 +53,12 @@ public class CodeDispatcher extends HttpServlet
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
         try {
             User user = (User) session.getAttribute(USER);
-            return new GsonBuilder().create().toJson(codeFilesDAO.getFilesContent(user.getUserId(), codeId));
+            UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
+
+            CodeFile codeFile = codeFilesDAO.getFilesContent(user.getUserId(), codeId);
+            codeFile.RetrieveUsers(user.getUserId(), userStorage);
+
+            return new GsonBuilder().create().toJson(codeFile);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

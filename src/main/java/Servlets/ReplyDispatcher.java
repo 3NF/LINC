@@ -2,6 +2,7 @@ package Servlets;
 
 import Data.Constraints;
 import Database.ReplyDAO;
+import Database.UserStorage;
 import Database.ValidateDAO;
 import Models.Reply;
 import Models.User;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static Data.Constraints.USER;
+import static Data.Constraints.USER_STORAGE;
 
 @WebServlet(name = "ReplyDispatcher", urlPatterns = "/user/reply_dispatcher")
 public class ReplyDispatcher extends HttpServlet
@@ -52,6 +54,11 @@ public class ReplyDispatcher extends HttpServlet
             else {
                 //Get replies from database
                 List<Reply> replies = replyDAO.getSuggestionReplies(suggestionID);
+                UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
+
+                for (Reply reply:replies) {
+                    reply.RetrieveUsers(user.getUserId(), userStorage);
+                }
 
                 //Convert file data into JSON
                 json = new GsonBuilder().disableHtmlEscaping().create().toJson(replies);

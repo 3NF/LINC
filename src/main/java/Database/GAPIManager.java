@@ -120,7 +120,6 @@ public class GAPIManager {
             e.printStackTrace();
         }
 
-        System.out.println(profile.getPhotoUrl());
         return new User(profile.getEmailAddress(), profile.getName().getGivenName(), profile.getName().getFamilyName(), targetId, profile.getPhotoUrl(), "", "");
     }
 
