@@ -68,12 +68,7 @@
                                 <th>Name</th>
                                 <th>Surname</th>
                                 <th>E-mail</th>
-                            </tr>
-                            <tr id = "empty-tr">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td style="display: none"></td>
+                                <th></th>
                             </tr>
                             <% List<UserProfile> semReaders = UserDAO.getSeminarReaders(user , courseId);
                                 for(UserProfile semReader : semReaders){ %>
@@ -82,13 +77,14 @@
                                 <td><%=semReader.getName().getFamilyName()%></td>
                                 <td><%=semReader.getEmailAddress()%></td>
                                 <td>
-                                    <div>
-                                        <a href="#" data-toggle="popover" data-popover-content="#popContent">
-                                            <span class="glyphicon glyphicon-option-vertical"></span>
-                                        </a>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                            <span class="glyphicon glyphicon-option-vertical"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><button class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=semReader.getId()%> , 'remove')">Remove</button></li>
+                                        </ul>
                                     </div>
                                 </td>
-                                <td style="display: none"><%=semReader.getId()%></td>
                             </tr>
                             <%}%>
                         </table>
@@ -116,13 +112,14 @@
                                 <td><%=assistant.getName().getFamilyName()%></td>
                                 <td><%=assistant.getEmailAddress()%></td>
                                 <td>
-                                    <div>
-                                        <a href="#" data-toggle="popover" data-popover-content="#popContent">
-                                            <span class="glyphicon glyphicon-option-vertical"></span>
-                                        </a>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                            <span class="glyphicon glyphicon-option-vertical"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><button class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=assistant.getId()%> , 'remove')">Remove</button></li>
+                                        </ul>
                                     </div>
                                 </td>
-                                <td style="display: none"><%=assistant.getId()%></td>
                             </tr>
                             <%}%>
                         </table>
@@ -150,27 +147,20 @@
                                 <td><%=student.getName().getFamilyName()%></td>
                                 <td><%=student.getEmailAddress()%></td>
                                 <td>
-                                    <div>
-                                        <a href="#" data-toggle="studentPopover" data-popover-content="#popContentStudents">
-                                            <span class="glyphicon glyphicon-option-vertical"></span>
-                                        </a>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                            <span class="glyphicon glyphicon-option-vertical"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><button class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=student.getId()%> , 'add')">Add as seminar reader</button></li>
+                                            <li><button class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=student.getId()%> , 'add')">Add as teacher assistant</button></li>
+                                        </ul>
                                     </div>
                                 </td>
-                                <td style="display: none"><%=student.getId()%></td>
                             </tr>
                             <%}%>
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div style="display:none">
-            <div class="btn-group-vertical" id="popCflaontent">
-                <button type="button" class="btn btn-light">Remove</button>
-            </div>
-            <div class="btn-group-vertical" id="popContentStudents">
-                <button type="button" class="btn btn-light">Add as seminar reader</button>
-                <button type="button" class="btn btn-light">Add as teacher assistant</button>
             </div>
         </div>
     </div>
