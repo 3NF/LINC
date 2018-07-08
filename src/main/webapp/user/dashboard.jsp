@@ -55,7 +55,7 @@
     <% GAPIManager gapiManager = GAPIManager.getInstance(); %>
 
     <%
-        Set<String> assignedAssIds = new HashSet<>(); assignedAssIds.addAll(assignmentInfoDAO.getAssignmentIds(courseId));
+        Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
         assignedAssIds.forEach(System.out::println);
         List<Assignment> assignments = gapiManager.getUserAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
                 .filter(assignment -> true).collect(Collectors.toList());
