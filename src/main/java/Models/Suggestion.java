@@ -40,7 +40,6 @@ public class Suggestion implements UserRetriever {
     public void RetrieveUsers(String requesterID, UserStorage userStorage) {
         if (user.getEmail() == null) {
             user = userStorage.getUserWithID(requesterID, user.getUserId());
-            System.out.println(user.getFirstName() + user.getLastName());
         }
     }
 
