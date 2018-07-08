@@ -245,7 +245,7 @@ public class GAPIManager {
         }
     }
 
-    public List<Student> getStudents(User user, String courseID) {
+    public List<Student> getUsers(User user, String courseID) {
         try
         {
             String accessToken = user.getAccessToken();

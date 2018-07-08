@@ -6,6 +6,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.api.services.classroom.model.Student" %>
 <%@ page import="Database.UserDAO" %>
+<%@ page import="com.google.api.services.classroom.model.UserProfile" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -74,12 +75,12 @@
                                 <td></td>
                                 <td style="display: none"></td>
                             </tr>
-                            <% List<User> semReaders = UserDAO.getSeminarReaders();
-                                for(User semReader : semReaders){ %>
+                            <% List<UserProfile> semReaders = UserDAO.getSeminarReaders(user , courseId);
+                                for(UserProfile semReader : semReaders){ %>
                             <tr>
-                                <td><%=semReader.getFirstName()%></td>
-                                <td><%=semReader.getLastName()%></td>
-                                <td><%=semReader.getEmail()%></td>
+                                <td><%=semReader.getName().getGivenName()%></td>
+                                <td><%=semReader.getName().getFamilyName()%></td>
+                                <td><%=semReader.getEmailAddress()%></td>
                                 <td>
                                     <div>
                                         <a href="#" data-toggle="popover" data-popover-content="#popContent">
@@ -87,7 +88,7 @@
                                         </a>
                                     </div>
                                 </td>
-                                <td style="display: none"><%=semReader.getUserId()%></td>
+                                <td style="display: none"><%=semReader.getId()%></td>
                             </tr>
                             <%}%>
                         </table>
@@ -108,12 +109,12 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
-                            <% List<User> assistants = UserDAO.getTeacherAssistants();
-                                for(User assistant : assistants){ %>
+                            <% List<UserProfile> assistants = UserDAO.getTeacherAssistants(user , courseId);
+                                for(UserProfile assistant : assistants){ %>
                             <tr>
-                                <td><%=assistant.getFirstName()%></td>
-                                <td><%=assistant.getLastName()%></td>
-                                <td><%=assistant.getEmail()%></td>
+                                <td><%=assistant.getName().getGivenName()%></td>
+                                <td><%=assistant.getName().getFamilyName()%></td>
+                                <td><%=assistant.getEmailAddress()%></td>
                                 <td>
                                     <div>
                                         <a href="#" data-toggle="popover" data-popover-content="#popContent">
@@ -121,7 +122,7 @@
                                         </a>
                                     </div>
                                 </td>
-                                <td style="display: none"><%=assistant.getUserId()%></td>
+                                <td style="display: none"><%=assistant.getId()%></td>
                             </tr>
                             <%}%>
                         </table>
@@ -142,13 +143,12 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
-                            <% GAPIManager gapi = GAPIManager.getInstance();
-                                List<Student> students = gapi.getStudents(user , courseId);
-                                for(Student student : students){ %>
+                            <% List<UserProfile> students = UserDAO.getStudents(user , courseId);
+                                for(UserProfile student : students){ %>
                             <tr>
-                                <td><%=student.getProfile().getName().getGivenName()%></td>
-                                <td><%=student.getProfile().getName().getFamilyName()%></td>
-                                <td><%=student.getProfile().getEmailAddress()%></td>
+                                <td><%=student.getName().getGivenName()%></td>
+                                <td><%=student.getName().getFamilyName()%></td>
+                                <td><%=student.getEmailAddress()%></td>
                                 <td>
                                     <div>
                                         <a href="#" data-toggle="studentPopover" data-popover-content="#popContentStudents">
@@ -156,7 +156,7 @@
                                         </a>
                                     </div>
                                 </td>
-                                <td style="display: none"><%=student.getUserId()%></td>
+                                <td style="display: none"><%=student.getId()%></td>
                             </tr>
                             <%}%>
                         </table>
@@ -165,7 +165,7 @@
             </div>
         </div>
         <div style="display:none">
-            <div class="btn-group-vertical" id="popContent">
+            <div class="btn-group-vertical" id="popCflaontent">
                 <button type="button" class="btn btn-light">Remove</button>
             </div>
             <div class="btn-group-vertical" id="popContentStudents">
