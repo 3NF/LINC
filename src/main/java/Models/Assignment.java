@@ -1,32 +1,33 @@
 package Models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Class that represents info of already corrected assignment
  */
-public class Assignment
-{
-    private int index;
+public class Assignment {
+    private String id;
     private String name;
-    private LocalDateTime postTime;
+    List<String> fileNames;
 
-    public Assignment(int index, String name, LocalDateTime postTime) {
-        this.index = index;
+    public Assignment(String id, String name) {
+        fileNames = new ArrayList<>();
+        this.id = id;
         this.name = name;
-        this.postTime = postTime;
     }
 
-    public int getIndex() {
-        return index;
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public LocalDateTime getPostTime() {
-        return postTime;
+    public void addFileNames(List<String> names) {
+        fileNames.addAll(names);
     }
 }

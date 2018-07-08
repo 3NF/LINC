@@ -108,8 +108,7 @@ public class UserDAO
         return false;
     }
 
-    //TODO 3NF-Bagdu maqsimaluri komunicireba bazebtan
-    public static List<String> getUsersByRole(String classroomID,Role role){
+    public static List<String> getUsersByRole(String classroomID, Role role){
         List<String> users = new ArrayList<String>();
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();

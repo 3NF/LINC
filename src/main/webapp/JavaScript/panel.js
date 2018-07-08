@@ -22,4 +22,10 @@ function start() {
 
 function signOut() {
     gapi.load('client', start);
+    location.href='../logout';
+}
+
+/* TODO ლუკა, ესაინმენთის ფაილების შეცვლა როცა პანელზე დაეჭეირაბა კონკრეტულ დავალებას*/
+function getAssignment(assignmentId) {
+    console.log(assignmentId);
 }

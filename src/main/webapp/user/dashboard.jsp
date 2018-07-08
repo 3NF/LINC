@@ -4,6 +4,14 @@
 <%@ page import="Data.Constraints" %>
 <%@ page import="static Data.Constraints.USER" %>
 <%@ page import="Database.GAPIManager" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.HashSet" %>
+<%@ page import="Database.AssignmentInfoDAO" %>
+<%@ page import="static Data.Constraints.ASSIGNMENT_INFO_DAO" %>
+<%@ page import="static Data.Constraints.GAPI_MANAGER" %>
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="Models.Assignment" %>
 <html>
 
 <head>
@@ -43,8 +51,16 @@
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
     <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
-    <% GAPIManager.getInstance().isInRoom(user, courseId); %>
+    <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
+    <% GAPIManager gapiManager = GAPIManager.getInstance(); %>
 
+    <%
+        Set<String> assignedAssIds = new HashSet<>(); assignedAssIds.addAll(assignmentInfoDAO.getAssignmentIds(courseId));
+        assignedAssIds.forEach(System.out::println);
+        List<Assignment> assignments = gapiManager.getUserAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
+                .filter(assignment -> true).collect(Collectors.toList());
+        assignments.forEach(System.out::println);
+    %>
 
     <script>
         let userProfilePicture = '<%=user.getPicturePath()%>';
@@ -55,14 +71,30 @@
 <body onload="onLoad()">
 <div class="fill">
     <div style="cursor:pointer" onclick="togleNav()">
-        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
-    </div>
-    <div id="menuBar" onclick="togleNav()">
-        <span class="glyphicon">&#xe236;</span>
+        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
+    <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
     </div>
 </div>
 <div id="mySidenav" class="sidenav">
-    <a class="logout" href='../logout' onclick="signOut()">Logout</a>
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item">
+            <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
+        </div>
+    </div>
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="height: 90%">
+        <% for (Assignment assignment : assignments) {%>
+            <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
+                <p><%=assignment.getName()%></p>
+        </div>
+        <%}%>
+    </div>
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item">
+            <p onclick="signOut()">Logout</p>
+        </div>
+    </div>
 </div>
 
 <div id="content">

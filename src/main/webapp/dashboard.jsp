@@ -59,7 +59,37 @@
     <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
     </div>
 </div>
-<div id="mySidenav" class="sidenav"><a class="logout" href='../logout' onclick="signOut()">Logout</a></div>
+<div id="mySidenav" class="sidenav">
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item">
+            <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
+        </div>
+    </div>
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="height: 90%">
+        <div class="sidenav-item">
+            <p>Assignment 1 - Unit Tests masd dfkdf UUUU QQQ OOO asd SAD</p>
+        </div>
+        <div class="sidenav-item">
+            <p>Assignment 2 - Tetris</p>
+        </div>
+        <div class="sidenav-item">
+            <p>Assignment 3 - DBSudoku</p>
+        </div>
+        <div class="sidenav-item">
+            <p>Assignment 4 - Threads</p>
+        </div>
+        <div class="sidenav-item">
+            <p>Assignment 5 - Web</p>
+        </div>
+    </div>
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item">
+            <p onclick="signOut()">Logout</p>
+        </div>
+    </div>
+</div>
 
 <div id="content">
     <div class="panel panel-default">

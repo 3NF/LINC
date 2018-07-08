@@ -31,6 +31,7 @@ public class MainListener implements ServletContextListener {
         sce.getServletContext().setAttribute(REPLY_DAO, new ReplyDAO(ConnectionPool.getInstance(), userStorage));
         sce.getServletContext().setAttribute(VALIDATE_DAO, new ValidateDAO(ConnectionPool.getInstance()));
         sce.getServletContext().setAttribute(SUGGESTION_DAO, new SuggestionDAO(ConnectionPool.getInstance(), userStorage));
+        sce.getServletContext().setAttribute(ASSIGNMENT_INFO_DAO, new AssignmentInfoDAO(ConnectionPool.getInstance()));
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

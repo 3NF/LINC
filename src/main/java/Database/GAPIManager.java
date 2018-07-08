@@ -15,6 +15,7 @@ import com.google.api.services.classroom.model.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -298,6 +299,24 @@ public class GAPIManager {
             e.printStackTrace();
             return null;
         }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public List<Assignment> getUserAssignments(String accessToken, String refreshToken, String courseId) {
+        GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(refreshToken);
+        Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+        try {
+            List<Assignment> assignments = new ArrayList<>();
+            List<CourseWork> courseWorks = service.courses().courseWork().list(courseId).execute().getCourseWork();
+            for (CourseWork courseWork : courseWorks) {
+                assignments.add(new Assignment(courseWork.getId(), courseWork.getTitle()));
+            }
+
+            return assignments;
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

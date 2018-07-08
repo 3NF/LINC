@@ -12,24 +12,12 @@ html, body {
     z-index: 100;
     top: 0;
     left: 80px;
-    background-color: whitesmoke;
+    background-color: white;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
 }
 
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
 
-.sidenav a:hover {
-    color: RED;
-}
 
 .sidenav .closebtn {
     position: absolute;
@@ -52,15 +40,6 @@ html, body {
     cursor: pointer;
 }
 
-.sidenav .logout {
-    position: absolute;
-    bottom: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    color: blue;
-}
-
 .fill {
     display: none;
     min-height: 100%;
@@ -81,4 +60,46 @@ html, body {
     width: 80%;
     position: relative;
     bottom: 0;
+}
+
+.sidenav-container {
+    width: 100%;
+}
+
+
+.sidenav-item {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    background: #ffffff;
+    height: 40px;
+    display: block;
+    user-select: none;
+    cursor: pointer;
+
+}
+
+.sidenav-item p, .sidenav-item a {
+    width: 80%;
+    margin-left: 10%;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    color: rgba(0,0,0,0.87);
+    font-weight: 900;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+}
+
+.sidenav-item:hover{
+    background-color: #f5f5f5;
+}
+
+.sprt{
+    border-top: .1rem solid rgba(0,0,0,0.12);
 }
