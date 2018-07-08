@@ -236,10 +236,8 @@ public class GAPIManager {
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
 
-            ListStudentSubmissionsResponse assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute();
-
-            System.out.println(assignments);
-
+            List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
+            System.err.println(assignments.get(1).getAssignmentSubmission().getAttachments());
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -283,29 +281,7 @@ public class GAPIManager {
         }
     }
 
-    public static String getUserAssignments(User user, String courseID){
-        String accessToken = user.getAccessToken();
-        GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
-        Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-        com.google.api.services.classroom.model.Assignment courseWork;
-        try {
-            String userID = user.getUserId();
-            String id = "daduna";
-            courseWork = service.courses().courseWork().list(courseID).execute().getCourseWork().get(0).getAssignment();
-            //courseWork.
-            if (courseWork == null) {System.err.println("tqveni deda sheveci");return null;}
-            return  courseWork.getStudentWorkFolder().getAlternateLink();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }  catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
-    public List<Assignment> getUserAssignments(String accessToken, String refreshToken, String courseId) {
+    public List<Assignment> getCourseAssignments(String accessToken, String refreshToken, String courseId) {
         GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(refreshToken);
         Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
         try {
@@ -314,7 +290,6 @@ public class GAPIManager {
             for (CourseWork courseWork : courseWorks) {
                 assignments.add(new Assignment(courseWork.getId(), courseWork.getTitle()));
             }
-
             return assignments;
         } catch (Exception e) {
             e.printStackTrace();
