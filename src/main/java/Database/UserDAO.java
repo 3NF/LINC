@@ -1,14 +1,17 @@
 package Database;
 
 import Models.User;
+import com.google.api.services.classroom.model.Student;
+import com.google.api.services.classroom.model.UserProfile;
 
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserDAO
 {
@@ -108,8 +111,46 @@ public class UserDAO
         return false;
     }
 
-    //TODO 3NF-Bagdu maqsimaluri komunicireba bazebtan
-    public static List<String> getUsersByRole(String classroomID,Role role){
+
+
+    private static List<UserProfile> getUsersByRole(User user , String courseId , Role role){
+        List<String> userIds = getUserIDsByRole(courseId , role);
+        List<UserProfile> result = new ArrayList<UserProfile>();
+        List<Student> users = GAPIManager.getInstance().getUsers(user , courseId);
+        Set<String> ids = new HashSet<String>();
+        ids.addAll(userIds);
+        for (Student student : users){
+            if (ids.contains(student.getProfile().getId()))
+                result.add(student.getProfile());
+        }
+        return result;
+    }
+
+    public static List<UserProfile> getStudents(User user, String courseId) {
+        List<String> teacherAssIds = getUserIDsByRole(courseId , Role.TeacherAssistant);
+        List<String> semReaderIds = getUserIDsByRole(courseId , Role.SeminarReader);
+        List<UserProfile> result = new ArrayList<UserProfile>();
+        List<Student> users = GAPIManager.getInstance().getUsers(user , courseId);
+        Set<String> ids = new HashSet<String>();
+        ids.addAll(teacherAssIds);
+        ids.addAll(semReaderIds);
+        for (Student student : users){
+            if (!ids.contains(student.getProfile().getId()))
+                result.add(student.getProfile());
+        }
+        return result;
+    }
+
+    public static List<UserProfile> getTeacherAssistants(User user, String courseId) {
+        return getUsersByRole(user , courseId , Role.TeacherAssistant);
+    }
+
+    public static List<UserProfile> getSeminarReaders(User user, String courseId) {
+        return getUsersByRole(user , courseId , Role.SeminarReader);
+    }
+
+
+    public static List<String> getUserIDsByRole(String classroomID,Role role){
         List<String> users = new ArrayList<String>();
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();
