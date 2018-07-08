@@ -25,16 +25,14 @@ public class UserStorageTester {
     public void checkLuka () {
         User user = userStorage.getUserWithID(bakurID, lukaID);
         System.out.println(user);
-        assertEquals(user.getFirstName(), "Luka");
-        assertEquals(user.getLastName(), "Tchumburidze");
+        assertEquals(user.getEmail(), "lchum16@freeuni.edu.ge");
     }
 
     @Test
     public void checkGiorgi () {
         User user = userStorage.getUserWithID(dzlieraID, giorgiID);
         System.out.println(user);
-        assertEquals(user.getFirstName(), "giorgi");
-        assertEquals(user.getLastName(), "baghdavadze");
+        assertEquals(user.getEmail(), "gbagh16@freeuni.edu.ge");
     }
 
     @Test
@@ -42,15 +40,13 @@ public class UserStorageTester {
     {
         User user = userStorage.getUserWithID(bakurID, dzlieraID);
         System.out.println(user);
-        assertEquals(user.getFirstName(), "giorgi");
-        assertEquals(user.getLastName(), "chkhikvadze");
+        assertEquals(user.getEmail(), "gchkh16@freeuni.edu.ge");
     }
 
     @Test
     public void checkBakur() {
         User user = userStorage.getUserWithID(dzlieraID, bakurID);
         System.out.println(user);
-        assertEquals(user.getFirstName(), "Bakur");
-        assertEquals(user.getLastName(), "Tsutskhashvili");
+        assertEquals(user.getEmail(), "btsut16@freeuni.edu.ge");
     }
 }

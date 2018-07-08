@@ -10,7 +10,6 @@ public class User {
 
     private transient String email;
     private transient String userId;
-    private transient String idToken;
     private transient String accessToken;
     private transient String refreshToken;
 
@@ -57,11 +56,6 @@ public class User {
     public String getPicturePath()
     {
         return picturePath;
-    }
-
-    public String getIdToken()
-    {
-        return idToken;
     }
 
     public String getAccessToken()
