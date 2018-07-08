@@ -47,7 +47,10 @@ public class ReplyDispatcher extends HttpServlet
 
             if (data.has("content")){
                 String UserID = ((User) session.getAttribute(USER)).getUserId();
+                UserStorage userStorage = (UserStorage) session.getAttribute(USER_STORAGE);
                 Reply reply = replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
+
+                reply.RetrieveUsers(user.getUserId(), userStorage);
 
                 json = new GsonBuilder().disableHtmlEscaping().create().toJson(reply);
             }
