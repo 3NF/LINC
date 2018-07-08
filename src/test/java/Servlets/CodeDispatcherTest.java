@@ -51,7 +51,7 @@ public class CodeDispatcherTest {
                 new BufferedReader(new StringReader(json)));
         // define return value for method getUniqueId()
         when(request.getServletContext()).thenReturn(servletContext);
-        when(servletContext.getAttribute("CodeFilesDAO")).thenReturn(new CodeFilesDAO(ConnectionPool.getInstance(), null));
+        when(servletContext.getAttribute("CodeFilesDAO")).thenReturn(new CodeFilesDAO(ConnectionPool.getInstance()));
         when(session.getAttribute(USER)).thenReturn(new User("105303857051815287047"));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
@@ -77,7 +77,7 @@ public class CodeDispatcherTest {
                 new BufferedReader(new StringReader(json)));
         // define return value for method getUniqueId()
         when(request.getServletContext()).thenReturn(servletContext);
-        when(servletContext.getAttribute("CodeFilesDAO")).thenReturn(new CodeFilesDAO(ConnectionPool.getInstance(), null));
+        when(servletContext.getAttribute("CodeFilesDAO")).thenReturn(new CodeFilesDAO(ConnectionPool.getInstance()));
         when(session.getAttribute(USER)).thenReturn(new User("1"));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));

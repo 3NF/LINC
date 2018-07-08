@@ -61,7 +61,7 @@ public class SuggestionDispatcherTest {
         // define return value for method getUniqueId()
         when(request.getServletContext()).thenReturn(servletContext);
         when(servletContext.getAttribute(VALIDATE_DAO)).thenReturn(valDAO);
-        when(servletContext.getAttribute(SUGGESTION_DAO)).thenReturn(new SuggestionDAO(source, null));
+        when(servletContext.getAttribute(SUGGESTION_DAO)).thenReturn(new SuggestionDAO(source));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
         when(session.getAttribute("user")).thenReturn(new User("105303857051815287047"));

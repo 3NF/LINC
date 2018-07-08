@@ -7,13 +7,10 @@ import org.junit.Test;
 public class UserStorageTester {
 
     UserStorage userStorage;
-    //Logged in users
 
     String giorgiID = "105303857051815287047";
     String dzlieraID = "103800297754371593008";
-    String bakurID = "";
-
-    //Not yet logged in user
+    String bakurID = "104176062122048371294";
     String lukaID = "114260512501360115146";
 
     @Before
@@ -23,7 +20,7 @@ public class UserStorageTester {
 
     @Test
     public void checkLuka () {
-        User user = userStorage.getUserWithID(dzlieraID, lukaID);
+        User user = userStorage.getUserWithID(bakurID, lukaID);
         System.out.println(user);
     }
 

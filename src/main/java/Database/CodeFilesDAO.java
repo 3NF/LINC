@@ -10,11 +10,9 @@ package Database;
 
 public class CodeFilesDAO {
     private final MysqlDataSource connectionPool;
-    private final UserStorage userStorage;
 
-    public CodeFilesDAO(MysqlDataSource connectionPool, UserStorage userStorage) {
+    public CodeFilesDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
-        this.userStorage = userStorage;
     }
 
     public CodeFile getFilesContent(String userId, String FileId) throws SQLException {
