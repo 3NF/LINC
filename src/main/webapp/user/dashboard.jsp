@@ -34,7 +34,7 @@
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
 <%--Comment following line if you want to view as Student--%>
-    <script src="../JavaScript/dashboard-instructor.js?newversion"></script>
+    <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
@@ -56,10 +56,8 @@
 
     <%
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
-        assignedAssIds.forEach(System.out::println);
-        List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
-                .filter(assignment -> true).collect(Collectors.toList());
-        assignments.forEach(System.out::println);
+        List<Assignment> assignments = gapiManager.getUserAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
+                .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
     %>
 
     <script>

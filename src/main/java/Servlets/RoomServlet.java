@@ -34,7 +34,7 @@ public class RoomServlet extends HttpServlet {
                 break;
             case SeminarReader :
             case TeacherAssistant :
-                url = "assistant-dashboard.jsp?" + Constraints.COURSE_ID + "=" + courseId;
+                url = "instructor-dashboard.jsp?" + Constraints.COURSE_ID + "=" + courseId;
                 break;
         }
         response.setContentType("text/html;charset = UTF-8");

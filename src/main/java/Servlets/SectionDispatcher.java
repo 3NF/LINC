@@ -23,7 +23,7 @@ import static Data.Constraints.USER;
 import static Data.Constraints.USER_STORAGE;
 
 @WebServlet(name = "ReplyDispatcher", urlPatterns = "/user/reply_dispatcher")
-public class ReplyDispatcher extends HttpServlet
+public class SectionDispatcher extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
