@@ -79,7 +79,7 @@ public class CodeFilesDAO {
         String query = "INSERT INTO suggestions (userID, Code_FileID, text, time, type, startInd, endInd) VALUES\n" +
                 "  (?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, suggestion.userID);
+        statement.setString(1, suggestion.user.getUserId());
         statement.setString(2, suggestion.fileID);
         statement.setString(3, suggestion.content);
         statement.setTimestamp(4, new java.sql.Timestamp(suggestion.timeStamp.getTime()));

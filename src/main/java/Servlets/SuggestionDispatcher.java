@@ -2,6 +2,7 @@ package Servlets;
 
 import Database.CodeFilesDAO;
 import Database.SuggestionDAO;
+import Database.UserStorage;
 import Database.ValidateDAO;
 import HelperClasses.Validate;
 import Models.Suggestion;
@@ -20,9 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static Data.Constraints.SUGGESTION_DAO;
-import static Data.Constraints.USER;
-import static Data.Constraints.VALIDATE_DAO;
+import static Data.Constraints.*;
 
 @WebServlet(name = "SuggestionDispatcher", urlPatterns = "/user/suggestion_dispatcher")
 public class SuggestionDispatcher extends HttpServlet
@@ -48,7 +47,7 @@ public class SuggestionDispatcher extends HttpServlet
             }
 
             if (data.has("content")){
-                json = addSuggestion(data, codeFileID, user, suggestionDAO);
+                json = addSuggestion(request, data, codeFileID, user, suggestionDAO);
             }
             else {
                 suggestionDAO.deleteSuggestion(data.get("suggestionID").getAsString());
@@ -65,7 +64,7 @@ public class SuggestionDispatcher extends HttpServlet
         }
     }
 
-    private String addSuggestion (JsonObject data, String codeFileID, User user, SuggestionDAO suggestionDAO) {
+    private String addSuggestion (HttpServletRequest request, JsonObject data, String codeFileID, User user, SuggestionDAO suggestionDAO) {
         try {
             String content = data.get("content").getAsString();
             String type = data.get("type").getAsString();
@@ -78,19 +77,12 @@ public class SuggestionDispatcher extends HttpServlet
             Suggestion.SuggestionType.valueOf(type);
             System.out.println("YES");
 
+            Suggestion suggestion = suggestionDAO.addSuggestion(user, codeFileID, type, content, startInd, endInd);
+            UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
+
+            suggestion.RetrieveUsers(user.getUserId(), userStorage);
             return new GsonBuilder().disableHtmlEscaping().create().toJson(suggestionDAO.addSuggestion(user, codeFileID, type, content, startInd, endInd));
         } catch (ClassCastException|IllegalArgumentException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String loadCodeNames(JsonObject data,HttpServletRequest request){
-        String assignmentID = data.get("assignmentID").getAsString();
-        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute("CodeFilesDAO");
-        try {
-            return new GsonBuilder().disableHtmlEscaping().create().toJson(codeFilesDAO.getAssignmentCodeNames(assignmentID));
-        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }

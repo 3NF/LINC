@@ -1,11 +1,12 @@
 package Models;
 
+import Database.UserStorage;
+import Interfaces.UserRetriever;
 import Models.User;
 import com.google.gson.Gson;
 import java.util.Date;
 
-public class Suggestion {
-
+public class Suggestion implements UserRetriever {
     //Type of suggestion
     public enum SuggestionType {
         Warning,
@@ -13,10 +14,9 @@ public class Suggestion {
     }
     public SuggestionType type;
 
-    public String userID;
     public String fileID;
     public String suggestionID;
-    private User user;
+    public User user;
 
     //Information about suggestion content
     public String content;
@@ -27,20 +27,21 @@ public class Suggestion {
 
     public Suggestion (SuggestionType type, String userID, String fileID, String suggestionID, int startInd, int endInd, String content, Date timeStamp) {
         this.type = type;
-        this.userID = userID;
+        this.user = new User(userID);
         this.suggestionID = suggestionID;
         this.fileID = fileID;
         this.startInd = startInd;
         this.endInd = endInd;
         this.content = content;
         this.timeStamp = timeStamp;
-
-        this.getUserObject();
     }
 
-    private void getUserObject () {
-        //Temporary
-        this.user = new User("lchum16@freeuni.edu.ge", "Luka",  "Tchumburidze", userID, "https://api.adorable.io/avatars/285/luka-tchumburidze.png", "0", "0");
+    @Override
+    public void RetrieveUsers(String requesterID, UserStorage userStorage) {
+        if (user.getEmail() == null) {
+            user = userStorage.getUserWithID(requesterID, user.getUserId());
+            System.out.println(user.getFirstName() + user.getLastName());
+        }
     }
 
     /**

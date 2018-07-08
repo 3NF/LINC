@@ -1,10 +1,12 @@
 package Models;
 
+import Database.UserStorage;
+import Interfaces.UserRetriever;
 import com.google.gson.Gson;
 
 import java.util.List;
 
-public class CodeFile {
+public class CodeFile implements UserRetriever {
 
     public enum Lang {
         c,
@@ -42,6 +44,15 @@ public class CodeFile {
         public Info (String id, String name) {
             this.id = id;
             this.name = name;
+        }
+    }
+
+    @Override
+    public void RetrieveUsers (String requesterID, UserStorage userStorage) {
+        if (suggestions == null) return;
+
+        for (Suggestion suggestion:suggestions) {
+            suggestion.RetrieveUsers (requesterID, userStorage);
         }
     }
 

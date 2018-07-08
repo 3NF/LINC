@@ -1,15 +1,16 @@
 package Models;
 
+import Database.UserStorage;
+import Interfaces.UserRetriever;
 import Models.User;
 import com.google.gson.Gson;
 
 import java.util.Date;
 
-public class Reply {
+public class Reply implements UserRetriever {
     private String suggestionID;
     private String replyID;
-    private String userID;
-    private User user;
+    public User user;
 
     //Information about reply
     private String content;
@@ -18,24 +19,11 @@ public class Reply {
     public Reply (String suggestionID, String replyID, String userID, String content, Date timeStamp) {
         this.suggestionID = suggestionID;
         this.replyID = replyID;
-        this.userID = userID;
-        this.content = content;
-        this.timeStamp = timeStamp;
-
-        this.getUserObject();
-    }
-
-    public Reply (String suggestionID, String replyID, User user, String content, Date timeStamp) {
-        this.suggestionID = suggestionID;
-        this.replyID = replyID;
-        this.user = user;
+        this.user = new User(userID);
         this.content = content;
         this.timeStamp = timeStamp;
     }
 
-    private void getUserObject () {
-        this.user = new User("gtsut16@freeuni.edu.ge", "Gvantsa",  "Tsutskhashvili", userID, "https://api.adorable.io/avatars/285/gvantsa-tsutskhashvili.png", "0", "0");
-    }
 
     public Date getDate(){
         return timeStamp;
@@ -43,9 +31,15 @@ public class Reply {
     public String getSuggestionID(){
         return suggestionID;
     }
-
     public String getReplyID(){
         return replyID;
+    }
+
+    @Override
+    public void RetrieveUsers(String requesterID, UserStorage userStorage) {
+        if (user.getEmail() == null) {
+            user = userStorage.getUserWithID(requesterID, user.getUserId());
+        }
     }
     /**
      * Converts this object to JSON string
