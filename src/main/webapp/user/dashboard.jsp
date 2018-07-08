@@ -34,7 +34,7 @@
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
 <%--Comment following line if you want to view as Student--%>
-    <script src="../JavaScript/dashboard-instructor.js?newversion"></script>
+    <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">

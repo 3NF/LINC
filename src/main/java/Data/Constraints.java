@@ -24,6 +24,7 @@ public class Constraints {
 
 
 	public static final String COURSE_ID = "courseID";
+	public static final String USER_ID = "userID";
 	public static final String ASSIGNMENT_ID = "assignmentID";
 	public static final String SUGGESTION_ID = "suggestionID";
     public static final String CODE_ID = "codeID";
@@ -32,6 +33,8 @@ public class Constraints {
 	public static final String ASSIGNMENT = "assignment";
 	public static final String USER = "user";
 	public static final String USER_ID_TOKEN = "user_id_token";
+
+	public static final String ROLE = "role";
 
 
 }

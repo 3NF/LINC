@@ -1,5 +1,8 @@
 package Servlets;
 
+import Data.Constraints;
+import Database.UserDAO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +13,18 @@ import java.io.IOException;
 @WebServlet(name = "ChangeRoleServlet" , urlPatterns = "/user/change_role")
 public class ChangeRoleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String roleS = request.getParameter(Constraints.ROLE);
+        String userId = request.getParameter(Constraints.USER_ID);
+        String change = request.getParameter("add");
+        UserDAO.Role role = UserDAO.Role.valueOf(roleS);
+        switch (change){
+            case "add" :
+                UserDAO.addUser(userId , role);
+                break;
+            case "remove" :
+                UserDAO.removeUser(userId , role);
+                break;
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

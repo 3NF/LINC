@@ -170,4 +170,12 @@ public class UserDAO
         }
         return users;
     }
+
+    public static void addUser(String userID , Role role){
+        System.out.println("add");
+    }
+
+    public static void removeUser(String userID , Role role){
+        System.out.println("remove");
+    }
 }
