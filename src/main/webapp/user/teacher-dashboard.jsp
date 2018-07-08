@@ -63,7 +63,7 @@
                         <a data-toggle="collapse" href="#semReaderCol">Seminar Readers</a>
                     </h3>
                     <div id="semReaderCol" class="panel-collapse collapse">
-                        <table class="table" id="semReadersTable" style="width:100%">
+                        <table class="table" id="semReadersTable">
                             <tr>
                                 <th>Name</th>
                                 <th>Surname</th>
@@ -77,11 +77,11 @@
                                 <td><%=semReader.getName().getFamilyName()%></td>
                                 <td><%=semReader.getEmailAddress()%></td>
                                 <td>
-                                    <div class="btn-group">
+                                    <div class="btn-group-vertical">
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=semReader.getId()%> , 'remove')">Remove</button></li>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=semReader.getId()%> , 'remove')">Remove</button></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -99,7 +99,7 @@
                         <a data-toggle="collapse" href="#teacherAssCol">Teacher Assistants</a>
                     </h3>
                     <div id="teacherAssCol" class="panel-collapse collapse">
-                        <table class="table" id="teacherAssTable" style="width:100%">
+                        <table class="table" id="teacherAssTable">
                             <tr>
                                 <th>Name</th>
                                 <th>Surname</th>
@@ -112,11 +112,11 @@
                                 <td><%=assistant.getName().getFamilyName()%></td>
                                 <td><%=assistant.getEmailAddress()%></td>
                                 <td>
-                                    <div class="btn-group">
+                                    <div class="btn-group-vertical">
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=assistant.getId()%> , 'remove')">Remove</button></li>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=assistant.getId()%> , 'remove')">Remove</button></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -134,7 +134,7 @@
                         <a data-toggle="collapse" href="#studentsCol">Students</a>
                     </h3>
                     <div id="studentsCol" class="panel-collapse collapse">
-                        <table class="table" id="studentsTable" style="width:100%">
+                        <table class="table" id="studentsTable">
                             <tr>
                                 <th>Name</th>
                                 <th>Surname</th>
@@ -147,12 +147,12 @@
                                 <td><%=student.getName().getFamilyName()%></td>
                                 <td><%=student.getEmailAddress()%></td>
                                 <td>
-                                    <div class="btn-group">
+                                    <div class="btn-group-vertical">
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=student.getId()%> , 'add')">Add as seminar reader</button></li>
-                                            <li><button class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=student.getId()%> , 'add')">Add as teacher assistant</button></li>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=student.getId()%> , 'add')">Add as seminar reader</button></li>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=student.getId()%> , 'add')">Add as teacher assistant</button></li>
                                         </ul>
                                     </div>
                                 </td>
