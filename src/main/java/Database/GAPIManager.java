@@ -11,10 +11,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.*;
+import com.google.api.services.drive.Drive;
+import com.sun.mail.iap.ByteArray;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -226,17 +226,23 @@ public class GAPIManager {
         }
     }
 
-    public void downloadAssignments(User teacher, String courseID, String assignmentId)
+    public static void downloadAssignments(User teacher, String courseID, String assignmentId)
     {
         try
         {
             String accessToken = teacher.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(teacher.getRefreshToken());
-
+            Drive driveService = new Drive.Builder(HTTP_TRANSPORT,JACKSON_FACTORY,credential)
+                    .setApplicationName("LINC")
+                    .build();;
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-
+            //DriveService driveService;
             List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
-            System.err.println(assignments.get(1).getAssignmentSubmission().getAttachments());
+            System.err.println(assignments.get(1).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId());
+            String fileId = assignments.get(1).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
+            OutputStream outputStream = new ByteArrayOutputStream();
+            driveService.files().get(fileId)
+                    .executeMediaAndDownloadTo(outputStream);
         } catch (Exception e)
         {
             e.printStackTrace();

@@ -26,7 +26,8 @@
                     "https://www.googleapis.com/auth/classroom.coursework.students.readonly https://www.googleapis.com/auth/classroom.coursework.students " +
                     "https://www.googleapis.com/auth/classroom.rosters " +
                     "https://www.googleapis.com/auth/classroom.profile.photos " +
-                    "https://www.googleapis.com/auth/classroom.profile.emails"
+                    "https://www.googleapis.com/auth/classroom.profile.emails  " +
+                    "https://www.googleapis.com/auth/drive"
                 });
 
                 auth2.grantOfflineAccess().then(finalCallback);
