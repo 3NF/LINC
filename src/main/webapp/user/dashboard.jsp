@@ -56,10 +56,8 @@
 
     <%
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
-        assignedAssIds.forEach(System.out::println);
         List<Assignment> assignments = gapiManager.getUserAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
-                .filter(assignment -> true).collect(Collectors.toList());
-        assignments.forEach(System.out::println);
+                .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
     %>
 
     <script>
@@ -77,7 +75,7 @@
 </div>
 <div id="mySidenav" class="sidenav">
     <div class="sidenav-container" style="margin-top: 10px">
-        <div class="sidenav-item">
+        <div class="sidenav-item" id = "goHome">
             <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
         </div>
     </div>

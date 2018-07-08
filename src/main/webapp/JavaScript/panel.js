@@ -1,8 +1,14 @@
 let isVisible = false;
 
 $(document).ready(function () {
+    console.log("123");
     $(".fill").css("display", "block");
     $(".sidenav").css("display", "block");
+
+    $('#goHome').on("click", function(){
+        console.log("11");
+        location.assign("/user/choose-room.jsp");
+    });
 });
 
 function togleNav() {

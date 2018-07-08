@@ -1,8 +1,9 @@
 package Database;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import Models.Reply;
+
+import java.sql.*;
+import java.util.*;
 
 public class AssignmentInfoDAO {
 
@@ -31,8 +32,31 @@ public class AssignmentInfoDAO {
      * @param classroomId           id if classroom
      * @return                      List of strings containing assignment ids
      */
-    public List<String> getAssignmentIds(String classroomId){
-        return Arrays.asList(new String[] {"12", "13", "14"});
+    public List<String> getAssignmentIds(String classroomId) {
+        Connection connection;
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            connection = connectionPool.getConnection();
+        } catch (SQLException e) {
+            return result;
+        }
+        PreparedStatement statement;
+        String query = "SELECT idInClassroom FROM assignments WHERE courseID=?";
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, classroomId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(resultSet.getString("idInClassroom"));
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("error in creation statement");
+            e.printStackTrace();
+            return null;
+        }
+
+        return result;
     }
 
 }
