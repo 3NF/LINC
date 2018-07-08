@@ -29,7 +29,7 @@ public class CodeFilesDAOTest {
         source.setDatabaseName(MYSQL_DATABASE_NAME);
         source.setUser(MYSQL_USERNAME);
         source.setPassword(MYSQL_PASSWORD);
-        DAO = new CodeFilesDAO(source, new UserStorage(GAPIManager.getInstance()));
+        DAO = new CodeFilesDAO(source);
         try {
             connection = source.getConnection();
         } catch (SQLException e) {

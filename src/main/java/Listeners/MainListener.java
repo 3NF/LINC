@@ -24,14 +24,15 @@ public class MainListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         sce.getServletContext().setAttribute(GAPI_MANAGER, GAPIManager.getInstance());
 
-        UserStorage userStorage = new UserStorage(GAPIManager.getInstance());
-
-        sce.getServletContext().setAttribute(CODE_FILES_DAO, new CodeFilesDAO(ConnectionPool.getInstance(), userStorage));
+        sce.getServletContext().setAttribute(USER_STORAGE, new UserStorage(GAPIManager.getInstance()));
+        sce.getServletContext().setAttribute(CODE_FILES_DAO, new CodeFilesDAO(ConnectionPool.getInstance()));
         sce.getServletContext().setAttribute(ASSIGNMENT_INFO_DAO, new AssignmentInfoDAO(ConnectionPool.getInstance()));
-        sce.getServletContext().setAttribute(REPLY_DAO, new ReplyDAO(ConnectionPool.getInstance(), userStorage));
+        sce.getServletContext().setAttribute(REPLY_DAO, new ReplyDAO(ConnectionPool.getInstance()));
         sce.getServletContext().setAttribute(VALIDATE_DAO, new ValidateDAO(ConnectionPool.getInstance()));
         sce.getServletContext().setAttribute(SUGGESTION_DAO, new SuggestionDAO(ConnectionPool.getInstance(), userStorage));
         sce.getServletContext().setAttribute(ASSIGNMENT_INFO_DAO, new AssignmentInfoDAO(ConnectionPool.getInstance()));
+        sce.getServletContext().setAttribute(SUGGESTION_DAO, new SuggestionDAO(ConnectionPool.getInstance()));
+        sce.getServletContext().setAttribute(SECTION_DAO, new SectionDAO(ConnectionPool.getInstance()));
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

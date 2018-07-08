@@ -25,6 +25,14 @@ public class Reply {
         this.getUserObject();
     }
 
+    public Reply (String suggestionID, String replyID, User user, String content, Date timeStamp) {
+        this.suggestionID = suggestionID;
+        this.replyID = replyID;
+        this.user = user;
+        this.content = content;
+        this.timeStamp = timeStamp;
+    }
+
     private void getUserObject () {
         this.user = new User("gtsut16@freeuni.edu.ge", "Gvantsa",  "Tsutskhashvili", userID, "https://api.adorable.io/avatars/285/gvantsa-tsutskhashvili.png", "0", "0");
     }

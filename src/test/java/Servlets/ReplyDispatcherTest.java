@@ -52,7 +52,7 @@ public class ReplyDispatcherTest {
 
     @Test
     public void test1() throws ServletException, IOException, SQLException, JSONException {
-        ReplyDAO DAO = new ReplyDAO(source, new UserStorage(GAPIManager.getInstance()));
+        ReplyDAO DAO = new ReplyDAO(source);
         DAO.addReply("asdd","105303857051815287047","-12");
         String json = "{\"suggestionID\":-12, \"amount\":222,\"courseID\":222}";
         when(request.getSession()).thenReturn(session);
@@ -61,7 +61,7 @@ public class ReplyDispatcherTest {
         // define return value for method getUniqueId()
         when(request.getServletContext()).thenReturn(servletContext);
         when(servletContext.getAttribute("ValidateDAO")).thenReturn(new ValidateDAO(source));
-        when(servletContext.getAttribute("ReplyDAO")).thenReturn(new ReplyDAO(source, null));
+        when(servletContext.getAttribute("ReplyDAO")).thenReturn(new ReplyDAO(source));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
         when(session.getAttribute("user")).thenReturn(new User("105303857051815287047"));
@@ -83,7 +83,7 @@ public class ReplyDispatcherTest {
                 new BufferedReader(new StringReader(json)));
         // define return value for method getUniqueId()
         when(request.getServletContext()).thenReturn(servletContext);
-        when(servletContext.getAttribute("ReplyDAO")).thenReturn(new ReplyDAO(source, null));
+        when(servletContext.getAttribute("ReplyDAO")).thenReturn(new ReplyDAO(source));
         when(servletContext.getAttribute("ValidateDAO")).thenReturn(new ValidateDAO(source));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));

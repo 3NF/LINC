@@ -11,8 +11,6 @@ import java.util.List;
 public class ReplyDAO {
 
     private final MysqlDataSource connectionPool;
-    private final UserStorage userStorage;
-    private final String replies = "replies";
     /**
      * Constructor of StudentDAo class
      *
@@ -20,9 +18,8 @@ public class ReplyDAO {
      */
 
 
-    public ReplyDAO(MysqlDataSource connectionPool, UserStorage userStorage) {
+    public ReplyDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
-        this.userStorage = userStorage;
     }
 
     public List<Reply> getSuggestionReplies(String id) {
@@ -37,7 +34,7 @@ public class ReplyDAO {
 
         try {
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + "." + replies + " WHERE suggestionID=" + id + " order by id";
+            String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE suggestionID=" + id + " order by id";
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String replyId = result.getString("id");
@@ -75,7 +72,7 @@ public class ReplyDAO {
             return null;
         }
         PreparedStatement statement;
-        String query = "INSERT INTO " + replies + " (userid,text,suggestionid,date) VALUES(?,?,?,?)";
+        String query = "INSERT INTO replies (userid,text,suggestionid,date) VALUES(?,?,?,?)";
         String replyID = "";
         try {
             String generatedColumns[] = { "id" };
@@ -109,7 +106,7 @@ public class ReplyDAO {
             return;
         }
         PreparedStatement statement;
-        String query = "DELETE FROM " + replies +  " WHERE id=?";
+        String query = "DELETE FROM replies WHERE id=?";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, replyId);
