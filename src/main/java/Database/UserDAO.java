@@ -100,15 +100,44 @@ public class UserDAO
     public static Role getRoleByCourse(User user, String courseId) {
         GAPIManager gp = GAPIManager.getInstance();
         Role role = gp.getRoleByCourse(user , courseId);
-        if (role != Role.Guest)
+        if (role == Role.Teacher) {
             return role;
-        if (isTeacherAssistant(user , courseId))
-            return Role.TeacherAssistant;
-        return Role.Guest;
+        } else {
+            String rtn= getInstructorType (user.getUserId(), courseId);
+            if (rtn == null) {
+                return Role.Pupil;
+            }
+            return Role.valueOf(rtn);
+        }
     }
 
-    private static boolean isTeacherAssistant(User user, String courseId){
-        return false;
+    public static String getInstructorType(String userID, String courseID){
+        try {
+            System.out.println(userID + "    " + courseID);
+            String query = "SELECT Type FROM instructors\n" +
+                    "WHERE userID=? AND classroomID=?";
+
+            Connection conn =  ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, userID);
+            statement.setString(2, courseID);
+
+            ResultSet result = statement.executeQuery();
+            String type = null;
+
+            if(result.next()) {
+                type = result.getString(1);
+            }
+
+            statement.close();
+            conn.close();
+            return type;
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
