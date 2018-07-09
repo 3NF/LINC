@@ -1,6 +1,14 @@
 <%@ page import="Data.Constraints" %>
 <%@ page import="Database.UserDAO" %>
 <%@ page import="Models.User" %>
+<%@ page import="Models.Assignment" %>
+<%@ page import="java.util.HashSet" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.List" %>
+<%@ page import="Database.AssignmentInfoDAO" %>
+<%@ page import="Database.GAPIManager" %>
+<%@ page import="static Data.Constraints.ASSIGNMENT_INFO_DAO" %>
+<%@ page import="java.util.stream.Collectors" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,6 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/instructor-dashboard.js?newversione"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="../JavaScript/panel.js"></script>
 
     <%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
@@ -35,9 +44,13 @@
     <script src='../codemirror-5.39.0/mode/clike.js'></script>
     <script src='../bootstrap-markdown/js/bootstrap-markdown.js'></script>
     <link rel="stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
-    <script src="../JavaScript/panel.js"></script>
+
+
+    <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
+    <% GAPIManager gapiManager = GAPIManager.getInstance(); %>
 
     <%
+
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         String courseId = request.getParameter(Constraints.COURSE_ID);
 
@@ -47,6 +60,10 @@
             response.sendRedirect("choose-room.jsp");
             return;
         }
+
+        Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
+        List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
+                .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
 
     %>
 
@@ -58,14 +75,30 @@
 <body>
 <div class="fill">
     <div style="cursor:pointer" onclick="togleNav()">
-        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
-    </div>
-    <div id="menuBar" onclick="togleNav()">
-        <span class="glyphicon">&#xe236;</span>
+        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
+    <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
     </div>
 </div>
 <div id="mySidenav" class="sidenav">
-    <a class="logout" href='../logout' onclick="signOut()">Logout</a>
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item" id = "goHome">
+            <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
+        </div>
+    </div>
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="height: 90%">
+        <% for (Assignment assignment : assignments) {%>
+        <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
+            <p><%=assignment.getName()%></p>
+        </div>
+        <%}%>
+    </div>
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item">
+            <p onclick="signOut()">Logout</p>
+        </div>
+    </div>
 </div>
 </body>
 </html>
