@@ -41,7 +41,9 @@
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         String courseId = request.getParameter(Constraints.COURSE_ID);
 
-        if (UserDAO.getRoleByCourse(user, courseId) != UserDAO.Role.TeacherAssistant) {
+        UserDAO.Role userRole = UserDAO.getRoleByCourse(user, courseId);
+        System.out.println(userRole);
+        if (userRole != UserDAO.Role.TeacherAssistant && userRole != UserDAO.Role.SeminarReader) {
             response.sendRedirect("choose-room.jsp");
             return;
         }
