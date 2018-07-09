@@ -11,7 +11,6 @@
 <head>
     <!-- css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="../Styles/assets/css/bootstrap.css" rel="stylesheet">
     <link href="../Styles/style.css" rel="stylesheet">
     <link href="../Styles/chooseRoom.css" rel="stylesheet">
 

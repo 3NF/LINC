@@ -28,9 +28,6 @@
     <link rel="stylesheet" href="../Styles/dashboard.css">
     <%--bootstrap--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="../Styles/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="../Styles/assets/css/font-awesome.css" rel="stylesheet">
-    <link href="../Styles/assets/css/docs.css" rel="stylesheet">
     <link href="../Styles/bootstrap-social.css" rel="stylesheet">
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
