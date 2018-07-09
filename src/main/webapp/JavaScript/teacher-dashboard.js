@@ -1,4 +1,5 @@
 function changeRole(role , userId , add , courseID){
+    var thisi = event.target;
     $.ajax({
         url: '/user/change_role',
         data:{"role" : role,
@@ -8,10 +9,9 @@ function changeRole(role , userId , add , courseID){
         },
         type:'POST',
         success:function(data){
-            var row = $(this).closest("tr");
-            var table = $(this).closest("table");
-            table.detach();
-            row.detach();
+            var row = $(thisi).closest("tr").clone();
+            $(thisi).closest("tr").remove();
+            var table = $(thisi).closest("table");
             if (role==='TeacherAssistant') {
                 $("#teacherAssTable").append('<tr>' + row + '</tr>');
                 console.log("ki");
