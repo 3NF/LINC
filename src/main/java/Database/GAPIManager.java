@@ -18,6 +18,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 public class GAPIManager {
@@ -225,10 +227,35 @@ public class GAPIManager {
         }
     }
 
-    public static void downloadAssignments(User teacher, String courseID, String assignmentId)
-    {
-        try
-        {
+
+    public static ByteArrayInputStream convertOutputIntoInputStream(OutputStream outputStream){
+        ByteArrayOutputStream outStream = ((ByteArrayOutputStream) outputStream);
+        ByteArrayInputStream inStream = new ByteArrayInputStream(outStream.toByteArray());
+        return inStream;
+    }
+
+    public static void unzipInputStream(ByteArrayInputStream inStream) throws IOException {
+        ZipInputStream zis = new ZipInputStream(inStream);
+        ZipEntry entry;
+        // while there are entries I process them
+        FileOutputStream fos = new FileOutputStream("input.txt");
+        while ((entry = zis.getNextEntry()) != null) {
+            System.out.println("entry: " + entry.getName() + ", " + entry.getSize());
+            byte[] buffer  = new byte[1024];
+            // consume all the data from this entry
+            int read;
+            while ((read=zis.read(buffer))>0){
+                fos.write(buffer,0,read);
+                //System.err.println(read);
+            }
+            // I could close the entry, but getNextEntry does it automatically
+            // zis.closeEntry()
+        }
+        fos.close();
+        System.err.println(fos.toString());
+    }
+
+    public static void downloadAssignments(User teacher, String courseID, String assignmentId) throws IOException {
             String accessToken = teacher.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(teacher.getRefreshToken());
             Drive driveService = new Drive.Builder(HTTP_TRANSPORT,JACKSON_FACTORY,credential)
@@ -237,15 +264,24 @@ public class GAPIManager {
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
             //DriveService driveService;
             List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
-            System.err.println(assignments.get(1).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId());
-            String fileId = assignments.get(1).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
-            OutputStream outputStream = new ByteArrayOutputStream();
-            driveService.files().get(fileId)
-                    .executeMediaAndDownloadTo(outputStream);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+
+            System.err.println(assignments);
+            System.err.println(assignments.get(1).getSubmissionHistory().get(0).getStateHistory().getActorUserId());
+            for (int k = 0; k < assignments.size(); ++ k) {
+                if (assignments.get(k).getAssignmentSubmission() == null) continue;
+                if (assignments.get(k).getAssignmentSubmission().getAttachments() == null) continue;
+                String actorUserID = assignments.get(k).getSubmissionHistory().get(0).getStateHistory().getActorUserId();
+                String fileId = assignments.get(k).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
+                System.out.println(actorUserID);
+                System.err.println(fileId);
+                OutputStream outputStream = new ByteArrayOutputStream();
+                driveService.files().get(fileId)
+                        .executeMediaAndDownloadTo(outputStream);
+
+                //convert OutPutStream into inputStream
+                ByteArrayInputStream inStream = convertOutputIntoInputStream(outputStream);
+                unzipInputStream(inStream);
+            }
     }
 
     public List<Student> getUsers(User user, String courseID) {
