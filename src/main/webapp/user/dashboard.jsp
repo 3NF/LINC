@@ -21,9 +21,6 @@
 
     <%--bootstrap--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="../Styles/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="../Styles/assets/css/font-awesome.css" rel="stylesheet">
-    <link href="../Styles/assets/css/docs.css" rel="stylesheet">
     <link href="../Styles/bootstrap-social.css" rel="stylesheet">
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -33,7 +30,7 @@
     <script src="../JavaScript/dashboard.js?newversione"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
-<%--Comment following line if you want to view as Student--%>
+    <%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
@@ -56,13 +53,10 @@
 
     <%
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
-        List<Assignment> assignments = gapiManager.getUserAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
+        List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
     %>
 
-    <script>
-        let userProfilePicture = '<%=user.getPicturePath()%>';
-    </script>
 
 </head>
 
@@ -75,15 +69,15 @@
 </div>
 <div id="mySidenav" class="sidenav">
     <div class="sidenav-container" style="margin-top: 10px">
-        <div class="sidenav-item">
+        <div class="sidenav-item" id = "goHome">
             <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
         </div>
     </div>
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="height: 90%">
         <% for (Assignment assignment : assignments) {%>
-            <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
-                <p><%=assignment.getName()%></p>
+        <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
+            <p><%=assignment.getName()%></p>
         </div>
         <%}%>
     </div>

@@ -15,14 +15,15 @@ public class ChangeRoleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String roleS = request.getParameter(Constraints.ROLE);
         String userId = request.getParameter(Constraints.USER_ID);
+        String courseID = request.getParameter(Constraints.COURSE_ID);
         String change = request.getParameter("add");
         UserDAO.Role role = UserDAO.Role.valueOf(roleS);
         switch (change){
             case "add" :
-                UserDAO.addUser(userId , role);
+                UserDAO.addUser(userId , role , courseID);
                 break;
             case "remove" :
-                UserDAO.removeUser(userId , role);
+                UserDAO.removeUser(userId , role , courseID);
                 break;
         }
     }
