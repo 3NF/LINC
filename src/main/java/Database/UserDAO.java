@@ -200,11 +200,35 @@ public class UserDAO
         return users;
     }
 
-    public static void addUser(String userID , Role role){
+    public static void addUser(String userID , Role role , String courseID){
+        try {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            String query = "INSERT INTO `instructors`(`classroomID`, `userID`, `Type`) VALUES (?,?,?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1 , courseID);
+            statement.setString(2 , userID);
+            statement.setString(3 , role.toString());
+            int result = statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         System.out.println("add");
     }
 
-    public static void removeUser(String userID , Role role){
+    public static void removeUser(String userID , Role role, String courseID){
+        try {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            String query = "DELETE FROM `instructors` WHERE `userID`=? AND`classroomID`=? AND`Type`=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1 , userID);
+            statement.setString(2 , courseID);
+            statement.setString(3 , role.toString());
+            int result = statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         System.out.println("remove");
     }
 }

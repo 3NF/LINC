@@ -13,4 +13,14 @@ public class UserDAOTester {
 
         System.out.println (UserDAO.getInstructorType(userID, courseID));
     }
+
+
+    @Test
+    public void addUserTest(){
+        String userID = "115209239224583784484";
+        String courseID = "15887333289";
+        UserDAO.Role role = UserDAO.Role.SeminarReader;
+        UserDAO.addUser(userID , role , courseID);
+
+    }
 }

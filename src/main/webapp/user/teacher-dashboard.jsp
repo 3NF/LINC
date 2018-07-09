@@ -81,7 +81,7 @@
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=semReader.getId()%> , 'remove')">Remove</button></li>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=semReader.getId()%> , 'remove' , '<%=courseId%>')">Remove</button></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -116,7 +116,7 @@
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=assistant.getId()%> , 'remove')">Remove</button></li>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=assistant.getId()%> , 'remove' , '<%=courseId%>')">Remove</button></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -151,8 +151,8 @@
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=student.getId()%> , 'add')">Add as seminar reader</button></li>
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=student.getId()%> , 'add')">Add as teacher assistant</button></li>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.SeminarReader%>' , <%=student.getId()%> , 'add' , '<%=courseId%>')">Add as seminar reader</button></li>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=UserDAO.Role.TeacherAssistant%>' , <%=student.getId()%> , 'add' , '<%=courseId%>')">Add as teacher assistant</button></li>
                                         </ul>
                                     </div>
                                 </td>
