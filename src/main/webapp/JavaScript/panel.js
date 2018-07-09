@@ -24,6 +24,7 @@ function start() {
         client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com'
     });
     gapi.auth2.getAuthInstance().signOut();
+
 }
 
 function signOut() {
