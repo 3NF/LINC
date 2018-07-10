@@ -137,7 +137,7 @@ function fetchCodesInfo () {
         url: "/user/code_dispatcher",
         method: "POST",
         contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify({courseID: getParameter("courseID"), assignmentID: 1}),
+        data: JSON.stringify({courseID: getParameter("courseID"), assignmentID: getParameter("assignmentID")}),
         //must be changed!!!!
         success: function( data, textStatus, jQxhr ){
             toggleLoading();

@@ -12,6 +12,7 @@
 <%@ page import="static Data.Constraints.GAPI_MANAGER" %>
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="Models.Assignment" %>
+<%@ page import="static Data.Constraints.*" %>
 <html>
 
 <head>
@@ -55,7 +56,13 @@
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
         List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
+        String firstAssignmentID = assignments.get(0).getId();
+        if (request.getParameter(ASSIGNMENT_ID) == null) {
+            response.sendRedirect("dashboard.jsp?" + COURSE_ID + "=" + request.getParameter(COURSE_ID) + "&"+ASSIGNMENT_ID + "=" + firstAssignmentID);
+        }
     %>
+
+    <script>var assignmentID = <%=assignments.get(0).getId()%>;</script>
 
 
 </head>
