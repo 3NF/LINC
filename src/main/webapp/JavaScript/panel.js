@@ -9,6 +9,8 @@ $(document).ready(function () {
         console.log("11");
         location.assign("/user/choose-room.jsp");
     });
+
+    console.log($(".sidenav-container").first().html());//.attr("onclick"));
 });
 
 function togleNav() {
@@ -32,8 +34,20 @@ function signOut() {
     location.href='../logout';
 }
 
-/* TODO ლუკა, ესაინმენთის ფაილების შეცვლა როცა პანელზე დაეჭეირაბა კონკრეტულ დავალებას*/
+function getParameter (name) {
+    try {
+        results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        return results[1] || 0;
+    } catch (e) {
+        return null;
+    }
+}
+
 function getAssignment(assignmentId) {
-    console.log(assignmentId);
+    console.log(location.href);
+    console.log(getParameter("assignmentID"));
+    if (getParameter("assignmentID") != null) {
+        location.href = location.href + "assignmentID=" + assignmentId;
+    }
 }
 
