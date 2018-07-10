@@ -1,5 +1,6 @@
 package Servlets;
 
+import Database.CodeFilesDAO;
 import Database.GAPIManager;
 import Database.ReplyDAO;
 import Models.User;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
+import static Data.Constraints.CODE_FILES_DAO;
 import static Data.Constraints.USER;
 
 @WebServlet(name = "GoogleLogin", urlPatterns = {"/GoogleLogin"})
@@ -43,7 +46,12 @@ public class GoogleLogin extends HttpServlet {
         }
 
         request.getSession().setAttribute(USER, resultedUser);
-        //GAPIManager.downloadAssignments(resultedUser,"15887333289","15917000927");
+        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(CODE_FILES_DAO);
+        /*try {
+            codeFilesDAO.addAssignments(GAPIManager.downloadAssignments(resultedUser,"15887333289","15917000927"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
         response.sendRedirect("/user/choose-room.jsp");
     }
 }

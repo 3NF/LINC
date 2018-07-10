@@ -24,6 +24,9 @@ public class UploadedAssignment implements Iterable{
         data.put(file.getFileName(),file);
     }
 
+    public int size(){
+        return data.size();
+    }
     public static void main(String[] args) {
         UploadedAssignment ass = new UploadedAssignment("1");
         ass.addAssignmentFile(new File("1", "2","-2"));
