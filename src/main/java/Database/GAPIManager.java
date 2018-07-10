@@ -252,7 +252,7 @@ public class GAPIManager {
             }
             String result = fos.toString("UTF-8");
             //System.err.println(result);
-            uploadedAssignment.addAssignmentFile(new File(entry.getName(),result));
+            uploadedAssignment.addAssignmentFile(new File(entry.getName(),result,actorUserID));
             fos.close();
             // I could close the entry, but getNextEntry does it automatically
             // zis.closeEntry()
