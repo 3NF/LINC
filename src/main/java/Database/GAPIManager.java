@@ -3,6 +3,8 @@ package Database;
 import Core.Room;
 import HelperClasses.Utilities;
 import Models.Assignment;
+import Models.File;
+import Models.UploadedAssignment;
 import Models.User;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.*;
@@ -234,12 +236,12 @@ public class GAPIManager {
         return inStream;
     }
 
-    public static void unzipInputStream(ByteArrayInputStream inStream) throws IOException {
+    public static void unzipInputStream(ByteArrayInputStream inStream,UploadedAssignment uploadedAssignment) throws IOException {
         ZipInputStream zis = new ZipInputStream(inStream);
         ZipEntry entry;
         // while there are entries I process them
-        FileOutputStream fos = new FileOutputStream("input.txt");
         while ((entry = zis.getNextEntry()) != null) {
+            ByteArrayOutputStream fos = new ByteArrayOutputStream();
             System.out.println("entry: " + entry.getName() + ", " + entry.getSize());
             byte[] buffer  = new byte[1024];
             // consume all the data from this entry
@@ -248,11 +250,13 @@ public class GAPIManager {
                 fos.write(buffer,0,read);
                 //System.err.println(read);
             }
+            String result = fos.toString("UTF-8");
+            //System.err.println(result);
+            uploadedAssignment.addAssignmentFile(new File(entry.getName(),result));
+            fos.close();
             // I could close the entry, but getNextEntry does it automatically
             // zis.closeEntry()
         }
-        fos.close();
-        System.err.println(fos.toString());
     }
 
     public static void downloadAssignments(User teacher, String courseID, String assignmentId) throws IOException {
@@ -266,10 +270,11 @@ public class GAPIManager {
             List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
 
             System.err.println(assignments);
-            System.err.println(assignments.get(1).getSubmissionHistory().get(0).getStateHistory().getActorUserId());
+            //System.err.println(assignments.get(1).getSubmissionHistory().get(0).getStateHistory().getActorUserId());
             for (int k = 0; k < assignments.size(); ++ k) {
                 if (assignments.get(k).getAssignmentSubmission() == null) continue;
                 if (assignments.get(k).getAssignmentSubmission().getAttachments() == null) continue;
+                UploadedAssignment uploadedAssignment = new UploadedAssignment(assignmentId);
                 String actorUserID = assignments.get(k).getSubmissionHistory().get(0).getStateHistory().getActorUserId();
                 String fileId = assignments.get(k).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
                 System.out.println(actorUserID);
@@ -280,7 +285,8 @@ public class GAPIManager {
 
                 //convert OutPutStream into inputStream
                 ByteArrayInputStream inStream = convertOutputIntoInputStream(outputStream);
-                unzipInputStream(inStream);
+                unzipInputStream(inStream,uploadedAssignment);
+                
             }
     }
 
