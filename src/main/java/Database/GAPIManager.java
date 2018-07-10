@@ -286,7 +286,9 @@ public class GAPIManager {
                 //convert OutPutStream into inputStream
                 ByteArrayInputStream inStream = convertOutputIntoInputStream(outputStream);
                 unzipInputStream(inStream,uploadedAssignment);
-                
+                for (Object gio : uploadedAssignment){
+                    System.err.println(((File) gio).getContent());
+                }
             }
     }
 

@@ -128,7 +128,8 @@ public class CodeFilesDAO {
     }
 
     public List<CodeFile.Info> getAssignmentCodeNames(String assignmentID) throws SQLException {
-        String query = "Select id,name FROM assignment_files where assignmentID=?";
+        String query = "Select assignments.idInClassroom,assignment_files.id,assignment_files.name FROM assignments " +
+                "inner join assignment_files on assignments.id=assignment_files.assignmentID where assignments.idInClassroom=?";
         Connection connection = connectionPool.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, assignmentID);
