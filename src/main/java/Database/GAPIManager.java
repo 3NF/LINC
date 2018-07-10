@@ -34,21 +34,18 @@ public class GAPIManager {
     private static final GAPIManager instance = new GAPIManager();
 
 
-
     private static GoogleClientSecrets secrets;
 
-    public static GAPIManager getInstance(){ return instance;}
+    public static GAPIManager getInstance() {
+        return instance;
+    }
 
 
-
-    private GAPIManager()
-    {
+    private GAPIManager() {
         Reader reader = new InputStreamReader(GAPIManager.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE));
-        try
-        {
+        try {
             secrets = GoogleClientSecrets.load(JACKSON_FACTORY, reader);
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -63,8 +60,7 @@ public class GAPIManager {
     }
 
 
-    public static TokenResponse getTokens(String authCode)
-    {
+    public static TokenResponse getTokens(String authCode) {
         try {
             Reader reader = new InputStreamReader(GAPIManager.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE));
             GoogleClientSecrets secrets = GoogleClientSecrets.load(JACKSON_FACTORY, reader);
@@ -78,8 +74,7 @@ public class GAPIManager {
 
     }
 
-    public User getUser(String idToken)
-    {
+    public User getUser(String idToken) {
         try {
             GoogleIdToken googleIdToken = GoogleIdToken.parse(JACKSON_FACTORY, idToken);
 
@@ -92,7 +87,7 @@ public class GAPIManager {
             String familyName = Utilities.capitalizeString((String) payload.get("family_name"));
             String givenName = Utilities.capitalizeString((String) payload.get("given_name"));
             UserDAO.UserCredential credential = UserDAO.getUserCredential(sub);
-            if(credential == null) return null;
+            if (credential == null) return null;
             return new User(email, givenName, familyName, sub, pictureUrl, credential.getAccessToken(), credential.getRefreshToken());
         } catch (Exception e) {
             return null;
@@ -114,12 +109,9 @@ public class GAPIManager {
 
         UserProfile profile = null;
 
-        try
-        {
-           profile =  room.userProfiles().get(targetId).execute();
-        }
-        catch (IOException e)
-        {
+        try {
+            profile = room.userProfiles().get(targetId).execute();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -127,10 +119,8 @@ public class GAPIManager {
     }
 
 
-    public User registerUser(String authCode)
-    {
-        try
-        {
+    public User registerUser(String authCode) {
+        try {
             GoogleTokenResponse tokenResponse = new GoogleAuthorizationCodeTokenRequest(HTTP_TRANSPORT, JACKSON_FACTORY, "https://www.googleapis.com/oauth2/v4/token", secrets.getDetails().getClientId(), secrets.getDetails().getClientSecret(), authCode, "http://localhost:8080").execute();
 
             String refreshToken = tokenResponse.getRefreshToken();
@@ -157,42 +147,33 @@ public class GAPIManager {
     }
 
 
-    public UserDAO.Role getRoleByCourse(User user, String courseId)
-    {
+    public UserDAO.Role getRoleByCourse(User user, String courseId) {
         Classroom service = null;
 
-        try
-        {
+        try {
             String accessToken = user.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
             service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
             Teacher teachers = null;
 
-            try
-            {
+            try {
                 Student student = service.courses().students().get(courseId, user.getUserId()).execute();
 
                 return UserDAO.Role.Pupil;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Teacher teacher = service.courses().teachers().get(courseId, user.getUserId()).execute();
                 return UserDAO.Role.Teacher;
             }
-            
-        }
-        catch (Exception e)
-        {
+
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private List<Course> getUserRooms(User user, boolean activeOnly)
-    {
-        try
-        {
+    private List<Course> getUserRooms(User user, boolean activeOnly) {
+        try {
             String accessToken = user.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
@@ -212,10 +193,8 @@ public class GAPIManager {
     }
 
 
-    public void getAllAssignments(User user, String courseId)
-    {
-        try
-        {
+    public void getAllAssignments(User user, String courseId) {
+        try {
             String accessToken = user.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
@@ -223,78 +202,78 @@ public class GAPIManager {
             System.out.println(service.courses().courseWork().list(courseId).execute());
 
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public static ByteArrayInputStream convertOutputIntoInputStream(OutputStream outputStream){
+    public static ByteArrayInputStream convertOutputIntoInputStream(OutputStream outputStream) {
         ByteArrayOutputStream outStream = ((ByteArrayOutputStream) outputStream);
         ByteArrayInputStream inStream = new ByteArrayInputStream(outStream.toByteArray());
         return inStream;
     }
 
-    public static void unzipInputStream(ByteArrayInputStream inStream,UploadedAssignment uploadedAssignment) throws IOException {
+    public static void unzipInputStream(ByteArrayInputStream inStream, UploadedAssignment uploadedAssignment, String actorUserID) throws IOException {
         ZipInputStream zis = new ZipInputStream(inStream);
         ZipEntry entry;
         // while there are entries I process them
         while ((entry = zis.getNextEntry()) != null) {
             ByteArrayOutputStream fos = new ByteArrayOutputStream();
-            System.out.println("entry: " + entry.getName() + ", " + entry.getSize());
-            byte[] buffer  = new byte[1024];
+            //System.out.println("entry: " + entry.getName() + ", " + entry.getSize());
+            byte[] buffer = new byte[1024];
             // consume all the data from this entry
             int read;
-            while ((read=zis.read(buffer))>0){
-                fos.write(buffer,0,read);
+            while ((read = zis.read(buffer)) > 0) {
+                fos.write(buffer, 0, read);
                 //System.err.println(read);
             }
             String result = fos.toString("UTF-8");
             //System.err.println(result);
-            uploadedAssignment.addAssignmentFile(new File(entry.getName(),result));
+            uploadedAssignment.addAssignmentFile(new File(entry.getName(), result, actorUserID));
             fos.close();
             // I could close the entry, but getNextEntry does it automatically
             // zis.closeEntry()
         }
     }
 
-    public static void downloadAssignments(User teacher, String courseID, String assignmentId) throws IOException {
-            String accessToken = teacher.getAccessToken();
-            GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(teacher.getRefreshToken());
-            Drive driveService = new Drive.Builder(HTTP_TRANSPORT,JACKSON_FACTORY,credential)
-                    .setApplicationName("LINC")
-                    .build();;
-            Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-            //DriveService driveService;
-            List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
+    public static UploadedAssignment downloadAssignments(User teacher, String courseID, String assignmentId) throws IOException {
+        String accessToken = teacher.getAccessToken();
+        GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(teacher.getRefreshToken());
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential)
+                .setApplicationName("LINC")
+                .build();
+        ;
+        Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+        //DriveService driveService;
+        List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
 
-            System.err.println(assignments);
-            //System.err.println(assignments.get(1).getSubmissionHistory().get(0).getStateHistory().getActorUserId());
-            for (int k = 0; k < assignments.size(); ++ k) {
-                if (assignments.get(k).getAssignmentSubmission() == null) continue;
-                if (assignments.get(k).getAssignmentSubmission().getAttachments() == null) continue;
-                UploadedAssignment uploadedAssignment = new UploadedAssignment(assignmentId);
-                String actorUserID = assignments.get(k).getSubmissionHistory().get(0).getStateHistory().getActorUserId();
-                String fileId = assignments.get(k).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
-                System.out.println(actorUserID);
-                System.err.println(fileId);
-                OutputStream outputStream = new ByteArrayOutputStream();
-                driveService.files().get(fileId)
-                        .executeMediaAndDownloadTo(outputStream);
+        //System.err.println(assignments);
+        UploadedAssignment uploadedAssignment = new UploadedAssignment(assignmentId);
+        //System.err.println(assignments.get(1).getSubmissionHistory().get(0).getStateHistory().getActorUserId());
+        for (int k = 0; k < assignments.size(); ++k) {
+            if (assignments.get(k).getAssignmentSubmission() == null) continue;
+            if (assignments.get(k).getAssignmentSubmission().getAttachments() == null) continue;
+            String actorUserID = assignments.get(k).getSubmissionHistory().get(0).getStateHistory().getActorUserId();
+            String fileId = assignments.get(k).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
+           // System.out.println(actorUserID);
+            //System.err.println(fileId);
+            OutputStream outputStream = new ByteArrayOutputStream();
+            driveService.files().get(fileId)
+                    .executeMediaAndDownloadTo(outputStream);
 
-                //convert OutPutStream into inputStream
-                ByteArrayInputStream inStream = convertOutputIntoInputStream(outputStream);
-                unzipInputStream(inStream,uploadedAssignment);
-                for (Object gio : uploadedAssignment){
-                    System.err.println(((File) gio).getContent());
-                }
-            }
+            //convert OutPutStream into inputStream
+            ByteArrayInputStream inStream = convertOutputIntoInputStream(outputStream);
+            unzipInputStream(inStream, uploadedAssignment, actorUserID);
+        }
+       /* for (Object gio : uploadedAssignment) {
+            System.err.println(((File) gio).getFileName());
+        }*/
+        return uploadedAssignment;
     }
 
     public List<Student> getUsers(User user, String courseID) {
-        try
-        {
+        try {
             String accessToken = user.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
@@ -302,8 +281,7 @@ public class GAPIManager {
             List<Student> students = service.courses().students().list(courseID).execute().getStudents();
 
             return students;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -313,8 +291,7 @@ public class GAPIManager {
      * Checks if user is in classroom
      */
     public boolean isInRoom(User user, String courseID) {
-        try
-        {
+        try {
             String accessToken = user.getAccessToken();
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();

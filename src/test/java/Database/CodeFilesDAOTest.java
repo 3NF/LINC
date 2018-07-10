@@ -52,10 +52,10 @@ public class CodeFilesDAOTest {
     public void testAddAssigment() {
         try {
 
-            UploadedAssignment assignment = new UploadedAssignment("1");
-            assignment.addAssignmentFile(new File("temp_code1.cpp","sdsdsdsdss"));
-            assignment.addAssignmentFile(new File("temp_code2.cpp","sdsdsdsssdss"));
-            DAO.addAssignments("-23",assignment);
+            UploadedAssignment assignment = new UploadedAssignment("15888564981");
+            assignment.addAssignmentFile(new File("temp_code1.cpp","sdsdsdsdss","-1"));
+            assignment.addAssignmentFile(new File("temp_code2.cpp","sdsdsdsssdss","-1"));
+            DAO.addAssignments(assignment);
             deleteAllUserAssigment("-23");
         } catch (SQLException e) {
             e.printStackTrace();

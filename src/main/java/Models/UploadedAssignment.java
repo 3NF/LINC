@@ -13,7 +13,7 @@ public class UploadedAssignment implements Iterable{
         return assignmentID;
     }
 
-    HashMap<String, String> data;
+    HashMap<String, File> data;
 
     public UploadedAssignment(String assignmentID) {
         data = new HashMap<>();
@@ -21,14 +21,17 @@ public class UploadedAssignment implements Iterable{
     }
 
     public void addAssignmentFile(File file) {
-        data.put(file.getFileName(), file.getContent());
+        data.put(file.getFileName(),file);
     }
 
+    public int size(){
+        return data.size();
+    }
     public static void main(String[] args) {
         UploadedAssignment ass = new UploadedAssignment("1");
-        ass.addAssignmentFile(new File("1", "2"));
-        ass.addAssignmentFile(new File("2", "3"));
-        ass.addAssignmentFile(new File("3", "4"));
+        ass.addAssignmentFile(new File("1", "2","-2"));
+        ass.addAssignmentFile(new File("2", "3","-3"));
+        ass.addAssignmentFile(new File("3", "4","-4"));
 
         for (Object file: ass) {
             System.out.println(((File)file).getContent());
@@ -49,7 +52,7 @@ public class UploadedAssignment implements Iterable{
             public File next() {
                 if (it.hasNext()) {
                     String fileName = (String) it.next();
-                    return new File(fileName, data.get(fileName));
+                    return new File(fileName, data.get(fileName).getContent(),data.get(fileName).getUserID());
                 } else {
                     return null;
                 }

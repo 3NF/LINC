@@ -121,8 +121,8 @@ public class AddAssignmentServletTest {
         when(req.getParameter(USER_ID_TOKEN)).thenReturn("-");
         JsonParser parser = new JsonParser();
         JsonArray jaB = new Gson().toJsonTree(Arrays.asList(new JsonObject[] {
-                parser.parse(new File("sample.h", "-").toString()).getAsJsonObject(), parser.parse(new File("sample.cpp", "-").toString()).getAsJsonObject(),
-                parser.parse(new File("main.c", "-").toString()).getAsJsonObject()})).getAsJsonArray();
+                parser.parse(new File("sample.h", "-","-").toString()).getAsJsonObject(), parser.parse(new File("sample.cpp", "-","12").toString()).getAsJsonObject(),
+                parser.parse(new File("main.c", "-","-").toString()).getAsJsonObject()})).getAsJsonArray();
 
         when(req.getParameter(ASSIGNMENT)).thenReturn(String.valueOf(jaB));
         when(req.getParameter(COURSE_ID)).thenReturn("-");
@@ -160,8 +160,8 @@ public class AddAssignmentServletTest {
         when(req.getParameter(USER_ID_TOKEN)).thenReturn("-");
         JsonParser parser = new JsonParser();
         JsonArray jaB = new Gson().toJsonTree(Arrays.asList(new JsonObject[] {
-                parser.parse(new File("sample.j", "-").toString()).getAsJsonObject(), parser.parse(new File("sample.cpp", "-").toString()).getAsJsonObject(),
-                parser.parse(new File("main.c", "-").toString()).getAsJsonObject()})).getAsJsonArray();
+                parser.parse(new File("sample.j", "-","-").toString()).getAsJsonObject(), parser.parse(new File("sample.cpp", "-","-").toString()).getAsJsonObject(),
+                parser.parse(new File("main.c", "-" , "-").toString()).getAsJsonObject()})).getAsJsonArray();
 
         when(req.getParameter(ASSIGNMENT)).thenReturn(String.valueOf(jaB));
         when(req.getParameter(COURSE_ID)).thenReturn("-");

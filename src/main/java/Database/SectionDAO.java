@@ -3,6 +3,7 @@ package Database;
 import Models.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,5 +43,22 @@ public class SectionDAO {
             e.printStackTrace();
         }
         return users;
+    }
+
+    public boolean isInSection(String instructorID,String studentID){
+        String query  = "SELECT instructors.id,instructors.userID,sections.studentID FROM instructors" +
+                " inner join sections on instructors.id=sections.instructorID " +
+                "where sections.instructorID=? AND sections.studentID=?";
+        try {
+            Connection connection =connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,instructorID);
+            statement.setString(2,studentID);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
