@@ -125,11 +125,6 @@ function navbarOnClick () {
     fetchCode(name);
 }
 
-//Writes loading message
-function showLoading (fileName) {
-    $("#code-content").html("Loading " + fileName + "...");
-}
-
 //Sends AJAX request to fetch code names
 function fetchCodesInfo () {
     toggleLoading();
@@ -182,11 +177,26 @@ function loadCodeInfoError () {
 function fetchCode (name) {
     toggleLoading();
     id = getCodeInd (name);
+    var dataObj;
+    console.log("uid " + uid);
+    if (uid !== null) {
+        dataObj = {
+            courseID: getParameter("courseID"),
+            codeID: id,
+            userID: uid
+        }
+    } else {
+        dataObj = {
+            courseID: getParameter("courseID"),
+            codeID: id
+        }
+    }
+
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
         contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify({courseID: getParameter("courseID"), codeID: id}),
+        data: JSON.stringify(dataObj),
         success: function( data, textStatus, jQxhr ){
             toggleLoading();
             loadCode(data, textStatus, jQxhr);

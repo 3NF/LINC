@@ -66,7 +66,7 @@
 
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
-    <title>Title</title>
+    <title>Section View</title>
 
 </head>
 <body>
