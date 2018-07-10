@@ -109,14 +109,14 @@ public class CodeFilesDAO {
         return fileId;
     }
 
-    public void addAssignments(String userID, UploadedAssignment assignment) throws SQLException {
+    public void addAssignments(UploadedAssignment assignment) throws SQLException {
         HashMap<String,String> fileId = getIdNameMap(assignment);
         Connection connection = connectionPool.getConnection();
         String query = "INSERT INTO code_files(userID,filesID,content) VALUES(?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
         for (Object file: assignment) {
             if (fileId.get(((File) file).getFileName()) == null) continue;
-            statement.setString(1, userID);
+            statement.setString(1, ((File) file).getUserID());
             statement.setString(2, fileId.get(((File) file).getFileName()));
             statement.setString(3, ((File)file).getContent());
             statement.addBatch();

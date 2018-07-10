@@ -236,7 +236,7 @@ public class GAPIManager {
         return inStream;
     }
 
-    public static void unzipInputStream(ByteArrayInputStream inStream,UploadedAssignment uploadedAssignment) throws IOException {
+    public static void unzipInputStream(ByteArrayInputStream inStream,UploadedAssignment uploadedAssignment,String actorUserID) throws IOException {
         ZipInputStream zis = new ZipInputStream(inStream);
         ZipEntry entry;
         // while there are entries I process them
@@ -285,7 +285,7 @@ public class GAPIManager {
 
                 //convert OutPutStream into inputStream
                 ByteArrayInputStream inStream = convertOutputIntoInputStream(outputStream);
-                unzipInputStream(inStream,uploadedAssignment);
+                unzipInputStream(inStream,uploadedAssignment,actorUserID);
                 for (Object gio : uploadedAssignment){
                     System.err.println(((File) gio).getContent());
                 }
