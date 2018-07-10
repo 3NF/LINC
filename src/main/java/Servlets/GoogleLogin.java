@@ -43,7 +43,7 @@ public class GoogleLogin extends HttpServlet {
         }
 
         request.getSession().setAttribute(USER, resultedUser);
-        GAPIManager.downloadAssignments(resultedUser,"15887333289","15917000927");
-        //response.sendRedirect("/user/choose-room.jsp");
+        //GAPIManager.downloadAssignments(resultedUser,"15887333289","15917000927");
+        response.sendRedirect("/user/choose-room.jsp");
     }
 }
