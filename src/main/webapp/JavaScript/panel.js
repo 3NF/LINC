@@ -32,7 +32,7 @@ function signOut() {
 
                 auth2.then(function () {
                     auth2.signOut().then(function () {
-                        location.href='../logout';
+                        location.href='/logout';
                     });
                 });
 

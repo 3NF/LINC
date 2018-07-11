@@ -14,18 +14,15 @@
 <%@ page import="Models.Assignment" %>
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="static Data.Constraints.CLIENT_ID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link rel="stylesheet" href="../Styles/style.css">
-    <% if (!Validate.isLogged(request.getSession())) {
-        response.sendRedirect("../loginPage.jsp");
-        return;
-    };
-    %>
     <title>Teacher Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="client_id" content="<%=CLIENT_ID%>">
     <link rel="stylesheet" href="../Styles/dashboard.css">
     <%--bootstrap--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
