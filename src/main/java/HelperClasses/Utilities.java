@@ -1,6 +1,8 @@
 package HelperClasses;
 
 
+import Models.UploadedAssignment;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -76,6 +78,36 @@ public final class Utilities {
 		}
 	}
 
+
+	public static void unzipInputStream(ByteArrayInputStream inStream, UploadedAssignment uploadedAssignment, String actorUserID) throws IOException {
+		ZipInputStream zis = new ZipInputStream(inStream);
+		ZipEntry entry;
+		// while there are entries I process them
+		while ((entry = zis.getNextEntry()) != null) {
+			ByteArrayOutputStream fos = new ByteArrayOutputStream();
+			//System.out.println("entry: " + entry.getName() + ", " + entry.getSize());
+			byte[] buffer = new byte[1024];
+			// consume all the data from this entry
+			int read;
+			while ((read = zis.read(buffer)) > 0) {
+				fos.write(buffer, 0, read);
+				//System.err.println(read);
+			}
+			String result = fos.toString("UTF-8");
+			//System.err.println(result);
+			uploadedAssignment.addAssignmentFile(new Models.File(entry.getName(), result, actorUserID));
+			fos.close();
+			// I could close the entry, but getNextEntry does it automatically
+			// zis.closeEntry()
+		}
+	}
+
+
+	public static ByteArrayInputStream convertOutputIntoInputStream(OutputStream outputStream) {
+		ByteArrayOutputStream outStream = ((ByteArrayOutputStream) outputStream);
+		ByteArrayInputStream inStream = new ByteArrayInputStream(outStream.toByteArray());
+		return inStream;
+	}
 
 
 	public static String capitalizeString(String source)

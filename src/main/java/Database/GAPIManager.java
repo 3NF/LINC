@@ -208,34 +208,6 @@ public class GAPIManager {
     }
 
 
-    public static ByteArrayInputStream convertOutputIntoInputStream(OutputStream outputStream) {
-        ByteArrayOutputStream outStream = ((ByteArrayOutputStream) outputStream);
-        ByteArrayInputStream inStream = new ByteArrayInputStream(outStream.toByteArray());
-        return inStream;
-    }
-
-    public static void unzipInputStream(ByteArrayInputStream inStream, UploadedAssignment uploadedAssignment, String actorUserID) throws IOException {
-        ZipInputStream zis = new ZipInputStream(inStream);
-        ZipEntry entry;
-        // while there are entries I process them
-        while ((entry = zis.getNextEntry()) != null) {
-            ByteArrayOutputStream fos = new ByteArrayOutputStream();
-            //System.out.println("entry: " + entry.getName() + ", " + entry.getSize());
-            byte[] buffer = new byte[1024];
-            // consume all the data from this entry
-            int read;
-            while ((read = zis.read(buffer)) > 0) {
-                fos.write(buffer, 0, read);
-                //System.err.println(read);
-            }
-            String result = fos.toString("UTF-8");
-            //System.err.println(result);
-            uploadedAssignment.addAssignmentFile(new File(entry.getName(), result, actorUserID));
-            fos.close();
-            // I could close the entry, but getNextEntry does it automatically
-            // zis.closeEntry()
-        }
-    }
 
     public static UploadedAssignment downloadAssignments(User teacher, String courseID, String assignmentId) throws IOException {
         String accessToken = teacher.getAccessToken();
@@ -263,8 +235,8 @@ public class GAPIManager {
                     .executeMediaAndDownloadTo(outputStream);
 
             //convert OutPutStream into inputStream
-            ByteArrayInputStream inStream = convertOutputIntoInputStream(outputStream);
-            unzipInputStream(inStream, uploadedAssignment, actorUserID);
+            ByteArrayInputStream inStream = Utilities.convertOutputIntoInputStream(outputStream);
+            Utilities.unzipInputStream(inStream, uploadedAssignment, actorUserID);
         }
        /* for (Object gio : uploadedAssignment) {
             System.err.println(((File) gio).getFileName());
