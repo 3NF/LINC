@@ -10,7 +10,7 @@ package Database;
 
 public class CodeFilesDAO {
 
-    public static final Set<String> extentions = new HashSet<String>(Arrays.asList(new String[]{"cpp","c","cc","h","chudo","java"}));
+    public static final Set<String> extentions = new HashSet<String>(Arrays.asList(new String[]{"css","html","cpp","c","cc","h","chudo","java","jsp"}));
     private final MysqlDataSource connectionPool;
 
     public CodeFilesDAO(MysqlDataSource connectionPool) {
@@ -114,19 +114,22 @@ public class CodeFilesDAO {
     public void addAssignments(UploadedAssignment assignment) throws SQLException {
         HashMap<String,String> fileId = getIdNameMap(assignment);
         Connection connection = connectionPool.getConnection();
-        String query = "INSERT INTO code_files(userID,filesID,content) VALUES(?,?,?)";
+        String query = "INSERT INTO code_files(userID,assignmentID,content,path) VALUES(?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
         int i = 0;
         boolean isToBeInserted = false;
         for (Object file: assignment) {
             //System.err.println(((File) fi0le).getFileName());
             String fileName = ((File) file).getFileName();
+            String userID = ((File) file).getUserID();
+            String assignmentID = assignment.getAssignmentID();
             int index = fileName.lastIndexOf(".");
             String extention = fileName.substring(index + 1);
             if (!extentions.contains(extention)) continue;
-            statement.setString(1, fileName);
-            statement.setString(2, "-1");
+            statement.setString(1, userID);
+            statement.setString(2, assignmentID);
             statement.setString(3, ((File)file).getContent());
+            statement.setString(4, fileName);
             isToBeInserted = true;
             statement.addBatch();
             ++i;
