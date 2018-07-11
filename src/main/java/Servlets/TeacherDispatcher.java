@@ -1,6 +1,7 @@
 package Servlets;
 
 import Data.Constraints;
+import Database.AssignmentInfoDAO;
 import Database.CodeFilesDAO;
 import Database.GAPIManager;
 import Models.UploadedAssignment;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static Data.Constraints.ASSIGNMENT_INFO_DAO;
 import static Data.Constraints.CODE_FILES_DAO;
 import static Models.File.USER;
 
@@ -29,7 +31,9 @@ public class TeacherDispatcher extends HttpServlet {
         String courseID = data.get("courseID").getAsString();
         UploadedAssignment uploadedAssignment = GAPIManager.downloadAssignments(user,courseID,assignmentID);
 
+        AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO);
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(CODE_FILES_DAO);
+        assignmentInfoDAO.addAssignment(assignmentID,courseID);
         try {
             codeFilesDAO.addAssignments(uploadedAssignment);
         } catch (SQLException e) {

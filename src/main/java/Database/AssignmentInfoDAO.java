@@ -1,6 +1,8 @@
 package Database;
 
+import Models.Assignment;
 import Models.Reply;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javafx.util.Pair;
 
 import java.sql.*;
@@ -8,9 +10,9 @@ import java.util.*;
 
 public class AssignmentInfoDAO {
 
-    ConnectionPool connectionPool;
+    MysqlDataSource connectionPool;
 
-    public AssignmentInfoDAO(ConnectionPool connectionPool) {
+    public AssignmentInfoDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
     }
 
@@ -71,4 +73,17 @@ public class AssignmentInfoDAO {
         return result;
     }
 
+    public void addAssignment(String assignmentID,String courseID){
+        String query = "INSERT INTO assignments(name,courseID,idInClassroom) VALUES (?,?,?)";
+        try {
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,"123");
+            statement.setString(2,courseID);
+            statement.setString(3,assignmentID);
+            statement.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
