@@ -106,6 +106,7 @@
                                 <th></th>
                             </tr>
                             <% List<UserProfile> semReaders = UserDAO.getSeminarReaders(user , courseId);
+                                semReaders.forEach(System.out::println);
                                 for(UserProfile semReader : semReaders){ %>
                             <tr>
                                 <td><%=semReader.getName().getGivenName()%></td>
@@ -212,17 +213,17 @@
         </div>
     </div>
     <ul class="dropdown-menu" id="removeEx">
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
+        <li><button type="button" class="btn btn-light" onclick="changeRole()" id="removeExButton">
             Remove
         </button>
         </li>
     </ul>
     <ul class="dropdown-menu" id="addEx" >
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
+        <li><button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonSR">
             Add as seminar reader
         </button>
         </li>
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
+        <li><button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonTA">
             Add as teacher assistant
         </button>
         </li>

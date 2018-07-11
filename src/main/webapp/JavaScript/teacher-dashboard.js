@@ -20,8 +20,7 @@ function changeRole(userId , courseID , role){
             var table = $(etarget).closest("table");
             if (change === 'add') {
                 var button = $('#removeEx').clone();
-                button.childNodes[0].childNodes[0].attr("onclick" , param);
-                row.childNodes[4].childNodes[0] = button;
+                button.getElementById("removeExButton").click(function(){changeRole(userId , courseID , role);});
                 if (role === 'TeacherAssistant') {
                     $("#teacherAssTable").append(row);
                 }
@@ -30,9 +29,8 @@ function changeRole(userId , courseID , role){
                 }
             }else{
                 var button = $('#addEx').clone();
-                button.childNodes[0].childNodes[0].attr("onclick" , param);
-                button.childNodes[1].childNodes[0].attr("onclick" , param);
-                row.childNodes[4].childNodes[0] = button;
+                button.getElementById("addExButtonSR").click(function(){changeRole(userId , courseID , role);});
+                button.getElementById("addExButtonTA").click(function(){changeRole(userId , courseID , role);});
                 $("#studentsTable").append(row);
             }
             row.fadeOut();
