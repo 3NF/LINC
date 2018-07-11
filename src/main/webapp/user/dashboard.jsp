@@ -68,86 +68,86 @@
 </head>
 
 <body onload="onLoad()">
-<div class="fill">
-    <div style="cursor:pointer" onclick="togleNav()">
-        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
-    <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
-    </div>
-</div>
-<div id="mySidenav" class="sidenav">
-    <div class="sidenav-container" style="margin-top: 10px">
-        <div class="sidenav-item" id = "goHome">
-            <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
+    <div class="fill">
+        <div style="cursor:pointer" onclick="togleNav()">
+            <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
+        <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
         </div>
     </div>
-    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-    <div class="sidenav-container" style="height: 90%">
-        <% for (Assignment assignment : assignments) {%>
-        <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
-            <p><%=assignment.getName()%></p>
-        </div>
-        <%}%>
-    </div>
-    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-    <div class="sidenav-container" style="margin-top: 10px">
-        <div class="sidenav-item">
-            <p onclick="signOut()">Logout</p>
-        </div>
-    </div>
-</div>
-
-<div id="content">
-    <div id = "loader-wrapper">
-        <div class="loader"></div>
-    </div>
-    <div class="panel panel-default">
-        <ul class="nav nav-tabs" id="navbar">
-            <li id="navbar-element" hidden><a href="javascript:void(0)" onclick="navbarOnClick()"></a></li>
-        </ul>
-
-        <div class="panel-body">
-            <div id="code-panel">
-                    <textarea readonly id="code-content">
-
-                    </textarea>
+    <div id="mySidenav" class="sidenav">
+        <div class="sidenav-container" style="margin-top: 10px">
+            <div class="sidenav-item" id = "goHome">
+                <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
             </div>
-            <div id="notification-div">
-                <h1 id="notification-text">Please select code interval!</h1>
+        </div>
+        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+        <div class="sidenav-container" style="height: 90%">
+            <% for (Assignment assignment : assignments) {%>
+            <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
+                <p><%=assignment.getName()%></p>
             </div>
-            <div id="comment-panel-wrapper">
-                <div class="media" id="comment-panel" hidden>
-                    <img class="media-object media-left" id="comment-profile-picture"
-                         src="../Images/temp_user_icon.svg">
-                    <div class="media-body" id="comment-content">
-                        <p class="media-heading" id="comment-user-name">Fname Lname</p>
-                        <p class="media-body" id="comment-text">Suggestion Text</p>
-                        <p id="comment-date">Here goes Precise Date</p>
+            <%}%>
+        </div>
+        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+        <div class="sidenav-container" style="margin-top: 10px">
+            <div class="sidenav-item">
+                <p onclick="signOut()">Logout</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div id = "loader-wrapper">
+            <div class="loader"></div>
+        </div>
+        <div class="panel panel-default">
+            <ul class="nav nav-tabs" id="navbar">
+                <li id="navbar-element" hidden><a href="javascript:void(0)" onclick="navbarOnClick()"></a></li>
+            </ul>
+
+            <div class="panel-body">
+                <div id="code-panel">
+                        <textarea readonly id="code-content">
+
+                        </textarea>
+                </div>
+                <div id="notification-div">
+                    <h1 id="notification-text">Please select code interval!</h1>
+                </div>
+                <div id="comment-panel-wrapper">
+                    <div class="media" id="comment-panel" hidden>
+                        <img class="media-object media-left" id="comment-profile-picture"
+                             src="../Images/temp_user_icon.svg">
+                        <div class="media-body" id="comment-content">
+                            <p class="media-heading" id="comment-user-name">Fname Lname</p>
+                            <p class="media-body" id="comment-text">Suggestion Text</p>
+                            <p id="comment-date">Here goes Precise Date</p>
+                        </div>
+                    </div>
+                    <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
+                        <form>
+                            <textarea id="comment-editor-content" class="editor-content" name="content"></textarea>
+                            <br>
+                            <button type="button" class="btn btn-primary" onclick="submitSuggestion()">Submit</button>
+                            <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
+                            </button>
+                            <button id="suggestion-type" type="button" class="btn btn-warning"
+                                    onclick="toggleSuggestionType()">Warning
+                            </button>
+                        </form>
+                    </div>
+                    <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
+                        <form>
+                            <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
+                            <br>
+                            <button type="button" class="btn btn-primary" onclick="submitReply()">Submit</button>
+                        </form>
                     </div>
                 </div>
-                <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
-                    <form>
-                        <textarea id="comment-editor-content" class="editor-content" name="content"></textarea>
-                        <br>
-                        <button type="button" class="btn btn-primary" onclick="submitSuggestion()">Submit</button>
-                        <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
-                        </button>
-                        <button id="suggestion-type" type="button" class="btn btn-warning"
-                                onclick="toggleSuggestionType()">Warning
-                        </button>
-                    </form>
-                </div>
-                <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
-                    <form>
-                        <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
-                        <br>
-                        <button type="button" class="btn btn-primary" onclick="submitReply()">Submit</button>
-                    </form>
-                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 </body>
 
 </html>
