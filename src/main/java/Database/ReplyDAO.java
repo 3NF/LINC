@@ -5,6 +5,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ReplyDAO {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return Collections.emptyList();
         }
 
         try {
@@ -53,7 +54,7 @@ public class ReplyDAO {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            return null;
+            return Collections.emptyList();
         }
 
 

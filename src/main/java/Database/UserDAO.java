@@ -175,7 +175,6 @@ public class UserDAO
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("add");
     }
 
     public static void removeUser(String userID , Role role, String courseID){
@@ -191,6 +190,5 @@ public class UserDAO
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("remove");
     }
 }

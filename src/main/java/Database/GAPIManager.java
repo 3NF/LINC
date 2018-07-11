@@ -55,12 +55,12 @@ public class GAPIManager {
      * @param room Unique name of room
      * @return corresponding Room object
      */
-    public static Room getRoomByName(String room) {
+    public Room getRoomByName(String room) {
         return null;
     }
 
 
-    public static TokenResponse getTokens(String authCode) {
+    public TokenResponse getTokens(String authCode) {
         try {
             Reader reader = new InputStreamReader(GAPIManager.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE));
             GoogleClientSecrets secrets = GoogleClientSecrets.load(JACKSON_FACTORY, reader);
@@ -188,7 +188,7 @@ public class GAPIManager {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -279,11 +279,13 @@ public class GAPIManager {
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
             List<Student> students = service.courses().students().list(courseID).execute().getStudents();
-
-            return students;
+            if (students == null)
+                return Collections.emptyList();
+            else
+                return students;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -312,13 +314,14 @@ public class GAPIManager {
         try {
             List<Assignment> assignments = new ArrayList<>();
             List<CourseWork> courseWorks = service.courses().courseWork().list(courseId).execute().getCourseWork();
+            if (courseWorks == null) return Collections.emptyList();
             for (CourseWork courseWork : courseWorks) {
                 assignments.add(new Assignment(courseWork.getId(), courseWork.getTitle()));
             }
             return assignments;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return Collections.emptyList();
         }
     }
 
