@@ -21,17 +21,23 @@ function togleNav() {
     isVisible = !isVisible;
 }
 
-function start() {
-    gapi.auth2.init({
-        client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com'
-    });
-    gapi.auth2.getAuthInstance().signOut();
-
-}
-
 function signOut() {
-    gapi.load('client', start);
-    location.href='../logout';
+    gapi.load('client',
+        {
+            callback : function () {
+                let id = $("meta[name='client_id']").attr("content");
+                auth2 = auth2 = gapi.auth2.init({
+                    client_id: id
+                });
+
+                auth2.then(function () {
+                    auth2.signOut().then(function () {
+                        location.href='../logout';
+                    });
+                });
+
+            }
+        });
 }
 
 function getParameter (name) {

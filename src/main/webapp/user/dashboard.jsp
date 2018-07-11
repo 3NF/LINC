@@ -63,7 +63,7 @@
     %>
 
     <script>var assignmentID = <%=assignments.get(0).getId()%>;</script>
-
+    <script>var uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
 
 </head>
 

@@ -95,13 +95,15 @@ public class CodeFilesDAO {
     private HashMap<String,String> getIdNameMap(UploadedAssignment assignment) throws SQLException {
         HashMap<String,String> fileId = new HashMap<String,String>();
         Connection connection = connectionPool.getConnection();
-        String query = "SELECT * FROM assignment_files WHERE assignmentID=?";
+        String query = "Select assignments.idInClassroom,assignment_files.id,assignment_files.name FROM assignments " +
+                "inner join assignment_files on assignments.id=assignment_files.assignmentID where assignments.idInClassroom=?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1,assignment.getAssignmentID());
         ResultSet result = statement.executeQuery();
         while (result.next()){
             String id = result.getString("id");
             String name = result.getString("name");
+
             fileId.put(name,id);
         }
         statement.close();
@@ -114,14 +116,26 @@ public class CodeFilesDAO {
         Connection connection = connectionPool.getConnection();
         String query = "INSERT INTO code_files(userID,filesID,content) VALUES(?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
+        int i = 0;
+        boolean isToBeInserted = false;
         for (Object file: assignment) {
-            if (fileId.get(((File) file).getFileName()) == null) continue;
-            statement.setString(1, ((File) file).getUserID());
+            //System.err.println(((File) fi0le).getFileName());
+            if (fileId.get(((File) file).getFileName()) == null) {
+                continue;
+            }
+            statement.setString(1, ((File) file).getFileName());
             statement.setString(2, fileId.get(((File) file).getFileName()));
             statement.setString(3, ((File)file).getContent());
+            isToBeInserted = true;
             statement.addBatch();
+            ++i;
+            if (i % 1000 == 0 || i == assignment.size()) {
+                statement.executeBatch();
+                isToBeInserted = false;
+            }
         }
-        statement.executeBatch();
+        if (isToBeInserted)
+            statement.executeBatch();
         statement.close();
         connection.close();
         //connection.createStatement().execute(query);

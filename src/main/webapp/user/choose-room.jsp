@@ -5,10 +5,13 @@
 <%@ page import="static Data.Constraints.USER" %>
 <%@ page import="Data.Constraints" %>
 <%@ page import="static Data.Constraints.COURSE_ID" %>
+<%@ page import="static Data.Constraints.CLIENT_ID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
+
+    <meta name="client_id" content="<%=CLIENT_ID%>">
     <!-- css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="../Styles/style.css" rel="stylesheet">
@@ -17,7 +20,7 @@
     <!-- javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=start" async defer></script>
     <script src="../JavaScript/panel.js"></script>
 
 
@@ -44,7 +47,7 @@
     </div>
 </div>
 <div id="mySidenav" class="sidenav">
-    <a class="logout" href='../logout' onclick="signOut()">Logout</a>
+    <a class="logout" href='#' onclick="signOut()">Logout</a>
 </div>
 <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose ClassRoom To Enter:</h1>
 
