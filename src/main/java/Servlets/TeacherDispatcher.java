@@ -22,7 +22,7 @@ import static Data.Constraints.ASSIGNMENT_INFO_DAO;
 import static Data.Constraints.CODE_FILES_DAO;
 import static Models.File.USER;
 
-@WebServlet(name = "TeacherDispatcher")
+@WebServlet(name = "TeacherDispatcher" ,urlPatterns = "/teacher-dispatcher")
 public class TeacherDispatcher extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);

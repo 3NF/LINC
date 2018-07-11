@@ -103,16 +103,16 @@
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="height: 90%">
         <% for (Assignment assignment : uploaded) {%>
-        <div class="sidenav-item"  onclick=getAssignment('<%=assignment.getId()%>')>
+        <div class="sidenav-item"  onclick=sendAssignments('<%=assignment.getId()%>')>
             <p style="color: green"><%=assignment.getName()%></p>
         </div>
         <%}%>
 
         <% for (Assignment assignment : notUploaded) {%>
-        <div class="sidenav-item"  onclick=getAssignment('<%=assignment.getId()%>')>
+        <div class="sidenav-item"  onclick=sendAssignments('<%=assignment.getId()%>')>
             <p style="color: red"><%=assignment.getName()%></p>
         </div>
-        <%}%>\
+        <%}%>
     </div>
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="margin-top: 10px">

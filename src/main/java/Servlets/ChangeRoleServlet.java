@@ -16,6 +16,7 @@ public class ChangeRoleServlet extends HttpServlet {
         String roleS = request.getParameter(Constraints.ROLE);
         String userId = request.getParameter(Constraints.USER_ID);
         String courseID = request.getParameter(Constraints.COURSE_ID);
+        System.out.println(courseID);
         String change = request.getParameter("change");
         UserDAO.Role role = UserDAO.Role.valueOf(roleS);
         switch (change){

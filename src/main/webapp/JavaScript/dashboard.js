@@ -159,7 +159,6 @@ function fetchCodesInfo() {
         method: "POST",
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify({courseID: getParameter("courseID"), assignmentID: getParameter("assignmentID")}),
-        //must be changed!!!!
         success: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadCodesInfo(data, textStatus, jQxhr);
