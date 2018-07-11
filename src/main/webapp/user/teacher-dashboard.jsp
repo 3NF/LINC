@@ -55,8 +55,10 @@
 
     <%
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
-        List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
-                .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
+        List<Assignment> uploaded = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream().filter
+                (assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
+        List <Assignment> notUploaded = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream().filter
+                (assignment -> !assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
     %>
 
     <%
@@ -100,11 +102,17 @@
     </div>
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="height: 90%">
-        <% for (Assignment assignment : assignments) {%>
-        <div class="sidenav-item" onclick=getAssignment('<%=assignment.getId()%>')>
-            <p><%=assignment.getName()%></p>
+        <% for (Assignment assignment : uploaded) {%>
+        <div class="sidenav-item"  onclick=getAssignment('<%=assignment.getId()%>')>
+            <p style="color: green"><%=assignment.getName()%></p>
         </div>
         <%}%>
+
+        <% for (Assignment assignment : notUploaded) {%>
+        <div class="sidenav-item"  onclick=getAssignment('<%=assignment.getId()%>')>
+            <p style="color: red"><%=assignment.getName()%></p>
+        </div>
+        <%}%>\
     </div>
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="margin-top: 10px">
@@ -138,9 +146,7 @@
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
-                                                Remove
-                                                </button>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -175,9 +181,7 @@
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">
-                                                  Remove
-                                                </button>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">Remove</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -231,21 +235,29 @@
             </div>
         </div>
     </div>
-    <ul class="dropdown-menu" id="removeEx">
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
-            Remove
-        </button>
-        </li>
-    </ul>
-    <ul class="dropdown-menu" id="addEx" >
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
-            Add as seminar reader
-        </button>
-        </li>
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
-            Add as teacher assistant
-        </button>
-        </li>
-    </ul>
+    <div class="hide">
+        <div class="btn-group-vertical" id="addEx">
+            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-option-vertical"></span></button>
+            <ul class="dropdown-menu" >
+                <li><button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonSR">
+                    Add as seminar reader
+                </button>
+                </li>
+                <li><button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonTA">
+                    Add as teacher assistant
+                </button>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group-vertical" id="removeEx">
+            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-option-vertical"></span></button>
+            <ul class="dropdown-menu">
+                <li><button type="button" class="btn btn-light" onclick="changeRole()" id="removeExButton">Remove</button>
+                </li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
