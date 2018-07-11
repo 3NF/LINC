@@ -4,6 +4,17 @@
 
 }
 
+
+#jstree_demo_div
+{
+    position: absolute;
+    left: 5px;
+    min-height: 500px;
+    min-width: 500px;
+    z-index: 1000;
+    background: darkgray;
+}
+
 #panel-swipe {
     width: 80%;
     position: relative;
