@@ -1,7 +1,6 @@
 let isVisible = false;
 
 $(document).ready(function () {
-    console.log("123");
     $(".fill").css("display", "block");
     $(".sidenav").css("display", "block");
 
@@ -10,8 +9,13 @@ $(document).ready(function () {
         location.assign("/user/choose-room.jsp");
     });
 
+    document.getElementById('menuBar').addEventListener('click', function() {
+        if (this.className === 'on') this.classList.remove('on');
+        else this.classList.add('on');
+    });
     console.log($(".sidenav-container").first().html());//.attr("onclick"));
 });
+
 
 function togleNav() {
     if (!isVisible)
@@ -58,7 +62,7 @@ function getAssignment(assignmentId) {
 }
 
 function sendAssignments(assignmentId) {
-    var courseID = getParameter("courseID");
+    const courseID = getParameter("courseID");
     console.log(courseID);
     $.ajax({
         type:'POST',

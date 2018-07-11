@@ -1,21 +1,21 @@
-var codeMirror;
+let codeMirror;
 
-var suggestionEditor;
-var replyEditor;
+let suggestionEditor;
+let replyEditor;
 
-var codeIDs;
+let codeIDs;
 //Array for storing suggestion objects
-var suggestions = [];
+let suggestions = [];
 //HTML line element array
-var lines = [];
+const lines = [];
 
-var codeInfo = [];
+let codeInfo = [];
 
-var activeSuggestionID = -1;
-var activeCodeFileID = -1;
+let activeSuggestionID = -1;
+let activeCodeFileID = -1;
 
 //New reply block
-var replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
+const replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
     "                            <div class = \"reply-panel\">\n" +
     "                                <img class = \"reply-profile-picture\" src=\"../Images/temp_user_icon.svg\">\n" +
     "                                <div class = \"reply-content\">\n" +
@@ -33,7 +33,7 @@ const warningColor = "#efcf4f";
 
 //AJAX successful code loading response callback
 function loadCode(data) {
-    var receivedData = data;
+    const receivedData = data;
     suggestions = receivedData.suggestions;
 
     console.log(receivedData);
@@ -63,7 +63,7 @@ function loadFileTree(paths) {
 
 
 function AddChilds(baseNode, nodes) {
-    if (nodes.count == 0) return;
+    if (nodes.count === 0) return;
 
     let elem = nodes[0];
 
@@ -74,11 +74,11 @@ function AddChilds(baseNode, nodes) {
     Places suggestions in appropriate line intervals
  */
 function placeSuggestions() {
-    for (var i = 0; i < suggestions.length; i++) {
+    for (let i = 0; i < suggestions.length; i++) {
 
-        var color;
-        var start = suggestions[i].startInd;
-        var end = suggestions[i].endInd;
+        let color;
+        const start = suggestions[i].startInd;
+        const end = suggestions[i].endInd;
         if (suggestions[i].type === "Error") {
             suggestions[i].color = errorColor;
         } else {
@@ -88,7 +88,7 @@ function placeSuggestions() {
         /*
             Edit suggestion lines
          */
-        for (var lineIterator = start; lineIterator < end + 1; lineIterator++) {
+        for (let lineIterator = start; lineIterator < end + 1; lineIterator++) {
             $(lines[lineIterator]).css("background-color", suggestions[i].color);
             $(lines[lineIterator]).css("color", "#ffffff");
             $(lines[lineIterator]).unbind("click");
@@ -116,14 +116,15 @@ function viewSuggestion(eventHandler) {
     } catch (e) {
 
     }
-    if ($("#notification-div").is(":visible")) {
-        $("#notification-div").hide();
+    let dv = $("#notification-div");
+    if (dv.is(":visible")) {
+        dv.hide();
         $("#comment-panel").show();
         $("#reply-editor-wrapper").show();
     }
 
     //Load suggestion data
-    var suggestion = suggestions[eventHandler.data];
+    const suggestion = suggestions[eventHandler.data];
     $("#comment-content").css("border-right-color", suggestion.color);
     $("#comment-text").html(suggestion.content);
     $("#comment-user-name").html(suggestion.user.firstName + " " + suggestion.user.lastName);
@@ -146,7 +147,7 @@ function navbarOnClick() {
     $(event.target).parent().attr("class", "active");
 
     //Get name of code
-    var name = $(event.target).text();
+    const name = $(event.target).text();
 
     fetchCode(name);
 }
@@ -174,8 +175,9 @@ function fetchCodesInfo() {
 function loadCodesInfo(data) {
     codeInfo = data;
     codeInfo.sort(function (a, b) {
-        return (a < b ? -1 : (a > b ? 1 : 0))
+        return (a.value < b.value ? -1 : (a.value > b.value ? 1 : 0))
     });
+    console.log(codeInfo);
     addCodes();
     //getFirstCode ();
 }
@@ -198,7 +200,7 @@ function addCodes() {
 }
 
 function getFirstCode() {
-    var name = $("#navbar").find(".active").find("a").text();
+    const name = $("#navbar").find(".active").find("a").text();
     fetchCode(name);
 }
 
@@ -207,23 +209,13 @@ function loadCodeInfoError() {
 }
 
 //Sends AJAX request to load code
-function fetchCode(name) {
+function fetchCode(id) {
     toggleLoading();
-    id = getCodeInd(name);
-    var dataObj;
-    console.log("uid " + uid);
-    if (uid !== null) {
-        dataObj = {
-            courseID: getParameter("courseID"),
-            codeID: id,
-            userID: uid
-        }
-    } else {
-        dataObj = {
-            courseID: getParameter("courseID"),
-            codeID: id
-        }
-    }
+    let dataObj;
+    dataObj = {
+        codeID: id
+    };
+
 
     $.ajax({
         url: "/user/code_dispatcher",
@@ -242,8 +234,8 @@ function fetchCode(name) {
 }
 
 function getCodeInd(name) {
-    for (var i = 0; i < codeInfo.length; i++) {
-        if (codeInfo[i].name == name) {
+    for (let i = 0; i < codeInfo.length; i++) {
+        if (codeInfo[i].name === name) {
             return codeInfo[i].id;
         }
     }
@@ -275,7 +267,7 @@ function fetchReplies(id) {
 function loadReplies(data) {
     console.log(data);
     clearReplies();
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
         drawReply(data[i]);
     }
 }
@@ -293,7 +285,7 @@ function clearReplies() {
 
 //Draws one new reply in the suggestion panel
 function drawReply(reply) {
-    var newBlock = $(replyBlock).closest(".reply-panel-wrapper");
+    const newBlock = $(replyBlock).closest(".reply-panel-wrapper");
     console.log(reply);
 
     $(newBlock).find(".reply-user-name").html(reply.user.firstName + " " + reply.user.lastName);

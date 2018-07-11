@@ -36,8 +36,8 @@
     <script src="../JavaScript/panel.js"></script>
 
     <%--my css--%>
-    <link rel="stylesheet" href="../Styles/style.css">
-    <link rel="stylesheet" href="../Styles/teacher-dashboard.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/teacher-dashboard.css">
 
     <script src = "--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -91,8 +91,8 @@
 <div class="fill">
     <div style="cursor:pointer" onclick="togleNav()">
         <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
-    <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
-    </div>
+    <button id="menuBar" onclick="togleNav()"><span></span><span></span><span></span>
+    </button>
 </div>
 <div id="mySidenav" class="sidenav">
     <div class="sidenav-container" style="margin-top: 10px">

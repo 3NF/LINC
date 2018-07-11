@@ -1,11 +1,12 @@
 $(document).ready(function () {
-
+    $('#jstree_demo_div').on("changed.jstree", function (e, data) {
+        fetchCode(data.node.li_attr["file-id"]);
+    });
 });
 
 function build_project_view() {
     $('#jstree_demo_div').jstree();
 }
-let ss = 0;
 function draw_view_rec(dv, l, r) {
     let new_folder_begins = [];
     let files = [];
@@ -14,7 +15,7 @@ function draw_view_rec(dv, l, r) {
         let file_path = codeInfo[i].value;
         let ind = file_path.indexOf("/");
         if (ind === -1) {
-            files.push(file_path);
+            files.push(codeInfo[i]);
             continue;
         }
         let cur_folder_name = file_path.substr(0, ind);
@@ -45,10 +46,8 @@ function draw_view_rec(dv, l, r) {
 
     for (let i = 0; i < files.length; i++) {
         let lst_file = document.createElement("li");
-        lst_file.append(files[i]);
-
-        lst_file.setAttribute("id", "123" + ss);
-        ss++;
+        lst_file.append(files[i].value);
+        lst_file.setAttribute("file-id", files[i].key);
         dv.appendChild(lst_file);
     }
 }

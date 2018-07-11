@@ -34,26 +34,157 @@ html, body {
 
 #menuBar {
     position: absolute;
-    font-size: 40px;
-    bottom: 10px;
-    left: 20px;
+    width: 55px;
+    height: 55px;
+    transform: translate(-50%, -50%);
+    left: 50px;
+    top: 20px;
     cursor: pointer;
+    background: white;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+}
+
+#menuBar span {
+    position: absolute;
+    width: 50px;
+    height: 4px;
+    top: 50%;
+    left: 50%;
+    background: #262626;
+    border-radius: 2px;
+    overflow: hidden;
+    transition: all 0.3s linear;
+}
+#menuBar span::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: gray;
+    transition: all 0.3s linear;
+}
+#menuBar span:nth-child(1) {
+    animation: span-first-off 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+}
+#menuBar span:nth-child(2) {
+    animation: span-second-off 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+}
+#menuBar span:nth-child(3) {
+    animation: span-third-off 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+#menuBar.on:hover span::before {
+    width: 100%;
+    transition: all 0.3s linear;
+}
+#menuBar.on span:nth-child(1) {
+    animation: span-first-on 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+}
+#menuBar.on span:nth-child(2) {
+    animation: span-second-on 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+}
+#menuBar.on span:nth-child(3) {
+    animation: span-third-on 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes span-first-on {
+    0% {
+        transform: translate(-50%, -300%);
+    }
+    30% {
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+}
+@keyframes span-first-off {
+    0% {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+    30% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -300%);
+    }
+}
+@keyframes span-second-on {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    25% {
+        background: gray;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        transform: translate(-150%, -50%) scale(0);
+    }
+}
+@keyframes span-second-off {
+    0% {
+        transform: translate(-150%, -50%) scale(0);
+    }
+    25% {
+        background: gray;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+@keyframes span-third-on {
+    0% {
+        transform: translate(-50%, 200%);
+    }
+    30% {
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+}
+@keyframes span-third-off {
+    0% {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+    30% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, 200%);
+    }
 }
 
 .fill {
     display: none;
-    min-height: 100%;
     width: 80px;
-    position: fixed;
-    background-color: #b2b4ae;
+    min-width: 100%;
+    background-color: white;
     text-align: center;
+    height: 55px;
     z-index: 101;
 }
 
 #user-panel-img {
-    width: 80%;
-    margin: 5px auto auto;
-
+    height: 40px;
+    width: auto;
+    position:absolute;
+    right: 5px;
 }
 
 #panel-swipe {
@@ -102,4 +233,14 @@ html, body {
 
 .sprt{
     border-top: .1rem solid rgba(0,0,0,0.12);
+}
+
+#jstree_demo_div {
+    height: 100%;
+    background-color: white;
+    z-index: 120;
+    position: absolute;
+    left: 5px;
+    min-height: 500px;
+    min-width: 500px;
 }
