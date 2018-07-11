@@ -24,10 +24,10 @@ public class CodeFilesDAO {
         statement.setString(1,userId);
         statement.setString(2,FileId);
         ResultSet result = statement.executeQuery();
-        String codeContent = "";
-        String fileName = "";
-        String codeLang = "";
-        String codeFileId = "";
+        String codeContent = null;
+        String fileName = null;
+        String codeLang = null;
+        String codeFileId = null;
         if (result.next()){
             codeContent = result.getString("content");
             fileName = result.getString("name");
