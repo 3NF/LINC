@@ -9,7 +9,7 @@ var suggestions = [];
 //HTML line element array
 var lines = [];
 
-var codeInfo =[];
+var codeInfo = [];
 
 var activeSuggestionID = -1;
 var activeCodeFileID = -1;
@@ -32,21 +32,20 @@ const warningColor = "#efcf4f";
 
 
 //AJAX successful code loading response callback
-function loadCode (data) {
+function loadCode(data) {
     var receivedData = data;
     suggestions = receivedData.suggestions;
 
-    console.log (receivedData);
+    console.log(receivedData);
     activeCodeFileID = receivedData.fileId;
     codeMirror.setValue(receivedData.code);
 
-    mapCodeLines ();
-    placeSuggestions ();
+    mapCodeLines();
+    placeSuggestions();
 }
 
 
-function loadFileTree(paths)
-{
+function loadFileTree(paths) {
     let baseNode = document.getElementById("jstree_demo_div");
     let rootUl = document.createElement("ul");
 
@@ -54,8 +53,7 @@ function loadFileTree(paths)
 
     paths.forEach(function (pIndex, path) {
         let paths = path.split('/');
-        paths.forEach(function(nIndex, node)
-        {
+        paths.forEach(function (nIndex, node) {
             let newLi = document.createElement("li");
             rootUl.appendChild(newLi);
             rootUl = rootUl.childNodes[0];
@@ -64,9 +62,8 @@ function loadFileTree(paths)
 }
 
 
-function AddChilds(baseNode,nodes)
-{
-    if(nodes.count == 0 ) return;
+function AddChilds(baseNode, nodes) {
+    if (nodes.count == 0) return;
 
     let elem = nodes[0];
 
@@ -76,8 +73,8 @@ function AddChilds(baseNode,nodes)
 /*
     Places suggestions in appropriate line intervals
  */
-function placeSuggestions () {
-    for (var i = 0; i < suggestions.length; i ++) {
+function placeSuggestions() {
+    for (var i = 0; i < suggestions.length; i++) {
 
         var color;
         var start = suggestions[i].startInd;
@@ -91,7 +88,7 @@ function placeSuggestions () {
         /*
             Edit suggestion lines
          */
-        for (var lineIterator = start; lineIterator < end+1; lineIterator ++) {
+        for (var lineIterator = start; lineIterator < end + 1; lineIterator++) {
             $(lines[lineIterator]).css("background-color", suggestions[i].color);
             $(lines[lineIterator]).css("color", "#ffffff");
             $(lines[lineIterator]).unbind("click");
@@ -106,7 +103,7 @@ function placeSuggestions () {
     Adjusts view for suggestion and fetches
     reply data for this suggestion
  */
-function viewSuggestion (eventHandler) {
+function viewSuggestion(eventHandler) {
     /*
         Adjust view.
         If student is logged in following lines
@@ -135,13 +132,13 @@ function viewSuggestion (eventHandler) {
     activeSuggestionID = suggestion.suggestionID;
     console.log(activeSuggestionID);
 
-    fetchReplies (suggestion.suggestionID);
+    fetchReplies(suggestion.suggestionID);
 }
 
 /*
     Loads new code in CodeMirror editor
  */
-function navbarOnClick () {
+function navbarOnClick() {
     console.log("There was a Click!");
 
     //Change html elements' styles
@@ -155,7 +152,7 @@ function navbarOnClick () {
 }
 
 //Sends AJAX request to fetch code names
-function fetchCodesInfo () {
+function fetchCodesInfo() {
     toggleLoading();
     $.ajax({
         url: "/user/code_dispatcher",
@@ -163,49 +160,57 @@ function fetchCodesInfo () {
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify({courseID: getParameter("courseID"), assignmentID: getParameter("assignmentID")}),
         //must be changed!!!!
-        success: function( data, textStatus, jQxhr ){
+        success: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadCodesInfo(data, textStatus, jQxhr);
         },
         error: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadCodeInfoError(data, textStatus, jQxhr);
-        }});
+        }
+    });
 }
 
 //AJAX successful code info loading response callback
-function loadCodesInfo (data) {
+function loadCodesInfo(data) {
     codeInfo = data;
-    addCodes ();
-    getFirstCode ();
+    codeInfo.sort(function (a, b) {
+        return (a < b ? -1 : (a > b ? 1 : 0))
+    });
+    addCodes();
+    //getFirstCode ();
 }
 
 function addCodes() {
-    for (var i = 0; i < codeInfo.length; i ++) {
+    let ul = document.createElement("ul");
+    $('#jstree_demo_div')[0].appendChild(ul);
+    draw_view_rec(ul, 0, codeInfo.length - 1);
+    build_project_view();
+    /*for (var i = 0; i < codeInfo.length; i++) {
         console.log(codeInfo[i]);
         var newElement = $("#navbar-element").clone(true);
         $(newElement).removeAttr("id");
-        $(newElement).find("a").html(codeInfo[i].name);
+        $(newElement).find("a").html(codeInfo[i].value);
         $(newElement).show();
         $(newElement).appendTo("#navbar");
     }
     $("#navbar-element").remove();
-    $("#navbar li:first-child").addClass("active");
+    $("#navbar li:first-child").addClass("active");*/
 }
 
-function getFirstCode () {
+function getFirstCode() {
     var name = $("#navbar").find(".active").find("a").text();
     fetchCode(name);
 }
 
-function loadCodeInfoError () {
+function loadCodeInfoError() {
     alert("Error in loading file information");
 }
 
 //Sends AJAX request to load code
-function fetchCode (name) {
+function fetchCode(name) {
     toggleLoading();
-    id = getCodeInd (name);
+    id = getCodeInd(name);
     var dataObj;
     console.log("uid " + uid);
     if (uid !== null) {
@@ -226,18 +231,19 @@ function fetchCode (name) {
         method: "POST",
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(dataObj),
-        success: function( data, textStatus, jQxhr ){
+        success: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadCode(data, textStatus, jQxhr);
         },
         error: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadCodeError(data, textStatus, jQxhr);
-        }});
+        }
+    });
 }
 
-function getCodeInd (name) {
-    for (var i = 0; i < codeInfo.length; i ++) {
+function getCodeInd(name) {
+    for (var i = 0; i < codeInfo.length; i++) {
         if (codeInfo[i].name == name) {
             return codeInfo[i].id;
         }
@@ -247,7 +253,7 @@ function getCodeInd (name) {
 
 
 //Sends AJAX request to fetch new replies
-function fetchReplies (id) {
+function fetchReplies(id) {
     toggleLoading();
     console.log(id);
     $.ajax({
@@ -255,40 +261,41 @@ function fetchReplies (id) {
         method: "POST",
         contentType: 'application/json; charset=UTF-8/json',
         data: JSON.stringify({courseID: getParameter("courseID"), suggestionID: id}),
-        success: function( data, textStatus, jQxhr ){
+        success: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadReplies(data, textStatus, jQxhr);
         },
         error: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadReplyError(data, textStatus, jQxhr);
-        }});
+        }
+    });
 }
 
 //AJAX successful callback for receiving reply data
-function loadReplies (data) {
+function loadReplies(data) {
     console.log(data);
     clearReplies();
-    for (var i = 0; i < data.length; i ++) {
+    for (var i = 0; i < data.length; i++) {
         drawReply(data[i]);
     }
 }
 
 //AJAX error callback for receiving reply data
-function loadReplyError (data) {
+function loadReplyError(data) {
     console.log(data);
     alert("Couldn't get replies");
 }
 
 //Clears all current replies
-function clearReplies () {
+function clearReplies() {
     $(".reply-panel-wrapper").remove();
 }
 
 //Draws one new reply in the suggestion panel
-function drawReply (reply) {
+function drawReply(reply) {
     var newBlock = $(replyBlock).closest(".reply-panel-wrapper");
-    console.log (reply);
+    console.log(reply);
 
     $(newBlock).find(".reply-user-name").html(reply.user.firstName + " " + reply.user.lastName);
     $(newBlock).find(".reply-profile-picture").attr("src", reply.user.picturePath);
@@ -302,7 +309,7 @@ function drawReply (reply) {
     Maps appropriate code lines for intervals
  */
 function mapCodeLines() {
-    $(".CodeMirror-linenumber").each(function( index ) {
+    $(".CodeMirror-linenumber").each(function (index) {
         if (!index) {
             return;
         }
@@ -321,14 +328,14 @@ function mapCodeLines() {
 }
 
 //AJAX error callback for receiving code data
-function loadCodeError () {
+function loadCodeError() {
     alert("Couldn't load requested file!");
 }
 
 /*
     Creates CodeMirror and Bootstrap Markdown editors
  */
-function onLoad () {
+function onLoad() {
     //Create CodeMirror editor
     codeMirror = CodeMirror.fromTextArea($("#code-content").get(0), {
         lineNumbers: true,
@@ -342,7 +349,7 @@ function onLoad () {
     $("#comment-editor-content").markdown({
         autofocus: true,
         saveable: true,
-        onShow: function(e) {
+        onShow: function (e) {
             suggestionEditor = e;
         }
     });
@@ -351,7 +358,7 @@ function onLoad () {
     $("#reply-editor-content").markdown({
         autofocus: true,
         saveable: true,
-        onShow: function(e) {
+        onShow: function (e) {
             replyEditor = e;
         }
     });
@@ -359,37 +366,42 @@ function onLoad () {
     Gets initial data for already
     activated code
     */
-    fetchCodesInfo ();
+    fetchCodesInfo();
     toggleLoading();
 }
 
-function submitReply () {
+function submitReply() {
     toggleLoading();
     console.log(replyEditor.parseContent());
     $.ajax({
         url: "/user/reply_dispatcher",
         method: "POST",
         contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify({courseID: getParameter("courseID"), suggestionID: activeSuggestionID, content: replyEditor.parseContent()}),
-        success: function( data){
+        data: JSON.stringify({
+            courseID: getParameter("courseID"),
+            suggestionID: activeSuggestionID,
+            content: replyEditor.parseContent()
+        }),
+        success: function (data) {
             toggleLoading();
             drawReply(data);
         },
         error: function (data, textStatus, jQxhr) {
             toggleLoading();
             showReplyAdditionError(data, textStatus, jQxhr);
-        }});
+        }
+    });
 }
 
-function showReplyAdditionError () {
+function showReplyAdditionError() {
     alert("Couldn't add new reply, please make sure that correct suggestion is chosen!")
 }
 
-function getParameter (name) {
+function getParameter(name) {
     results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     return results[1] || 0;
 }
 
-function toggleLoading () {
+function toggleLoading() {
     $("#loader-wrapper").fadeToggle();
 }

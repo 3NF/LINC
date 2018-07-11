@@ -33,13 +33,16 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="../jstree/dist/jstree.min.js"></script>
     <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css" />
+    <link rel="stylesheet" href="dist/themes/default/style.min.css" />
 
-    <%--Comment following line if you want to view as Student--%>
+<%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="../Styles/dashboard.css">
+    <link rel="stylesheet" href="dist/themes/default/style.min.css">
+
 
     <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -48,7 +51,10 @@
     <script src='../codemirror-5.39.0/mode/clike.js'></script>
     <script src='../bootstrap-markdown/js/bootstrap-markdown.js'></script>
     <link rel="stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
     <script src="../JavaScript/panel.js"></script>
+    <script src="../JavaScript/project-view.js"></script>
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
     <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
@@ -63,6 +69,10 @@
         if (request.getParameter(ASSIGNMENT_ID) == null) {
             response.sendRedirect("dashboard.jsp?" + COURSE_ID + "=" + request.getParameter(COURSE_ID) + "&"+ASSIGNMENT_ID + "=" + firstAssignmentID);
         }
+
+
+
+
     %>
 
     <script>var assignmentID = <%=assignments.get(0).getId()%>;</script>
@@ -99,6 +109,9 @@
         </div>
     </div>
     <div id="jstree_demo_div">
+
+
+
 
     </div>
     <div id="content">
