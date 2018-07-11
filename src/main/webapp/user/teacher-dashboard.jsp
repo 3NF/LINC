@@ -55,7 +55,6 @@
 
     <%
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
-        System.err.println(assignedAssIds);
         List<Assignment> uploaded = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream().filter
                 (assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
         List <Assignment> notUploaded = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream().filter
