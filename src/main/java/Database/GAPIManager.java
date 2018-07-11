@@ -3,7 +3,6 @@ package Database;
 import Core.Room;
 import HelperClasses.Utilities;
 import Models.Assignment;
-import Models.File;
 import Models.UploadedAssignment;
 import Models.User;
 import com.google.api.client.auth.oauth2.TokenResponse;
@@ -14,15 +13,11 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.*;
 import com.google.api.services.drive.Drive;
-import com.sun.mail.iap.ByteArray;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
 
 public class GAPIManager {
 
@@ -148,7 +143,7 @@ public class GAPIManager {
 
 
     public UserDAO.Role getRoleByCourse(User user, String courseId) {
-        Classroom service = null;
+        Classroom service;
 
         try {
             String accessToken = user.getAccessToken();
