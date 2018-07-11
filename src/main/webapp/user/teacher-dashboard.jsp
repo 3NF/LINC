@@ -13,6 +13,7 @@
 <%@ page import="java.util.Set" %>
 <%@ page import="Models.Assignment" %>
 <%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -61,6 +62,37 @@
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
     %>
 
+    <%
+        Set<String> semReaderIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.SeminarReader));
+        Set<String> teacherAssIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.TeacherAssistant));
+
+        /*semReaderIds.forEach(System.out::println);
+        teacherAssIds.forEach(System.out::println);*/
+
+        List<Student> allUsers = gapiManager.getUsers(user, courseId);
+
+        List<UserProfile> students = new ArrayList<>();
+        List<UserProfile> semReaders = new ArrayList<>();
+        List<UserProfile> assistants = new ArrayList<>();
+
+        for (Student student : allUsers) {
+            if (semReaderIds.contains(student.getProfile().getId())) {
+            	semReaders.add(student.getProfile());
+            	continue;
+            }
+
+            if (teacherAssIds.contains(student.getProfile().getId())) {
+                assistants.add(student.getProfile());
+                continue;
+            }
+
+            students.add(student.getProfile());
+        }
+        semReaders.forEach(System.out::println);
+        assistants.forEach(System.out::println);
+
+    %>
+
 </head>
 <body>
 <div class="fill">
@@ -105,8 +137,7 @@
                                 <th>E-mail</th>
                                 <th></th>
                             </tr>
-                            <% List<UserProfile> semReaders = UserDAO.getSeminarReaders(user , courseId);
-                                for(UserProfile semReader : semReaders){ %>
+                            <% for(UserProfile semReader : semReaders){ %>
                             <tr>
                                 <td><%=semReader.getName().getGivenName()%></td>
                                 <td><%=semReader.getName().getFamilyName()%></td>
@@ -140,8 +171,7 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
-                            <% List<UserProfile> assistants = UserDAO.getTeacherAssistants(user , courseId);
-                                for(UserProfile assistant : assistants){ %>
+                            <% for(UserProfile assistant : assistants){ %>
                             <tr>
                                 <td><%=assistant.getName().getGivenName()%></td>
                                 <td><%=assistant.getName().getFamilyName()%></td>
@@ -175,8 +205,7 @@
                                 <th>Surname</th>
                                 <th>E-mail</th>
                             </tr>
-                            <% List<UserProfile> students = UserDAO.getStudents(user , courseId);
-                                for(UserProfile student : students){ %>
+                            <% for(UserProfile student : students){ %>
                             <tr>
                                 <td><%=student.getName().getGivenName()%></td>
                                 <td><%=student.getName().getFamilyName()%></td>

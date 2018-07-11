@@ -141,45 +141,7 @@ public class UserDAO
     }
 
 
-
-    private static List<UserProfile> getUsersByRole(User user , String courseId , Role role){
-        List<String> userIds = getUserIDsByRole(courseId , role);
-        List<UserProfile> result = new ArrayList<UserProfile>();
-        List<Student> users = GAPIManager.getInstance().getUsers(user , courseId);
-        Set<String> ids = new HashSet<String>();
-        ids.addAll(userIds);
-        for (Student student : users){
-            if (ids.contains(student.getProfile().getId()))
-                result.add(student.getProfile());
-        }
-        return result;
-    }
-
-    public static List<UserProfile> getStudents(User user, String courseId) {
-        List<String> teacherAssIds = getUserIDsByRole(courseId , Role.TeacherAssistant);
-        List<String> semReaderIds = getUserIDsByRole(courseId , Role.SeminarReader);
-        List<UserProfile> result = new ArrayList<UserProfile>();
-        List<Student> users = GAPIManager.getInstance().getUsers(user , courseId);
-        Set<String> ids = new HashSet<String>();
-        ids.addAll(teacherAssIds);
-        ids.addAll(semReaderIds);
-        for (Student student : users){
-            if (!ids.contains(student.getProfile().getId()))
-                result.add(student.getProfile());
-        }
-        return result;
-    }
-
-    public static List<UserProfile> getTeacherAssistants(User user, String courseId) {
-        return getUsersByRole(user , courseId , Role.TeacherAssistant);
-    }
-
-    public static List<UserProfile> getSeminarReaders(User user, String courseId) {
-        return getUsersByRole(user , courseId , Role.SeminarReader);
-    }
-
-
-    public static List<String> getUserIDsByRole(String classroomID,Role role){
+    public static List<String> getUserIDsByRole(String classroomID, Role role){
         List<String> users = new ArrayList<String>();
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();
