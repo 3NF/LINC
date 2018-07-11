@@ -1,6 +1,4 @@
-
-/* todo ეს მოაშორე ძლიერ*/
-body {
+#content-wrapper {
     width: 100vw;
     height: 100vh;
     padding-top: 20vh;
@@ -17,8 +15,8 @@ body {
     margin: 0 auto;
     width: max-content;
     max-width: 80%;
-    background: -webkit-repeating-radial-gradient(lightcyan, goldenrod);
-    border: black dotted thick;
+    background: #fffffc;
+    border: 3px solid red;
 }
 
 .classRoom h3 {

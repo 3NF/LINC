@@ -38,34 +38,35 @@
     <title>Choose Room - LINC</title>
 </head>
 <body>
-<div class="fill">
-    <div style="cursor:pointer" onclick="togleNav()">
-        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
-    </div>
-    <div id="menuBar" onclick="togleNav()">
-        <span class="glyphicon">&#xe236;</span>
-    </div>
-</div>
-<div id="mySidenav" class="sidenav">
-    <a class="logout" href='#' onclick="signOut()">Logout</a>
-</div>
-<h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose ClassRoom To Enter:</h1>
-
-
-<div class="panel">
-
-    <%for (Course course : courses) {%>
-
-    <td>
-        <div class="classRoom" onclick=<%="enterClasroom(" + course.getId() + ")"%>>
-            <h3><%=course.getName()%>
-            </h3>
+        <div class="fill" >
+            <div style="cursor:pointer" onclick="togleNav()">
+                <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
+            </div>
+            <div id="menuBar" onclick="togleNav()">
+                <span class="glyphicon">&#xe236;</span>
+            </div>
         </div>
-    </td>
+        <div id="mySidenav" class="sidenav">
+            <a class="logout" href='#' onclick="signOut()">Logout</a>
+        </div>
+        <div id = "content-wrapper">
+        <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose ClassRoom To Enter:</h1>
 
-    <%}%>
-</div>
 
+        <div class="panel">
+
+            <%for (Course course : courses) {%>
+
+            <td>
+                <div class="classRoom" onclick=<%="enterClasroom(" + course.getId() + ")"%>>
+                    <h3><%=course.getName()%>
+                    </h3>
+                </div>
+            </td>
+
+            <%}%>
+        </div>
+    </div>
 </body>
 <script>
     function enterClasroom(id) {

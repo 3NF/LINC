@@ -171,6 +171,7 @@ html, body {
 }
 
 .fill {
+    margin-top: 5px;
     display: none;
     width: 80px;
     min-width: 100%;
