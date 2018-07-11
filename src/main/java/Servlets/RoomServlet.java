@@ -38,6 +38,6 @@ public class RoomServlet extends HttpServlet {
                 break;
         }
         response.setContentType("text/html;charset = UTF-8");
-        response.getWriter().write(url);
+        response.sendRedirect(url);
     }
 }
