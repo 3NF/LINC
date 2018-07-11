@@ -33,6 +33,7 @@ public class SectionDAO {
             statement.setString(2, userID);
             ResultSet result = statement.executeQuery();
 
+            System.out.println("YES");
             while (result.next()) {
                 users.add(new User(result.getString("studentID")));
             }

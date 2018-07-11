@@ -1,15 +1,17 @@
 <%@ page import="Data.Constraints" %>
-<%@ page import="Database.UserDAO" %>
 <%@ page import="Models.User" %>
 <%@ page import="Models.Assignment" %>
 <%@ page import="java.util.HashSet" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.List" %>
-<%@ page import="Database.AssignmentInfoDAO" %>
-<%@ page import="Database.GAPIManager" %>
 <%@ page import="static Data.Constraints.ASSIGNMENT_INFO_DAO" %>
 <%@ page import="java.util.stream.Collectors" %>
+<%@ page import="static Data.Constraints.SECTION_DAO" %>
+<%@ page import="static Data.Constraints.COURSE_ID" %>
 <%@ page import="static Data.Constraints.CLIENT_ID" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Database.*" %>
+<%@ page import="static Data.Constraints.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -52,6 +54,7 @@
 
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         String courseId = request.getParameter(Constraints.COURSE_ID);
+        UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
 
         UserDAO.Role userRole = UserDAO.getRoleByCourse(user, courseId);
         System.out.println(userRole);
@@ -64,8 +67,17 @@
         List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
 
+        SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
+        String courseID = request.getParameter(COURSE_ID);
+        ArrayList <User> studentsOnlyID = (ArrayList)DAO.getUsersInSection(courseID, user.getUserId());
+        ArrayList <User> students = new ArrayList<>();
+        for (User student: studentsOnlyID) {
+            students.add(userStorage.getUserWithID(user.getUserId(), student.getUserId()));
+        }
+        System.out.println("abab " + students.size());
     %>
 
+    <script>var assignmentID = <%=assignments.get(0).getId()%>;</script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
     <title>Section View</title>
@@ -98,6 +110,15 @@
             <p onclick="signOut()">Logout</p>
         </div>
     </div>
+</div>
+
+<div id = "content">
+    <% for (User student: students) {%>
+    <div class = "user-box" align = "center" onclick="chooseStudent(<%=student.getUserId()%>)">
+        <img class = "user-img" src="<%=student.getPicturePath()%>">
+        <h3 class = "user-name"><%=student.getFirstName() + " " + student.getLastName()%></h3>
+    </div>
+    <%}%>
 </div>
 </body>
 </html>

@@ -1,0 +1,30 @@
+#content {
+    margin-left: 80px;
+}
+.user-box {
+    display: inline-block;
+    position: relative;
+    max-width: 200px;
+    min-width: 200px;
+    min-height: 200px;
+    max-height: 200px;
+    background-color: #F5F5F5;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 10%;
+}
+
+.user-box:hover {
+    background-color: #dcdcdc;
+    cursor: pointer;
+}
+
+.user-img {
+    width: 50%;
+    border-radius: 50%;
+    margin: 5px auto;
+}
+
+.user-name {
+    text-align: center;
+}

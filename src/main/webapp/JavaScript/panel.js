@@ -58,6 +58,8 @@ function getAssignment(assignmentId) {
     console.log(getParameter("assignmentID"));
     if (getParameter("assignmentID") != null) {
         location.href = location.href + "assignmentID=" + assignmentId;
+    } else {
+        assignmentID = assignmentId;
     }
 }
 

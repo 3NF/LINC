@@ -31,17 +31,17 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/dashboard.js?newversione"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="${pageContext.request.contextPath}/jstree/dist/jstree.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css" />
+    <script src="../jstree/dist/jstree.min.js"></script>
+    <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css" />
+    <link rel="stylesheet" href="dist/themes/default/style.min.css" />
 
 <%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/dashboard.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css">
+    <link rel="stylesheet" href="../Styles/style.css">
+    <link rel="stylesheet" href="../Styles/dashboard.css">
+    <link rel="stylesheet" href="dist/themes/default/style.min.css">
 
 
     <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -75,8 +75,8 @@
 
     %>
 
-    <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
-    <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
+    <script>var assignmentID = <%=assignments.get(0).getId()%>;</script>
+    <script>var uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
 
 </head>
 
