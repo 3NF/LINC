@@ -47,7 +47,7 @@ public class GoogleLogin extends HttpServlet {
 
         request.getSession().setAttribute(USER, resultedUser);
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(CODE_FILES_DAO);
-       /* try {
+        /* try {
             codeFilesDAO.addAssignments(GAPIManager.downloadAssignments(resultedUser,"15887333289","15917000927"));
         } catch (SQLException e) {
             e.printStackTrace();
