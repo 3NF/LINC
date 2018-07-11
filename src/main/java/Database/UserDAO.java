@@ -103,7 +103,7 @@ public class UserDAO
         if (role == Role.Teacher) {
             return role;
         } else {
-            String rtn= getInstructorType (user.getUserId(), courseId);
+            String rtn = getInstructorType (user.getUserId(), courseId);
             if (rtn == null) {
                 return Role.Pupil;
             }
