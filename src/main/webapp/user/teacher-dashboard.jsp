@@ -66,9 +66,12 @@
         Set<String> semReaderIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.SeminarReader));
         Set<String> teacherAssIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.TeacherAssistant));
 
-        /*semReaderIds.forEach(System.out::println);
-        teacherAssIds.forEach(System.out::println);*/
-
+        System.out.println("semReaders ----");
+        semReaderIds.forEach(System.out::println);
+        System.out.println();
+        System.out.println("assistants ----");
+        teacherAssIds.forEach(System.out::println);
+        System.out.println();
         List<Student> allUsers = gapiManager.getUsers(user, courseId);
 
         List<UserProfile> students = new ArrayList<>();
@@ -76,20 +79,21 @@
         List<UserProfile> assistants = new ArrayList<>();
 
         for (Student student : allUsers) {
+            System.out.print("User " + student.getProfile().getName() + " " + student.getProfile().getId());
             if (semReaderIds.contains(student.getProfile().getId())) {
+                System.out.println(" is SemReader");
             	semReaders.add(student.getProfile());
             	continue;
             }
 
             if (teacherAssIds.contains(student.getProfile().getId())) {
+                System.out.println(" is assistant");
                 assistants.add(student.getProfile());
                 continue;
             }
-
+            System.out.println(" is student");
             students.add(student.getProfile());
         }
-        semReaders.forEach(System.out::println);
-        assistants.forEach(System.out::println);
 
     %>
 
