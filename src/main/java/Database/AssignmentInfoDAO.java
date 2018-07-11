@@ -1,6 +1,7 @@
 package Database;
 
 import Models.Reply;
+import javafx.util.Pair;
 
 import java.sql.*;
 import java.util.*;
@@ -13,15 +14,26 @@ public class AssignmentInfoDAO {
         this.connectionPool = connectionPool;
     }
 
-    /**
-     *
-     * Gets names of files for assignment, which must be assigned
-     *
-     * @param classroomId           id of classroom
-     * @param assignmentId          id of assignment
-     * @return                      List of Strings containing file names
-     */
-    public List<String> getAssignmentFilesNames(String classroomId, String assignmentId) {
+    public List<Pair<String,String>> getAssignmentFilesPath(String userID, String assignmentID) {
+        String query =  "SELECT path,id FROM code_files WHERE userID=? AND assignmentID=?";
+        List<Pair<String,String>> answer = new ArrayList<Pair<String,String>>();
+        try {
+            Connection connectionn = connectionPool.getConnection();
+            PreparedStatement statement = connectionn.prepareStatement(query);
+            statement.setString(1,userID);
+            statement.setString(2,assignmentID);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                String path = result.getString("path");
+                String id = result.getString("id");
+                answer.add(new Pair<>(id,path));
+            }
+            statement.close();
+            connectionn.close();
+            return answer;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

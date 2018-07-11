@@ -1,10 +1,7 @@
 package Servlets;
 
 import Data.Constraints;
-import Database.CodeFilesDAO;
-import Database.SectionDAO;
-import Database.UserStorage;
-import Database.ValidateDAO;
+import Database.*;
 import HelperClasses.Validate;
 import Models.CodeFile;
 import Models.User;
@@ -57,14 +54,14 @@ public class CodeDispatcher extends HttpServlet
     }
 
     private String loadCodeWithID(JsonObject data,HttpServletRequest request, String userID){
-        String codeId = data.get(Constraints.CODE_ID).getAsString();
-        System.out.println(codeId);
+        String codeFilesId = data.get(Constraints.CODE_ID).getAsString();
+        System.out.println(codeFilesId);
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
         try {
             UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
 
-            CodeFile codeFile = codeFilesDAO.getFilesContent(userID, codeId);
-            codeFile.RetrieveUsers(userID, userStorage);
+            CodeFile codeFile = codeFilesDAO.getFilesContent(codeFilesId);
+            //codeFile.RetrieveUsers(userID, userStorage);
 
             return new GsonBuilder().create().toJson(codeFile);
         } catch (SQLException e) {
@@ -75,13 +72,9 @@ public class CodeDispatcher extends HttpServlet
 
     private String loadCodeNames(JsonObject data,HttpServletRequest request){
         String assignmentID = data.get(Constraints.ASSIGNMENT_ID).getAsString();
-        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
-        try {
-            return new GsonBuilder().disableHtmlEscaping().create().toJson(codeFilesDAO.getAssignmentCodeNames(assignmentID));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(Constraints.ASSIGNMENT_INFO_DAO);
+        String userID = ((User) request.getSession().getAttribute(USER)).getUserId();
+        return new GsonBuilder().disableHtmlEscaping().create().toJson(assignmentInfoDAO.getAssignmentFilesPath(userID,assignmentID));
     }
 
     /*

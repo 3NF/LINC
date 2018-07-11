@@ -9,20 +9,20 @@ package Database;
         import java.util.*;
 
 public class CodeFilesDAO {
+
+    public static final Set<String> extentions = new HashSet<String>(Arrays.asList(new String[]{"cpp","c","cc","h","chudo","java"}));
     private final MysqlDataSource connectionPool;
 
     public CodeFilesDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
     }
 
-    public CodeFile getFilesContent(String userId, String FileId) throws SQLException {
+    public CodeFile getFilesContent(String codeFilesID) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
-        String query = "SELECT assignment_files.lang,assignment_files.name,code_files.content,code_files.id FROM assignment_files inner join " +
-                "code_files on assignment_files.id=code_files.filesID where code_files.userID=? AND code_files.filesID=?";
+        String query = "SELECT * FROM code_files WHERE id=?";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1,userId);
-        statement.setString(2,FileId);
+        statement.setString(1,codeFilesID);
         ResultSet result = statement.executeQuery();
         String codeContent = null;
         String fileName = null;
@@ -30,8 +30,8 @@ public class CodeFilesDAO {
         String codeFileId = null;
         if (result.next()){
             codeContent = result.getString("content");
-            fileName = result.getString("name");
-            codeLang = result.getString("lang");
+            fileName = result.getString("path");
+            codeLang = "";
             codeFileId = result.getString("id");
         }
 
@@ -58,7 +58,7 @@ public class CodeFilesDAO {
         return new CodeFile(codeContent,codeFileId,fileName,suggestions,codeLang);
     }
 
-    public void tempSaveCodeFile (long userId, long fileID, String content) throws SQLException {
+    /*public void tempSaveCodeFile (long userId, long fileID, String content) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
         String query = "INSERT INTO code_files (userID, filesID, content) VALUES\n" +
@@ -71,9 +71,9 @@ public class CodeFilesDAO {
         statement.executeUpdate();
         statement.close();
         connection.close();
-    }
+    }*/
 
-    public void tempSaveSuggestion (Suggestion suggestion) throws SQLException {
+    /*public void tempSaveSuggestion (Suggestion suggestion) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
         String query = "INSERT INTO suggestions (userID, Code_FileID, text, time, type, startInd, endInd) VALUES\n" +
@@ -90,7 +90,7 @@ public class CodeFilesDAO {
         statement.executeUpdate();
         statement.close();
         connection.close();
-    }
+    }*/
 
     private HashMap<String,String> getIdNameMap(UploadedAssignment assignment) throws SQLException {
         HashMap<String,String> fileId = new HashMap<String,String>();
@@ -120,11 +120,12 @@ public class CodeFilesDAO {
         boolean isToBeInserted = false;
         for (Object file: assignment) {
             //System.err.println(((File) fi0le).getFileName());
-            if (fileId.get(((File) file).getFileName()) == null) {
-                continue;
-            }
-            statement.setString(1, ((File) file).getFileName());
-            statement.setString(2, fileId.get(((File) file).getFileName()));
+            String fileName = ((File) file).getFileName();
+            int index = fileName.lastIndexOf(".");
+            String extention = fileName.substring(index + 1);
+            if (!extentions.contains(extention)) continue;
+            statement.setString(1, fileName);
+            statement.setString(2, "-1");
             statement.setString(3, ((File)file).getContent());
             isToBeInserted = true;
             statement.addBatch();
