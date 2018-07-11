@@ -30,7 +30,9 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../JavaScript/dashboard.js?newversione"></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="../jstree/dist/jstree.min.js"></script>
+    <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css" />
 
     <%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
@@ -96,7 +98,9 @@
             </div>
         </div>
     </div>
+    <div id="jstree_demo_div">
 
+    </div>
     <div id="content">
         <div id = "loader-wrapper">
             <div class="loader"></div>
