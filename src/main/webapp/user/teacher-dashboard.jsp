@@ -138,9 +138,7 @@
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
-                                                Remove
-                                                </button>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -175,9 +173,7 @@
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">
-                                                  Remove
-                                                </button>
+                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">Remove</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -231,21 +227,29 @@
             </div>
         </div>
     </div>
-    <ul class="dropdown-menu" id="removeEx">
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
-            Remove
-        </button>
-        </li>
-    </ul>
-    <ul class="dropdown-menu" id="addEx" >
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
-            Add as seminar reader
-        </button>
-        </li>
-        <li><button type="button" class="btn btn-light" onclick="changeRole()">
-            Add as teacher assistant
-        </button>
-        </li>
-    </ul>
+    <div class="hide">
+        <div class="btn-group-vertical" id="addEx">
+            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-option-vertical"></span></button>
+            <ul class="dropdown-menu" >
+                <li><button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonSR">
+                    Add as seminar reader
+                </button>
+                </li>
+                <li><button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonTA">
+                    Add as teacher assistant
+                </button>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group-vertical" id="removeEx">
+            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-option-vertical"></span></button>
+            <ul class="dropdown-menu">
+                <li><button type="button" class="btn btn-light" onclick="changeRole()" id="removeExButton">Remove</button>
+                </li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>

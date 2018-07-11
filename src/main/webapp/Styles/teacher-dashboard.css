@@ -1,13 +1,13 @@
 #empty-tr {
     display: none;
 }
-.btn{
+.btn {
     width : 100%;
 }
-.table{
+.table {
     width : 100%;
 }
 
-#addEx , #removeEx{
+.hide {
     display: none;
 }
