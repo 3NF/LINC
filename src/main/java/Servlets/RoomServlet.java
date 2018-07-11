@@ -13,12 +13,12 @@ import java.io.IOException;
 
 @WebServlet(name = "rooms", urlPatterns = "/user/rooms")
 public class RoomServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doGet(request , response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String courseId = (String) request.getParameter(Constraints.COURSE_ID);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String courseId = request.getParameter(Constraints.COURSE_ID);
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         UserDAO.Role userRole = UserDAO.getRoleByCourse(user , courseId);
         String url = "";
@@ -38,6 +38,6 @@ public class RoomServlet extends HttpServlet {
                 break;
         }
         response.setContentType("text/html;charset = UTF-8");
-        response.getWriter().write(url);
+	    response.getWriter().write(url);
     }
 }

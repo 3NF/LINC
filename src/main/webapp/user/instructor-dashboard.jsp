@@ -9,11 +9,13 @@
 <%@ page import="Database.GAPIManager" %>
 <%@ page import="static Data.Constraints.ASSIGNMENT_INFO_DAO" %>
 <%@ page import="java.util.stream.Collectors" %>
+<%@ page import="static Data.Constraints.CLIENT_ID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="client_id" content="<%=CLIENT_ID%>">
 
     <%--bootstrap--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -66,7 +68,7 @@
 
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
-    <title>Title</title>
+    <title>Section View</title>
 
 </head>
 <body>
