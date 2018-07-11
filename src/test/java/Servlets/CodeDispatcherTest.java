@@ -1,5 +1,7 @@
 package Servlets;
 
+import Data.Constraints;
+import Database.AssignmentInfoDAO;
 import Database.CodeFilesDAO;
 import Database.ConnectionPool;
 import Models.User;
@@ -61,9 +63,7 @@ public class CodeDispatcherTest {
         JsonParser parse = new JsonParser();
         JsonObject object = (JsonObject) parse.parse(response_writer.toString());
 
-        assertEquals(object.get("fileName").getAsString(), "temp_code1.cpp");
-        assertEquals(object.get("lang").getAsString(), "cpp");
-        assertEquals(object.get("fileId").getAsString(), "1");
+        assertEquals(object.get("fileName").getAsString(), "jondo/lato/user.java");
         // use mock in test....
     }
 
@@ -71,14 +71,14 @@ public class CodeDispatcherTest {
     public void test2() throws ServletException, IOException, JSONException {
         //  create mock
 
-        String json = "{\"assignmentID\":1, \"amount\":222}";
+        String json = "{\"assignmentID\":123123123123, \"amount\":222}";
         when(request.getSession()).thenReturn(session);
         when(request.getReader()).thenReturn(
                 new BufferedReader(new StringReader(json)));
         // define return value for method getUniqueId()
         when(request.getServletContext()).thenReturn(servletContext);
-        when(servletContext.getAttribute("CodeFilesDAO")).thenReturn(new CodeFilesDAO(ConnectionPool.getInstance()));
-        when(session.getAttribute(USER)).thenReturn(new User("1"));
+        when(servletContext.getAttribute(Constraints.ASSIGNMENT_INFO_DAO)).thenReturn(new AssignmentInfoDAO(ConnectionPool.getInstance()));
+        when(session.getAttribute(USER)).thenReturn(new User("105303857051815287047"));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
         new CodeDispatcher().doPost(request, response);
@@ -87,16 +87,10 @@ public class CodeDispatcherTest {
         JsonParser parse = new JsonParser();
         JSONArray array = new JSONArray(response_writer.toString());
         JSONObject jsonobject = array.getJSONObject(0);
-        String id = jsonobject.getString("id");
-        String name = jsonobject.getString("name");
+        String id = jsonobject.getString("key");
+        String name = jsonobject.getString("value");
         assertEquals(id, "1");
-        assertEquals(name, "temp_code1.cpp");
-
-        jsonobject = array.getJSONObject(1);
-        id = jsonobject.getString("id");
-        name = jsonobject.getString("name");
-        assertEquals(id, "2");
-        assertEquals(name, "temp_code2.cpp");
+        assertEquals(name, "jondo/lato/user.java");
         // use mock in test....
     }
 }

@@ -55,12 +55,12 @@ public class GAPIManager {
      * @param room Unique name of room
      * @return corresponding Room object
      */
-    public static Room getRoomByName(String room) {
+    public Room getRoomByName(String room) {
         return null;
     }
 
 
-    public static TokenResponse getTokens(String authCode) {
+    public TokenResponse getTokens(String authCode) {
         try {
             Reader reader = new InputStreamReader(GAPIManager.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE));
             GoogleClientSecrets secrets = GoogleClientSecrets.load(JACKSON_FACTORY, reader);
@@ -188,7 +188,7 @@ public class GAPIManager {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -208,34 +208,6 @@ public class GAPIManager {
     }
 
 
-    public static ByteArrayInputStream convertOutputIntoInputStream(OutputStream outputStream) {
-        ByteArrayOutputStream outStream = ((ByteArrayOutputStream) outputStream);
-        ByteArrayInputStream inStream = new ByteArrayInputStream(outStream.toByteArray());
-        return inStream;
-    }
-
-    public static void unzipInputStream(ByteArrayInputStream inStream, UploadedAssignment uploadedAssignment, String actorUserID) throws IOException {
-        ZipInputStream zis = new ZipInputStream(inStream);
-        ZipEntry entry;
-        // while there are entries I process them
-        while ((entry = zis.getNextEntry()) != null) {
-            ByteArrayOutputStream fos = new ByteArrayOutputStream();
-            //System.out.println("entry: " + entry.getName() + ", " + entry.getSize());
-            byte[] buffer = new byte[1024];
-            // consume all the data from this entry
-            int read;
-            while ((read = zis.read(buffer)) > 0) {
-                fos.write(buffer, 0, read);
-                //System.err.println(read);
-            }
-            String result = fos.toString("UTF-8");
-            //System.err.println(result);
-            uploadedAssignment.addAssignmentFile(new File(entry.getName(), result, actorUserID));
-            fos.close();
-            // I could close the entry, but getNextEntry does it automatically
-            // zis.closeEntry()
-        }
-    }
 
     public static UploadedAssignment downloadAssignments(User teacher, String courseID, String assignmentId) throws IOException {
         String accessToken = teacher.getAccessToken();
@@ -263,8 +235,8 @@ public class GAPIManager {
                     .executeMediaAndDownloadTo(outputStream);
 
             //convert OutPutStream into inputStream
-            ByteArrayInputStream inStream = convertOutputIntoInputStream(outputStream);
-            unzipInputStream(inStream, uploadedAssignment, actorUserID);
+            ByteArrayInputStream inStream = Utilities.convertOutputIntoInputStream(outputStream);
+            Utilities.unzipInputStream(inStream, uploadedAssignment, actorUserID);
         }
        /* for (Object gio : uploadedAssignment) {
             System.err.println(((File) gio).getFileName());
@@ -279,11 +251,13 @@ public class GAPIManager {
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
             List<Student> students = service.courses().students().list(courseID).execute().getStudents();
-
-            return students;
+            if (students == null)
+                return Collections.emptyList();
+            else
+                return students;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -296,7 +270,7 @@ public class GAPIManager {
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
             try {
-                service.courses().students().list(courseID).execute();
+                service.courses().get(courseID).execute();
                 return true;
             } catch (IOException e) {
                 return false;
@@ -312,13 +286,14 @@ public class GAPIManager {
         try {
             List<Assignment> assignments = new ArrayList<>();
             List<CourseWork> courseWorks = service.courses().courseWork().list(courseId).execute().getCourseWork();
+            if (courseWorks == null) return Collections.emptyList();
             for (CourseWork courseWork : courseWorks) {
                 assignments.add(new Assignment(courseWork.getId(), courseWork.getTitle()));
             }
             return assignments;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return Collections.emptyList();
         }
     }
 

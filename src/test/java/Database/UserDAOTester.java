@@ -8,12 +8,19 @@ public class UserDAOTester {
 
     @Test
     public void getInstructorTypeTester () {
-        String userID = "114260512501360115146";
+        String userID = "117213251258433180469";
         String courseID = "15887333289";
 
         System.out.println (UserDAO.getInstructorType(userID, courseID));
     }
 
+    @Test
+    public void getUserIDsByRoleTester() {
+        String userID = "TeacherAssistant";
+        String courseID = "15887333289";
+
+        System.out.println (UserDAO.getUserIDsByRole(courseID, UserDAO.Role.TeacherAssistant));
+    }
 
     @Test
     public void addUserTest(){

@@ -40,7 +40,7 @@ public class CodeFilesDAOTest {
     @Test
     public void testGetFilesContent() {
         try {
-            CodeFile codeFile = DAO.getFilesContent("1", "1");
+            CodeFile codeFile = DAO.getFilesContent("1");
             System.out.println(codeFile);
             DAO.getAssignmentCodeNames("1");
         } catch (SQLException e) {

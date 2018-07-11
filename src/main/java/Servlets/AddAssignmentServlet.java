@@ -112,7 +112,7 @@ public class AddAssignmentServlet extends HttpServlet {
         JsonArray assignmentJSON = parser.parse(assignment).getAsJsonArray();
 
         List<String> uploadedFiles = JSONArrayToList(assignmentJSON);
-        List<String> assignmentFiles = dao.getAssignmentFilesNames(courseID, assignmentID);
+        List<String> assignmentFiles = null;
 
         List<String> missingFiles = getMissingFiles(assignmentFiles, uploadedFiles);
         List<String> extraFiles = getMissingFiles(uploadedFiles, assignmentFiles);
