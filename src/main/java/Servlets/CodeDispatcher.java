@@ -33,6 +33,7 @@ public class CodeDispatcher extends HttpServlet
             SectionDAO sectionDAO = (SectionDAO) request.getSession().getAttribute(SECTION_DAO);
 
 
+            System.out.println("QWERTY");
             if (data.has(Constraints.USER_ID) && sectionDAO.isInSection(userID, data.get(Constraints.USER_ID).getAsString())) {
                 userID = data.get(Constraints.USER_ID).getAsString();
             }
@@ -41,6 +42,7 @@ public class CodeDispatcher extends HttpServlet
                 json = loadCodeNames(data,request);
             }
             else {
+                System.out.println(userID);
                 json = loadCodeWithID(data,request, userID);
             }
             //Send response to client
@@ -71,9 +73,12 @@ public class CodeDispatcher extends HttpServlet
     }
 
     private String loadCodeNames(JsonObject data,HttpServletRequest request){
-        String assignmentID = data.get(Constraints.ASSIGNMENT_ID).getAsString();
         AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(Constraints.ASSIGNMENT_INFO_DAO);
         String userID = ((User) request.getSession().getAttribute(USER)).getUserId();
+        if (data.has("userID"))
+            userID =  data.get("userID").getAsString();
+        String assignmentID = data.get(Constraints.ASSIGNMENT_ID).getAsString();
+
         return new GsonBuilder().disableHtmlEscaping().create().toJson(assignmentInfoDAO.getAssignmentFilesPath(userID,assignmentID));
     }
 

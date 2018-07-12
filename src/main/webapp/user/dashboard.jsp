@@ -35,6 +35,9 @@
     <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css"/>
 
+    <%--Comment following line if you want to view as Student--%>
+    <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
+
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="../Styles/dashboard.css">
@@ -74,9 +77,13 @@
         <%--Comment following line if you want to view as Student--%>
         <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
     <%}%>
-
     <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
     <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
+
+    <%
+        String assignmentID = assignments.get(0).getId();
+        String userID = (String)request.getAttribute(USER_ID);
+    %>
 
 </head>
 
@@ -174,6 +181,9 @@
                 <option>0</option>
             </select>
         </form>
+    </div>
+    <div id="showGrade">
+        <p>Your grade is <%=AssignmentInfoDAO.getGrade(userID , assignmentID)%></p>
     </div>
 </div>
 </body>
