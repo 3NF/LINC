@@ -193,8 +193,6 @@ public class GAPIManager {
             GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(user.getRefreshToken());
 
             Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-            System.out.println(service.courses().courseWork().list(courseId).execute());
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,16 +212,13 @@ public class GAPIManager {
         //DriveService driveService;
         List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
 
-        //System.err.println(assignments);
         UploadedAssignment uploadedAssignment = new UploadedAssignment(assignmentId);
-        //System.err.println(assignments.get(1).getSubmissionHistory().get(0).getStateHistory().getActorUserId());
         for (int k = 0; k < assignments.size(); ++k) {
             if (assignments.get(k).getAssignmentSubmission() == null) continue;
             if (assignments.get(k).getAssignmentSubmission().getAttachments() == null) continue;
             String actorUserID = assignments.get(k).getSubmissionHistory().get(0).getStateHistory().getActorUserId();
             String fileId = assignments.get(k).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
-           // System.out.println(actorUserID);
-            //System.err.println(fileId);
+
             OutputStream outputStream = new ByteArrayOutputStream();
             driveService.files().get(fileId)
                     .executeMediaAndDownloadTo(outputStream);
@@ -232,9 +227,6 @@ public class GAPIManager {
             ByteArrayInputStream inStream = Utilities.convertOutputIntoInputStream(outputStream);
             Utilities.unzipInputStream(inStream, uploadedAssignment, actorUserID);
         }
-       /* for (Object gio : uploadedAssignment) {
-            System.err.println(((File) gio).getFileName());
-        }*/
         return uploadedAssignment;
     }
 

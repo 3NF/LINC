@@ -8,12 +8,12 @@
     Line colors are stored in following arrays
     once hover-in is made on code lines
  */
-var oldLineColors = [];
+let oldLineColors = [];
 
 /*
     First and last intervals for new suggestions
  */
-var firstMarker = -1, lastMarker = -1;
+let firstMarker = -1, lastMarker = -1;
 
 // Marked line color
 const markedColor = "#DBDBDB";
@@ -28,7 +28,7 @@ $( document ).ready(function() {
     button from warning to error and vice versa
  */
 function toggleSuggestionType () {
-    if ($(event.target).text() == "Warning") {
+    if ($(event.target).text() === "Warning") {
         $(event.target).html("Error");
         $(event.target).removeClass("btn-warning");
         $(event.target).addClass("btn-danger");
@@ -43,7 +43,7 @@ function toggleSuggestionType () {
     Turns on or off new suggestion editor view
  */
 function adjustView (ind) {
-    if (ind == "newContent") {
+    if (ind === "newContent") {
         $("#notification-div").hide();
         $("#comment-panel").hide();
         $("#comment-editor-wrapper").show();
@@ -65,9 +65,9 @@ function adjustView (ind) {
  */
 function inHover (event) {
     //Get index of line number
-    var index = $(event.currentTarget).parent().parent().index()+1;
-    var col = $(event.currentTarget).css("background-color");
-    if (col == warningColor || col == errorColor || col == markedColor) {
+    const index = $(event.currentTarget).parent().parent().index() + 1;
+    let col = $(event.currentTarget).css("background-color");
+    if (col === warningColor || col === errorColor || col === markedColor) {
         col = "";
     }
     oldLineColors[index] = col;
@@ -79,8 +79,8 @@ function inHover (event) {
     Line number hover-out function
  */
 function outHover (event) {
-    var index = $(event.currentTarget).parent().parent().index()+1;
-    if (index == lastMarker) {
+    const index = $(event.currentTarget).parent().parent().index() + 1;
+    if (index === lastMarker) {
         return;
     }
     $(event.currentTarget).css("background-color", oldLineColors[index]);
@@ -90,14 +90,14 @@ function outHover (event) {
     Helps creating new interval
  */
 function lineOnClick (eventHandler) {
-    var lineNumber = eventHandler.data;
+    const lineNumber = eventHandler.data;
     /*
         If new interval is already chosen
         this function should do nothing
      */
     activeSuggestionID = -1;
 
-    if (lastMarker != -1) {
+    if (lastMarker !== -1) {
         return;
     }
 
@@ -106,7 +106,7 @@ function lineOnClick (eventHandler) {
         create new interval if
         first marker is already put
      */
-    if (firstMarker == -1) {
+    if (firstMarker === -1) {
         firstMarker = lineNumber;
     } else {
         lastMarker = lineNumber;
@@ -133,7 +133,7 @@ function markSuggestion () {
     Marks all lines in new interval
  */
 function markLines (col) {
-    for (var i = firstMarker; i < lastMarker + 1; i ++) {
+    for (let i = firstMarker; i < lastMarker + 1; i ++) {
         $(lines[i]).css("background-color", col);
     }
 }
@@ -145,7 +145,7 @@ function isValidSuggestion () {
     if (firstMarker > lastMarker) {
         return false;
     }
-    for (var i = 0; i < suggestions.length; i ++) {
+    for (let i = 0; i < suggestions.length; i ++) {
         if (!(suggestions[i].startInd < firstMarker || suggestions[i].endInd > lastMarker)) {
             return false;
         }
@@ -167,10 +167,10 @@ function clearInterval () {
 }
 
 function submitSuggestion () {
-    var suggestionContent = suggestionEditor.parseContent();
-    var suggestionType = $("#suggestion-type").html();
+    const suggestionContent = suggestionEditor.parseContent();
+    const suggestionType = $("#suggestion-type").html();
 
-    var dataObj = {
+    const dataObj = {
         type: $("#suggestion-type").text(),
         courseID: getParameter("courseID"),
         codeFileID: activeCodeFileID,
@@ -179,8 +179,6 @@ function submitSuggestion () {
         endInd: lastMarker
     };
 
-    console.log(suggestionContent);
-    console.log(suggestionType);
     $.ajax({
         url: "/user/suggestion_dispatcher",
         method: "POST",
@@ -211,6 +209,6 @@ function updateGrade(selectObj) {
             }
         });
     } else {
-        $('#instructorSelector').prop('selectedIndex' , 0);
+        $("#gradeSelector").prop("selectedIndex", 0);
     }
 }

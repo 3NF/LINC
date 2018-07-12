@@ -31,7 +31,6 @@ public class GoogleLogin extends HttpServlet {
     {
         String action = request.getParameter("action");
         String referer = request.getHeader("referer");
-        System.out.println(referer);
         User resultedUser = null;
 
         if (action.equals("register")) {

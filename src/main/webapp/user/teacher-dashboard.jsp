@@ -33,8 +33,8 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../JavaScript/teacher-dashboard.js?newversione"></script>
-    <script src="../JavaScript/panel.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/teacher-dashboard.js?newversione"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
