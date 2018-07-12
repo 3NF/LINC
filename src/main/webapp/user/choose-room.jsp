@@ -27,7 +27,6 @@
     <%
         User user = (User) session.getAttribute(USER);
         List<Course> courses = GAPIManager.getInstance().getActiveRooms(user);
-        System.out.println(user.getUserId());
     %>
 
     <title>Choose Room - LINC</title>

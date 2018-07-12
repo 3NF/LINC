@@ -48,7 +48,6 @@ public class ReplyDAO {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            System.err.println("error in creation statement");
             try {
                 connection.close();
             } catch (SQLException e1) {
@@ -69,7 +68,6 @@ public class ReplyDAO {
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
-            System.err.println("error in getting connection");
             return null;
         }
         PreparedStatement statement;
@@ -90,7 +88,6 @@ public class ReplyDAO {
             }
             statement.close();
         } catch (SQLException e) {
-            System.err.println("error in creation statement");
             e.printStackTrace();
             return null;
         }
@@ -103,7 +100,6 @@ public class ReplyDAO {
         try {
             connection = connectionPool.getConnection();
         } catch (SQLException e) {
-            System.err.println("error in getting connection");
             return;
         }
         PreparedStatement statement;

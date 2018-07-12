@@ -56,7 +56,6 @@
         String courseId = request.getParameter(Constraints.COURSE_ID);
         UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
         UserDAO.Role userRole = UserDAO.getRoleByCourse(user, courseId);
-        System.out.println(userRole);
         if (userRole != UserDAO.Role.TeacherAssistant && userRole != UserDAO.Role.SeminarReader) {
             response.sendRedirect("choose-room.jsp");
             return;
@@ -73,7 +72,6 @@
         for (User student: studentsOnlyID) {
             students.add(userStorage.getUserWithID(user.getUserId(), student.getUserId()));
         }
-        System.out.println("abab " + students.size());
     %>
 
     <script>var assignmentID = <%=assignments.get(0).getId()%>;</script>

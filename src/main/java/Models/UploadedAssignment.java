@@ -33,10 +33,6 @@ public class UploadedAssignment implements Iterable{
         ass.addAssignmentFile(new File("2", "3","-3"));
         ass.addAssignmentFile(new File("3", "4","-4"));
 
-        for (Object file: ass) {
-            System.out.println(((File)file).getContent());
-        }
-
     }
 
     @Override

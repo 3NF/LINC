@@ -65,7 +65,6 @@ public class AssignmentInfoDAO {
             }
             statement.close();
         } catch (SQLException e) {
-            System.err.println("error in creation statement");
             e.printStackTrace();
             return Collections.emptyList();
         }

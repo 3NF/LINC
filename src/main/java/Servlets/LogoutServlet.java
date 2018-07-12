@@ -10,7 +10,6 @@ import java.io.IOException;
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	    System.out.println("123");
         request.getSession().invalidate();
         response.sendRedirect("/loginPage.jsp");
     }

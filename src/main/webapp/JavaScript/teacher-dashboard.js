@@ -39,9 +39,6 @@ function changeRole(userId , courseID , role){
             }
             row.fadeOut();
             row.fadeIn();
-        },
-        error:function(){
-            console.log('Service call failed!');
         }
     });
 }
