@@ -112,7 +112,7 @@
         </div>
     </div>
     <% for (User student: students) {%>
-    <div class = "user-box" align = "center" onclick="chooseStudent(<%=student.getUserId()%>)">
+    <div class = "user-box" align = "center" onclick="chooseStudent('<%=student.getUserId()%>')">
         <img class = "user-img" src="<%=student.getPicturePath()%>">
         <h3 class = "user-name"><%=student.getFirstName() + " " + student.getLastName()%></h3>
     </div>

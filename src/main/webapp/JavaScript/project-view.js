@@ -1,12 +1,13 @@
 $(document).ready(function () {
     $('#jstree_demo_div').on("changed.jstree", function (e, data) {
-        fetchCode(data.node.li_attr["file-id"]);
+        let file_id = data.node.li_attr["file-id"];
+        if (file_id !== undefined)
+            fetchCode(data.node.li_attr["file-id"]);
     });
 });
 
 let projectViewIsVisible = false;
 function toggleProjectView() {
-    console.log("bakuri");
     if (projectViewIsVisible) {
         $("#jstree_demo_div_container").toggle("slide");
         $("#file-open").html("&#xe117;");
@@ -19,7 +20,6 @@ function toggleProjectView() {
 
 
 function build_project_view() {
-    console.log("gaba");
     $('#jstree_demo_div').jstree();
 }
 function draw_view_rec(dv, l, r) {

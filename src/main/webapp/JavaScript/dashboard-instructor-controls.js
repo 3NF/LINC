@@ -167,9 +167,17 @@ function clearInterval () {
 }
 
 function submitSuggestion () {
-    suggestionContent = console.log(suggestionEditor.parseContent());
-    suggestionType = $("#suggestion-type").html();
+    var suggestionContent = suggestionEditor.parseContent();
+    var suggestionType = $("#suggestion-type").html();
 
+    var dataObj = {
+        type: $("#suggestion-type").text(),
+        courseID: getParameter("courseID"),
+        codeFileID: activeCodeFileID,
+        content: suggestionContent,
+        startInd: firstMarker,
+        endInd: lastMarker
+    };
 
     console.log(suggestionContent);
     console.log(suggestionType);
@@ -177,7 +185,7 @@ function submitSuggestion () {
         url: "/user/suggestion_dispatcher",
         method: "POST",
         contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify({courseID: getParameter("courseID"), codeFileID: activeCodeFileID, content: suggestionContent, startInd: firstMarker, endInd: lastMarker}),
+        data: JSON.stringify(dataObj),
         success: function( data, textStatus, jQxhr ){
             viewSuggestion(data);
         },
@@ -190,16 +198,19 @@ function suggestionAdditionError () {
     alert ("Couldn't add new suggestion");
 }
 
-// TODO Bakuri
 function updateGrade(selectObj) {
-    var selectIndex=selectObj.selectedIndex;
-    var grade=selectObj.options[selectIndex].text;
-    $.ajax({
-        url: "/user/update_grade",
-        method: "POST",
-        data: {'grade': grade,
+    if (window.confirm("Do You want to grade assignments?")) {
+        let selectIndex=selectObj.selectedIndex;
+        let grade=selectObj.options[selectIndex].text;
+        $.ajax({
+            url: "/user/update_grade",
+            method: "POST",
+            data: {'grade': grade,
                 'assignmentID' : getParameter("assignmentID"),
                 'userID' : getParameter("userID")
-        }
-    });
+            }
+        });
+    } else {
+        $('#instructorSelector').prop('selectedIndex' , 0);
+    }
 }
