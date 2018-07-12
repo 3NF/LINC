@@ -132,12 +132,9 @@ public class AssignmentInfoDAO {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1,assignmentID);
             statement.setString(2,userID);
-            System.out.println("grade found");
             ResultSet result = statement.executeQuery();
-            System.out.println("executed");
             if (result.next()) {
                 grade = result.getString("grade");
-                System.out.println(grade);
             }
             statement.close();
             connection.close();
