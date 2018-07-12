@@ -4,6 +4,6 @@ function chooseStudent (id) {
 }
 
 function getParameter (name) {
-    results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    return results[1] || 0;
+    let result = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return result[1] || 0;
 }
