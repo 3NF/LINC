@@ -74,10 +74,6 @@
         <%--Comment following line if you want to view as Student--%>
         <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
     <%}%>
-
-    <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
-    <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
-
 </head>
 
 <body onload="onLoad()">

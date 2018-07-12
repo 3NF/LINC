@@ -154,11 +154,9 @@ function loadCodesInfo(data) {
     });
     console.log(codeInfo);
     addCodes();
-    //getFirstCode ();
 }
 
 function addCodes() {
-    console.log("yle");
     let ul = document.createElement("ul");
     $('#jstree_demo_div')[0].appendChild(ul);
     draw_view_rec(ul, 0, codeInfo.length - 1);
