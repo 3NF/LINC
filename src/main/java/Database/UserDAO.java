@@ -164,7 +164,7 @@ public class UserDAO
     public static void addUser(String userID , Role role , String courseID){
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();
-            String query = "INSERT INTO `instructors`(`classroomID`, `userID`, `Type`) VALUES (?,?,?)";
+            String query = "INSERT IGNORE INTO `instructors`(`classroomID`, `userID`, `Type`) VALUES (?,?,?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1 , courseID);
             statement.setString(2 , userID);
