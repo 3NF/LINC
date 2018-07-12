@@ -52,6 +52,7 @@
     <script src='../bootstrap-markdown/js/bootstrap-markdown.js'></script>
     <link rel="stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
     <script src="../JavaScript/panel.js"></script>
     <script src="../JavaScript/project-view.js"></script>
@@ -158,7 +159,20 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <div id="instructorButton">
+            <select class="selectpicker" data-style="btn-primary" name="grade" onchange="updateGrade(this)">
+                <option></option>
+                <option>Plus Plus</option>
+                <option>Plus</option>
+                <option>Check Plus</option>
+                <option>Check</option>
+                <option>Check Minus</option>
+                <option>Minus</option>
+                <option>Minus Minus</option>
+                <option>0</option>
+            </select>
+        </form>
     </div>
 </div>
 </body>

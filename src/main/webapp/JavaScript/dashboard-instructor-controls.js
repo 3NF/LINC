@@ -184,3 +184,18 @@ function submitSuggestion () {
 function suggestionAdditionError () {
     alert ("Couldn't add new suggestion");
 }
+
+function updateGrade(selectObj) {
+    var selectIndex=selectObj.selectedIndex;
+    var grade=selectObj.options[selectIndex].text;
+    console.log(grade);
+    $.ajax({
+        url: "/user/update_grade",
+        method: "POST",
+        contentType: 'application/json; charset=UTF-8',
+        data: {'grade': grade,
+                'courseID' : getParameter("courseID"),
+                'userID' : getParameter("userID")
+        }
+    });
+}
