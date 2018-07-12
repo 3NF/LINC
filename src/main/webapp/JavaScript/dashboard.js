@@ -129,12 +129,24 @@ function navbarOnClick() {
 //Sends AJAX request to fetch code names
 function fetchCodesInfo() {
     toggleLoading();
-    console.log(JSON.stringify({courseID: getParameter("courseID"), assignmentID: getParameter("assignmentID")}));
+    let uid = getParameter("userID");
+    let assId = getParameter("assignmentID");
+    if (uid !== null) {
+        dataObj = {
+            assignmentID: assId,
+            userID: uid
+        }
+    } else {
+        dataObj = {
+            assignmentID: assId
+        }
+    }
+    console.log(JSON.stringify(dataObj));
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
         contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify({courseID: getParameter("courseID"), assignmentID: getParameter("assignmentID")}),
+        data: JSON.stringify(dataObj),
         success: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadCodesInfo(data, textStatus, jQxhr);
@@ -173,19 +185,10 @@ function loadCodeInfoError() {
 function fetchCode(id) {
     toggleLoading();
     let dataObj;
-    let uid = getParameter("userID");
-    if (uid !== null) {
-        dataObj = {
-            courseID: getParameter("courseID"),
-            codeID: id,
-            userID: uid
-        }
-    } else {
-        dataObj = {
-            courseID: getParameter("courseID"),
-            codeID: id
-        }
-    }
+    dataObj = {
+        codeID: id
+    };
+
 
     $.ajax({
         url: "/user/code_dispatcher",
