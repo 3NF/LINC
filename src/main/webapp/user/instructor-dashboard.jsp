@@ -27,12 +27,12 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../JavaScript/instructor-dashboard.js?newversione"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/instructor-dashboard.js?newversione"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-    <script src="../JavaScript/panel.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
 
     <%--Comment following line if you want to view as Student--%>
-    <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">

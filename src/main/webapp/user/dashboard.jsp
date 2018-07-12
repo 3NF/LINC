@@ -36,8 +36,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css"/>
 
     <%--my css--%>
-    <link rel="stylesheet" href="../Styles/style.css">
-    <link rel="stylesheet" href="../Styles/dashboard.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/dashboard.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css">
 
 
@@ -51,8 +51,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-    <script src="../JavaScript/panel.js"></script>
-    <script src="../JavaScript/project-view.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/project-view.js"></script>
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
     <% String courseId = request.getParameter(Constraints.COURSE_ID); %>

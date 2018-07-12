@@ -21,7 +21,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=start" async defer></script>
-    <script src="../JavaScript/panel.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
 
 
     <%
