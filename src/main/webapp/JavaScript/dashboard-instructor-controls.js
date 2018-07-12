@@ -195,6 +195,7 @@ function submitSuggestion () {
                 data.color = warningColor;
             }
             suggestions[suggestions.length] = data;
+            console.log(suggestions);
             viewSuggestion(suggestions.length-1);
         },
         error: function (data, textStatus, jQxhr) {

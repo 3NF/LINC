@@ -71,7 +71,7 @@ function placeSuggestion (ind, suggestion) {
         $(lines[lineIterator]).css("background-color", suggestion.color);
         $(lines[lineIterator]).css("color", "#ffffff");
         $(lines[lineIterator]).unbind("click");
-        $(lines[lineIterator]).click(ind, viewSuggestion);
+        $(lines[lineIterator]).click(function () {viewSuggestion(ind);});
     }
 }
 
@@ -102,7 +102,8 @@ function viewSuggestion(eventHandler) {
     }
 
     //Load suggestion data
-    var suggestion = suggestions[eventHandler.data];
+    var suggestion = suggestions[eventHandler];
+    console.log(suggestion);
     $("#comment-content").css("border-right-color", suggestion.color);
     $("#comment-text").html(suggestion.content);
     $("#comment-user-name").html(suggestion.user.firstName + " " + suggestion.user.lastName);
@@ -112,22 +113,6 @@ function viewSuggestion(eventHandler) {
     console.log(activeSuggestionID);
 
     fetchReplies(suggestion.suggestionID);
-}
-
-/*
-    Loads new code in CodeMirror editor
- */
-function navbarOnClick() {
-    console.log("There was a Click!");
-
-    //Change html elements' styles
-    $("#navbar").find(".active").removeClass("active");
-    $(event.target).parent().attr("class", "active");
-
-    //Get name of code
-    var name = $(event.target).text();
-
-    fetchCode(name);
 }
 
 //Sends AJAX request to fetch code names
@@ -200,6 +185,8 @@ function fetchCode(id) {
         success: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadCode(data, textStatus, jQxhr);
+            console.log("abc");
+            toggleProjectView();
         },
         error: function (data, textStatus, jQxhr) {
             toggleLoading();
