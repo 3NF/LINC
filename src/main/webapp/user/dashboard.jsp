@@ -154,8 +154,7 @@
                         <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
                         </button>
                         <button id="suggestion-type" type="button" class="btn btn-warning"
-                                onclick="toggleSuggestionType()">Warning
-                        </button>
+                                onclick="toggleSuggestionType()">Warning</button>
                     </form>
                 </div>
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>

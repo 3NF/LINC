@@ -22,7 +22,7 @@ import java.util.List;
 
 import static Data.Constraints.*;
 
-@WebServlet(name = "ReplyDispatcher", urlPatterns = "/user/reply_dispatcher")
+@WebServlet(name = "SectionDispatcher", urlPatterns = "/user/section_dispatcher")
 public class SectionDispatcher extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

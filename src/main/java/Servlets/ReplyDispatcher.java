@@ -26,11 +26,13 @@ import static Data.Constraints.USER_STORAGE;
 public class ReplyDispatcher extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa");
         HttpSession session = request.getSession();
 
         try {
             User user = (User) session.getAttribute(USER);
 
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa");
             //Get request data
             String json;
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
@@ -47,7 +49,9 @@ public class ReplyDispatcher extends HttpServlet
 
             if (data.has("content")){
                 String UserID = ((User) session.getAttribute(USER)).getUserId();
-                UserStorage userStorage = (UserStorage) session.getAttribute(USER_STORAGE);
+                UserStorage userStorage = (UserStorage) session.getServletContext().getAttribute(USER_STORAGE);
+                System.out.println(userStorage);
+                System.out.println(user.getUserId());
                 Reply reply = replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
 
                 reply.RetrieveUsers(user.getUserId(), userStorage);
@@ -73,7 +77,7 @@ public class ReplyDispatcher extends HttpServlet
             response.getWriter().write(json);
         } catch (NumberFormatException|NullPointerException e) {
             e.printStackTrace();
-            response.sendError(HttpStatus.SC_NOT_FOUND);
+            response.sendError(HttpStatus.SC_GATEWAY_TIMEOUT);
         }
     }
 
