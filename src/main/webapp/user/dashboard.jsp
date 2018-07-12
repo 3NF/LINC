@@ -96,8 +96,8 @@
         <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
 
     <%
-        String assignmentID = assignments.get(0).getId();
-        String userID = (String)request.getAttribute(USER_ID);
+        String assignmentID = request.getParameter(ASSIGNMENT_ID);
+        String userID = user.getUserId();
     %>
 
 </head>
