@@ -169,7 +169,7 @@
         </div>
     </div>
     <div id="instructorButton">
-            <select class="form-control selectpicker show-tick" data-style="btn-primary" name="grade" onchange="updateGrade(this)" style="width : 100px">
+            <select class="form-control selectpicker show-tick" data-style="btn-primary" name="grade" onchange="updateGrade(this)">
                 <option></option>
                 <option>Plus Plus</option>
                 <option>Plus</option>
