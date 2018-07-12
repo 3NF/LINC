@@ -35,9 +35,6 @@
     <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css"/>
 
-    <%--Comment following line if you want to view as Student--%>
-    <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
-
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="../Styles/dashboard.css">

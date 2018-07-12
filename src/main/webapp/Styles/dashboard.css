@@ -145,3 +145,7 @@ html {
     style: 'btn-info';
     width : 200px;
 }
+
+#instructorButton{
+    display : none;
+}

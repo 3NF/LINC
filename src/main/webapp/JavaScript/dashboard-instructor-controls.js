@@ -18,6 +18,11 @@ var firstMarker = -1, lastMarker = -1;
 // Marked line color
 const markedColor = "#DBDBDB";
 
+$( document ).ready(function() {
+    $("#instructorButton").css("display", "block");
+    $("#showGrade").css("display", "none");
+});
+
 /*
     Following line converts comment editor
     button from warning to error and vice versa
