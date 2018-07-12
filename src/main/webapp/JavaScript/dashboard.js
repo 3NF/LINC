@@ -129,6 +129,7 @@ function navbarOnClick() {
 //Sends AJAX request to fetch code names
 function fetchCodesInfo() {
     toggleLoading();
+    console.log(JSON.stringify({courseID: getParameter("courseID"), assignmentID: getParameter("assignmentID")}));
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",

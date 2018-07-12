@@ -46,21 +46,21 @@ function signOut() {
 
 function getParameter (name) {
     try {
-        results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-        return results[1] || 0;
+        let result = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        return result[1] || 0;
     } catch (e) {
         return null;
     }
 }
 
 function getAssignment(assignmentId) {
-    console.log(location.href);
-    console.log(getParameter("assignmentID"));
+    console.log(assignmentId);
     if (getParameter("assignmentID") != null) {
-        location.href = location.href + "assignmentID=" + assignmentId;
+        location.href = changeParameter ("assignmentID", assignmentId);
     } else {
         assignmentID = assignmentId;
     }
+
 }
 
 function isDownloaded(assignmentID){
@@ -68,16 +68,13 @@ function isDownloaded(assignmentID){
 }
 
 function changeParameter(paramName, paramVal) {
+    console.log(paramVal);
     const oldLink = location.href;
-    const chunks = oldLink.split("&");
-    let newLink = chunks[0] + "&";
-    for (let i = 1; i < chunks.length; i ++) {
-        if (chunks[i] === paramName + "=") {
-            chunks[i+1] = paramVal;
-        }
-        newLink += (chunks[i] + "&");
-    }
-    return newLink.substring(0, newLink.length - 1);
+    let ind_of_param = oldLink.indexOf(paramName);
+    let old_value_start = oldLink.indexOf("=", ind_of_param + 1) + 1;
+    let old_value_end = oldLink.indexOf("&", old_value_start + 1);
+    if (old_value_end === -1) old_value_end = oldLink.length;
+    return oldLink.substr(0, old_value_start) + paramVal + oldLink.substr(old_value_end);
 }
 
 function sendAssignments(assignmentId) {
