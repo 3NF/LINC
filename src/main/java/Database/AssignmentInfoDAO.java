@@ -122,4 +122,15 @@ public class AssignmentInfoDAO {
             e.printStackTrace();
         }
     }
+
+    public static Grade getGrade(String userID , String assignmentID){
+        try {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Grade.MinusMinus;
+    }
+
 }

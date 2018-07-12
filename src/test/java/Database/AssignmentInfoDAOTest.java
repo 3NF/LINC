@@ -22,5 +22,5 @@ public class AssignmentInfoDAOTest {
         AssignmentInfoDAO.Grade grade = AssignmentInfoDAO.Grade.CheckPlus;
         AssignmentInfoDAO.addGrade(userID , grade , assignmentID);
     }
-    
+
 }
