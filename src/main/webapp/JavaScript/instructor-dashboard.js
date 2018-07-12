@@ -1,5 +1,6 @@
 function chooseStudent (id) {
-    window.location.href = "dashboard.jsp?courseID=" + getParameter("courseID") + "&assignmentID=" + assignmentID + "&=userID=" + id;
+    //console.log("dashboard.jsp?courseID=" + getParameter("courseID") + "&assignmentID=" + assignmentID + "&=userID=" + id);
+    window.location.href = "dashboard.jsp?courseID=" + getParameter("courseID") + "&assignmentID=" + assignmentID + "&userID=" + id;
 }
 
 function getParameter (name) {

@@ -46,7 +46,7 @@ public class CodeFilesDAO {
             String uId = result.getString("userId");
             String text = result.getString("text");
             String type = result.getString("type");
-            Date date = new Date(result.getDate("time").getTime());
+            Date date = result.getTimestamp("time");
             Suggestion.SuggestionType suggestionType = Suggestion.SuggestionType.valueOf(type);
             int startInd = result.getInt("startInd");
             int endInd = result.getInt("endInd");
@@ -152,7 +152,7 @@ public class CodeFilesDAO {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, assignmentID);
         ResultSet result = statement.executeQuery();
-        List <CodeFile.Info> codeFileNames = new ArrayList<CodeFile.Info>();
+        List <CodeFile.Info> codeFileNames = new ArrayList<>();
         while (result.next()){
             codeFileNames.add(new CodeFile.Info(result.getString("id"),result.getString("name")));
         }

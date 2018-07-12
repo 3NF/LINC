@@ -30,8 +30,7 @@ public class CodeDispatcher extends HttpServlet
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
             String json;
             String userID = ((User) request.getSession().getAttribute(USER)).getUserId();
-            SectionDAO sectionDAO = (SectionDAO) request.getSession().getAttribute(SECTION_DAO);
-
+            SectionDAO sectionDAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
 
             System.out.println("QWERTY");
             if (data.has(Constraints.USER_ID) && sectionDAO.isInSection(userID, data.get(Constraints.USER_ID).getAsString())) {
@@ -63,7 +62,7 @@ public class CodeDispatcher extends HttpServlet
             UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
 
             CodeFile codeFile = codeFilesDAO.getFilesContent(codeFilesId);
-            //codeFile.RetrieveUsers(userID, userStorage);
+            codeFile.RetrieveUsers(userID, userStorage);
 
             return new GsonBuilder().create().toJson(codeFile);
         } catch (SQLException e) {

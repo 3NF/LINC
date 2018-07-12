@@ -48,9 +48,9 @@ public class SectionDAO {
     }
 
     public boolean isInSection(String instructorID, String studentID) {
-        String query = "SELECT instructors.id,instructors.userID,sections.studentID FROM instructors" +
-                " inner join sections on instructors.id=sections.instructorID " +
-                "where sections.instructorID=? AND sections.studentID=?";
+            String query = "SELECT instructors.id,instructors.userID,sections.studentID FROM instructors" +
+                    " inner join sections on instructors.id=sections.instructorID " +
+                    "where sections.instructorID=? AND sections.studentID=?";
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
