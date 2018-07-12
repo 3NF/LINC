@@ -1,6 +1,8 @@
 package Database;
 
 import Models.User;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.services.classroom.model.Student;
 import com.google.api.services.classroom.model.UserProfile;
 
@@ -68,6 +70,15 @@ public class UserDAO
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    public static GoogleCredential getGoogleCredentials(String userId)
+    {
+        UserCredential credential = getUserCredential(userId);
+
+        return new GoogleCredential.Builder().setJsonFactory(GAPIManager.JACKSON_FACTORY).setClientSecrets(GAPIManager.secrets).setTransport(GAPIManager.HTTP_TRANSPORT)
+                .build().setAccessToken(credential.getAccessToken()).setRefreshToken(credential.getRefreshToken());
     }
 
     public static void saveUserCredentials(String sub, String accessToken, String refreshToken)

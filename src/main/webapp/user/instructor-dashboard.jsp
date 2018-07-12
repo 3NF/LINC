@@ -12,6 +12,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Database.*" %>
 <%@ page import="static Data.Constraints.*" %>
+<%@ page import="com.google.api.services.classroom.model.Student" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -66,15 +67,14 @@
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
 
         SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
-        String courseID = request.getParameter(COURSE_ID);
-        ArrayList <User> studentsOnlyID = (ArrayList)DAO.getUsersInSection(courseID, user.getUserId());
+        ArrayList <User> studentsOnlyID = (ArrayList)DAO.getUsersInSection(courseId, user.getUserId());
         ArrayList <User> students = new ArrayList<>();
         for (User student: studentsOnlyID) {
-            students.add(userStorage.getUserWithID(user.getUserId(), student.getUserId()));
+            students.add(GAPIManager.getInstance().getUserProfile(user.getUserId(), student.getUserId()));
         }
     %>
 
-    <script>var assignmentID = <%=assignments.get(0).getId()%>;</script>
+    <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
     <title>Section View</title>
