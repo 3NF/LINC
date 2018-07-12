@@ -161,7 +161,7 @@ public class AssignmentInfoDAO {
         }
     }
 
-    public List <Pair<String,String>> getUsersGrades(String classrooomID, String userID){
+    public List <Pair<String,String>> getUsersGrades(String classroomID, String userID){
         List <Pair<String,String>>  list = new ArrayList<Pair<String,String>>();
         try {
             String query = "SELECT assignments.idInClassroom,grades.assignmentID,grades.grade FROM assignments inner join " +
@@ -169,7 +169,7 @@ public class AssignmentInfoDAO {
             Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1,userID);
-            statement.setString(2,classrooomID);
+            statement.setString(2,classroomID);
             ResultSet result = statement.executeQuery();
             while (result.next()){
                 String assignmentID = result.getString("grades.assignmentID");
@@ -182,7 +182,7 @@ public class AssignmentInfoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return list;
     }
 
     public static void main(String args[]){
