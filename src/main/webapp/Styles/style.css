@@ -277,6 +277,30 @@ html, body {
     margin: 0 auto;
 }
 
+.grade_PlusPlus {
+    background-color: #e02626;
+}
+
+.grade_Plus {
+    background-color: #e08325;
+}
+
 .grade_CheckPlus {
-    background-color: #0a001f;
+    background-color: #e024b7;
+}
+
+.grade_Check {
+    background-color: #2f49a8;
+}
+
+.grade_CheckMinus {
+    background-color: #2bd1c0;
+}
+
+.grade_MinusMinus {
+    background-color: #38b747;
+}
+
+.grade_0 {
+    background-color: #7c7776;
 }
