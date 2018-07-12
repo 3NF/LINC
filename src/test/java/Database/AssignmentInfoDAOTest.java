@@ -14,4 +14,13 @@ public class AssignmentInfoDAOTest {
         AssignmentInfoDAO dao = new AssignmentInfoDAO(ConnectionPool.getInstance());
         System.err.println(dao.getAssignmentFilesPath("105303857051815287047","123123123123"));
     }
+
+    @Test
+    public void addGradeTest(){
+        String userID = "115209239224583784484";
+        String assignmentID = "12373837357";
+        AssignmentInfoDAO.Grade grade = AssignmentInfoDAO.Grade.CheckPlus;
+        AssignmentInfoDAO.addGrade(userID , grade , assignmentID);
+    }
+    
 }
