@@ -5,10 +5,10 @@ html, body {
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
 .sidenav {
-    display: none;
+    display: flex;
+    flex-direction: column;
     height: 100%;
     width: 0;
-    position: fixed;
     z-index: 100;
     top: 0;
     left: 80px;
@@ -180,6 +180,7 @@ html, body {
     margin-top: 5px;
     display: none;
     width: 80px;
+    position: fixed;
     min-width: 100%;
     background-color: white;
     text-align: center;
@@ -235,14 +236,32 @@ html, body {
     border-top: .1rem solid rgba(0,0,0,0.12);
 }
 
-#jstree_demo_div {
+#jstree_demo_div_container {
     height: 100%;
-    background-color: white;
+    background-color: black;
     z-index: 120;
     position: absolute;
     left: 5px;
+    min-width: 500px;
+}
+
+#jstree_demo_div{
+    background-color: red;
+    display: block;
+    height: 70%;
+    z-index: 121;
+    position: fixed;
+    left: 5px;
     min-height: 500px;
     min-width: 500px;
+}
+
+#toggle-project-view{
+    display: block;
+    position: fixed;
+    top: 90%;
+    font-size: 20px;
+    left: 5px;
 }
 
 #login-logo {

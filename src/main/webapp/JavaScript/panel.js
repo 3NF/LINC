@@ -1,4 +1,4 @@
-let isVisible = false;
+let manuIsVisible = false;
 
 $(document).ready(function () {
     $(".fill").css("display", "block");
@@ -17,12 +17,12 @@ $(document).ready(function () {
 });
 
 
-function togleNav() {
-    if (!isVisible)
+function toggleNav() {
+    if (!manuIsVisible)
         $("#mySidenav")[0].style.width = "250px";
     else
         $("#mySidenav")[0].style.width = "0";
-    isVisible = !isVisible;
+    manuIsVisible = !manuIsVisible;
 }
 
 function signOut() {

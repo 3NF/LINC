@@ -4,6 +4,17 @@ $(document).ready(function () {
     });
 });
 
+let projectViewIsVisible = false;
+function toggleProjectView() {
+    console.log("bakuri");
+    if (!projectViewIsVisible)
+        $("#jstree_demo_div_container").animate({width:'toggle'}, 500);
+    else
+        $("#jstree_demo_div_container").animate({width:'toggle'}, 0);
+    projectViewIsVisible = !projectViewIsVisible;
+}
+
+
 function build_project_view() {
     $('#jstree_demo_div').jstree();
 }
