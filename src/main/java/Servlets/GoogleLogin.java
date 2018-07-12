@@ -30,6 +30,8 @@ public class GoogleLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String action = request.getParameter("action");
+        String referer = request.getHeader("referer");
+        System.out.println(referer);
         User resultedUser = null;
 
         if (action.equals("register")) {
@@ -46,12 +48,10 @@ public class GoogleLogin extends HttpServlet {
         }
 
         request.getSession().setAttribute(USER, resultedUser);
-        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(CODE_FILES_DAO);
-        /* try {
-            codeFilesDAO.addAssignments(GAPIManager.downloadAssignments(resultedUser,"15887333289","15917000927"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-        response.sendRedirect("/user/choose-room.jsp");
+        if (referer.contains("user")) {
+            response.sendRedirect(referer);
+        } else {
+            response.sendRedirect("/user/choose-room.jsp");
+        }
     }
 }

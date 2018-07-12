@@ -67,6 +67,19 @@ function isDonwloaded(assignmentID){
     alert("You have allready uploaded the assignment");
 }
 
+function changeParameter(paramName, paramVal) {
+    var oldLink = location.href;
+    var chunks = oldLink.split("&");
+    var newLink = chunks[0] + "&";
+    for (var i = 1; i < chunks.length; i ++) {
+        if (chunks[i] === paramName + "=") {
+            chunks[i+1] = paramVal;
+        }
+        newLink += (chunks[i] + "&");
+    }
+    return newLink.substring(0, newLink.length - 1);
+}
+
 function sendAssignments(assignmentId) {
     const courseID = getParameter("courseID");
     if (window.confirm("Do You want to download assignments?")) {
