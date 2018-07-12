@@ -108,7 +108,7 @@ public class AssignmentInfoDAO {
         }
     }
 
-    public static void addGrade(String userID , Grade grade , String assignmentID){
+    public void addGrade(String userID , Grade grade , String assignmentID){
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();
             String query = "INSERT INTO `grades`(`assignmentID`, `userID`, `grade`) VALUES (?,?,?)";
@@ -117,20 +117,47 @@ public class AssignmentInfoDAO {
             statement.setString(2 , userID);
             statement.setString(3 , grade.getName());
             int result = statement.executeUpdate();
+            statement.close();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static String getGrade(String userID , String assignmentID){
+    public  String getGrade(String userID , String assignmentID){
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();
+            String query = "SELECT * FROM grades WHERE assignmentID=? AND userID=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,assignmentID);
+            statement.setString(2,userID);
+            ResultSet result = statement.executeQuery();
+            String grade = "Not graded yet";
+            if (result.next()) {
+                grade = result.getString("grade");
+            }
+            statement.close();
             connection.close();
+            return grade;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return Grade.MinusMinus.getName();
     }
 
+    public void updateGrade(String assignmentID,String userID,String grade){
+        try {
+            Connection connection = connectionPool.getConnection();
+            String query = "INSERT INTO `grades`(`assignmentID`, `userID`, `grade`) VALUES (?,?,?) " +
+                    " ON DUPLICATE KEY UPDATE grade=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,assignmentID);
+            statement.setString(2,userID);
+            statement.setString(3,grade);
+            statement.setString(4,grade);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
