@@ -47,10 +47,10 @@ public class ReplyDispatcher extends HttpServlet
 
             if (data.has("content")){
                 String UserID = ((User) session.getAttribute(USER)).getUserId();
-                UserStorage userStorage = (UserStorage) session.getServletContext().getAttribute(USER_STORAGE);
                 Reply reply = replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
-
-                reply.RetrieveUsers(user.getUserId(), userStorage);
+                UserStorage userStorage = (UserStorage) session.getServletContext().getAttribute(USER_STORAGE);
+                if (userStorage != null)
+                    reply.RetrieveUsers(user.getUserId(), userStorage);
 
                 json = new GsonBuilder().disableHtmlEscaping().create().toJson(reply);
             }
@@ -60,7 +60,8 @@ public class ReplyDispatcher extends HttpServlet
                 UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
 
                 for (Reply reply:replies) {
-                    reply.RetrieveUsers(user.getUserId(), userStorage);
+                    if (userStorage != null)
+                        reply.RetrieveUsers(user.getUserId(), userStorage);
                 }
 
                 //Convert file data into JSON

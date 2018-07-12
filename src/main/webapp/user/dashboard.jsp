@@ -13,6 +13,8 @@
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="Models.Assignment" %>
 <%@ page import="static Data.Constraints.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="javafx.util.Pair" %>
 <html>
 
 <head>
@@ -70,16 +72,35 @@
     %>
 
     <%
-    if (request.getParameter(USER_ID) != null) {%>
-        <%--Comment following line if you want to view as Student--%>
-        <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversione"></script>
-    <%}%>
-    <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
-    <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
+        boolean isStudent = request.getParameter(USER_ID) == null;
+        List<String> assignmentHtmlIds = new ArrayList<>();
+        Map<String, String> hmp;
+        if (isStudent) {
+        	hmp = new HashMap<>();
+            List<Pair<String, String> > grades = assignmentInfoDAO.getUsersGrades(request.getParameter(COURSE_ID), user.getUserId());
+            for (Pair<String, String> grade : grades) {
+                hmp.put(grade.getKey(), grade.getValue());
+            }
+        } else {
+        	hmp = Collections.emptyMap();
+        }
+
+        for (Assignment assignment : assignments) {
+            String grade = hmp.get(assignment.getId());
+            assignmentHtmlIds.add("grade_" + (grade == null? "none" : grade.replaceAll("\\s+","")));
+        }
+
+        if (!isStudent) {%>
+            <%--Comment following line if you want to view as Student--%>
+            <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversione"></script>
+        <%}%>
+
+        <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
+        <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
 
     <%
-        String assignmentID = assignments.get(0).getId();
-        String userID = (String)request.getAttribute(USER_ID);
+        String assignmentID = request.getParameter(ASSIGNMENT_ID);
+        String userID = user.getUserId();
     %>
 
 </head>
@@ -99,11 +120,15 @@
         </div>
         <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
         <div class="sidenav-container" style="height: 20%">
-            <% for (Assignment assignment : assignments) {%>
-            <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
-                <p><%=assignment.getName()%>
-                </p>
-            </div>
+            <% for (int i = 0; i < assignments.size(); i++) {
+            	Assignment assignment = assignments.get(i);
+            	String idInHtml = assignmentHtmlIds.get(i);
+                System.out.println(idInHtml);
+            %>
+                <div class="sidenav-item <%=idInHtml%>" onclick=getAssignment(<%=assignment.getId()%>)>
+                    <p><%=assignment.getName()%>
+                    </p>
+                </div>
             <%}%>
         </div>
         <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
@@ -144,10 +169,10 @@
                     </div>
                 </div>
                 <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
-                    <form>
+                    <form onsubmit="submitSuggestion(); return false;">
                         <textarea id="comment-editor-content" class="editor-content" name="content"></textarea>
                         <br>
-                        <button type="button" class="btn btn-primary" onclick="submitSuggestion()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
                         </button>
                         <button id="suggestion-type" type="button" class="btn btn-warning"
@@ -155,10 +180,10 @@
                     </form>
                 </div>
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
-                    <form>
+                    <form onsubmit="submitReply(); return false;">
                         <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
                         <br>
-                        <button type="button" class="btn btn-primary" onclick="submitReply()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
