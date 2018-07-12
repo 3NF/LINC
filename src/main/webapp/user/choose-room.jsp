@@ -47,7 +47,7 @@
     </div>
 </div>
 <div id="content-wrapper">
-    <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose ClassRoom To Enter:</h1>
+    <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose Classroom To Enter:</h1>
 
 
     <div class="panel">
