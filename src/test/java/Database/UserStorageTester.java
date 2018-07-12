@@ -28,13 +28,14 @@ public class UserStorageTester {
         userStorage = new UserStorage(GAPIManager.getInstance());
     }
 
-    /*@Test
+    @Test
     public void checkLuka () {
-        User user = userStorage.getUserWithID(bakurID, lukaID);
+        User user = userStorage.getUserWithID(bakurID, giorgiID);
         System.out.println(user);
-        assertEquals(user.getEmail(), "lchum16@freeuni.edu.ge");
+        assertEquals(user.getEmail(), "gbagh16@freeuni.edu.ge");
     }
 
+    /*
     @Test
     public void checkGiorgi () {
         User user = userStorage.getUserWithID(dzlieraID, giorgiID);

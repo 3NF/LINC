@@ -7,11 +7,11 @@ $(document).ready(function () {
 let projectViewIsVisible = false;
 function toggleProjectView() {
     console.log("bakuri");
-    if (!projectViewIsVisible) {
-        $("#jstree_demo_div_container").animate({width:'toggle'}, 500);
+    if (projectViewIsVisible) {
+        $("#jstree_demo_div_container").toggle("slide");
         $("#file-open").html("&#xe117;");
     } else {
-        $("#jstree_demo_div_container").animate({width:'toggle'}, 0);
+        $("#jstree_demo_div_container").toggle("slide");
         $("#file-open").html("&#xe118;");
     }
     projectViewIsVisible = !projectViewIsVisible;

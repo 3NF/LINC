@@ -64,6 +64,7 @@ function getAssignment(assignmentId) {
 }
 
 function isDownloaded(assignmentID){
+    console.log(assignmentID);
     alert("You have allready uploaded the assignment");
 }
 

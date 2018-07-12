@@ -154,11 +154,9 @@ function loadCodesInfo(data) {
     });
     console.log(codeInfo);
     addCodes();
-    //getFirstCode ();
 }
 
 function addCodes() {
-    console.log("yle");
     let ul = document.createElement("ul");
     $('#jstree_demo_div')[0].appendChild(ul);
     draw_view_rec(ul, 0, codeInfo.length - 1);
@@ -173,10 +171,19 @@ function loadCodeInfoError() {
 function fetchCode(id) {
     toggleLoading();
     let dataObj;
-    dataObj = {
-        codeID: id
-    };
-
+    let uid = getParameter("userID");
+    if (uid !== null) {
+        dataObj = {
+            courseID: getParameter("courseID"),
+            codeID: id,
+            userID: uid
+        }
+    } else {
+        dataObj = {
+            courseID: getParameter("courseID"),
+            codeID: id
+        }
+    }
 
     $.ajax({
         url: "/user/code_dispatcher",
