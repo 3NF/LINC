@@ -65,20 +65,24 @@ function getAssignment(assignmentId) {
 
 function sendAssignments(assignmentId) {
     const courseID = getParameter("courseID");
-    console.log(courseID);
-    $.ajax({
-        type:'POST',
-        url: '/teacher-dispatcher',
-        data: JSON.stringify(
-            {"assignmentID" : assignmentId,
-            "courseID" : courseID}
-        ),
-        success:function(){
-            alert("Successfully downloaded assignment files.");
-        },
-        error:function(){
-            console.log('Service call failed!');
-        }
-    });
+    if (window.confirm("Do You want to download assignments?")) {
+        console.log(courseID);
+        $.ajax({
+            type: 'POST',
+            url: '/teacher-dispatcher',
+            data: JSON.stringify(
+                {
+                    "assignmentID": assignmentId,
+                    "courseID": courseID
+                }
+            ),
+            success: function () {
+                alert("Successfully downloaded assignment files.");
+            },
+            error: function () {
+                console.log('Service call failed!');
+            }
+        });
+    }
 }
 
