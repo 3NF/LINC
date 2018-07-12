@@ -6,13 +6,13 @@ html, body {
 }
 .sidenav {
     display: flex;
+    background-color: red;
     flex-direction: column;
     height: 100%;
     width: 0;
     z-index: 100;
     top: 0;
     left: 80px;
-    background-color: white;
     overflow-x: hidden;
     transition: 0.5s;
 }
@@ -177,12 +177,12 @@ html, body {
 }
 
 .fill {
+    background-color: #8a3d3d;
     margin-top: 5px;
     display: none;
     width: 80px;
     position: fixed;
     min-width: 100%;
-    background-color: white;
     text-align: center;
     height: 55px;
     z-index: 101;
@@ -259,7 +259,7 @@ html, body {
 #toggle-project-view{
     display: block;
     position: fixed;
-    top: 90%;
+    top: 20%;
     font-size: 20px;
     left: 5px;
 }

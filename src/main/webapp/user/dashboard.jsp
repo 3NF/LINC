@@ -84,34 +84,34 @@
     <button id="menuBar" onclick="toggleNav()"><span></span><span></span><span></span>
     </button>
 </div>
-<div id="mySidenav" class="sidenav">
-    <div class="sidenav-container" style="margin-top: 10px">
-        <div class="sidenav-item" id="goHome">
-            <p><span class="glyphicon glyphicon-home"></span> Classes</p>
-        </div>
-    </div>
-    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-    <div class="sidenav-container" style="height: 90%">
-        <% for (Assignment assignment : assignments) {%>
-        <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
-            <p><%=assignment.getName()%>
-            </p>
-        </div>
-        <%}%>
-    </div>
-    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-    <div class="sidenav-container" style="margin-top: 10px">
-        <div class="sidenav-item">
-            <p onclick="signOut()">Logout</p>
-        </div>
-    </div>
-</div>
 <%--<div id = "jstree_demo_div_container">
     <div id="jstree_demo_div">
     </div>
     <div id="toggle-project-view" onclick="toggleProjectView()" data-toggle="tooltip" title="Toggle project view"><span class="glyphicon">&#xe118;</span></div>
 </div>--%>
 <div id="content">
+    <div id="mySidenav" class="sidenav">
+        <div class="sidenav-container" style="margin-top: 10px">
+            <div class="sidenav-item" id="goHome">
+                <p><span class="glyphicon glyphicon-home"></span> Classes</p>
+            </div>
+        </div>
+        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+        <div class="sidenav-container" style="height: 20%">
+            <% for (Assignment assignment : assignments) {%>
+            <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
+                <p><%=assignment.getName()%>
+                </p>
+            </div>
+            <%}%>
+        </div>
+        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+        <div class="sidenav-container" style="margin-top: 10px">
+            <div class="sidenav-item">
+                <p onclick="signOut()">Logout</p>
+            </div>
+        </div>
+    </div>
     <div id="loader-wrapper">
         <div class="loader"></div>
     </div>
