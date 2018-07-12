@@ -40,10 +40,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/teacher-dashboard.css">
 
-    <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src='../bootstrap-markdown/js/bootstrap-markdown.js'></script>
-    <link rel="stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <script src = "--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src = '../bootstrap-markdown/js/bootstrap-markdown.js'></script>
+    <link rel = "stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
 
     <%
         User user = (User) request.getSession().getAttribute(Constraints.USER);
@@ -65,6 +65,7 @@
     <%
         Set<String> semReaderIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.SeminarReader));
         Set<String> teacherAssIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.TeacherAssistant));
+        Set<String> studentsIds = new HashSet<>();
 
         List<Student> allUsers = gapiManager.getUsers(user, courseId);
 
@@ -82,6 +83,7 @@
                 assistants.add(student.getProfile());
                 continue;
             }
+            studentsIds.add(student.getProfile().getId());
             students.add(student.getProfile());
         }
         String teacherAssistantJson = new Gson().toJson(teacherAssIds);
@@ -93,7 +95,7 @@
 <body>
 <div class="fill">
     <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
-    <button id="menuBar" onclick="toggleNav()"><span></span><span></span><span></span>
+    <button id="menuBar" onclick="togleNav()"><span></span><span></span><span></span>
     </button>
 </div>
 <div id="mySidenav" class="sidenav">
@@ -109,20 +111,6 @@
             <p style="color: green"><%=assignment.getName()%></p>
         </div>
         <%}%>
-<div id="content">
-    <div id="mySidenav" class="sidenav">
-        <div class="sidenav-container" style="margin-top: 10px">
-            <div class="sidenav-item" id = "goHome">
-                <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
-            </div>
-        </div>
-        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-        <div class="sidenav-container" style="height: 90%">
-            <% for (Assignment assignment : uploaded) {%>
-            <div class="sidenav-item"  onclick=sendAssignments('<%=assignment.getId()%>')>
-                <p style="color: green"><%=assignment.getName()%></p>
-            </div>
-            <%}%>
 
         <% for (Assignment assignment : notUploaded) {%>
         <div class="sidenav-item"  onclick=sendAssignments('<%=assignment.getId()%>')>
@@ -137,116 +125,7 @@
         </div>
     </div>
 </div>
-    <div id="content">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" href="#semReaderCol">Seminar Readers</a>
-                    </h3>
-                    <div id="semReaderCol" class="panel-collapse collapse">
-                        <table class="table" id="semReadersTable">
-                            <tr>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>E-mail</th>
-                                <th></th>
-                            </tr>
-                            <% for(UserProfile semReader : semReaders){ %>
-                            <tr>
-                                <td><%=semReader.getName().getGivenName()%></td>
-                                <td><%=semReader.getName().getFamilyName()%></td>
-                                <td><%=semReader.getEmailAddress()%></td>
-                                <td>
-                                    <div class="btn-group-vertical">
-                                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                                            <span class="glyphicon glyphicon-option-vertical"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <%}%>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" href="#teacherAssCol">Teacher Assistants</a>
-                    </h3>
-                    <div id="teacherAssCol" class="panel-collapse collapse">
-                        <table class="table" id="teacherAssTable">
-                            <tr>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>E-mail</th>
-                            </tr>
-                            <% for(UserProfile assistant : assistants){ %>
-                            <tr>
-                                <td><%=assistant.getName().getGivenName()%></td>
-                                <td><%=assistant.getName().getFamilyName()%></td>
-                                <td><%=assistant.getEmailAddress()%></td>
-                                <td>
-                                    <div class="btn-group-vertical">
-                                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                                            <span class="glyphicon glyphicon-option-vertical"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">Remove</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <%}%>
-                        </table>
-                        <button class = "btn btn-light" style="width:260px;color:black" onclick='randomSections(<%=teacherAssistantJson%>,<%=studentJson%>,<%=semReadersJson%>,<%=courseId%>)'> Random sections for teacher assistants </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" href="#studentsCol">Students</a>
-                    </h3>
-                    <div id="studentsCol" class="panel-collapse collapse">
-                        <table class="table" id="studentsTable">
-                            <tr>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>E-mail</th>
-                            </tr>
-                            <% for(UserProfile student : students){ %>
-                            <tr>
-                                <td><%=student.getName().getGivenName()%></td>
-                                <td><%=student.getName().getFamilyName()%></td>
-                                <td><%=student.getEmailAddress()%></td>
-                                <td>
-                                    <div class="btn-group-vertical">
-                                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                                            <span class="glyphicon glyphicon-option-vertical"></span></button>
-                                        <ul class="dropdown-menu" >
-                                            <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
-            <% for (Assignment assignment : notUploaded) {%>
-            <div class="sidenav-item"  onclick=sendAssignments('<%=assignment.getId()%>')>
-                <p style="color: red"><%=assignment.getName()%></p>
-            </div>
-            <%}%>
-        </div>
-        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-        <div class="sidenav-container" style="margin-top: 10px">
-            <div class="sidenav-item">
-                <p onclick="signOut()">Logout</p>
-            </div>
-        </div>
-    </div>
+<div id="content">
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -261,24 +140,17 @@
                             <th>E-mail</th>
                             <th></th>
                         </tr>
-                        <% for (UserProfile semReader : semReaders) { %>
+                        <% for(UserProfile semReader : semReaders){ %>
                         <tr>
-                            <td><%=semReader.getName().getGivenName()%>
-                            </td>
-                            <td><%=semReader.getName().getFamilyName()%>
-                            </td>
-                            <td><%=semReader.getEmailAddress()%>
-                            </td>
+                            <td><%=semReader.getName().getGivenName()%></td>
+                            <td><%=semReader.getName().getFamilyName()%></td>
+                            <td><%=semReader.getEmailAddress()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-option-vertical"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li>
-                                            <button type="button" class="btn btn-light"
-                                                    onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
-                                                Remove
-                                            </button>
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -303,24 +175,17 @@
                             <th>Surname</th>
                             <th>E-mail</th>
                         </tr>
-                        <% for (UserProfile assistant : assistants) { %>
+                        <% for(UserProfile assistant : assistants){ %>
                         <tr>
-                            <td><%=assistant.getName().getGivenName()%>
-                            </td>
-                            <td><%=assistant.getName().getFamilyName()%>
-                            </td>
-                            <td><%=assistant.getEmailAddress()%>
-                            </td>
+                            <td><%=assistant.getName().getGivenName()%></td>
+                            <td><%=assistant.getName().getFamilyName()%></td>
+                            <td><%=assistant.getEmailAddress()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-option-vertical"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li>
-                                            <button type="button" class="btn btn-light"
-                                                    onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">
-                                                Remove
-                                            </button>
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">Remove</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -328,6 +193,7 @@
                         </tr>
                         <%}%>
                     </table>
+                    <button class = "btn btn-light" style="width:260px;color:black" onclick='randomSections(<%=teacherAssistantJson%>,<%=studentJson%>,<%=semReadersJson%>,<%=courseId%>)'> Random sections for teacher assistants </button>
                 </div>
             </div>
         </div>
@@ -345,30 +211,23 @@
                             <th>Surname</th>
                             <th>E-mail</th>
                         </tr>
-                        <% for (UserProfile student : students) { %>
+                        <% for(UserProfile student : students){ %>
                         <tr>
-                            <td><%=student.getName().getGivenName()%>
-                            </td>
-                            <td><%=student.getName().getFamilyName()%>
-                            </td>
-                            <td><%=student.getEmailAddress()%>
-                            </td>
+                            <td><%=student.getName().getGivenName()%></td>
+                            <td><%=student.getName().getFamilyName()%></td>
+                            <td><%=student.getEmailAddress()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-option-vertical"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <button type="button" class="btn btn-light"
-                                                    onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
-                                                Add as seminar reader
-                                            </button>
+                                    <ul class="dropdown-menu" >
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
+                                            Add as seminar reader
+                                        </button>
                                         </li>
-                                        <li>
-                                            <button type="button" class="btn btn-light"
-                                                    onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">
-                                                Add as teacher assistant
-                                            </button>
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">
+                                            Add as teacher assistant
+                                        </button>
                                         </li>
                                     </ul>
                                 </div>
@@ -385,16 +244,14 @@
     <div class="btn-group-vertical" id="addEx">
         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
             <span class="glyphicon glyphicon-option-vertical"></span></button>
-        <ul class="dropdown-menu">
-            <li>
-                <button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonSR">
-                    Add as seminar reader
-                </button>
+        <ul class="dropdown-menu" >
+            <li><button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonSR">
+                Add as seminar reader
+            </button>
             </li>
-            <li>
-                <button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonTA">
-                    Add as teacher assistant
-                </button>
+            <li><button type="button" class="btn btn-light" onclick="changeRole()" id="addExButtonTA">
+                Add as teacher assistant
+            </button>
             </li>
         </ul>
     </div>
@@ -402,8 +259,7 @@
         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
             <span class="glyphicon glyphicon-option-vertical"></span></button>
         <ul class="dropdown-menu">
-            <li>
-                <button type="button" class="btn btn-light" onclick="changeRole()" id="removeExButton">Remove</button>
+            <li><button type="button" class="btn btn-light" onclick="changeRole()" id="removeExButton">Remove</button>
             </li>
         </ul>
     </div>
