@@ -39,4 +39,13 @@ public class SectionDAOTester {
         assertEquals(students.size(), 1);
     }
 
+    @Test
+    public void test2() {
+        String userID = "";
+        String courseID = "15887333289";
+        List <String> usersID = new ArrayList<>();
+        usersID.add("23");
+        usersID.add("123");
+        DAO.addUsersInSection("15887333289","104406936880731130000",usersID);
+    }
 }

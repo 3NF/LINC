@@ -15,6 +15,7 @@
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="static Data.Constraints.CLIENT_ID" %>
+<%@ page import="com.google.gson.Gson" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -64,6 +65,7 @@
     <%
         Set<String> semReaderIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.SeminarReader));
         Set<String> teacherAssIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.TeacherAssistant));
+        Set<String> studentsIds = new HashSet<>();
 
         List<Student> allUsers = gapiManager.getUsers(user, courseId);
 
@@ -81,9 +83,12 @@
                 assistants.add(student.getProfile());
                 continue;
             }
+            studentsIds.add(student.getProfile().getId());
             students.add(student.getProfile());
         }
-
+        String teacherAssistantJson = new Gson().toJson(teacherAssIds);
+        String studentJson = new Gson().toJson(studentsIds);
+        String semReadersJson = new Gson().toJson(semReaderIds);
     %>
 
 </head>
@@ -188,6 +193,7 @@
                             </tr>
                             <%}%>
                         </table>
+                        <button class = "btn btn-light" style="width:260px;color:black" onclick='randomSections(<%=teacherAssistantJson%>,<%=studentJson%>,<%=semReadersJson%>,<%=courseId%>)'> Random sections for teacher assistants </button>
                     </div>
                 </div>
             </div>

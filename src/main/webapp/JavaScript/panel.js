@@ -103,3 +103,67 @@ function sendAssignments(assignmentId) {
     }
 }
 
+/**
+ * Shuffles array in place. ES6 version
+ * @param {Array} a items An array containing the items.
+ */
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function giveInSection(leader,students,nashti,inSection,courseID){
+    let l = 0;
+    for (let k = 0;k < leader.length; ++ k) {
+        console.log(leader[k]);
+        let r = l + inSection - 1;
+        if (nashti > 0) {
+            ++r;
+            --nashti;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/user/addInSectionDispatcher',
+            data: JSON.stringify(
+                {
+                    "leaderID": leader[k],
+                    "courseID": courseID,
+                    "sections": students.slice(l, r)
+                }
+            ),
+            success: function () {
+                alert("Successfully downloaded assignment files.");
+            },
+            error: function () {
+                console.log('Service call failed!');
+            }
+        });
+        l = r + 1;
+    }
+}
+
+function randomSections(teacherAssistants,students,semReaders,courseID){
+    /*console.log(teacherAssistants);
+    console.log(students);
+    console.log(semReaders);*/
+    shuffle(teacherAssistants);
+    shuffle(students);
+    shuffle(semReaders);
+    /*console.log("fuchuri");
+    console.log(teacherAssistants);
+    console.log(students);
+    console.log(semReaders);*/
+    let teacherAssistatnsCnt = teacherAssistants.length;
+    let studentsCnt = students.length;
+    let semReadersCnt = semReaders.length;
+
+    let inSectionAssistant = studentsCnt/teacherAssistatnsCnt;
+    let nashti = studentsCnt % teacherAssistatnsCnt;
+    let inSectionSemReader = studentsCnt/teacherAssistatnsCnt;
+    giveInSection(teacherAssistants,students,nashti,inSectionAssistant,courseID);
+    nashti = studentsCnt%teacherAssistatnsCnt;
+    giveInSection(semReadersCnt,students,nashti,inSectionSemReader,courseID);
+}
