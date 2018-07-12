@@ -165,5 +165,5 @@ function randomSections(teacherAssistants,students,semReaders,courseID){
     let inSectionSemReader = studentsCnt/teacherAssistatnsCnt;
     giveInSection(teacherAssistants,students,nashti,inSectionAssistant,courseID);
     nashti = studentsCnt%teacherAssistatnsCnt;
-    giveInSection(semReadersCnt,students,nashti,inSectionSemReader,courseID);
+    giveInSection(semReaders,students,nashti,inSectionSemReader,courseID);
 }
