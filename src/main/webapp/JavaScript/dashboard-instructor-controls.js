@@ -185,16 +185,19 @@ function suggestionAdditionError () {
     alert ("Couldn't add new suggestion");
 }
 
-// TODO Bakuri
 function updateGrade(selectObj) {
-    var selectIndex=selectObj.selectedIndex;
-    var grade=selectObj.options[selectIndex].text;
-    $.ajax({
-        url: "/user/update_grade",
-        method: "POST",
-        data: {'grade': grade,
+    if (window.confirm("Do You want to grade assignments?")) {
+        let selectIndex=selectObj.selectedIndex;
+        let grade=selectObj.options[selectIndex].text;
+        $.ajax({
+            url: "/user/update_grade",
+            method: "POST",
+            data: {'grade': grade,
                 'assignmentID' : getParameter("assignmentID"),
                 'userID' : getParameter("userID")
-        }
-    });
+            }
+        });
+    } else {
+        $('#instructorSelector').prop('selectedIndex' , 0);
+    }
 }
