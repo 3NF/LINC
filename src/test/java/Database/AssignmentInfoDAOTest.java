@@ -23,4 +23,13 @@ public class AssignmentInfoDAOTest {
         AssignmentInfoDAO.addGrade(userID , grade , assignmentID);
     }
 
+    @Test
+    public void getGradeTest(){
+        String userID = "115209239224583784484";
+        String assignmentID = "12373837357";
+        String grade = AssignmentInfoDAO.getGrade(userID , assignmentID);
+        System.out.println(grade);
+    }
+
+
 }

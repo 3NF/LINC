@@ -171,6 +171,7 @@ public class UserDAO
             statement.setString(2 , userID);
             statement.setString(3 , role.toString());
             int result = statement.executeUpdate();
+            statement.close();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -186,6 +187,7 @@ public class UserDAO
             statement.setString(2 , courseID);
             statement.setString(3 , role.toString());
             int result = statement.executeUpdate();
+            statement.close();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
