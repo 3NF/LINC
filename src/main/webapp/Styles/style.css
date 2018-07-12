@@ -297,6 +297,10 @@ html, body {
     background-color: #2bd1c0;
 }
 
+.grade_Minus {
+    background-color: #f7f327;
+}
+
 .grade_MinusMinus {
     background-color: #38b747;
 }
