@@ -125,6 +125,7 @@ public class AssignmentInfoDAO {
     }
 
     public  String getGrade(String userID , String assignmentID){
+        String grade = "Not graded yet";
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();
             String query = "SELECT * FROM grades WHERE assignmentID=? AND userID=?";
@@ -132,7 +133,6 @@ public class AssignmentInfoDAO {
             statement.setString(1,assignmentID);
             statement.setString(2,userID);
             ResultSet result = statement.executeQuery();
-            String grade = "Not graded yet";
             if (result.next()) {
                 grade = result.getString("grade");
             }
@@ -142,10 +142,10 @@ public class AssignmentInfoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return Grade.MinusMinus.getName();
+        return grade;
     }
 
-    public void updateGrade(String assignmentID,String userID,String grade){
+    public void updateGrade(String assignmentID, String userID, String grade){
         try {
             Connection connection = connectionPool.getConnection();
             String query = "INSERT INTO `grades`(`assignmentID`, `userID`, `grade`) VALUES (?,?,?) " +

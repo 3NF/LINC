@@ -13,12 +13,11 @@ import java.io.IOException;
 @WebServlet(name = "UpdateGradeServlet" , urlPatterns = "/user/update_grade")
 public class UpdateGradeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String gradeS = request.getParameter("grade");
-        String courseID = request.getParameter(Constraints.COURSE_ID);
+        String grade = request.getParameter("grade");
+        String assignmentID = request.getParameter(Constraints.ASSIGNMENT_ID);
         String userID = request.getParameter(Constraints.USER_ID);
-        String noSpaceStr = gradeS.replaceAll("\\s", "");
-        AssignmentInfoDAO.Grade grade = AssignmentInfoDAO.Grade.valueOf(noSpaceStr);
-        System.out.println(grade.getName());
+        AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(Constraints.ASSIGNMENT_INFO_DAO);
+        assignmentInfoDAO.updateGrade(assignmentID , userID , grade);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

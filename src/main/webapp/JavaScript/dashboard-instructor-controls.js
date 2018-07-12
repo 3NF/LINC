@@ -185,15 +185,15 @@ function suggestionAdditionError () {
     alert ("Couldn't add new suggestion");
 }
 
+// TODO Bakuri
 function updateGrade(selectObj) {
     var selectIndex=selectObj.selectedIndex;
     var grade=selectObj.options[selectIndex].text;
-    console.log(grade);
     $.ajax({
         url: "/user/update_grade",
         method: "POST",
         data: {'grade': grade,
-                'courseID' : getParameter("courseID"),
+                'assignmentID' : getParameter("assignmentID"),
                 'userID' : getParameter("userID")
         }
     });

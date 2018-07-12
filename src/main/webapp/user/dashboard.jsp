@@ -169,7 +169,7 @@
         </div>
     </div>
     <div id="instructorButton">
-            <select class="selectpicker" data-style="btn-primary" name="grade" onchange="updateGrade(this)">
+            <select class="form-control selectpicker show-tick" data-style="btn-primary" name="grade" onchange="updateGrade(this)" style="width : 100px">
                 <option></option>
                 <option>Plus Plus</option>
                 <option>Plus</option>
@@ -183,7 +183,7 @@
         </form>
     </div>
     <div id="showGrade">
-        <p>Your grade is <%=AssignmentInfoDAO.getGrade(userID , assignmentID)%></p>
+        <p>Your grade is <%=assignmentInfoDAO.getGrade(userID , assignmentID)%></p>
     </div>
 </div>
 </body>
