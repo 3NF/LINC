@@ -102,7 +102,7 @@
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="height: 90%">
         <% for (Assignment assignment : uploaded) {%>
-        <div class="sidenav-item"  onclick=sendAssignments('<%=assignment.getId()%>')>
+        <div class="sidenav-item"  onclick=isDonwloaded('<%=assignment.getId()%>')>
             <p style="color: green"><%=assignment.getName()%></p>
         </div>
         <%}%>

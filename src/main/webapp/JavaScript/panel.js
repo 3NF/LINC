@@ -63,6 +63,10 @@ function getAssignment(assignmentId) {
     }
 }
 
+function isDonwloaded(assignmentID){
+    alert("You have allready uploaded the assignment");
+}
+
 function sendAssignments(assignmentId) {
     const courseID = getParameter("courseID");
     if (window.confirm("Do You want to download assignments?")) {
