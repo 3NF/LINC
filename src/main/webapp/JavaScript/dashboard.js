@@ -173,10 +173,19 @@ function loadCodeInfoError() {
 function fetchCode(id) {
     toggleLoading();
     let dataObj;
-    dataObj = {
-        codeID: id
-    };
-
+    let uid = getParameter("userID");
+    if (uid !== null) {
+        dataObj = {
+            courseID: getParameter("courseID"),
+            codeID: id,
+            userID: uid
+        }
+    } else {
+        dataObj = {
+            courseID: getParameter("courseID"),
+            codeID: id
+        }
+    }
 
     $.ajax({
         url: "/user/code_dispatcher",
