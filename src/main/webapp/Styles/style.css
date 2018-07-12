@@ -276,3 +276,7 @@ html, body {
 .g-signin2{
     margin: 0 auto;
 }
+
+.grade_CheckPlus {
+    background-color: #0a001f;
+}
