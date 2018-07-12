@@ -135,7 +135,6 @@ function giveInSection(leader,students,nashti,inSection,courseID){
                 }
             ),
             success: function () {
-                alert("Successfully downloaded assignment files.");
             },
             error: function () {
                 console.log('Service call failed!');
@@ -152,10 +151,10 @@ function randomSections(teacherAssistants,students,semReaders,courseID){
     shuffle(teacherAssistants);
     shuffle(students);
     shuffle(semReaders);
-    /*console.log("fuchuri");
+    console.log("fuchuri");
     console.log(teacherAssistants);
     console.log(students);
-    console.log(semReaders);*/
+    console.log(semReaders);
     let teacherAssistatnsCnt = teacherAssistants.length;
     let studentsCnt = students.length;
     let semReadersCnt = semReaders.length;
