@@ -25,6 +25,9 @@ public class User {
     }
 
     public User(String userId,String email,String picturePath){
+        this.firstName = "Firstname";
+        this.lastName = "Lastname";
+
         this.userId = userId;
         this.email = email;
         this.picturePath = picturePath;

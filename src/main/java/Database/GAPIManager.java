@@ -91,7 +91,6 @@ public class GAPIManager {
 
 
     public User getUserById(String requesterId, String targetId) {
-
         UserDAO.UserCredential cred = UserDAO.getUserCredential(requesterId);
         String accessToken = cred.getAccessToken();
         String refreshToken = cred.getRefreshToken();
@@ -107,7 +106,7 @@ public class GAPIManager {
         try {
             profile = room.userProfiles().get(targetId).execute();
         } catch (IOException e) {
-            e.printStackTrace();
+            return new User (targetId, null, "/Images/temp_user_icon.svg");
         }
 
         return new User(profile.getEmailAddress(), profile.getName().getGivenName(), profile.getName().getFamilyName(), targetId, profile.getPhotoUrl(), "", "");
