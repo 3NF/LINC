@@ -59,7 +59,8 @@ public class CodeDispatcher extends HttpServlet
             UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
 
             CodeFile codeFile = codeFilesDAO.getFilesContent(codeFilesId);
-            codeFile.RetrieveUsers(userID, userStorage);
+            if (userStorage != null)
+                codeFile.RetrieveUsers(userID, userStorage);
 
             return new GsonBuilder().create().toJson(codeFile);
         } catch (SQLException e) {
