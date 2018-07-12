@@ -7,7 +7,7 @@ let codeIDs;
 //Array for storing suggestion objects
 let suggestions = [];
 //HTML line element array
-const lines = [];
+var lines = [];
 
 let codeInfo = [];
 
@@ -15,7 +15,7 @@ let activeSuggestionID = -1;
 let activeCodeFileID = -1;
 
 //New reply block
-const replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
+var replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
     "                            <div class = \"reply-panel\">\n" +
     "                                <img class = \"reply-profile-picture\" src=\"../Images/temp_user_icon.svg\">\n" +
     "                                <div class = \"reply-content\">\n" +
@@ -33,9 +33,10 @@ const warningColor = "#efcf4f";
 
 //AJAX successful code loading response callback
 function loadCode(data) {
-    const receivedData = data;
+    var receivedData = data;
     suggestions = receivedData.suggestions;
 
+    console.log(receivedData);
     activeCodeFileID = receivedData.fileId;
     codeMirror.setValue(receivedData.code);
 
@@ -49,24 +50,28 @@ function loadCode(data) {
 function placeSuggestions() {
     for (let i = 0; i < suggestions.length; i++) {
 
-        let color;
-        const start = suggestions[i].startInd;
-        const end = suggestions[i].endInd;
         if (suggestions[i].type === "Error") {
             suggestions[i].color = errorColor;
         } else {
             suggestions[i].color = warningColor;
         }
 
-        /*
-            Edit suggestion lines
-         */
-        for (let lineIterator = start; lineIterator < end + 1; lineIterator++) {
-            $(lines[lineIterator]).css("background-color", suggestions[i].color);
-            $(lines[lineIterator]).css("color", "#ffffff");
-            $(lines[lineIterator]).unbind("click");
-            $(lines[lineIterator]).click(i, viewSuggestion);
-        }
+        placeSuggestion (i, suggestions[i]);
+    }
+}
+
+function placeSuggestion (ind, suggestion) {
+    const start = suggestion.startInd;
+    const end = suggestion.endInd;
+
+    /*
+        Edit suggestion lines
+     */
+    for (let lineIterator = start; lineIterator < end + 1; lineIterator++) {
+        $(lines[lineIterator]).css("background-color", suggestion.color);
+        $(lines[lineIterator]).css("color", "#ffffff");
+        $(lines[lineIterator]).unbind("click");
+        $(lines[lineIterator]).click(ind, viewSuggestion);
     }
 }
 
@@ -97,13 +102,14 @@ function viewSuggestion(eventHandler) {
     }
 
     //Load suggestion data
-    const suggestion = suggestions[eventHandler.data];
+    var suggestion = suggestions[eventHandler.data];
     $("#comment-content").css("border-right-color", suggestion.color);
     $("#comment-text").html(suggestion.content);
     $("#comment-user-name").html(suggestion.user.firstName + " " + suggestion.user.lastName);
     $("#comment-profile-picture").attr("src", suggestion.user.picturePath);
     $("#comment-date").html(suggestion.timeStamp);
     activeSuggestionID = suggestion.suggestionID;
+    console.log(activeSuggestionID);
 
     fetchReplies(suggestion.suggestionID);
 }
@@ -112,13 +118,14 @@ function viewSuggestion(eventHandler) {
     Loads new code in CodeMirror editor
  */
 function navbarOnClick() {
+    console.log("There was a Click!");
 
     //Change html elements' styles
     $("#navbar").find(".active").removeClass("active");
     $(event.target).parent().attr("class", "active");
 
     //Get name of code
-    const name = $(event.target).text();
+    var name = $(event.target).text();
 
     fetchCode(name);
 }
@@ -138,6 +145,7 @@ function fetchCodesInfo() {
             assignmentID: assId
         }
     }
+    console.log(JSON.stringify(dataObj));
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
@@ -160,6 +168,7 @@ function loadCodesInfo(data) {
     codeInfo.sort(function (a, b) {
         return (a.value < b.value ? -1 : (a.value > b.value ? 1 : 0))
     });
+    console.log(codeInfo);
     addCodes();
 }
 
@@ -203,6 +212,7 @@ function fetchCode(id) {
 //Sends AJAX request to fetch new replies
 function fetchReplies(id) {
     toggleLoading();
+    console.log(id);
     $.ajax({
         url: "/user/reply_dispatcher",
         method: "POST",
@@ -221,6 +231,7 @@ function fetchReplies(id) {
 
 //AJAX successful callback for receiving reply data
 function loadReplies(data) {
+    console.log(data);
     clearReplies();
     for (let i = 0; i < data.length; i++) {
         drawReply(data[i]);
@@ -229,6 +240,7 @@ function loadReplies(data) {
 
 //AJAX error callback for receiving reply data
 function loadReplyError(data) {
+    console.log(data);
     alert("Couldn't get replies");
 }
 
@@ -239,7 +251,8 @@ function clearReplies() {
 
 //Draws one new reply in the suggestion panel
 function drawReply(reply) {
-    const newBlock = $(replyBlock).closest(".reply-panel-wrapper");
+    var newBlock = $(replyBlock).closest(".reply-panel-wrapper");
+    console.log(reply);
 
     $(newBlock).find(".reply-user-name").html(reply.user.firstName + " " + reply.user.lastName);
     $(newBlock).find(".reply-profile-picture").attr("src", reply.user.picturePath);
@@ -317,6 +330,10 @@ function onLoad() {
 
 function submitReply() {
     toggleLoading();
+    var replyContent = replyEditor.parseContent();
+    console.log(replyContent);
+    $("#reply-editor-content").html("");
+
     $.ajax({
         url: "/user/reply_dispatcher",
         method: "POST",

@@ -70,6 +70,7 @@
     %>
 
     <%
+        System.out.println(request.getParameter(USER_ID));
     if (request.getParameter(USER_ID) != null) {%>
         <%--Comment following line if you want to view as Student--%>
         <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversione"></script>
@@ -144,10 +145,10 @@
                     </div>
                 </div>
                 <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
-                    <form>
+                    <form onsubmit="submitSuggestion(); return false;">
                         <textarea id="comment-editor-content" class="editor-content" name="content"></textarea>
                         <br>
-                        <button type="button" class="btn btn-primary" onclick="submitSuggestion()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
                         </button>
                         <button id="suggestion-type" type="button" class="btn btn-warning"
@@ -155,10 +156,10 @@
                     </form>
                 </div>
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
-                    <form>
+                    <form onsubmit="submitReply(); return false;">
                         <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
                         <br>
-                        <button type="button" class="btn btn-primary" onclick="submitReply()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
