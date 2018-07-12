@@ -6,11 +6,11 @@ html, body {
     display: flex;
     background-color: white;
     flex-direction: column;
-    height: 80%;
+    height: calc(100% - 55px);
     width: 0;
-    z-index: 100;
-    top: 0;
-    left: 80px;
+    z-index: 150;
+    top: 55px;
+    left: 0;
     overflow-x: hidden;
     transition: 0.5s;
 }
@@ -174,8 +174,8 @@ html, body {
 }
 
 .fill {
-    margin-top: 5px;
     display: none;
+    background-color: white;
     min-width: 100%;
     text-align: center;
     height: 55px;
@@ -234,8 +234,7 @@ html, body {
 }
 
 #jstree_demo_div_container {
-    height: 80%;
-    background-color: black;
+    height: calc(100% - 120px);
     z-index: 120;
     position: absolute;
     left: 5px;
@@ -244,20 +243,22 @@ html, body {
 
 #jstree_demo_div{
     display: block;
-    height: 70%;
+    background-color: white;
+    height: 90%;
     z-index: 121;
-    position: fixed;
+    position: relative;
     left: 5px;
     min-height: 500px;
     min-width: 500px;
 }
 
 #toggle-project-view{
+    bottom: 5px;
     display: block;
     position: fixed;
-    top: 20%;
-    font-size: 20px;
-    left: 5px;
+    font-size: 50px;
+    cursor: pointer;
+    left: 10px;
 }
 
 #login-logo {

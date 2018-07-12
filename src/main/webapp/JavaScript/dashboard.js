@@ -44,23 +44,6 @@ function loadCode(data) {
     placeSuggestions();
 }
 
-
-function loadFileTree(paths) {
-    let baseNode = document.getElementById("jstree_demo_div");
-    let rootUl = document.createElement("ul");
-
-    baseNode.appendChild(rootUl);
-
-    paths.forEach(function (pIndex, path) {
-        let paths = path.split('/');
-        paths.forEach(function (nIndex, node) {
-            let newLi = document.createElement("li");
-            rootUl.appendChild(newLi);
-            rootUl = rootUl.childNodes[0];
-        })
-    })
-}
-
 /*
     Places suggestions in appropriate line intervals
  */
@@ -174,6 +157,7 @@ function loadCodesInfo(data) {
 }
 
 function addCodes() {
+    console.log("yle");
     let ul = document.createElement("ul");
     $('#jstree_demo_div')[0].appendChild(ul);
     draw_view_rec(ul, 0, codeInfo.length - 1);
@@ -207,15 +191,6 @@ function fetchCode(id) {
             loadCodeError(data, textStatus, jQxhr);
         }
     });
-}
-
-function getCodeInd(name) {
-    for (let i = 0; i < codeInfo.length; i++) {
-        if (codeInfo[i].name === name) {
-            return codeInfo[i].id;
-        }
-    }
-    return undefined;
 }
 
 
