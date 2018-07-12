@@ -1,18 +1,16 @@
 html, body {
-    height: 100%;
-    width: 100%;
     margin: 0;
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
 .sidenav {
-    display: none;
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 100;
-    top: 0;
-    left: 80px;
+    display: flex;
     background-color: white;
+    flex-direction: column;
+    height: calc(100% - 55px);
+    width: 0;
+    z-index: 150;
+    top: 55px;
+    left: 0;
     overflow-x: hidden;
     transition: 0.5s;
 }
@@ -67,7 +65,6 @@ html, body {
     content: "";
     position: absolute;
     width: 0;
-    height: 100%;
     top: 0;
     right: 0;
     background: gray;
@@ -177,11 +174,9 @@ html, body {
 }
 
 .fill {
-    margin-top: 5px;
     display: none;
-    width: 80px;
-    min-width: 100%;
     background-color: white;
+    min-width: 100%;
     text-align: center;
     height: 55px;
     z-index: 101;
@@ -197,6 +192,9 @@ html, body {
     width: 100%;
 }
 
+#mySidenav {
+    position: absolute;
+}
 
 .sidenav-item {
     text-overflow: ellipsis;
@@ -235,16 +233,35 @@ html, body {
     border-top: .1rem solid rgba(0,0,0,0.12);
 }
 
-#jstree_demo_div {
-    height: 100%;
-    background-color: white;
+#jstree_demo_div_container {
+    height: calc(100% - 120px);
     z-index: 120;
     position: absolute;
+    left: 5px;
+    min-width: 500px;
+}
+
+#jstree_demo_div{
+    display: block;
+    background-color: white;
+    height: 90%;
+    z-index: 121;
+    position: relative;
     left: 5px;
     min-height: 500px;
     min-width: 500px;
 }
 
+#toggle-project-view{
+    bottom: 5px;
+    display: block;
+    position: fixed;
+    font-size: 50px;
+    cursor: pointer;
+    left: 10px;
+}
+
 #login-logo {
     width: 50%;
 }
+

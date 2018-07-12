@@ -43,9 +43,9 @@
 
 <body onload="onLoad()">
 <div class="fill">
-    <div style="cursor:pointer" onclick="togleNav()">
+    <div style="cursor:pointer" onclick="toggleNav()">
         <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
-    <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
+    <div id="menuBar" onclick="toggleNav()"><span class="glyphicon">&#xe236;</span>
     </div>
 </div>
 <div id="mySidenav" class="sidenav">

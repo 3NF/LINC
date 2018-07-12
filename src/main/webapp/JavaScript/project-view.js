@@ -4,7 +4,22 @@ $(document).ready(function () {
     });
 });
 
+let projectViewIsVisible = false;
+function toggleProjectView() {
+    console.log("bakuri");
+    if (!projectViewIsVisible) {
+        $("#jstree_demo_div_container").animate({width:'toggle'}, 500);
+        $("#file-open").html("&#xe117;");
+    } else {
+        $("#jstree_demo_div_container").animate({width:'toggle'}, 0);
+        $("#file-open").html("&#xe118;");
+    }
+    projectViewIsVisible = !projectViewIsVisible;
+}
+
+
 function build_project_view() {
+    console.log("gaba");
     $('#jstree_demo_div').jstree();
 }
 function draw_view_rec(dv, l, r) {

@@ -86,32 +86,32 @@
 <body>
 <div class="fill">
     <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
-    <button id="menuBar" onclick="togleNav()"><span></span><span></span><span></span>
+    <button id="menuBar" onclick="toggleNav()"><span></span><span></span><span></span>
     </button>
-</div>
-<div id="mySidenav" class="sidenav">
-    <div class="sidenav-container" style="margin-top: 10px">
-        <div class="sidenav-item" id = "goHome">
-            <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
-        </div>
-    </div>
-    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-    <div class="sidenav-container" style="height: 90%">
-        <% for (Assignment assignment : assignments) {%>
-        <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
-            <p><%=assignment.getName()%></p>
-        </div>
-        <%}%>
-    </div>
-    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-    <div class="sidenav-container" style="margin-top: 10px">
-        <div class="sidenav-item">
-            <p onclick="signOut()">Logout</p>
-        </div>
-    </div>
 </div>
 
 <div id = "content">
+    <div id="mySidenav" class="sidenav">
+        <div class="sidenav-container" style="margin-top: 10px">
+            <div class="sidenav-item" id = "goHome">
+                <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
+            </div>
+        </div>
+        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+        <div class="sidenav-container" style="height: 90%">
+            <% for (Assignment assignment : assignments) {%>
+            <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
+                <p><%=assignment.getName()%></p>
+            </div>
+            <%}%>
+        </div>
+        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+        <div class="sidenav-container" style="margin-top: 10px">
+            <div class="sidenav-item">
+                <p onclick="signOut()">Logout</p>
+            </div>
+        </div>
+    </div>
     <% for (User student: students) {%>
     <div class = "user-box" align = "center" onclick="chooseStudent(<%=student.getUserId()%>)">
         <img class = "user-img" src="<%=student.getPicturePath()%>">

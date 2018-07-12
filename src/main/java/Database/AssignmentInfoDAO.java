@@ -86,4 +86,40 @@ public class AssignmentInfoDAO {
             e.printStackTrace();
         }
     }
+
+    public enum Grade {
+        PlusPlus("Plus Plus"),
+        Plus("Plus"),
+        CheckPlus("Check Plus"),
+        Check("Check"),
+        CheckMinus("Check Minus"),
+        Minus("Minus"),
+        MinusMinus("Minus Minus"),
+        None("0");
+
+        private String gName;
+
+        Grade(String name) {
+            this.gName = name;
+        }
+
+        public String getName() {
+            return gName;
+        }
+    }
+
+    public static void addGrade(String userID , Grade grade , String assignmentID){
+        try {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            String query = "INSERT INTO `grades`(`assignmentID`, `userID`, `grade`) VALUES (?,?,?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1 , assignmentID);
+            statement.setString(2 , userID);
+            statement.setString(3 , grade.getName());
+            int result = statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

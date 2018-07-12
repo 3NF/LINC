@@ -35,7 +35,7 @@
 <body>
 <div class="fill">
     <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
-    <button id="menuBar" onclick="togleNav()"><span></span><span></span><span></span>
+    <button id="menuBar" onclick="toggleNav()"><span></span><span></span><span></span>
     </button>
 </div>
 <div id="mySidenav" class="sidenav">
