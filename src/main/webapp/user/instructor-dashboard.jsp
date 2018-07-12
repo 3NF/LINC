@@ -85,10 +85,9 @@
 </head>
 <body>
 <div class="fill">
-    <div style="cursor:pointer" onclick="togleNav()">
-        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
-    <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
-    </div>
+    <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
+    <button id="menuBar" onclick="togleNav()"><span></span><span></span><span></span>
+    </button>
 </div>
 <div id="mySidenav" class="sidenav">
     <div class="sidenav-container" style="margin-top: 10px">

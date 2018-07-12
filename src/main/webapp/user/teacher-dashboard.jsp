@@ -89,8 +89,7 @@
 </head>
 <body>
 <div class="fill">
-    <div style="cursor:pointer" onclick="togleNav()">
-        <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
+    <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
     <button id="menuBar" onclick="togleNav()"><span></span><span></span><span></span>
     </button>
 </div>
