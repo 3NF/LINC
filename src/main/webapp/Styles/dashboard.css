@@ -80,10 +80,6 @@ html {
     height: 100%;
 }
 
-#content {
-    min-height: 100%;
-}
-
 #comment-user-name {
     font-weight: bold;
 }
