@@ -5,12 +5,13 @@ import Models.Reply;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javafx.util.Pair;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.*;
 
 public class AssignmentInfoDAO {
 
-    MysqlDataSource connectionPool;
+    private MysqlDataSource connectionPool;
 
     public AssignmentInfoDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
@@ -159,5 +160,33 @@ public class AssignmentInfoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List <Pair<String,String>> getUsersGrades(String classrooomID, String userID){
+        List <Pair<String,String>>  list = new ArrayList<Pair<String,String>>();
+        try {
+            String query = "SELECT assignments.idInClassroom,grades.assignmentID,grades.grade FROM assignments inner join " +
+                    "grades on grades.assignmentID=assignments.idInClassroom WHERE userID=? AND assignments.courseID=?";
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,userID);
+            statement.setString(2,classrooomID);
+            ResultSet result = statement.executeQuery();
+            while (result.next()){
+                String assignmentID = result.getString("grades.assignmentID");
+                String grade = result.getString("grades.grade");
+                list.add(new Pair<>(assignmentID,grade));
+            }
+            statement.close();
+            connection.close();
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void main(String args[]){
+        //System.err.println(new AssignmentInfoDAO(ConnectionPool.getInstance()).getUsersGrades("15887333289","105303857051815287047"));
     }
 }
