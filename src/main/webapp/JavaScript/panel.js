@@ -46,32 +46,36 @@ function signOut() {
 
 function getParameter (name) {
     try {
-        results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-        return results[1] || 0;
+        let result = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        return result[1] || 0;
     } catch (e) {
         return null;
     }
 }
 
 function getAssignment(assignmentId) {
+    console.log(assignmentId);
     if (getParameter("assignmentID") != null) {
         location.href = changeParameter ("assignmentID", assignmentId);
     } else {
         assignmentID = assignmentId;
     }
+
+}
+
+function isDownloaded(assignmentID){
+    console.log(assignmentID);
+    alert("You have allready uploaded the assignment");
 }
 
 function changeParameter(paramName, paramVal) {
-    var oldLink = location.href;
-    var chunks = oldLink.split("&");
-    var newLink = chunks[0] + "&";
-    for (var i = 1; i < chunks.length; i ++) {
-        if (chunks[i] === paramName + "=") {
-            chunks[i+1] = paramVal;
-        }
-        newLink += (chunks[i] + "&");
-    }
-    return newLink.substring(0, newLink.length - 1);
+    console.log(paramVal);
+    const oldLink = location.href;
+    let ind_of_param = oldLink.indexOf(paramName);
+    let old_value_start = oldLink.indexOf("=", ind_of_param + 1) + 1;
+    let old_value_end = oldLink.indexOf("&", old_value_start + 1);
+    if (old_value_end === -1) old_value_end = oldLink.length;
+    return oldLink.substr(0, old_value_start) + paramVal + oldLink.substr(old_value_end);
 }
 
 function sendAssignments(assignmentId) {
@@ -137,7 +141,7 @@ function giveInSection(leaders, students, rem, inSection, courseID){
     }
 }
 
-function randomSections(teacherAssistants, students, semReaders, courseID) {
+function randomSections(teacherAssistants, students, semReaders, courseID){
 
     shuffle(teacherAssistants);
     shuffle(students);
@@ -151,10 +155,10 @@ function randomSections(teacherAssistants, students, semReaders, courseID) {
     let rem = studentsCnt % teacherAssistantCnt;
     let inSectionSemReader = studentsCnt / semReadersCnt;
 
-    giveInSection(teacherAssistants, students, rem, inSectionAssistant, courseID);
+    giveInSection(teacherAssistants,students,rem,inSectionAssistant,courseID);
 
-    rem = studentsCnt % teacherAssistantCnt;
+    rem = studentsCnt%teacherAssistantCnt;
 
-    giveInSection(semReaders, students, rem, inSectionSemReader, courseID);
-    alert("Shuffle have been made!");
+    giveInSection(semReaders,students,rem,inSectionSemReader,courseID);
+    alert("now section,seminarers leaders has their students");
 }
