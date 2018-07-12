@@ -179,8 +179,6 @@ function submitSuggestion () {
         endInd: lastMarker
     };
 
-    console.log(suggestionContent);
-    console.log(suggestionType);
     $.ajax({
         url: "/user/suggestion_dispatcher",
         method: "POST",
@@ -211,6 +209,6 @@ function updateGrade(selectObj) {
             }
         });
     } else {
-        $('#instructorSelector').prop('selectedIndex' , 0);
+        $("#gradeSelector").prop("selectedIndex", 0);
     }
 }

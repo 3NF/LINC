@@ -38,7 +38,6 @@ public class CodeFilesDAO {
         query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE Code_FileID=?";
         statement = connection.prepareStatement(query);
         statement.setString(1,codeFileId);
-        //System.err.println(query);
         result = statement.executeQuery();
         List<Suggestion> suggestions = new ArrayList<>();
         while (result.next()){
@@ -50,7 +49,6 @@ public class CodeFilesDAO {
             Suggestion.SuggestionType suggestionType = Suggestion.SuggestionType.valueOf(type);
             int startInd = result.getInt("startInd");
             int endInd = result.getInt("endInd");
-            //System.err.println(suggestionId + ' ' + uId + ' ' + type);
             suggestions.add(new Suggestion(suggestionType,uId, codeFileId,suggestionId,startInd,endInd,text,date));
         }
         statement.close();
@@ -119,7 +117,6 @@ public class CodeFilesDAO {
         int i = 0;
         boolean isToBeInserted = false;
         for (Object file: assignment) {
-            //System.err.println(((File) fi0le).getFileName());
             String fileName = ((File) file).getFileName();
             String userID = ((File) file).getUserID();
             String assignmentID = assignment.getAssignmentID();

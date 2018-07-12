@@ -36,7 +36,6 @@ function loadCode(data) {
     const receivedData = data;
     suggestions = receivedData.suggestions;
 
-    console.log(receivedData);
     activeCodeFileID = receivedData.fileId;
     codeMirror.setValue(receivedData.code);
 
@@ -105,7 +104,6 @@ function viewSuggestion(eventHandler) {
     $("#comment-profile-picture").attr("src", suggestion.user.picturePath);
     $("#comment-date").html(suggestion.timeStamp);
     activeSuggestionID = suggestion.suggestionID;
-    console.log(activeSuggestionID);
 
     fetchReplies(suggestion.suggestionID);
 }
@@ -114,7 +112,6 @@ function viewSuggestion(eventHandler) {
     Loads new code in CodeMirror editor
  */
 function navbarOnClick() {
-    console.log("There was a Click!");
 
     //Change html elements' styles
     $("#navbar").find(".active").removeClass("active");
@@ -141,7 +138,6 @@ function fetchCodesInfo() {
             assignmentID: assId
         }
     }
-    console.log(JSON.stringify(dataObj));
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
@@ -164,7 +160,6 @@ function loadCodesInfo(data) {
     codeInfo.sort(function (a, b) {
         return (a.value < b.value ? -1 : (a.value > b.value ? 1 : 0))
     });
-    console.log(codeInfo);
     addCodes();
 }
 
@@ -208,7 +203,6 @@ function fetchCode(id) {
 //Sends AJAX request to fetch new replies
 function fetchReplies(id) {
     toggleLoading();
-    console.log(id);
     $.ajax({
         url: "/user/reply_dispatcher",
         method: "POST",
@@ -227,7 +221,6 @@ function fetchReplies(id) {
 
 //AJAX successful callback for receiving reply data
 function loadReplies(data) {
-    console.log(data);
     clearReplies();
     for (let i = 0; i < data.length; i++) {
         drawReply(data[i]);
@@ -236,7 +229,6 @@ function loadReplies(data) {
 
 //AJAX error callback for receiving reply data
 function loadReplyError(data) {
-    console.log(data);
     alert("Couldn't get replies");
 }
 
@@ -248,7 +240,6 @@ function clearReplies() {
 //Draws one new reply in the suggestion panel
 function drawReply(reply) {
     const newBlock = $(replyBlock).closest(".reply-panel-wrapper");
-    console.log(reply);
 
     $(newBlock).find(".reply-user-name").html(reply.user.firstName + " " + reply.user.lastName);
     $(newBlock).find(".reply-profile-picture").attr("src", reply.user.picturePath);
@@ -326,7 +317,6 @@ function onLoad() {
 
 function submitReply() {
     toggleLoading();
-    console.log(replyEditor.parseContent());
     $.ajax({
         url: "/user/reply_dispatcher",
         method: "POST",

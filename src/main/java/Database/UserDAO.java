@@ -113,7 +113,6 @@ public class UserDAO
 
     public static String getInstructorType(String userID, String courseID){
         try {
-            System.out.println(userID + "    " + courseID);
             String query = "SELECT Type FROM instructors\n" +
                     "WHERE userID=? AND classroomID=?";
 

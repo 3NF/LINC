@@ -5,7 +5,6 @@ $(document).ready(function () {
     $(".sidenav").css("display", "block");
 
     $('#goHome').on("click", function(){
-        console.log("11");
         location.assign("/user/choose-room.jsp");
     });
 
@@ -13,7 +12,6 @@ $(document).ready(function () {
         if (this.className === 'on') this.classList.remove('on');
         else this.classList.add('on');
     });
-    console.log($(".sidenav-container").first().html());//.attr("onclick"));
 });
 
 
@@ -54,7 +52,6 @@ function getParameter (name) {
 }
 
 function getAssignment(assignmentId) {
-    console.log(assignmentId);
     if (getParameter("assignmentID") != null) {
         location.href = changeParameter ("assignmentID", assignmentId);
     } else {
@@ -64,12 +61,10 @@ function getAssignment(assignmentId) {
 }
 
 function isDownloaded(assignmentID){
-    console.log(assignmentID);
     alert("You have allready uploaded the assignment");
 }
 
 function changeParameter(paramName, paramVal) {
-    console.log(paramVal);
     const oldLink = location.href;
     let ind_of_param = oldLink.indexOf(paramName);
     let old_value_start = oldLink.indexOf("=", ind_of_param + 1) + 1;
@@ -81,7 +76,6 @@ function changeParameter(paramName, paramVal) {
 function sendAssignments(assignmentId) {
     const courseID = getParameter("courseID");
     if (window.confirm("Do You want to download assignments?")) {
-        console.log(courseID);
         $.ajax({
             type: 'POST',
             url: '/teacher-dispatcher',
@@ -131,8 +125,6 @@ function giveInSection(leaders, students, rem, inSection, courseID){
                     "sections": students.slice(l, r + 1)
                 }
             ),
-            success: function () {
-            },
             error: function () {
                 console.log('Service call failed!');
             }

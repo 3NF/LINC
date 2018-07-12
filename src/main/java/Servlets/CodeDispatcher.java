@@ -32,7 +32,6 @@ public class CodeDispatcher extends HttpServlet
             String userID = ((User) request.getSession().getAttribute(USER)).getUserId();
             SectionDAO sectionDAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
 
-            System.out.println("QWERTY");
             if (data.has(Constraints.USER_ID) && sectionDAO.isInSection(userID, data.get(Constraints.USER_ID).getAsString())) {
                 userID = data.get(Constraints.USER_ID).getAsString();
             }
@@ -41,7 +40,6 @@ public class CodeDispatcher extends HttpServlet
                 json = loadCodeNames(data,request);
             }
             else {
-                System.out.println(userID);
                 json = loadCodeWithID(data,request, userID);
             }
             //Send response to client
@@ -56,7 +54,6 @@ public class CodeDispatcher extends HttpServlet
 
     private String loadCodeWithID(JsonObject data,HttpServletRequest request, String userID){
         String codeFilesId = data.get(Constraints.CODE_ID).getAsString();
-        System.out.println(codeFilesId);
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
         try {
             UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);

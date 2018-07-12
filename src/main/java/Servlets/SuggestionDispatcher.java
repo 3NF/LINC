@@ -75,7 +75,6 @@ public class SuggestionDispatcher extends HttpServlet
 
             //Might throw IllegalArgumentException
             Suggestion.SuggestionType.valueOf(type);
-            System.out.println("YES");
 
             Suggestion suggestion = suggestionDAO.addSuggestion(user, codeFileID, type, content, startInd, endInd);
             UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);

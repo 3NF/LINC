@@ -35,7 +35,6 @@ public final class Utilities {
 	public static void unZip(String fileZip) {
 		byte[] buffer = new byte[1024];
 		String dist = subFolderName + File.separator + new File(fileZip).getName();
-		System.out.println(dist);
 		try {
 
 			//create output directory is not exists
@@ -85,20 +84,15 @@ public final class Utilities {
 		// while there are entries I process them
 		while ((entry = zis.getNextEntry()) != null) {
 			ByteArrayOutputStream fos = new ByteArrayOutputStream();
-			//System.out.println("entry: " + entry.getName() + ", " + entry.getSize());
 			byte[] buffer = new byte[1024];
 			// consume all the data from this entry
 			int read;
 			while ((read = zis.read(buffer)) > 0) {
 				fos.write(buffer, 0, read);
-				//System.err.println(read);
 			}
 			String result = fos.toString("UTF-8");
-			//System.err.println(result);
 			uploadedAssignment.addAssignmentFile(new Models.File(entry.getName(), result, actorUserID));
 			fos.close();
-			// I could close the entry, but getNextEntry does it automatically
-			// zis.closeEntry()
 		}
 	}
 

@@ -72,7 +72,7 @@
     <%
     if (request.getParameter(USER_ID) != null) {%>
         <%--Comment following line if you want to view as Student--%>
-        <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
+        <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversione"></script>
     <%}%>
     <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
     <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
@@ -165,7 +165,7 @@
         </div>
     </div>
     <div id="instructorButton">
-            <select class="form-control selectpicker show-tick" data-style="btn-primary" name="grade" onchange="updateGrade(this)">
+            <select id='gradeSelector' class="form-control selectpicker show-tick" data-style="btn-primary" name="grade" onchange="updateGrade(this)">
                 <option></option>
                 <option>Plus Plus</option>
                 <option>Plus</option>

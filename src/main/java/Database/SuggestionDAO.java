@@ -48,7 +48,6 @@ public class SuggestionDAO {
 
             return new Suggestion(Suggestion.SuggestionType.valueOf(type), user.getUserId(), codeFileID, suggestionID, startInd, endInd, content, timestamp);
         } catch (SQLException e) {
-            System.err.println("Error in suggestion addition");
             e.printStackTrace();
 
             return null;

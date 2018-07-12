@@ -10,7 +10,7 @@
 
 #code-panel {
     float: left;
-    min-width: 65%;
+    width: 65%;
     max-width: 100%;
 }
 
