@@ -54,13 +54,24 @@ function getParameter (name) {
 }
 
 function getAssignment(assignmentId) {
-    console.log(location.href);
-    console.log(getParameter("assignmentID"));
     if (getParameter("assignmentID") != null) {
-        location.href = location.href + "assignmentID=" + assignmentId;
+        location.href = changeParameter ("assignmentID", assignmentId);
     } else {
         assignmentID = assignmentId;
     }
+}
+
+function changeParameter(paramName, paramVal) {
+    var oldLink = location.href;
+    var chunks = oldLink.split("&");
+    var newLink = chunks[0] + "&";
+    for (var i = 1; i < chunks.length; i ++) {
+        if (chunks[i] === paramName + "=") {
+            chunks[i+1] = paramVal;
+        }
+        newLink += (chunks[i] + "&");
+    }
+    return newLink.substring(0, newLink.length - 1);
 }
 
 function sendAssignments(assignmentId) {

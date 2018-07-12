@@ -187,21 +187,6 @@ function addCodes() {
     $('#jstree_demo_div')[0].appendChild(ul);
     draw_view_rec(ul, 0, codeInfo.length - 1);
     build_project_view();
-    /*for (var i = 0; i < codeInfo.length; i++) {
-        console.log(codeInfo[i]);
-        var newElement = $("#navbar-element").clone(true);
-        $(newElement).removeAttr("id");
-        $(newElement).find("a").html(codeInfo[i].value);
-        $(newElement).show();
-        $(newElement).appendTo("#navbar");
-    }
-    $("#navbar-element").remove();
-    $("#navbar li:first-child").addClass("active");*/
-}
-
-function getFirstCode() {
-    const name = $("#navbar").find(".active").find("a").text();
-    fetchCode(name);
 }
 
 function loadCodeInfoError() {
