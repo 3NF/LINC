@@ -24,49 +24,46 @@
     <script src="../JavaScript/panel.js"></script>
 
 
-
     <%
         User user = (User) session.getAttribute(USER);
         List<Course> courses = GAPIManager.getInstance().getActiveRooms(user);
         System.out.println(user.getUserId());
     %>
-    <script>
-        let userProfilePicture = '<%=user.getPicturePath()%>';
-    </script>
-
 
     <title>Choose Room - LINC</title>
 </head>
 <body>
-        <div class="fill" >
-            <div style="cursor:pointer" onclick="togleNav()">
-                <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
-            </div>
-            <div id="menuBar" onclick="togleNav()">
-                <span class="glyphicon">&#xe236;</span>
-            </div>
-        </div>
-        <div id="mySidenav" class="sidenav">
-            <a class="logout" href='#' onclick="signOut()">Logout</a>
-        </div>
-        <div id = "content-wrapper">
-        <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose ClassRoom To Enter:</h1>
-
-
-        <div class="panel">
-
-            <%for (Course course : courses) {%>
-
-            <td>
-                <div class="classRoom" onclick=<%="enterClasroom(" + course.getId() + ")"%>>
-                    <h3><%=course.getName()%>
-                    </h3>
-                </div>
-            </td>
-
-            <%}%>
+<div class="fill">
+    <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
+    <button id="menuBar" onclick="togleNav()"><span></span><span></span><span></span>
+    </button>
+</div>
+<div id="mySidenav" class="sidenav">
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item">
+            <p onclick="signOut()">Logout</p>
         </div>
     </div>
+</div>
+<div id="content-wrapper">
+    <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose ClassRoom To Enter:</h1>
+
+
+    <div class="panel">
+
+        <%for (Course course : courses) {%>
+
+        <td>
+            <div class="classRoom" onclick=<%="enterClasroom(" + course.getId() + ")"%>>
+                <h3><%=course.getName()%>
+                </h3>
+            </div>
+        </td>
+
+        <%}%>
+    </div>
+</div>
 </body>
 <script>
     function enterClasroom(id) {

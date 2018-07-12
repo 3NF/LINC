@@ -32,16 +32,16 @@
     <script src="../JavaScript/dashboard.js?newversione"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="../jstree/dist/jstree.min.js"></script>
-    <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css" />
-    <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+    <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css"/>
 
-<%--Comment following line if you want to view as Student--%>
+    <%--Comment following line if you want to view as Student--%>
     <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="../Styles/dashboard.css">
-    <link rel="stylesheet" href="dist/themes/default/style.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css">
 
 
     <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -67,105 +67,101 @@
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
         String firstAssignmentID = assignments.get(0).getId();
         if (request.getParameter(ASSIGNMENT_ID) == null) {
-            response.sendRedirect("dashboard.jsp?" + COURSE_ID + "=" + request.getParameter(COURSE_ID) + "&"+ASSIGNMENT_ID + "=" + firstAssignmentID);
+            response.sendRedirect("dashboard.jsp?" + COURSE_ID + "=" + request.getParameter(COURSE_ID) + "&" + ASSIGNMENT_ID + "=" + firstAssignmentID);
         }
-
-
 
 
     %>
 
-    <script>var assignmentID = <%=assignments.get(0).getId()%>;</script>
-    <script>var uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
+    <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
+    <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
 
 </head>
 
 <body onload="onLoad()">
-    <div class="fill">
-        <div style="cursor:pointer" onclick="togleNav()">
-            <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img"></div>
-        <div id="menuBar" onclick="togleNav()"><span class="glyphicon">&#xe236;</span>
+<div class="fill">
+    <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
+    <button id="menuBar" onclick="togleNav()"><span></span><span></span><span></span>
+    </button>
+</div>
+<div id="mySidenav" class="sidenav">
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item" id="goHome">
+            <p><span class="glyphicon glyphicon-home"></span> Classes</p>
         </div>
     </div>
-    <div id="mySidenav" class="sidenav">
-        <div class="sidenav-container" style="margin-top: 10px">
-            <div class="sidenav-item" id = "goHome">
-                <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
-            </div>
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="height: 90%">
+        <% for (Assignment assignment : assignments) {%>
+        <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
+            <p><%=assignment.getName()%>
+            </p>
         </div>
-        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-        <div class="sidenav-container" style="height: 90%">
-            <% for (Assignment assignment : assignments) {%>
-            <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
-                <p><%=assignment.getName()%></p>
-            </div>
-            <%}%>
-        </div>
-        <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
-        <div class="sidenav-container" style="margin-top: 10px">
-            <div class="sidenav-item">
-                <p onclick="signOut()">Logout</p>
-            </div>
+        <%}%>
+    </div>
+    <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
+    <div class="sidenav-container" style="margin-top: 10px">
+        <div class="sidenav-item">
+            <p onclick="signOut()">Logout</p>
         </div>
     </div>
-    <div id="jstree_demo_div">
+</div>
+<div id="jstree_demo_div">
 
 
-
-
+</div>
+<div id="content">
+    <div id="loader-wrapper">
+        <div class="loader"></div>
     </div>
-    <div id="content">
-        <div id = "loader-wrapper">
-            <div class="loader"></div>
-        </div>
-        <div class="panel panel-default">
-            <ul class="nav nav-tabs" id="navbar">
-                <li id="navbar-element" hidden><a href="javascript:void(0)" onclick="navbarOnClick()"></a></li>
-            </ul>
+    <div class="panel panel-default">
+        <ul class="nav nav-tabs" id="navbar">
+            <li id="navbar-element" hidden><a href="javascript:void(0)" onclick="navbarOnClick()"></a></li>
+        </ul>
 
-            <div class="panel-body">
-                <div id="code-panel">
+        <div class="panel-body">
+            <div id="code-panel">
                         <textarea readonly id="code-content">
 
                         </textarea>
+            </div>
+            <div id="notification-div">
+                <h1 id="notification-text">Please select code interval!</h1>
+            </div>
+            <div id="comment-panel-wrapper">
+                <div class="media" id="comment-panel" hidden>
+                    <img class="media-object media-left" id="comment-profile-picture"
+                         src="../Images/temp_user_icon.svg">
+                    <div class="media-body" id="comment-content">
+                        <p class="media-heading" id="comment-user-name">Fname Lname</p>
+                        <p class="media-body" id="comment-text">Suggestion Text</p>
+                        <p id="comment-date">Here goes Precise Date</p>
+                    </div>
                 </div>
-                <div id="notification-div">
-                    <h1 id="notification-text">Please select code interval!</h1>
+                <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
+                    <form>
+                        <textarea id="comment-editor-content" class="editor-content" name="content"></textarea>
+                        <br>
+                        <button type="button" class="btn btn-primary" onclick="submitSuggestion()">Submit</button>
+                        <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
+                        </button>
+                        <button id="suggestion-type" type="button" class="btn btn-warning"
+                                onclick="toggleSuggestionType()">Warning
+                        </button>
+                    </form>
                 </div>
-                <div id="comment-panel-wrapper">
-                    <div class="media" id="comment-panel" hidden>
-                        <img class="media-object media-left" id="comment-profile-picture"
-                             src="../Images/temp_user_icon.svg">
-                        <div class="media-body" id="comment-content">
-                            <p class="media-heading" id="comment-user-name">Fname Lname</p>
-                            <p class="media-body" id="comment-text">Suggestion Text</p>
-                            <p id="comment-date">Here goes Precise Date</p>
-                        </div>
-                    </div>
-                    <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
-                        <form>
-                            <textarea id="comment-editor-content" class="editor-content" name="content"></textarea>
-                            <br>
-                            <button type="button" class="btn btn-primary" onclick="submitSuggestion()">Submit</button>
-                            <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
-                            </button>
-                            <button id="suggestion-type" type="button" class="btn btn-warning"
-                                    onclick="toggleSuggestionType()">Warning
-                            </button>
-                        </form>
-                    </div>
-                    <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
-                        <form>
-                            <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
-                            <br>
-                            <button type="button" class="btn btn-primary" onclick="submitReply()">Submit</button>
-                        </form>
-                    </div>
+                <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
+                    <form>
+                        <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
+                        <br>
+                        <button type="button" class="btn btn-primary" onclick="submitReply()">Submit</button>
+                    </form>
                 </div>
             </div>
-
         </div>
+
     </div>
+</div>
 </body>
 
 </html>
