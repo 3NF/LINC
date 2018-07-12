@@ -55,7 +55,6 @@
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         String courseId = request.getParameter(Constraints.COURSE_ID);
         UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
-
         UserDAO.Role userRole = UserDAO.getRoleByCourse(user, courseId);
         System.out.println(userRole);
         if (userRole != UserDAO.Role.TeacherAssistant && userRole != UserDAO.Role.SeminarReader) {

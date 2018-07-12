@@ -238,16 +238,18 @@ html, body {
     z-index: 120;
     position: absolute;
     left: 5px;
+    border-radius: 5px;
     min-width: 500px;
 }
 
 #jstree_demo_div{
+    margin-left: 3px;
+    margin-right: 3px;
     display: block;
     background-color: white;
     height: 90%;
     z-index: 121;
     position: relative;
-    left: 5px;
     min-height: 500px;
     min-width: 500px;
 }
@@ -265,3 +267,12 @@ html, body {
     width: 50%;
 }
 
+#jstree_demo_div_container {
+    display: none;
+    border-right: #97a3aa 1px solid;
+    border-left: #97a3aa 1px solid;
+}
+
+.g-signin2{
+    margin: 0 auto;
+}

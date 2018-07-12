@@ -35,9 +35,6 @@
     <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css"/>
 
-    <%--Comment following line if you want to view as Student--%>
-    <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
-
     <%--my css--%>
     <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="../Styles/dashboard.css">
@@ -70,9 +67,13 @@
         if (request.getParameter(ASSIGNMENT_ID) == null) {
             response.sendRedirect("dashboard.jsp?" + COURSE_ID + "=" + request.getParameter(COURSE_ID) + "&" + ASSIGNMENT_ID + "=" + firstAssignmentID);
         }
-
-
     %>
+
+    <%
+    if (request.getParameter(USER_ID) != null) {%>
+        <%--Comment following line if you want to view as Student--%>
+        <script src="../JavaScript/dashboard-instructor-controls.js?newversion"></script>
+    <%}%>
 
     <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
     <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
@@ -108,7 +109,7 @@
             </div>
         </div>
     </div>
-    <div id = "jstree_demo_div_container">
+    <div id = "jstree_demo_div_container" >
         <div id="jstree_demo_div">
         </div>
 
