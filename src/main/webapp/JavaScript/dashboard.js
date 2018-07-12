@@ -61,15 +61,6 @@ function loadFileTree(paths) {
     })
 }
 
-
-function AddChilds(baseNode, nodes) {
-    if (nodes.count === 0) return;
-
-    let elem = nodes[0];
-
-    let exelem = $(container).children('[data-directory]')
-}
-
 /*
     Places suggestions in appropriate line intervals
  */
@@ -319,7 +310,7 @@ function onLoad() {
         readOnly: true,
         viewportMargin: Infinity
     });
-    codeMirror.setSize("100%", "100%");
+    codeMirror.setSize("100%", "85%");
 
     //Create Bootstrap Markdown editor for suggestion editor
     $("#comment-editor-content").markdown({
