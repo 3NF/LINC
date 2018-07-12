@@ -77,6 +77,11 @@
     <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
     <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
 
+    <%
+        String assignmentID = assignments.get(0).getId();
+        String userID = (String)request.getAttribute(USER_ID);
+    %>
+
 </head>
 
 <body onload="onLoad()">
@@ -173,6 +178,9 @@
                 <option>0</option>
             </select>
         </form>
+    </div>
+    <div id="showGrade">
+        <p>Your grade is <%=AssignmentInfoDAO.getGrade(userID , assignmentID)%></p>
     </div>
 </div>
 </body>

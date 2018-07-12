@@ -123,14 +123,14 @@ public class AssignmentInfoDAO {
         }
     }
 
-    public static Grade getGrade(String userID , String assignmentID){
+    public static String getGrade(String userID , String assignmentID){
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return Grade.MinusMinus;
+        return Grade.MinusMinus.getName();
     }
 
 }

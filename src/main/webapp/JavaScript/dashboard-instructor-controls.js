@@ -192,7 +192,6 @@ function updateGrade(selectObj) {
     $.ajax({
         url: "/user/update_grade",
         method: "POST",
-        contentType: 'application/json; charset=UTF-8',
         data: {'grade': grade,
                 'courseID' : getParameter("courseID"),
                 'userID' : getParameter("userID")

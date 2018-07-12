@@ -311,6 +311,7 @@ function onLoad() {
     */
     fetchCodesInfo();
     toggleLoading();
+
 }
 
 function submitReply() {

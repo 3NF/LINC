@@ -16,7 +16,8 @@ public class UpdateGradeServlet extends HttpServlet {
         String gradeS = request.getParameter("grade");
         String courseID = request.getParameter(Constraints.COURSE_ID);
         String userID = request.getParameter(Constraints.USER_ID);
-        AssignmentInfoDAO.Grade grade = AssignmentInfoDAO.Grade.valueOf(gradeS);
+        String noSpaceStr = gradeS.replaceAll("\\s", "");
+        AssignmentInfoDAO.Grade grade = AssignmentInfoDAO.Grade.valueOf(noSpaceStr);
         System.out.println(grade.getName());
     }
 
