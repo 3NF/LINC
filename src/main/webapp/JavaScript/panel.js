@@ -63,15 +63,15 @@ function getAssignment(assignmentId) {
     }
 }
 
-function isDonwloaded(assignmentID){
+function isDownloaded(assignmentID){
     alert("You have allready uploaded the assignment");
 }
 
 function changeParameter(paramName, paramVal) {
-    var oldLink = location.href;
-    var chunks = oldLink.split("&");
-    var newLink = chunks[0] + "&";
-    for (var i = 1; i < chunks.length; i ++) {
+    const oldLink = location.href;
+    const chunks = oldLink.split("&");
+    let newLink = chunks[0] + "&";
+    for (let i = 1; i < chunks.length; i ++) {
         if (chunks[i] === paramName + "=") {
             chunks[i+1] = paramVal;
         }
@@ -115,22 +115,22 @@ function shuffle(a) {
     return a;
 }
 
-function giveInSection(leader,students,nashti,inSection,courseID){
+function giveInSection(leaders, students, rem, inSection, courseID){
     let l = 0;
-    for (let k = 0;k < leader.length; ++ k) {
+    for (let k = 0; k < leaders.length; ++k) {
         let r = l + inSection - 1;
-        if (nashti > 0) {
+        if (rem > 0) {
             ++r;
-            --nashti;
+            --rem;
         }
         $.ajax({
             type: 'POST',
-            url: '/user/addInSectionDispatcher',
+            url: '/user/addInSectionServlet',
             data: JSON.stringify(
                 {
-                    "leaderID": leader[k],
+                    "leaderID": leaders[k],
                     "courseID": courseID,
-                    "sections": students.slice(l, r+1)
+                    "sections": students.slice(l, r + 1)
                 }
             ),
             success: function () {
@@ -143,28 +143,24 @@ function giveInSection(leader,students,nashti,inSection,courseID){
     }
 }
 
-function randomSections(teacherAssistants,students,semReaders,courseID){
-    /*console.log(teacherAssistants);
-    console.log(students);
-    console.log(semReaders);*/
+function randomSections(teacherAssistants, students, semReaders, courseID){
+
     shuffle(teacherAssistants);
     shuffle(students);
     shuffle(semReaders);
-/*
-    console.log("fuchuri");
-    console.log(teacherAssistants);
-    console.log(students);
-    console.log(semReaders);
-*/
-    let teacherAssistatnsCnt = teacherAssistants.length;
+
+    let teacherAssistantCnt = teacherAssistants.length;
     let studentsCnt = students.length;
     let semReadersCnt = semReaders.length;
 
-    let inSectionAssistant = studentsCnt/teacherAssistatnsCnt;
-    let nashti = studentsCnt % teacherAssistatnsCnt;
-    let inSectionSemReader = studentsCnt/teacherAssistatnsCnt;
-    giveInSection(teacherAssistants,students,nashti,inSectionAssistant,courseID);
-    nashti = studentsCnt%semReadersCnt;
-    giveInSection(semReaders,students,nashti,inSectionSemReader,courseID);
+    let inSectionAssistant = studentsCnt / teacherAssistantCnt;
+    let rem = studentsCnt % teacherAssistantCnt;
+    let inSectionSemReader = studentsCnt / semReadersCnt;
+
+    giveInSection(teacherAssistants,students,rem,inSectionAssistant,courseID);
+
+    rem = studentsCnt%teacherAssistantCnt;
+
+    giveInSection(semReaders,students,rem,inSectionSemReader,courseID);
     alert("now section,seminarers leaders has their students");
 }

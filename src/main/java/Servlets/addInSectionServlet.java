@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-@WebServlet(name = "Servlet",urlPatterns = "/user/addInSectionDispatcher")
-public class addInSectionDispatcher extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@WebServlet(name = "Servlet",urlPatterns = "/user/addInSectionServlet")
+public class addInSectionServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
         //if (data.hz)
         String courseID = data.get("courseID").getAsString();
@@ -32,7 +32,7 @@ public class addInSectionDispatcher extends HttpServlet {
         sectionDAO.addUsersInSection(courseID,leaderID,list);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 
     }
 }
