@@ -80,7 +80,7 @@ public class SuggestionDispatcher extends HttpServlet
             UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
 
             suggestion.RetrieveUsers(user.getUserId(), userStorage);
-            return new GsonBuilder().disableHtmlEscaping().create().toJson(suggestionDAO.addSuggestion(user, codeFileID, type, content, startInd, endInd));
+            return new GsonBuilder().disableHtmlEscaping().create().toJson(suggestion);
         } catch (ClassCastException|IllegalArgumentException e) {
             e.printStackTrace();
             return null;
