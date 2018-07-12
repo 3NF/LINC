@@ -245,3 +245,7 @@ html, body {
     min-height: 500px;
     min-width: 500px;
 }
+
+#login-logo {
+    width: 1000px;
+}

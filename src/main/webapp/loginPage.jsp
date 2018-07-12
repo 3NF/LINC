@@ -35,7 +35,7 @@
         <input type="hidden" name="id_token" value="">
         <input type="hidden" name="action" value="login">
     </form>
-    <img src="${pageContext.request.contextPath}/Images/logo@500-min.png"><br>
+    <img id = "login-logo" src="${pageContext.request.contextPath}/Images/Logo.svg"><br>
     <h2>Welcome! Connect With Google To Start using LINC </h2>
     <div style="text-align: center; margin: 0 auto; width: fit-content">
         <img id="loading" src="${pageContext.request.contextPath}/Images/loading.gif" style="display: none">

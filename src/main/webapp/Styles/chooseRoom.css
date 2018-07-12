@@ -6,7 +6,8 @@
 }
 
 .welcomeText {
-    color: darkcyan;
+    color: #bfbe00;
+    text-shadow: 0 2px #004d14;
     text-align: center;
     margin: 10px auto;
 }
@@ -15,8 +16,8 @@
     margin: 0 auto;
     width: max-content;
     max-width: 80%;
-    background: #fffffc;
-    border: 3px solid red;
+    background: #fffffd;
+    border: 3px solid #d4d4d2;
 }
 
 .classRoom h3 {
