@@ -118,7 +118,6 @@ function shuffle(a) {
 function giveInSection(leader,students,nashti,inSection,courseID){
     let l = 0;
     for (let k = 0;k < leader.length; ++ k) {
-        console.log(leader[k]);
         let r = l + inSection - 1;
         if (nashti > 0) {
             ++r;
@@ -131,7 +130,7 @@ function giveInSection(leader,students,nashti,inSection,courseID){
                 {
                     "leaderID": leader[k],
                     "courseID": courseID,
-                    "sections": students.slice(l, r)
+                    "sections": students.slice(l, r+1)
                 }
             ),
             success: function () {
@@ -151,10 +150,12 @@ function randomSections(teacherAssistants,students,semReaders,courseID){
     shuffle(teacherAssistants);
     shuffle(students);
     shuffle(semReaders);
+/*
     console.log("fuchuri");
     console.log(teacherAssistants);
     console.log(students);
     console.log(semReaders);
+*/
     let teacherAssistatnsCnt = teacherAssistants.length;
     let studentsCnt = students.length;
     let semReadersCnt = semReaders.length;

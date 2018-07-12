@@ -24,7 +24,6 @@ public class addInSectionDispatcher extends HttpServlet {
         String courseID = data.get("courseID").getAsString();
         String leaderID = data.get("leaderID").getAsString();
         JsonArray array = data.get("sections").getAsJsonArray();
-        System.err.println(array);
 
         Type listType = new TypeToken<List<String>>() {
         }.getType();
