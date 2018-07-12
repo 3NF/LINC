@@ -61,15 +61,6 @@ function loadFileTree(paths) {
     })
 }
 
-
-function AddChilds(baseNode, nodes) {
-    if (nodes.count === 0) return;
-
-    let elem = nodes[0];
-
-    let exelem = $(container).children('[data-directory]')
-}
-
 /*
     Places suggestions in appropriate line intervals
  */
@@ -187,21 +178,6 @@ function addCodes() {
     $('#jstree_demo_div')[0].appendChild(ul);
     draw_view_rec(ul, 0, codeInfo.length - 1);
     build_project_view();
-    /*for (var i = 0; i < codeInfo.length; i++) {
-        console.log(codeInfo[i]);
-        var newElement = $("#navbar-element").clone(true);
-        $(newElement).removeAttr("id");
-        $(newElement).find("a").html(codeInfo[i].value);
-        $(newElement).show();
-        $(newElement).appendTo("#navbar");
-    }
-    $("#navbar-element").remove();
-    $("#navbar li:first-child").addClass("active");*/
-}
-
-function getFirstCode() {
-    const name = $("#navbar").find(".active").find("a").text();
-    fetchCode(name);
 }
 
 function loadCodeInfoError() {
@@ -334,7 +310,7 @@ function onLoad() {
         readOnly: true,
         viewportMargin: Infinity
     });
-    codeMirror.setSize("100%", "100%");
+    codeMirror.setSize("100%", "85%");
 
     //Create Bootstrap Markdown editor for suggestion editor
     $("#comment-editor-content").markdown({
