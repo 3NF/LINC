@@ -1,12 +1,12 @@
 let manuIsVisible = false;
 
 const gradeMap =   {'0' : '0',
-                    'PLus' : 'Plus',
+                    'Plus' : 'Plus',
                     'Check' : 'Check',
                     'Minus' : 'Minus',
                     'none' : 'Not graded',
-                    'PlusPLus' : 'PlusPLus',
-                    'CheckPLus' : 'Check Plus',
+                    'PlusPlus' : 'Plus Plus',
+                    'CheckPlus' : 'Check Plus',
                     'CheckMinus' : 'Check Minus',
                     'MinusMinus' : 'Minus Minus'};
 
