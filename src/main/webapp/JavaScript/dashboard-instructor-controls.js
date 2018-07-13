@@ -97,7 +97,7 @@ function lineOnClick (eventHandler) {
      */
     activeSuggestionID = -1;
 
-    if (lastMarker != -1) {
+    if (lastMarker !== -1) {
         return;
     }
 
@@ -106,7 +106,7 @@ function lineOnClick (eventHandler) {
         create new interval if
         first marker is already put
      */
-    if (firstMarker == -1) {
+    if (firstMarker === -1) {
         firstMarker = lineNumber;
     } else {
         lastMarker = lineNumber;
@@ -169,8 +169,6 @@ function clearInterval () {
 function submitSuggestion () {
     var suggestionContent = suggestionEditor.parseContent();
     var suggestionType = $("#suggestion-type").html();
-
-    $("#comment-editor-content").html("");
 
     var dataObj = {
         type: $("#suggestion-type").text(),
