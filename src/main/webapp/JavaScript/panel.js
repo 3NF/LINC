@@ -1,5 +1,15 @@
 let manuIsVisible = false;
 
+const gradeMap =   {'0' : '0',
+                    'Plus' : 'Plus',
+                    'Check' : 'Check',
+                    'Minus' : 'Minus',
+                    'none' : 'Not graded',
+                    'PlusPlus' : 'Plus Plus',
+                    'CheckPlus' : 'Check Plus',
+                    'CheckMinus' : 'Check Minus',
+                    'MinusMinus' : 'Minus Minus'};
+
 $(document).ready(function () {
     $(".fill").css("display", "block");
     $(".sidenav").css("display", "block");
@@ -153,4 +163,10 @@ function randomSections(teacherAssistants, students, semReaders, courseID){
 
     giveInSection(semReaders,students,rem,inSectionSemReader,courseID);
     alert("now section,seminarers leaders has their students");
+}
+
+function mouseOver(grade){
+    var etarget = event.target;
+    var changedGrade = gradeMap[grade];
+    etarget.innerHTML = changedGrade;
 }
