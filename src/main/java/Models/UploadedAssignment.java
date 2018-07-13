@@ -27,13 +27,6 @@ public class UploadedAssignment implements Iterable{
     public int size(){
         return data.size();
     }
-    public static void main(String[] args) {
-        UploadedAssignment ass = new UploadedAssignment("1");
-        ass.addAssignmentFile(new File("1", "2","-2"));
-        ass.addAssignmentFile(new File("2", "3","-3"));
-        ass.addAssignmentFile(new File("3", "4","-4"));
-
-    }
 
     @Override
     public Iterator iterator() {

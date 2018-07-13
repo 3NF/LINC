@@ -12,17 +12,18 @@ import java.util.List;
 public class ReplyDAO {
 
     private final MysqlDataSource connectionPool;
+
     /**
      * Constructor of StudentDAo class
-     *
-     * @param connectionPool
      */
-
-
     public ReplyDAO(MysqlDataSource connectionPool) {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Returns replies of suggestion
+     *
+     */
     public List<Reply> getSuggestionReplies(String id) {
         Connection connection;
         ArrayList<Reply> suggestionsReply = new ArrayList<>();
@@ -60,7 +61,10 @@ public class ReplyDAO {
         return suggestionsReply;
     }
 
-
+	/**
+	 * Adds reply in database
+	 *
+	 */
     public Reply addReply(String text, String userId, String suggestionId) {
         Connection connection;
         java.sql.Timestamp timestamp;
@@ -95,7 +99,10 @@ public class ReplyDAO {
         return new Reply(suggestionId, replyID, userId, text, timestamp);
     }
 
-    public void deleteReply(String replyId) {
+	/**
+	 * Deletes reply from database
+	 */
+	public void deleteReply(String replyId) {
         Connection connection;
         try {
             connection = connectionPool.getConnection();
