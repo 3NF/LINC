@@ -22,10 +22,10 @@ import java.util.List;
 
 public class GAPIManager {
 
-    public static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
-    public static final String CLIENT_SECRET_FILE = "client_secret.json";
-    public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-    public static final String APPNAME = "LINC";
+    private static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
+	private static final String CLIENT_SECRET_FILE = "client_secret.json";
+	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+	private static final String APPNAME = "LINC";
 
     private static final GAPIManager instance = new GAPIManager();
 
@@ -96,7 +96,7 @@ public class GAPIManager {
 
         Classroom room = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APPNAME).build();
 
-        UserProfile profile = null;
+        UserProfile profile;
 
         try {
             profile = room.userProfiles().get(targetId).setFields("name").execute();
@@ -202,32 +202,31 @@ public class GAPIManager {
         Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential)
                 .setApplicationName("LINC")
                 .build();
-        ;
         Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
         //DriveService driveService;
         List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
 
         UploadedAssignment uploadedAssignment = new UploadedAssignment(assignmentId);
-        for (int k = 0; k < assignments.size(); ++k) {
-            if (assignments.get(k).getAssignmentSubmission() == null) continue;
-            if (assignments.get(k).getAssignmentSubmission().getAttachments() == null) continue;
-            String actorUserID = assignments.get(k).getSubmissionHistory().get(0).getStateHistory().getActorUserId();
-            String fileId = assignments.get(k).getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
+	    for (StudentSubmission assignment : assignments) {
+		    if (assignment.getAssignmentSubmission() == null) continue;
+		    if (assignment.getAssignmentSubmission().getAttachments() == null) continue;
+		    String actorUserID = assignment.getSubmissionHistory().get(0).getStateHistory().getActorUserId();
+		    String fileId = assignment.getAssignmentSubmission().getAttachments().get(0).getDriveFile().getId();
 
-            OutputStream outputStream = new ByteArrayOutputStream();
-            driveService.files().get(fileId)
-                    .executeMediaAndDownloadTo(outputStream);
+		    OutputStream outputStream = new ByteArrayOutputStream();
+		    driveService.files().get(fileId)
+				    .executeMediaAndDownloadTo(outputStream);
 
-            //convert OutPutStream into inputStream
-            ByteArrayInputStream inStream = Utilities.convertOutputIntoInputStream(outputStream);
-            Utilities.unzipInputStream(inStream, uploadedAssignment, actorUserID);
-        }
+		    //convert OutPutStream into inputStream
+		    ByteArrayInputStream inStream = Utilities.convertOutputIntoInputStream(outputStream);
+		    Utilities.unzipInputStream(inStream, uploadedAssignment, actorUserID);
+	    }
         return uploadedAssignment;
     }
 
 
     /** shoudl be called from teachers user only*/
-    public List<User> getUsers(User user, String courseID) {
+    public List<UserProfile> getUsers(User user, String courseID) {
         try {
             Credential credential = user.getCredential();
 
@@ -236,11 +235,9 @@ public class GAPIManager {
             if (students == null)
                 return Collections.emptyList();
 
-            List<User> users = new ArrayList<>();
+            List<UserProfile> users = new ArrayList<>();
 
-
-            students.forEach(student -> users.add(new User(student.getProfile().getId(),
-                    student.getProfile().getEmailAddress(),student.getProfile().getPhotoUrl())));
+            students.forEach(student -> users.add(student.getProfile()));
             return users;
         } catch (Exception e) {
             e.printStackTrace();

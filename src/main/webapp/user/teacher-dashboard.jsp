@@ -68,23 +68,23 @@
         Set<String> studentsIds = new HashSet<>();
         String teacherID = ((User) session.getAttribute(Constraints.USER)).getUserId();
         UserDAO.addUser(teacherID,UserDAO.Role.Teacher,courseId);
-        List<User> allUsers = gapiManager.getUsers(user, courseId);
+        List<UserProfile> allUsers = gapiManager.getUsers(user, courseId);
 
-        List<User> students = new ArrayList<>();
-        List<User> semReaders = new ArrayList<>();
-        List<User> assistants = new ArrayList<>();
+        List<UserProfile> students = new ArrayList<>();
+        List<UserProfile> semReaders = new ArrayList<>();
+        List<UserProfile> assistants = new ArrayList<>();
 
-        for (User student : allUsers) {
-            if (semReaderIds.contains(student.getUserId())) {
+        for (UserProfile student : allUsers) {
+            if (semReaderIds.contains(student.getId())) {
                 semReaders.add(student);
                 continue;
             }
 
-            if (teacherAssIds.contains(student.getUserId())) {
+            if (teacherAssIds.contains(student.getId())) {
                 assistants.add(student);
                 continue;
             }
-            studentsIds.add(student.getUserId());
+            studentsIds.add(student.getId());
             students.add(student);
         }
         String teacherAssistantJson = new Gson().toJson(teacherAssIds);
@@ -141,17 +141,17 @@
                             <th>E-mail</th>
                             <th></th>
                         </tr>
-                        <% for(User semReader : semReaders){ %>
+                        <% for(UserProfile semReader : semReaders){ %>
                         <tr>
-                            <td><%=semReader.getFirstName()%></td>
-                            <td><%=semReader.getLastName()%></td>
-                            <td><%=semReader.getEmail()%></td>
+                            <td><%=semReader.getName().getGivenName()%></td>
+                            <td><%=semReader.getName().getFamilyName()%></td>
+                            <td><%=semReader.getEmailAddress()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-option-vertical"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getUserId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -176,17 +176,17 @@
                             <th>Surname</th>
                             <th>E-mail</th>
                         </tr>
-                        <% for(User assistant : assistants){ %>
+                        <% for(UserProfile assistant : assistants){ %>
                         <tr>
-                            <td><%=assistant.getFirstName()%></td>
-                            <td><%=assistant.getLastName()%></td>
-                            <td><%=assistant.getEmail()%></td>
+                            <td><%=assistant.getName().getGivenName()%></td>
+                            <td><%=assistant.getName().getFamilyName()%></td>
+                            <td><%=assistant.getEmailAddress()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-option-vertical"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getUserId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">Remove</button>
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">Remove</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -212,21 +212,21 @@
                             <th>Surname</th>
                             <th>E-mail</th>
                         </tr>
-                        <% for(User student : students){ %>
+                        <% for(UserProfile student : students){ %>
                         <tr>
-                            <td><%=student.getFirstName()%></td>
-                            <td><%=student.getLastName()%></td>
-                            <td><%=student.getEmail()%></td>
+                            <td><%=student.getName().getGivenName()%></td>
+                            <td><%=student.getName().getFamilyName()%></td>
+                            <td><%=student.getEmailAddress()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-option-vertical"></span></button>
                                     <ul class="dropdown-menu" >
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getUserId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
                                             Add as seminar reader
                                         </button>
                                         </li>
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getUserId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">
                                             Add as teacher assistant
                                         </button>
                                         </li>
