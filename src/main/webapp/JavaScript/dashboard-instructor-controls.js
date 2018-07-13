@@ -197,6 +197,7 @@ function submitSuggestion () {
             suggestions[suggestions.length] = data;
             console.log(suggestions);
             viewSuggestion(suggestions.length-1);
+            placeSuggestion(suggestions.length-1, data);
         },
         error: function (data, textStatus, jQxhr) {
             suggestionAdditionError(data, textStatus, jQxhr);
