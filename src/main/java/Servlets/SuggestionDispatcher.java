@@ -32,9 +32,9 @@ public class SuggestionDispatcher extends HttpServlet
 
             //Get request data
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-            String json;
+            String json = "";
 
-            String courseID = data.get("courseID").getAsString();
+            String courseID = data.get(COURSE_ID).getAsString();
             String codeFileID = data.get("codeFileID").getAsString();
 
             ValidateDAO validateDAO = (ValidateDAO)request.getServletContext().getAttribute(VALIDATE_DAO);
@@ -50,15 +50,16 @@ public class SuggestionDispatcher extends HttpServlet
                 json = addSuggestion(request, data, codeFileID, user, suggestionDAO);
             }
             else {
-                suggestionDAO.deleteSuggestion(data.get("suggestionID").getAsString());
-                json = "";//deleteSuggestion(data,request);
+                String suggestionID = data.get(SUGGESTION_ID).getAsString();
+                deleteSuggestion(suggestionDAO, suggestionID);
+                response.sendError(HttpStatus.SC_OK);
             }
 
             //Send response to client
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF8");
             response.getWriter().write(json);
-        } catch (NumberFormatException|NullPointerException e) {
+        } catch (NumberFormatException|NullPointerException|SQLException e) {
             e.printStackTrace();
             response.sendError(HttpStatus.SC_NOT_FOUND);
         }
@@ -84,6 +85,10 @@ public class SuggestionDispatcher extends HttpServlet
             e.printStackTrace();
             return null;
         }
+    }
+
+    private void deleteSuggestion (SuggestionDAO suggestionDAO, String suggestionID) throws SQLException {
+        suggestionDAO.deleteSuggestion(suggestionID);
     }
 
     /*

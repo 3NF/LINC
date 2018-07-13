@@ -55,22 +55,21 @@ public class SuggestionDAO {
 		}
 	}
 
-	/**
-	 * Deletes suggestion from database
-	 */
-	public void deleteSuggestion(String suggestionID) {
-		String query = "DELETE suggestions.*,replies.*" +
-				"FROM suggestions " +
-				"INNER JOIN replies ON suggestions.id= replies.suggestionID where suggestions.id=?";
-		PreparedStatement statement;
-		try {
-			Connection connection = connectionPool.getConnection();
-			statement = connection.prepareStatement(query);
-			statement.setString(1, suggestionID);
-			statement.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    public void deleteSuggestion(String suggestionID) throws SQLException{
+        String query = "DELETE suggestions.*,replies.*" +
+                "FROM suggestions " +
+                "INNER JOIN replies ON suggestions.id=replies.suggestionID where suggestions.id=?";
+        PreparedStatement statement;
 
+        Connection connection = connectionPool.getConnection();
+        statement = connection.prepareStatement(query);
+            statement.setString(1,suggestionID);
+            statement.execute();
+            statement.close();
+        query = "DELETE FROM suggestions WHERE id=?";
+        statement = connection.prepareStatement(query);
+        statement.setString(1,suggestionID);
+        statement.execute();
+        connection.close();
+    }
 }

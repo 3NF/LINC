@@ -93,6 +93,8 @@ function outHover (event) {
  */
 function lineOnClick (eventHandler) {
     var lineNumber = eventHandler.data;
+    console.log(lineNumber);
+
     /*
         If new interval is already chosen
         this function should do nothing
@@ -136,6 +138,7 @@ function markSuggestion () {
  */
 function markLines (col) {
     for (var i = firstMarker; i < lastMarker + 1; i ++) {
+        console .log(i);
         $(lines[i]).css("background-color", col);
     }
 }
@@ -204,23 +207,58 @@ function submitSuggestion () {
         }});
 }
 
-function removeSuggestion (ind) {
+function getInd (id) {
+    for (var i = 0; i < suggestions.length; i ++) {
+        if (suggestions[i].suggestionID === id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function removeSuggestion (id) {
+    var ind = getInd (id);
     var start = suggestions[ind].startInd;
     var end = suggestions[ind].endInd;
+
+    suggestions[ind].startInd = -1;
+    suggestions[ind].endInd = -1;
 
     /*
        Edit suggestion lines
     */
     for (let lineIterator = start; lineIterator < end + 1; lineIterator++) {
-        $(lines[lineIterator]).css("background-color", "#dbdbdb");
+        $(lines[lineIterator]).css("background-color", "#f7f7f7");
         $(lines[lineIterator]).css("color", "#999999");
         $(lines[lineIterator]).unbind("click");
-        $(lines[lineIterator]).click(ind, lineOnClick);
+
+        $(lines[lineIterator]).click(lineIterator, lineOnClick);
     }
 }
 
 function suggestionAdditionError () {
     alert ("Couldn't add new suggestion");
+}
+
+function deleteClick () {
+    suggID = activeSuggestionID;
+    $.ajax({
+        url: "/user/suggestion_dispatcher",
+        method: "POST",
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({courseID: getParameter("courseID"), codeFileID: activeCodeFileID, suggestionID: activeSuggestionID}),
+        success: function(){
+            removeSuggestion(suggID);
+            $("#comment-panel").hide();
+            activeSuggestionID = -1;
+        },
+        error: function () {
+            suggestRemoveError();
+        }});
+}
+
+function suggestRemoveError () {
+    alert ("Couldn't remove suggestion");
 }
 
 function updateGrade(selectObj) {

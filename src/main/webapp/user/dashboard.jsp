@@ -178,7 +178,7 @@
                     </div>
                     <%
                         if (request.getParameter(USER_ID) != null) {
-                            %><button id = "suggestion-remove-btn" type="button" class="btn btn-danger" hidden>Remove</button><%
+                            %><button id = "suggestion-remove-btn" type="button" class="btn btn-danger" onclick = "deleteClick()" hidden>Remove</button><%
                         }
                     %>
                 </div>
