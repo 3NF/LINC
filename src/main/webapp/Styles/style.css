@@ -315,8 +315,10 @@ html, body {
 
 .loader {
     margin: auto;
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid darkgreen; /* Blue */
+    border-left: 10px solid yellow; /* Blue */
+    border-right: 10px solid red; /* Blue */
     border-radius: 50%;
     width: 70px;
     height: 70px;

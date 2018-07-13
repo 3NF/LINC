@@ -172,6 +172,7 @@ function clearInterval () {
 }
 
 function submitSuggestion () {
+    toggleLoading();
     var suggestionContent = suggestionEditor.parseContent();
     var suggestionType = $("#suggestion-type").html();
 
@@ -201,9 +202,11 @@ function submitSuggestion () {
             console.log(suggestions);
             viewSuggestion(suggestions.length-1);
             placeSuggestion(suggestions.length-1, data);
+            toggleLoading();
         },
         error: function (data, textStatus, jQxhr) {
             suggestionAdditionError(data, textStatus, jQxhr);
+            toggleLoading();
         }});
 }
 
@@ -241,6 +244,7 @@ function suggestionAdditionError () {
 }
 
 function deleteClick () {
+    toggleLoading();
     suggID = activeSuggestionID;
     $.ajax({
         url: "/user/suggestion_dispatcher",
@@ -252,9 +256,11 @@ function deleteClick () {
             $("#comment-panel").hide();
             $(".reply-panel-wrapper").hide();
             activeSuggestionID = -1;
+            toggleLoading();
         },
         error: function () {
             suggestRemoveError();
+            toggleLoading();
         }});
 }
 
@@ -263,6 +269,7 @@ function suggestRemoveError () {
 }
 
 function updateGrade(selectObj) {
+
     if (window.confirm("Do You want to grade assignments?")) {
         let selectIndex=selectObj.selectedIndex;
         let grade=selectObj.options[selectIndex].text;

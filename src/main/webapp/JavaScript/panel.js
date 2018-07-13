@@ -1,5 +1,9 @@
 let manuIsVisible = false;
 
+function toggleLoading() {
+    $("#loader-wrapper").fadeToggle();
+}
+
 const gradeMap =   {'0' : '0',
                     'Plus' : 'Plus',
                     'Check' : 'Check',
