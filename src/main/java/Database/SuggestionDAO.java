@@ -8,51 +8,52 @@ import java.sql.*;
 
 public class SuggestionDAO {
 
-    private final MysqlDataSource connectionPool;
+	private final MysqlDataSource connectionPool;
 
-    public SuggestionDAO(MysqlDataSource connectionPool) {
-        this.connectionPool = connectionPool;
-    }
+	public SuggestionDAO(MysqlDataSource connectionPool) {
+		this.connectionPool = connectionPool;
+	}
 
+	/**
+	 * Adds suggestion in database
+	 */
+	public Suggestion addSuggestion(User user, String codeFileID, String type, String content, int startInd, int endInd) {
+		String query = "INSERT INTO suggestions(userID, Code_FileID, text, time, type, startInd, endInd) VALUES" +
+				"(?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement statement;
+		String suggestionID;
+		Timestamp timestamp;
 
-    public Suggestion addSuggestion(User user, String codeFileID, String type, String content, int startInd, int endInd){
-        String query = "INSERT INTO suggestions(userID, Code_FileID, text, time, type, startInd, endInd) VALUES" +
-                "(?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement statement;
-        String suggestionID;
-        Timestamp timestamp;
+		try {
+			Connection connection = connectionPool.getConnection();
+			String generatedColumns[] = {"id"};
+			statement = connection.prepareStatement(query, generatedColumns);
+			statement.setString(1, user.getUserId());
+			statement.setString(2, codeFileID);
+			statement.setString(3, content);
+			timestamp = new Timestamp(System.currentTimeMillis());
+			statement.setTimestamp(4, timestamp);
+			statement.setString(5, type);
+			statement.setString(6, "" + startInd);
+			statement.setString(7, "" + endInd);
+			if (statement.executeUpdate() > 0) {
+				ResultSet result = statement.getGeneratedKeys();
+				if (result.next()) {
+					suggestionID = result.getString(1);
+				} else {
+					throw new SQLException();
+				}
+			} else {
+				throw new SQLException();
+			}
+			statement.close();
 
-        try {
-            Connection connection = connectionPool.getConnection();
-            String generatedColumns[] = { "id" };
-            statement = connection.prepareStatement(query,generatedColumns);
-            statement.setString(1, user.getUserId());
-            statement.setString(2, codeFileID);
-            statement.setString(3, content);
-            timestamp = new Timestamp(System.currentTimeMillis());
-            statement.setTimestamp(4, timestamp);
-            statement.setString(5, type);
-            statement.setString(6, ""+startInd);
-            statement.setString(7, ""+endInd);
-            if (statement.executeUpdate() > 0){
-                ResultSet result = statement.getGeneratedKeys();
-                if (result.next()) {
-                    suggestionID = result.getString(1);
-                } else {
-                    throw new SQLException();
-                }
-            } else {
-                throw new SQLException();
-            }
-            statement.close();
-
-            return new Suggestion(Suggestion.SuggestionType.valueOf(type), user.getUserId(), codeFileID, suggestionID, startInd, endInd, content, timestamp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            return null;
-        }
-    }
+			return new Suggestion(Suggestion.SuggestionType.valueOf(type), user.getUserId(), codeFileID, suggestionID, startInd, endInd, content, timestamp);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
     public void deleteSuggestion(String suggestionID) throws SQLException{
         String query = "DELETE suggestions.*,replies.*" +

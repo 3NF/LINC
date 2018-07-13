@@ -18,6 +18,10 @@ public class SectionDAO {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Returns Users in given users section
+     * Must be called from user which has TeacherAssistants privileges
+     */
     public List<User> getUsersInSection(String classroomID, String userID) {
         ArrayList<User> users = new ArrayList<>();
 
@@ -46,6 +50,9 @@ public class SectionDAO {
         return users;
     }
 
+    /**
+     * Checks if student is in users section
+     */
     public boolean isInSection(String instructorID, String studentID) {
             String query = "SELECT instructors.id,instructors.userID,sections.studentID FROM instructors" +
                     " inner join sections on instructors.id=sections.instructorID " +
@@ -63,7 +70,7 @@ public class SectionDAO {
         return false;
     }
 
-    public String getInstructorDataBaseID(String classroomID, String leaderID) {
+	public String getInstructorDataBaseID(String classroomID, String leaderID) {
         String query = "SELECT id FROM instructors WHERE classroomID=? AND userID=?";
         try {
             Connection conn = connectionPool.getConnection();
@@ -83,10 +90,13 @@ public class SectionDAO {
         return "-1";
     }
 
-    public void addUsersInSection(String classromID, String leaderID, List<String> usersID) {
-        String instructorID = getInstructorDataBaseID(classromID, leaderID);
+	/**
+	 * Adds students in users section
+	 */
+	public void addUsersInSection(String classroomID, String leaderID, List<String> usersID) {
+        String instructorID = getInstructorDataBaseID(classroomID, leaderID);
         String query = "INSERT INTO sections(instructorID,studentID) VALUES(?,?)";
-        Connection conn = null;
+        Connection conn;
         try {
             conn = connectionPool.getConnection();
             PreparedStatement statement = conn.prepareStatement(query);
