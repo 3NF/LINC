@@ -69,7 +69,6 @@ public class GAPIManager {
 
 
     }
-
     public User getUser(String idToken) {
         try {
             GoogleIdToken googleIdToken = GoogleIdToken.parse(JACKSON_FACTORY, idToken);
