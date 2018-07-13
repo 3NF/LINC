@@ -88,17 +88,11 @@ public class UserDAO {
 	}
 
 	public static Role getRoleByCourse(User user, String courseId) {
-		GAPIManager gp = GAPIManager.getInstance();
-		Role role = gp.getRoleByCourse(user, courseId);
-		if (role == Role.Teacher) {
-			return role;
-		} else {
-			String rtn = getInstructorType(user.getUserId(), courseId);
-			if (rtn == null) {
-				return Role.Pupil;
-			}
-			return Role.valueOf(rtn);
+		String rtn = getInstructorType(user.getUserId(), courseId);
+		if (rtn == null) {
+			return Role.Pupil;
 		}
+		return Role.valueOf(rtn);
 	}
 
 	public static String getInstructorType(String userID, String courseID) {

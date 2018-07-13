@@ -29,9 +29,6 @@ public class RoomServlet extends HttpServlet {
             case Pupil:
                 url = "/user/dashboard.jsp?" + Constraints.COURSE_ID + "=" + courseId;
                 break;
-            case Teacher:
-                url = "teacher-dashboard.jsp?" + Constraints.COURSE_ID + "=" + courseId;
-                break;
             case SeminarReader :
             case TeacherAssistant :
                 url = "instructor-dashboard.jsp?" + Constraints.COURSE_ID + "=" + courseId;

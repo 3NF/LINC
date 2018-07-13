@@ -16,6 +16,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="static Data.Constraints.CLIENT_ID" %>
 <%@ page import="com.google.gson.Gson" %>
+<%@ page import="static Data.Constraints.USER_ID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -47,6 +48,7 @@
 
 
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="https://apis.google.com/js/api.js"></script>
 
 
     <%
@@ -94,7 +96,8 @@
         String studentJson = new Gson().toJson(studentsIds);
         String semReadersJson = new Gson().toJson(semReaderIds);
     %>
-
+    <script>let userId = '<%=user.getUserId()%>';</script>
+    <script>let classroomId = getParameter("courseID"); </script>
 </head>
 <body>
 <div class="fill">

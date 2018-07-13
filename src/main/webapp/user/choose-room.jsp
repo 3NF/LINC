@@ -6,6 +6,7 @@
 <%@ page import="Data.Constraints" %>
 <%@ page import="static Data.Constraints.COURSE_ID" %>
 <%@ page import="static Data.Constraints.CLIENT_ID" %>
+<%@ page import="static Data.Constraints.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -21,13 +22,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=start" async defer></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
 
 
     <%
         User user = (User) session.getAttribute(USER);
-        List<Course> courses = GAPIManager.getInstance().getActiveRooms(user);
     %>
+
+    <script>let userId = '<%=user.getUserId()%>';</script>
+
 
     <title>Choose Room - LINC</title>
 </head>
@@ -49,23 +53,19 @@
     <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose Classroom To Enter:</h1>
 
 
-    <div class="panel">
-
-        <%for (Course course : courses) {%>
-
-        <td>
-            <div class="classRoom"  onclick=<%="enterClasroom(" + course.getId() + ")"%>>
-                <h3><%=course.getName()%>
-                </h3>
-            </div>
-        </td>
-
-        <%}%>
+    <div class="panel" id = "crs_cntr">
     </div>
 </div>
 </body>
 <script>
-    function enterClasroom(id) {
+    gapi.load('client', get_classroom_list);
+    function enterClasroom(teacherId, id) {
+        console.log(teacherId);
+        console.log(id);
+        if (teacherId === userId) {
+            window.location.assign("teacher-dashboard.jsp?" +  '<%=Constraints.COURSE_ID%>' + "=" + id);
+            return;
+        }
         $.ajax({
             url: 'rooms',
             data: {courseID: id},

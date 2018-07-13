@@ -230,12 +230,10 @@ public class GAPIManager {
 
 
 	public User getUserProfile(String requesterId, String targetId) {
-		System.out.print(requesterId);
 		GoogleCredential credential = UserDAO.getGoogleCredentials(requesterId);
 		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
 		try {
 			UserProfile profile = service.userProfiles().get(targetId).execute();
-			System.out.println(profile);
 			return new User(profile.getEmailAddress(), profile.getName().getGivenName(), profile.getName().getFamilyName(), profile.getId(), profile.getPhotoUrl(), "-", "-");
 		} catch (Exception e) {
 			e.printStackTrace();

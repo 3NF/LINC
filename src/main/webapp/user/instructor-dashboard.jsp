@@ -72,7 +72,7 @@
         List <User> studentsOnlyID = DAO.getUsersInSection(courseId, user.getUserId());
         List <User> students = new ArrayList<>();
         for (User student: studentsOnlyID) {
-            students.add(GAPIManager.getInstance().getUserProfile(teacherID, student.getUserId()));
+            students.add(userStorage.getUserWithID(teacherID, student.getUserId()));
         }
     %>
 

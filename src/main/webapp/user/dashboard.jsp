@@ -104,7 +104,7 @@
         <%}%>
 
         <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
-        <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
+        <script>let uid = <%=(String)request.getParameter(USER_ID)%>;</script>
         <script>let teachID = '<%=teacherID%>';</script>
 
 
