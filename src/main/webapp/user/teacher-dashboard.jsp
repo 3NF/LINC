@@ -67,24 +67,24 @@
         Set<String> teacherAssIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.TeacherAssistant));
         Set<String> studentsIds = new HashSet<>();
 
-        List<Student> allUsers = gapiManager.getUsers(user, courseId);
+        List<User> allUsers = gapiManager.getUsers(user, courseId);
 
-        List<UserProfile> students = new ArrayList<>();
-        List<UserProfile> semReaders = new ArrayList<>();
-        List<UserProfile> assistants = new ArrayList<>();
+        List<User> students = new ArrayList<>();
+        List<User> semReaders = new ArrayList<>();
+        List<User> assistants = new ArrayList<>();
 
-        for (Student student : allUsers) {
-            if (semReaderIds.contains(student.getProfile().getId())) {
-                semReaders.add(student.getProfile());
+        for (User student : allUsers) {
+            if (semReaderIds.contains(student.getUserId())) {
+                semReaders.add(student);
                 continue;
             }
 
-            if (teacherAssIds.contains(student.getProfile().getId())) {
-                assistants.add(student.getProfile());
+            if (teacherAssIds.contains(student.getUserId())) {
+                assistants.add(student);
                 continue;
             }
-            studentsIds.add(student.getProfile().getId());
-            students.add(student.getProfile());
+            studentsIds.add(student.getUserId());
+            students.add(student);
         }
         String teacherAssistantJson = new Gson().toJson(teacherAssIds);
         String studentJson = new Gson().toJson(studentsIds);
@@ -140,17 +140,17 @@
                             <th>E-mail</th>
                             <th></th>
                         </tr>
-                        <% for(UserProfile semReader : semReaders){ %>
+                        <% for(User semReader : semReaders){ %>
                         <tr>
-                            <td><%=semReader.getName().getGivenName()%></td>
-                            <td><%=semReader.getName().getFamilyName()%></td>
-                            <td><%=semReader.getEmailAddress()%></td>
+                            <td><%=semReader.getFirstName()%></td>
+                            <td><%=semReader.getLastName()%></td>
+                            <td><%=semReader.getEmail()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-option-vertical"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
+                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getUserId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -175,11 +175,11 @@
                             <th>Surname</th>
                             <th>E-mail</th>
                         </tr>
-                        <% for(UserProfile assistant : assistants){ %>
+                        <% for(User assistant : assistants){ %>
                         <tr>
-                            <td><%=assistant.getName().getGivenName()%></td>
-                            <td><%=assistant.getName().getFamilyName()%></td>
-                            <td><%=assistant.getEmailAddress()%></td>
+                            <td><%=assistant.getFirstName()%></td>
+                            <td><%=assistant.getLastName()%></td>
+                            <td><%=assistant.getEmail()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
@@ -211,11 +211,11 @@
                             <th>Surname</th>
                             <th>E-mail</th>
                         </tr>
-                        <% for(UserProfile student : students){ %>
+                        <% for(User student : students){ %>
                         <tr>
-                            <td><%=student.getName().getGivenName()%></td>
-                            <td><%=student.getName().getFamilyName()%></td>
-                            <td><%=student.getEmailAddress()%></td>
+                            <td><%=student.getFirstName()%></td>
+                            <td><%=student.getLastName()%></td>
+                            <td><%=student.getEmail()%></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
