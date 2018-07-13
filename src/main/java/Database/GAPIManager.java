@@ -22,9 +22,9 @@ import java.util.List;
 
 public class GAPIManager {
 
-    private static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
+    public static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
 	private static final String CLIENT_SECRET_FILE = "client_secret.json";
-	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+	public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	private static final String APPNAME = "LINC";
 
     private static final GAPIManager instance = new GAPIManager();

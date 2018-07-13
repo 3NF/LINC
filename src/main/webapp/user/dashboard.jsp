@@ -31,9 +31,9 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../JavaScript/dashboard.js?newversione"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/dashboard.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="../jstree/dist/jstree.min.js"></script>
+    <script src="${pageContext.request.contextPath}/jstree/dist/jstree.min.js"></script>
     <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css"/>
 
@@ -68,6 +68,7 @@
         String firstAssignmentID = assignments.get(0).getId();
         if (request.getParameter(ASSIGNMENT_ID) == null) {
             response.sendRedirect("dashboard.jsp?" + COURSE_ID + "=" + request.getParameter(COURSE_ID) + "&" + ASSIGNMENT_ID + "=" + firstAssignmentID);
+            return;
         }
     %>
 
@@ -92,7 +93,7 @@
 
         if (!isStudent) {%>
             <%--Comment following line if you want to view as Student--%>
-            <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversione"></script>
+            <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js"></script>
         <%}%>
 
         <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
@@ -166,6 +167,11 @@
                         <p class="media-body" id="comment-text">Suggestion Text</p>
                         <p id="comment-date">Here goes Precise Date</p>
                     </div>
+                    <%
+                        if (request.getParameter(USER_ID) != null) {
+                            %><button id = "suggestion-remove-btn" type="button" class="btn btn-danger" hidden>Remove</button><%
+                        }
+                    %>
                 </div>
                 <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
                     <form onsubmit="submitSuggestion(); return false;">

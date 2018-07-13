@@ -94,11 +94,8 @@ function viewSuggestion(eventHandler) {
     } catch (e) {
 
     }
-    let dv = $("#notification-div");
-    if (dv.is(":visible")) {
-        dv.hide();
-        $("#comment-panel").show();
-        $("#reply-editor-wrapper").show();
+    $("#comment-panel").show();
+    $("#reply-editor-wrapper").show();
     }
 
     //Load suggestion data

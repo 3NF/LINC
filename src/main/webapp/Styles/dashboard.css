@@ -146,3 +146,8 @@ html {
     display : none;
 }
 
+#suggestion-remove-btn {
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}

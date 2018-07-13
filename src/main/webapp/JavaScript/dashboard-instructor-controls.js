@@ -49,6 +49,7 @@ function adjustView (ind) {
         $("#comment-editor-wrapper").show();
         $("#reply-editor-wrapper").hide();
         $(".reply-panel").hide();
+        $("#suggestion-remove-btn").hide();
     } else {
         if (!$("#reply-editor-wrapper").is(":visible")) {
             $("#notification-div").hide();
@@ -56,6 +57,7 @@ function adjustView (ind) {
             $("#comment-editor-wrapper").hide();
             $("#reply-editor-wrapper").show();
             $(".reply-panel").show();
+            $("#suggestion-remove-btn").show();
         }
     }
 }
