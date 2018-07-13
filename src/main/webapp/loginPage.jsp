@@ -35,6 +35,7 @@
         <input type="hidden" name="id_token" value="">
         <input type="hidden" name="action" value="login">
     </form>
+    <img id = "login-logo" src="${pageContext.request.contextPath}/Images/Logo.svg"><br>
     <div id="loader-wrapper" hidden>
         <div class="loader"></div>
     </div>

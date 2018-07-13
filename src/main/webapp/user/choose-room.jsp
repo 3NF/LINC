@@ -54,7 +54,7 @@
         <%for (Course course : courses) {%>
 
         <td>
-            <div class="classRoom" onclick=<%="enterClasroom(" + course.getId() + ")"%>>
+            <div class="classRoom"  onclick=<%="enterClasroom(" + course.getId() + ")"%>>
                 <h3><%=course.getName()%>
                 </h3>
             </div>
