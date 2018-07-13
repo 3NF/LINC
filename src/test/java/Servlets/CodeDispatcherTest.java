@@ -4,6 +4,7 @@ import Data.Constraints;
 import Database.AssignmentInfoDAO;
 import Database.CodeFilesDAO;
 import Database.ConnectionPool;
+import Database.UserStorage;
 import Models.User;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -24,7 +25,9 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 
 import static Data.Constraints.USER;
+import static Data.Constraints.USER_STORAGE;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -46,7 +49,7 @@ public class CodeDispatcherTest {
     @Test
     public void test1() throws ServletException, IOException {
         //  create mock
-
+        UserStorage userStorage = mock(UserStorage.class);
         String json = "{\"codeID\":1, \"amount\":222}";
         when(request.getSession()).thenReturn(session);
         when(request.getReader()).thenReturn(
@@ -55,6 +58,8 @@ public class CodeDispatcherTest {
         when(request.getServletContext()).thenReturn(servletContext);
         when(servletContext.getAttribute("CodeFilesDAO")).thenReturn(new CodeFilesDAO(ConnectionPool.getInstance()));
         when(session.getAttribute(USER)).thenReturn(new User("105303857051815287047"));
+        when(session.getAttribute(USER_STORAGE)).thenReturn(null);
+        when(userStorage.getUserWithID(any(),any())).thenReturn(new User("123123"));
         response_writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
         new CodeDispatcher().doPost(request, response);
@@ -70,8 +75,9 @@ public class CodeDispatcherTest {
     @Test
     public void test2() throws ServletException, IOException, JSONException {
         //  create mock
-
+        UserStorage userStorage = mock(UserStorage.class);
         String json = "{\"assignmentID\":123123123123, \"amount\":222}";
+        when(userStorage.getUserWithID(any(),any())).thenReturn(new User("123123"));
         when(request.getSession()).thenReturn(session);
         when(request.getReader()).thenReturn(
                 new BufferedReader(new StringReader(json)));

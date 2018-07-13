@@ -1,6 +1,8 @@
 package Models;
 
 
+import Database.GAPIManager;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.gson.Gson;
 
 public class User {
@@ -12,6 +14,7 @@ public class User {
     private transient String userId;
     private transient String accessToken;
     private transient String refreshToken;
+    private transient GoogleCredential credentials;
 
     public User(String email, String FirstName, String lastName, String userId, String picturePath, String accessToken, String refreshToken)
     {
@@ -22,16 +25,21 @@ public class User {
         this.picturePath = processPictureLink(picturePath);
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+
+        this.credentials =    new GoogleCredential.Builder().setJsonFactory(GAPIManager.JACKSON_FACTORY).setClientSecrets(GAPIManager.secrets).setTransport(GAPIManager.HTTP_TRANSPORT).
+                build().setAccessToken(accessToken).setRefreshToken(refreshToken);
     }
+
 
     public User(String userId,String email,String picturePath){
         this.firstName = "Firstname";
         this.lastName = "Lastname";
-
         this.userId = userId;
         this.email = email;
         this.picturePath = picturePath;
     }
+
+
 
     public User(String userId){
         this.userId = userId;
@@ -82,4 +90,9 @@ public class User {
     public String toString() {
         return new Gson().toJson(this);
     }
+
+    public GoogleCredential getCredential() {
+        return credentials;
+    }
+
 }

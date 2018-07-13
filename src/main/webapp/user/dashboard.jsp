@@ -4,6 +4,9 @@
 <%@ page import="Data.Constraints" %>
 <%@ page import="static Data.Constraints.USER" %>
 <%@ page import="Database.GAPIManager" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.HashSet" %>
 <%@ page import="Database.AssignmentInfoDAO" %>
 <%@ page import="static Data.Constraints.ASSIGNMENT_INFO_DAO" %>
 <%@ page import="static Data.Constraints.GAPI_MANAGER" %>
@@ -168,10 +171,10 @@
                     </div>
                 </div>
                 <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
-                    <form>
+                    <form onsubmit="submitSuggestion(); return false;">
                         <textarea id="comment-editor-content" class="editor-content" name="content"></textarea>
                         <br>
-                        <button type="button" class="btn btn-primary" onclick="submitSuggestion()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
                         </button>
                         <button id="suggestion-type" type="button" class="btn btn-warning"
@@ -179,10 +182,10 @@
                     </form>
                 </div>
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
-                    <form>
+                    <form onsubmit="submitReply(); return false;">
                         <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
                         <br>
-                        <button type="button" class="btn btn-primary" onclick="submitReply()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
