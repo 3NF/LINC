@@ -278,33 +278,33 @@ html, body {
 }
 
 .grade_PlusPlus {
-    background-color: #e02626;
+    background-color: darkgreen;
 }
 
 .grade_Plus {
-    background-color: #e08325;
+    background-color: green;
 }
 
 .grade_CheckPlus {
-    background-color: #e024b7;
+    background-color: greenyellow;
 }
 
 .grade_Check {
-    background-color: #2f49a8;
+    background-color: yellow;
 }
 
 .grade_CheckMinus {
-    background-color: #2bd1c0;
+    background-color: grey;
 }
 
 .grade_Minus {
-    background-color: #f7f327;
+    background-color: orangered;
 }
 
 .grade_MinusMinus {
-    background-color: #38b747;
+    background-color: red;
 }
 
 .grade_0 {
-    background-color: #7c7776;
+    background-color: darkslategrey;
 }
