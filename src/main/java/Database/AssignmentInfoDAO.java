@@ -73,13 +73,12 @@ public class AssignmentInfoDAO {
 	}
 
 	public void addAssignment(String assignmentID, String courseID) {
-		String query = "INSERT INTO assignments(name,courseID,idInClassroom) VALUES (?,?,?)";
+		String query = "INSERT INTO assignments(courseID,idInClassroom) VALUES (?,?)";
 		try {
 			Connection connection = connectionPool.getConnection();
 			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, "123");
-			statement.setString(2, courseID);
-			statement.setString(3, assignmentID);
+			statement.setString(1, courseID);
+			statement.setString(2, assignmentID);
 			statement.execute();
 		} catch (Exception e) {
 			e.printStackTrace();

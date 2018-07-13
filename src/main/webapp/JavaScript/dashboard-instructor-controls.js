@@ -250,6 +250,7 @@ function deleteClick () {
         success: function(){
             removeSuggestion(suggID);
             $("#comment-panel").hide();
+            $(".reply-panel-wrapper").hide();
             activeSuggestionID = -1;
         },
         error: function () {

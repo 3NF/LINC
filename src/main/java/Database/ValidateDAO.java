@@ -1,6 +1,5 @@
 package Database;
 
-import Models.Reply;
 import Models.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
@@ -23,10 +22,10 @@ public class ValidateDAO {
                 "WHERE T.INSID = sections.instructorID) M, code_files WHERE code_files.id=? AND code_files.userID=M.studentID;";
 */
 
-		String q = "SELECT instructors.userID,instructors.classroomID,code_files.id FROM instructors inner join" +
-				" sections on instructors.id=sections.instructorID inner join code_files " +
+		String q = "SELECT Instructors.userID,Instructors.classroomID,code_files.id FROM Instructors inner join" +
+				" sections on Instructors.id=sections.instructorID inner join code_files " +
 				"on code_files.userID=sections.studentID " +
-				"where instructors.classroomID=?  AND instructors.userID=? and code_files.id=?";
+				"where Instructors.classroomID=?  AND Instructors.userID=? and code_files.id=?";
 
 		PreparedStatement statement;
 
@@ -52,7 +51,7 @@ public class ValidateDAO {
 
 	public boolean hasAccessInstructor(User user, String suggestionID, String courseID) {
 		String query = "SELECT Instructors.userID,Instructors.classroomID,sections.InstructorID,sections.studentID,suggestions.id FROM Instructors inner join " +
-				"sections on instructors.id=sections.InstructorID " +
+				"sections on Instructors.id=sections.InstructorID " +
 				"inner join code_files on code_files.userID = sections.studentID " +
 				"inner join suggestions on suggestions.Code_FileID=code_files.id " +
 				"WHERE Instructors.userID=? AND suggestions.id=? AND Instructors.classroomID=?";

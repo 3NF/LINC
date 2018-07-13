@@ -47,6 +47,7 @@ public class ReplyDispatcher extends HttpServlet
             }
 
             if (data.has("content")){
+                System.err.print(data.get("content").getAsString());
                 String UserID = ((User) session.getAttribute(USER)).getUserId();
                 Reply reply = replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
                 UserStorage userStorage = (UserStorage) session.getServletContext().getAttribute(USER_STORAGE);

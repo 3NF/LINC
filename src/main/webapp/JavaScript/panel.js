@@ -96,6 +96,7 @@ function sendAssignments(assignmentId) {
                 }
             ),
             success: function () {
+                
                 alert("Successfully downloaded assignment files.");
             },
             error: function () {
