@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebServlet(name = "ChangeRoleServlet" , urlPatterns = "/user/change_role")
 public class ChangeRoleServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String roleS = request.getParameter(Constraints.ROLE);
         String userId = request.getParameter(Constraints.USER_ID);
         String courseID = request.getParameter(Constraints.COURSE_ID);
@@ -28,7 +28,4 @@ public class ChangeRoleServlet extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }

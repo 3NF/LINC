@@ -15,8 +15,4 @@ public class ChooseRoomServlet extends HttpServlet
         request.getRequestDispatcher("/user/ChooseRoom.jsp").forward(request,response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-
-    }
 }

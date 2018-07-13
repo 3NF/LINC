@@ -21,7 +21,4 @@ public class UpdateGradeServlet extends HttpServlet {
         assignmentInfoDAO.updateGrade(assignmentID , userID , grade);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-
-    }
 }

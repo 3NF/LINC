@@ -183,7 +183,4 @@ public class AssignmentInfoDAO {
 		return Collections.emptyList();
 	}
 
-	public static void main(String args[]) {
-		//System.err.println(new AssignmentInfoDAO(ConnectionPool.getInstance()).getUsersGrades("15887333289","105303857051815287047"));
-	}
 }

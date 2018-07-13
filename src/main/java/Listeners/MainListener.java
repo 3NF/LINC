@@ -34,6 +34,15 @@ public class MainListener implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
+        sce.getServletContext().removeAttribute(GAPI_MANAGER);
+
+        sce.getServletContext().removeAttribute(USER_STORAGE);
+        sce.getServletContext().removeAttribute(CODE_FILES_DAO);
+        sce.getServletContext().removeAttribute(ASSIGNMENT_INFO_DAO);
+        sce.getServletContext().removeAttribute(REPLY_DAO);
+        sce.getServletContext().removeAttribute(VALIDATE_DAO);
+        sce.getServletContext().removeAttribute(SUGGESTION_DAO);
+        sce.getServletContext().removeAttribute(SECTION_DAO);
     }
 
 

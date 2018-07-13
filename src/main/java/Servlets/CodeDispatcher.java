@@ -46,6 +46,7 @@ public class CodeDispatcher extends HttpServlet
             //Send response to client
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF8");
+            // TODO: 7/13/18 Luka ნახე ეს json null შეიძლება იყოსო 
             response.getWriter().write(json);
         } catch (NumberFormatException|NullPointerException e) {
             e.printStackTrace();

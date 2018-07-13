@@ -20,7 +20,6 @@ import java.util.List;
 public class addInSectionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-        //if (data.hz)
         String courseID = data.get("courseID").getAsString();
         String leaderID = data.get("leaderID").getAsString();
         JsonArray array = data.get("sections").getAsJsonArray();

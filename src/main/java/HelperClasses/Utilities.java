@@ -16,68 +16,6 @@ import java.util.zip.ZipInputStream;
  */
 public final class Utilities {
 
-	public static void main(String args[]) {
-		unZip("/home/bakuri/Downloads/kanfetebi.zip");
-	}
-
-
-	private static final String subFolderName = "unzipedFiles";
-
-	/**
-	 *
-	 * This method extracts zip files
-	 *
-	 * @param fileZip zips location
-	 *
-	 * Method is written from
-	 * <href a="https://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/"
-	 */
-	public static void unZip(String fileZip) {
-		byte[] buffer = new byte[1024];
-		String dist = subFolderName + File.separator + new File(fileZip).getName();
-		try {
-
-			//create output directory is not exists
-			File folder = new File(dist);
-			if (!folder.exists()) {
-				folder.mkdir();
-			}
-
-			//get the zip file content
-			ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
-			//get the zipped file list entry
-			ZipEntry ze = zis.getNextEntry();
-
-			while (ze != null) {
-				String fileName = ze.getName();
-				if (!(fileName.endsWith(".txt") || fileName.endsWith(".cpp") || fileName.endsWith(".h"))) {
-					ze = zis.getNextEntry();
-					continue;
-				}
-
-				File newFile = new File(dist + File.separator + fileName);
-
-				new File(newFile.getParent()).mkdirs();
-
-				FileOutputStream fos = new FileOutputStream(newFile);
-
-				int len;
-				while ((len = zis.read(buffer)) > 0) {
-					fos.write(buffer, 0, len);
-				}
-
-				fos.close();
-				ze = zis.getNextEntry();
-			}
-
-			zis.closeEntry();
-			zis.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-
 	public static void unzipInputStream(ByteArrayInputStream inStream, UploadedAssignment uploadedAssignment, String actorUserID) throws IOException {
 		ZipInputStream zis = new ZipInputStream(inStream);
 		ZipEntry entry;
@@ -99,8 +37,7 @@ public final class Utilities {
 
 	public static ByteArrayInputStream convertOutputIntoInputStream(OutputStream outputStream) {
 		ByteArrayOutputStream outStream = ((ByteArrayOutputStream) outputStream);
-		ByteArrayInputStream inStream = new ByteArrayInputStream(outStream.toByteArray());
-		return inStream;
+		return new ByteArrayInputStream(outStream.toByteArray());
 	}
 
 
