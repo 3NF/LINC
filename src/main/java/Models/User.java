@@ -16,8 +16,7 @@ public class User {
     private transient String refreshToken;
     private transient GoogleCredential credentials;
 
-    public User(String email, String FirstName, String lastName, String userId, String picturePath, String accessToken, String refreshToken)
-    {
+    public User(String email, String FirstName, String lastName, String userId, String picturePath, String accessToken, String refreshToken) {
         this.firstName = FirstName;
         this.email = email;
         this.lastName = lastName;

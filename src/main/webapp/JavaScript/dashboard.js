@@ -96,7 +96,7 @@ function viewSuggestion(eventHandler) {
     }
     $("#comment-panel").show();
     $("#reply-editor-wrapper").show();
-    }
+
 
     //Load suggestion data
     var suggestion = suggestions[eventHandler];
@@ -120,11 +120,14 @@ function fetchCodesInfo() {
     if (uid !== null) {
         dataObj = {
             assignmentID: assId,
+            teacherID: teachID,
             userID: uid
         }
     } else {
         dataObj = {
-            assignmentID: assId
+            assignmentID: assId,
+            teacherID: teachID,
+            courseID: getParameter("courseID")
         }
     }
     console.log(JSON.stringify(dataObj));
@@ -170,6 +173,7 @@ function fetchCode(id) {
     toggleLoading();
     let dataObj;
     dataObj = {
+        teacherID: teachID,
         codeID: id
     };
 
@@ -201,7 +205,7 @@ function fetchReplies(id) {
         url: "/user/reply_dispatcher",
         method: "POST",
         contentType: 'application/json; charset=UTF-8/json',
-        data: JSON.stringify({courseID: getParameter("courseID"), suggestionID: id}),
+        data: JSON.stringify({courseID: getParameter("courseID"), teacherID: teachID, suggestionID: id}),
         success: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadReplies(data, textStatus, jQxhr);

@@ -247,7 +247,7 @@ html, body {
     margin-right: 3px;
     display: block;
     background-color: white;
-    height: 90%;
+    height: 100%;
     z-index: 121;
     position: relative;
     min-height: 500px;

@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="../Styles/dashboard.css">
     <%--bootstrap--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="../Styles/bootstrap-social.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/Styles/bootstrap-social.css" rel="stylesheet">
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -42,8 +42,12 @@
 
     <script src = "--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src = '../bootstrap-markdown/js/bootstrap-markdown.js'></script>
-    <link rel = "stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <script src = '${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
+    <link rel = "stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
+
+
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+
 
     <%
         User user = (User) request.getSession().getAttribute(Constraints.USER);
@@ -52,7 +56,6 @@
     <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
     <% GAPIManager gapiManager = GAPIManager.getInstance(); %>
 
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
     <%
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));

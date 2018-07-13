@@ -18,7 +18,7 @@ public class UserStorage {
 
     public User getUserWithID (String requesterID, String targetId) {
         if (!users.containsKey(targetId)) {
-            User ad = gapiManager.getUserById(requesterID, targetId);
+            User ad = gapiManager.getUserProfile(requesterID, targetId);
             System.out.println("US " + ad);
             users.put(targetId, ad);
         }

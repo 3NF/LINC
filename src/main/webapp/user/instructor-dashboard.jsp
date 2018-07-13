@@ -22,14 +22,16 @@
 
     <%--bootstrap--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="../Styles/bootstrap-social.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/Styles/bootstrap-social.css" rel="stylesheet">
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/instructor-dashboard.js?newversione"></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
 
     <%--Comment following line if you want to view as Student--%>
@@ -42,10 +44,10 @@
     <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../codemirror-5.39.0/lib/codemirror.css">
-    <script src='../codemirror-5.39.0/lib/codemirror.js'></script>
-    <script src='../codemirror-5.39.0/mode/clike.js'></script>
-    <script src='../bootstrap-markdown/js/bootstrap-markdown.js'></script>
-    <link rel="stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <script src='${pageContext.request.contextPath}/codemirror-5.39.0/lib/codemirror.js'></script>
+    <script src='${pageContext.request.contextPath}/codemirror-5.39.0/mode/clike.js'></script>
+    <script src='${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
 
 
     <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
@@ -61,16 +63,16 @@
             response.sendRedirect("choose-room.jsp");
             return;
         }
-
+        String teacherID = UserDAO.getUserIDsByRole(courseId, UserDAO.Role.Teacher).get(0);
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
         List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
 
         SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
-        ArrayList <User> studentsOnlyID = (ArrayList)DAO.getUsersInSection(courseId, user.getUserId());
-        ArrayList <User> students = new ArrayList<>();
+        List <User> studentsOnlyID = DAO.getUsersInSection(courseId, user.getUserId());
+        List <User> students = new ArrayList<>();
         for (User student: studentsOnlyID) {
-            students.add(GAPIManager.getInstance().getUserProfile(user.getUserId(), student.getUserId()));
+            students.add(GAPIManager.getInstance().getUserProfile(teacherID, student.getUserId()));
         }
     %>
 

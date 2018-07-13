@@ -76,6 +76,7 @@ public class UserDAO
     public static GoogleCredential getGoogleCredentials(String userId)
     {
         UserCredential credential = getUserCredential(userId);
+        System.out.println(userId);
 
         return new GoogleCredential.Builder().setJsonFactory(GAPIManager.JACKSON_FACTORY).setClientSecrets(GAPIManager.secrets).setTransport(GAPIManager.HTTP_TRANSPORT)
                 .build().setAccessToken(credential.getAccessToken()).setRefreshToken(credential.getRefreshToken());
@@ -152,7 +153,7 @@ public class UserDAO
 
 
     public static List<String> getUserIDsByRole(String classroomID, Role role){
-        List<String> users = new ArrayList<String>();
+        List<String> users = new ArrayList<>();
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();
             String query="SELECT * FROM instructors WHERE classroomID=? AND Type=?";

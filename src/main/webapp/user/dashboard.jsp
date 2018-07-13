@@ -15,6 +15,7 @@
 <%@ page import="static Data.Constraints.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="javafx.util.Pair" %>
+<%@ page import="Database.UserDAO" %>
 <html>
 
 <head>
@@ -23,33 +24,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="client_id" content="<%=CLIENT_ID%>">
 
-    <%--bootstrap--%>
+    <%--bootstrap and Jquery --%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="../Styles/bootstrap-social.css" rel="stylesheet">
+    <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <%--Google api--%>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <script src="${pageContext.request.contextPath}/JavaScript/dashboard.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="${pageContext.request.contextPath}/jstree/dist/jstree.min.js"></script>
-    <link rel="stylesheet" href="../jstree/dist/themes/default/style.min.css"/>
+    <script src="${pageContext.request.contextPath}/jstree/dist/jstree.js"></script>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css"/>
 
     <%--my css--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/dashboard.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css">
 
 
-    <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../codemirror-5.39.0/lib/codemirror.css">
-    <script src='../codemirror-5.39.0/lib/codemirror.js'></script>
-    <script src='../codemirror-5.39.0/mode/clike.js'></script>
-    <script src='../bootstrap-markdown/js/bootstrap-markdown.js'></script>
-    <link rel="stylesheet" href="../bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/codemirror-5.39.0/lib/codemirror.css">
+    <script src='${pageContext.request.contextPath}/codemirror-5.39.0/lib/codemirror.js'></script>
+    <script src='${pageContext.request.contextPath}/codemirror-5.39.0/mode/clike.js'></script>
+    <script src='${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
@@ -91,6 +95,9 @@
             assignmentHtmlIds.add("grade_" + (grade == null? "none" : grade.replaceAll("\\s+","")));
         }
 
+        String courseID = request.getParameter(COURSE_ID);
+        String teacherID = UserDAO.getUserIDsByRole(courseID, UserDAO.Role.Teacher).get(0);
+
         if (!isStudent) {%>
             <%--Comment following line if you want to view as Student--%>
             <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js"></script>
@@ -98,6 +105,8 @@
 
         <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
         <script>let uid = <%=(String)request.getAttribute(USER_ID)%>;</script>
+        <script>let teachID = '<%=teacherID%>';</script>
+
 
     <%
         String assignmentID = request.getParameter(ASSIGNMENT_ID);

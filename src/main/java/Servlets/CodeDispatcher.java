@@ -29,6 +29,7 @@ public class CodeDispatcher extends HttpServlet
             //Get request data
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
             String json;
+            String teacherID = data.get(TEACHER_ID).getAsString();
             String userID = ((User) request.getSession().getAttribute(USER)).getUserId();
             SectionDAO sectionDAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
 
@@ -40,7 +41,7 @@ public class CodeDispatcher extends HttpServlet
                 json = loadCodeNames(data,request);
             }
             else {
-                json = loadCodeWithID(data,request, userID);
+                json = loadCodeWithID(data,request, userID, teacherID);
             }
             //Send response to client
             response.setContentType("application/json");
@@ -52,15 +53,18 @@ public class CodeDispatcher extends HttpServlet
         }
     }
 
-    private String loadCodeWithID(JsonObject data,HttpServletRequest request, String userID){
+    private String loadCodeWithID(JsonObject data,HttpServletRequest request, String userID, String teacherID){
         String codeFilesId = data.get(Constraints.CODE_ID).getAsString();
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
         try {
             UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
 
             CodeFile codeFile = codeFilesDAO.getFilesContent(codeFilesId);
-            if (userStorage != null)
-                codeFile.RetrieveUsers(userID, userStorage);
+            if (userStorage != null) {
+            	System.err.println(teacherID);
+	            System.err.println(userStorage);
+	            codeFile.RetrieveUsers(teacherID, userStorage);
+            }
 
             return new GsonBuilder().create().toJson(codeFile);
         } catch (SQLException e) {

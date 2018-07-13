@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+import static Data.Constraints.TEACHER_ID;
 import static Data.Constraints.USER;
 import static Data.Constraints.USER_STORAGE;
 
@@ -49,8 +50,10 @@ public class ReplyDispatcher extends HttpServlet
                 String UserID = ((User) session.getAttribute(USER)).getUserId();
                 Reply reply = replyDAO.addReply(data.get("content").getAsString(),UserID,suggestionID);
                 UserStorage userStorage = (UserStorage) session.getServletContext().getAttribute(USER_STORAGE);
-                if (userStorage != null)
-                    reply.RetrieveUsers(user.getUserId(), userStorage);
+                if (userStorage != null) {
+                    reply.user = user;
+
+                }
 
                 json = new GsonBuilder().disableHtmlEscaping().create().toJson(reply);
             }
@@ -58,10 +61,12 @@ public class ReplyDispatcher extends HttpServlet
                 //Get replies from database
                 List<Reply> replies = replyDAO.getSuggestionReplies(suggestionID);
                 UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
+                String teacherID = data.get(TEACHER_ID).getAsString();
 
                 for (Reply reply:replies) {
-                    if (userStorage != null)
-                        reply.RetrieveUsers(user.getUserId(), userStorage);
+                    if (userStorage != null) {
+                        reply.RetrieveUsers(teacherID, userStorage);
+                    }
                 }
 
                 //Convert file data into JSON
