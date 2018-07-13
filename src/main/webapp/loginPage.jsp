@@ -18,7 +18,7 @@
         function onSuccess(googleUser)
         {
             $(".g-signin2").hide();
-            $("#loading").show();
+            $("#loader-wrapper").show();
             let id_token = googleUser.getAuthResponse().id_token;
             let form = document.forms[0];
             form.id_token.value = id_token;
@@ -35,7 +35,9 @@
         <input type="hidden" name="id_token" value="">
         <input type="hidden" name="action" value="login">
     </form>
-    <img id = "login-logo" src="${pageContext.request.contextPath}/Images/Logo.svg"><br>
+    <div id="loader-wrapper" hidden>
+        <div class="loader"></div>
+    </div>
     <h2>Welcome! Connect With Google To Start using LINC </h2>
     <div style="text-align: center; margin: 0 auto; width: fit-content">
         <img id="loading" src="${pageContext.request.contextPath}/Images/loading.gif" style="display: none">
