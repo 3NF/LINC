@@ -155,9 +155,6 @@
 
                         </textarea>
             </div>
-            <div id="notification-div">
-                <h1 id="notification-text">Please select code interval!</h1>
-            </div>
             <div id="comment-panel-wrapper">
                 <div class="media" id="comment-panel" hidden>
                     <img class="media-object media-left" id="comment-profile-picture"
