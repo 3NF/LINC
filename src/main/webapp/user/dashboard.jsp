@@ -123,8 +123,10 @@
                 System.out.println(idInHtml);
             %>
                 <div class="sidenav-item <%=idInHtml%>" onclick=getAssignment(<%=assignment.getId()%>)>
-                    <p><%=assignment.getName()%>
-                    </p>
+                    <% String grade = idInHtml.substring(6); %>
+                    <p onmouseover="mouseOver('<%=grade%>')"
+                       onmouseout="this.innerHTML='<%=assignment.getName()%>';"
+                    ><%=assignment.getName()%></p>
                 </div>
             <%}%>
         </div>
