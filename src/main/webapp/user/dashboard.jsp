@@ -72,8 +72,7 @@
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
 
         if (assignments.size() == 0) {
-            //request.setAttribute("code", SC_);
-            response.sendError(HttpStatus.SC_NOT_FOUND, "Lectured haven't released any assignment to system!");
+            HelperClasses.Utilities.sendError(request, response, HttpStatus.SC_NOT_FOUND, "Lecturer hasn't released any assignment to system!");
             return;
         }
 

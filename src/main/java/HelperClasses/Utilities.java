@@ -2,7 +2,10 @@ package HelperClasses;
 
 
 import Models.UploadedAssignment;
+import org.apache.http.HttpStatus;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -47,6 +50,12 @@ public final class Utilities {
 		if(!firstChar.matches("^[a-zA-Z]+$")) return source;
 		return firstChar.toUpperCase() + source.substring(1,source.length());
 	}
+
+	public static void sendError (HttpServletRequest request, HttpServletResponse response, int code, String message) throws IOException {
+        request.setAttribute("code", code);
+        request.setAttribute("message", message);
+        response.sendError(code);
+    }
 }
 
 
