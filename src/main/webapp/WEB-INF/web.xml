@@ -11,6 +11,11 @@
         <welcome-file>loginPage.jsp</welcome-file>
     </welcome-file-list>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/error-page.jsp</location>
+    </error-page>
+
     <listener>
         <listener-class>Listeners.MainListener</listener-class>
     </listener>
