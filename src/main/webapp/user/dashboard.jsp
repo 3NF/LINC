@@ -16,6 +16,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="javafx.util.Pair" %>
 <%@ page import="Database.UserDAO" %>
+<%@ page import="org.apache.http.HttpStatus" %>
 <html>
 
 <head>
@@ -69,6 +70,12 @@
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
         List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
+
+        if (assignments.size() == 0) {
+            response.sendError(HttpStatus.SC_NOT_FOUND, "Lectured haven't released any assignment to system!");
+            return;
+        }
+
         String firstAssignmentID = assignments.get(0).getId();
         if (request.getParameter(ASSIGNMENT_ID) == null) {
             response.sendRedirect("dashboard.jsp?" + COURSE_ID + "=" + request.getParameter(COURSE_ID) + "&" + ASSIGNMENT_ID + "=" + firstAssignmentID);
