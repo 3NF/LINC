@@ -22,8 +22,7 @@ import java.sql.SQLException;
 import static Data.Constraints.*;
 
 @WebServlet(name = "CodeDispatcher", urlPatterns = "/user/code_dispatcher")
-public class CodeDispatcher extends HttpServlet
-{
+public class CodeDispatcher extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             //Get request data
@@ -37,58 +36,55 @@ public class CodeDispatcher extends HttpServlet
                 userID = data.get(Constraints.USER_ID).getAsString();
             }
 
-            if (data.has(Constraints.ASSIGNMENT_ID)){
-                json = loadCodeNames(data,request);
-            }
-            else {
-                json = loadCodeWithID(data,request, userID, teacherID);
+            if (data.has(Constraints.ASSIGNMENT_ID)) {
+                json = loadCodeNames(data, request);
+            } else {
+                json = loadCodeWithID(data, request, userID, teacherID);
             }
             //Send response to client
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF8");
-            // TODO: 7/13/18 Luka ნახე ეს json null შეიძლება იყოსო 
             response.getWriter().write(json);
-        } catch (NumberFormatException|NullPointerException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             e.printStackTrace();
             response.sendError(HttpStatus.SC_NOT_FOUND);
-        }
-    }
-
-    private String loadCodeWithID(JsonObject data,HttpServletRequest request, String userID, String teacherID){
-        String codeFilesId = data.get(Constraints.CODE_ID).getAsString();
-        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
-        try {
-            UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
-
-            CodeFile codeFile = codeFilesDAO.getFilesContent(codeFilesId);
-            if (userStorage != null) {
-            	System.err.println(teacherID);
-	            System.err.println(userStorage);
-	            codeFile.RetrieveUsers(teacherID, userStorage);
-            }
-
-            return new GsonBuilder().create().toJson(codeFile);
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            response.sendError(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Couldn't save data in database");
         }
     }
 
-    private String loadCodeNames(JsonObject data,HttpServletRequest request){
+    private String loadCodeWithID(JsonObject data, HttpServletRequest request, String userID, String teacherID) throws SQLException {
+        String codeFilesId = data.get(Constraints.CODE_ID).getAsString();
+        CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
+
+
+        UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
+
+        CodeFile codeFile = codeFilesDAO.getFilesContent(codeFilesId);
+        if (userStorage != null) {
+            System.err.println(teacherID);
+            System.err.println(userStorage);
+            codeFile.RetrieveUsers(teacherID, userStorage);
+        }
+
+        return new GsonBuilder().create().toJson(codeFile);
+    }
+
+    private String loadCodeNames(JsonObject data, HttpServletRequest request) throws SQLException {
         AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(Constraints.ASSIGNMENT_INFO_DAO);
         String userID = ((User) request.getSession().getAttribute(USER)).getUserId();
         if (data.has("userID"))
-            userID =  data.get("userID").getAsString();
+            userID = data.get("userID").getAsString();
         String assignmentID = data.get(Constraints.ASSIGNMENT_ID).getAsString();
 
-        return new GsonBuilder().disableHtmlEscaping().create().toJson(assignmentInfoDAO.getAssignmentFilesPath(userID,assignmentID));
+        return new GsonBuilder().disableHtmlEscaping().create().toJson(assignmentInfoDAO.getAssignmentFilesPath(userID, assignmentID));
     }
 
     /*
         User must not access this with get request
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
-    {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.SC_NOT_FOUND);
     }
 }
