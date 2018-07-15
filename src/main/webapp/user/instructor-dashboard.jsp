@@ -13,6 +13,7 @@
 <%@ page import="Database.*" %>
 <%@ page import="static Data.Constraints.*" %>
 <%@ page import="com.google.api.services.classroom.model.Student" %>
+<%@ page import="org.apache.http.HttpStatus" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -67,6 +68,11 @@
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
         List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
+
+        if (assignments.size() == 0) {
+            HelperClasses.Utilities.sendError(request, response, HttpStatus.SC_NOT_FOUND, "Lecturer hasn't released any assignment to system!");
+            return;
+        }
 
         SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
         List <User> studentsOnlyID = DAO.getUsersInSection(courseId, user.getUserId());
