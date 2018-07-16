@@ -34,8 +34,6 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="${pageContext.request.contextPath}/JavaScript/teacher-dashboard.js?newversione"></script>
-    <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
 
     <%--my css--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
@@ -49,6 +47,12 @@
 
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script src="https://apis.google.com/js/api.js"></script>
+
+
+    <script src="${pageContext.request.contextPath}/JavaScript/teacher-dashboard.js?newversione"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/gapi-scripts.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/html-templates.js"></script>
 
 
     <%
@@ -68,36 +72,24 @@
     %>
 
     <%
-        Set<String> semReaderIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.SeminarReader));
-        Set<String> teacherAssIds = new HashSet<>(UserDAO.getUserIDsByRole(courseId, UserDAO.Role.TeacherAssistant));
+        List<String> semReaderIds = UserDAO.getUserIDsByRole(courseId, UserDAO.Role.SeminarReader);
+        List<String> teacherAssIds = UserDAO.getUserIDsByRole(courseId, UserDAO.Role.TeacherAssistant);
         Set<String> studentsIds = new HashSet<>();
         String teacherID = ((User) session.getAttribute(Constraints.USER)).getUserId();
         UserDAO.addUser(teacherID,UserDAO.Role.Teacher,courseId);
-        List<UserProfile> allUsers = gapiManager.getUsers(user, courseId);
-
-        List<UserProfile> students = new ArrayList<>();
-        List<UserProfile> semReaders = new ArrayList<>();
-        List<UserProfile> assistants = new ArrayList<>();
-
-        for (UserProfile student : allUsers) {
-            if (semReaderIds.contains(student.getId())) {
-                semReaders.add(student);
-                continue;
-            }
-
-            if (teacherAssIds.contains(student.getId())) {
-                assistants.add(student);
-                continue;
-            }
-            studentsIds.add(student.getId());
-            students.add(student);
-        }
         String teacherAssistantJson = new Gson().toJson(teacherAssIds);
-        String studentJson = new Gson().toJson(studentsIds);
         String semReadersJson = new Gson().toJson(semReaderIds);
+        System.out.println(teacherAssistantJson);
+        System.out.println(semReadersJson);
     %>
-    <script>let userId = '<%=user.getUserId()%>';</script>
-    <script>let classroomId = getParameter("courseID"); </script>
+    <script>userId = '<%=user.getUserId()%>';</script>
+    <script>courseID = '<%=courseId%>';</script>
+    <script>students = []</script>
+    <script>seminarReaders = []</script>
+    <script>assistants = []</script>
+    <script>classroomId = getParameter("courseID"); </script>
+    <script>assistantIds = JSON.parse('<%=teacherAssistantJson%>') </script>
+    <script>seminarReaderIds = JSON.parse('<%=semReadersJson%>') </script>
 </head>
 <body>
 <div class="fill">
@@ -147,23 +139,8 @@
                             <th>E-mail</th>
                             <th></th>
                         </tr>
-                        <% for(UserProfile semReader : semReaders){ %>
-                        <tr>
-                            <td><%=semReader.getName().getGivenName()%></td>
-                            <td><%=semReader.getName().getFamilyName()%></td>
-                            <td><%=semReader.getEmailAddress()%></td>
-                            <td>
-                                <div class="btn-group-vertical">
-                                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-option-vertical"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=semReader.getId()%>' ,'<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">Remove</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <%}%>
+                        <tbody id = "semReadersTable1">
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -182,25 +159,10 @@
                             <th>Surname</th>
                             <th>E-mail</th>
                         </tr>
-                        <% for(UserProfile assistant : assistants){ %>
-                        <tr>
-                            <td><%=assistant.getName().getGivenName()%></td>
-                            <td><%=assistant.getName().getFamilyName()%></td>
-                            <td><%=assistant.getEmailAddress()%></td>
-                            <td>
-                                <div class="btn-group-vertical">
-                                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-option-vertical"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=assistant.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">Remove</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <%}%>
+                        <tbody id = "teacherAssTable1">
+                        </tbody>
                     </table>
-                    <button class = "btn btn-light" style="width:260px;color:black" onclick='randomSections(<%=teacherAssistantJson%>,<%=studentJson%>,<%=semReadersJson%>,<%=courseId%>)'> Random sections for teacher assistants </button>
+                    <button class = "btn btn-light" style="width:260px;color:black" onclick='randomSections()'> Random sections for teacher assistants </button>
                 </div>
             </div>
         </div>
@@ -218,29 +180,8 @@
                             <th>Surname</th>
                             <th>E-mail</th>
                         </tr>
-                        <% for(UserProfile student : students){ %>
-                        <tr>
-                            <td><%=student.getName().getGivenName()%></td>
-                            <td><%=student.getName().getFamilyName()%></td>
-                            <td><%=student.getEmailAddress()%></td>
-                            <td>
-                                <div class="btn-group-vertical">
-                                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-option-vertical"></span></button>
-                                    <ul class="dropdown-menu" >
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.SeminarReader%>')">
-                                            Add as seminar reader
-                                        </button>
-                                        </li>
-                                        <li><button type="button" class="btn btn-light" onclick="changeRole('<%=student.getId()%>' , '<%=courseId%>' , '<%=UserDAO.Role.TeacherAssistant%>')">
-                                            Add as teacher assistant
-                                        </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <%}%>
+                        <tbody id = "studentsTable1">
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -272,4 +213,7 @@
     </div>
 </div>
 </body>
+<script>
+    gapi.load('client', get_students);
+</script>
 </html>

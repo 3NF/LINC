@@ -1,6 +1,6 @@
 function changeRole(userId , courseID , role){
-    var etarget = event.target;
-    var change;
+    let etarget = event.target;
+    let change;
     if ($(etarget).text() === 'Remove') {
         change = 'remove';
     } else {
@@ -15,12 +15,11 @@ function changeRole(userId , courseID , role){
         },
         type:'POST',
         success:function(){
-            var row = $(etarget).closest("tr").clone();
-            var table = $(etarget).closest("table");
+            let row = $(etarget).closest("tr").clone();
             $(etarget).closest("tr").remove();
             if (change === 'add') {
                 $("#removeExButton").attr("onclick","changeRole('" +userId+"','"+ courseID +"','" +role+"')");
-                var button = $('#removeEx').clone();
+                let button = $('#removeEx').clone();
                 row.find("td:last").empty();
                 row.find("td:last").append(button);
                 if (role === 'TeacherAssistant') {
@@ -32,7 +31,7 @@ function changeRole(userId , courseID , role){
             }else{
                 $("#addExButtonSR").attr("onclick","changeRole('" +userId+"','"+ courseID +"','SeminarReader')");
                 $("#addExButtonTA").attr("onclick","changeRole('" +userId+"','"+ courseID +"','TeacherAssistant')");
-                var button = $('#addEx').clone();
+                let button = $('#addEx').clone();
                 row.find("td:last").empty();
                 row.find("td:last").append(button);
                 $("#studentsTable").append(row);

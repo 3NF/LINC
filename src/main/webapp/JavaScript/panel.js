@@ -58,46 +58,6 @@ function signOut() {
         });
 }
 
-function get_classroom_list() {
-    // 2. Initialize the JavaScript client library.
-    gapi.client.init({
-        'apiKey': 'AIzaSyBKiQttlC5rUqexQiZgXlP2Zmhod5QZJhA',
-        // clientId and scope are optional if auth is not required.
-        client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
-        scope: "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.courses.readonly " +
-        "https://www.googleapis.com/auth/classroom.coursework.students.readonly https://www.googleapis.com/auth/classroom.coursework.students " +
-        "https://www.googleapis.com/auth/classroom.rosters " +
-        "https://www.googleapis.com/auth/classroom.profile.photos " +
-        "https://www.googleapis.com/auth/classroom.profile.emails  " +
-        "https://www.googleapis.com/auth/drive"
-    }).then(function () {
-        // 3. Initialize and make the API request.
-        return gapi.client.request({
-            'path': 'https://classroom.googleapis.com/v1/courses?courseStates=ACTIVE',
-        })
-    }).then(function (response) {
-        let lst = response.result.courses;
-        console.log(lst);
-        for (let i = 0; i < lst.length; i++) {
-
-            let dv = `<div class="classRoom"  onclick=enterClasroom('${lst[i].ownerId}','${lst[i].id}')><h3>${lst[i].name}</h3></div>`;
-            $("#crs_cntr").append(dv);
-        }
-    }, function (reason) {
-        console.log('Error: ' + reason.result.error.message);
-    });
-}
-
-function test_classroom_api() {
-    gapi.client.request({
-        'path': 'https://people.googleapis.com/v1/people/me?requestMask.includeField=person.names',
-    }).then(function (response) {
-        console.log(response.result);
-    }, function (reason) {
-        console.log('Error: ' + reason.result.error.message);
-    });
-}
-
 function getParameter(name) {
     try {
         let result = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -117,7 +77,7 @@ function getAssignment(assignmentId) {
 }
 
 function isDownloaded(assignmentID) {
-    alert("You have allready uploaded the assignment");
+    alert("You have already uploaded the assignment");
 }
 
 function changeParameter(paramName, paramVal) {
@@ -190,30 +150,32 @@ function giveInSection(leaders, students, rem, inSection, courseID) {
     }
 }
 
-function randomSections(teacherAssistants, students, semReaders, courseID) {
+function randomSections() {
+    let assistants_cln = JSON.parse(JSON.stringify(assistants));
+    let students_cln = JSON.parse(JSON.stringify(students));
+    let seminarReaders_cln = JSON.parse(JSON.stringify(seminarReaders));
+    shuffle(assistants_cln);
+    shuffle(students_cln);
+    shuffle(seminarReaders_cln);
 
-    shuffle(teacherAssistants);
-    shuffle(students);
-    shuffle(semReaders);
-
-    let teacherAssistantCnt = teacherAssistants.length;
-    let studentsCnt = students.length;
-    let semReadersCnt = semReaders.length;
+    let teacherAssistantCnt = assistants_cln.length;
+    let studentsCnt = students_cln.length;
+    let semReadersCnt = seminarReaders_cln.length;
 
     let inSectionAssistant = studentsCnt / teacherAssistantCnt;
     let rem = studentsCnt % teacherAssistantCnt;
     let inSectionSemReader = studentsCnt / semReadersCnt;
 
-    giveInSection(teacherAssistants, students, rem, inSectionAssistant, courseID);
+    giveInSection(assistants_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionAssistant, courseID);
 
     rem = studentsCnt % teacherAssistantCnt;
 
-    giveInSection(semReaders, students, rem, inSectionSemReader, courseID);
+    giveInSection(seminarReaders_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionSemReader, courseID);
+
     alert("now section,seminarers leaders has their students");
 }
 
 function mouseOver(grade) {
-    var etarget = event.target;
-    var changedGrade = gradeMap[grade];
-    etarget.innerHTML = changedGrade;
+    let etarget = event.target;
+    etarget.innerHTML = gradeMap[grade];
 }

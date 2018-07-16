@@ -24,6 +24,7 @@
     <script src="https://apis.google.com/js/platform.js?onload=start" async defer></script>
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/gapi-scripts.js"></script>
 
 
     <%
