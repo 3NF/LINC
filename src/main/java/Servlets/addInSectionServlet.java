@@ -24,10 +24,6 @@ public class addInSectionServlet extends HttpServlet {
         String leaderID = data.get("leaderID").getAsString();
         JsonArray array = data.get("sections").getAsJsonArray();
 
-        System.out.println(courseID);
-        System.out.println(leaderID);
-        System.out.println(array);
-
         Type listType = new TypeToken<List<String>>() {
         }.getType();
         List <String> list = new Gson().fromJson(array , listType);

@@ -40,22 +40,7 @@ function toggleNav() {
 }
 
 function signOut() {
-    gapi.load('client',
-        {
-            callback: function () {
-                let id = $("meta[name='client_id']").attr("content");
-                auth2 = auth2 = gapi.auth2.init({
-                    client_id: id
-                });
-
-                auth2.then(function () {
-                    auth2.signOut().then(function () {
-                        location.href = '/logout';
-                    });
-                });
-
-            }
-        });
+    document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8080/logout";
 }
 
 function getParameter(name) {

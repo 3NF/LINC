@@ -79,8 +79,6 @@
         UserDAO.addUser(teacherID,UserDAO.Role.Teacher,courseId);
         String teacherAssistantJson = new Gson().toJson(teacherAssIds);
         String semReadersJson = new Gson().toJson(semReaderIds);
-        System.out.println(teacherAssistantJson);
-        System.out.println(semReadersJson);
     %>
     <script>userId = '<%=user.getUserId()%>';</script>
     <script>courseID = '<%=courseId%>';</script>

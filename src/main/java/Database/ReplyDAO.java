@@ -45,7 +45,6 @@ public class ReplyDAO {
                 String suggestionId = result.getString("suggestionID");
                 Date date = result.getTimestamp("date");
                 suggestionsReply.add(new Reply(suggestionId, replyId, userId, content, date));
-                System.out.println(content);
             }
             statement.close();
             connection.close();
@@ -79,7 +78,6 @@ public class ReplyDAO {
         String query = "INSERT INTO replies (userid,text,suggestionid,date) VALUES(?,?,?,?)";
         String replyID = "";
         try {
-        	System.out.println(text);
             String generatedColumns[] = { "id" };
             statement = connection.prepareStatement(query,generatedColumns);
             statement.setString(1, userId);

@@ -1,19 +1,18 @@
 <%@ page import="Data.Constraints" %>
 <%@ page import="Models.User" %>
 <%@ page import="Models.Assignment" %>
-<%@ page import="java.util.HashSet" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="java.util.List" %>
 <%@ page import="static Data.Constraints.ASSIGNMENT_INFO_DAO" %>
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="static Data.Constraints.SECTION_DAO" %>
 <%@ page import="static Data.Constraints.COURSE_ID" %>
 <%@ page import="static Data.Constraints.CLIENT_ID" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="Database.*" %>
 <%@ page import="static Data.Constraints.*" %>
 <%@ page import="com.google.api.services.classroom.model.Student" %>
 <%@ page import="org.apache.http.HttpStatus" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.DateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -55,7 +54,9 @@
     <% GAPIManager gapiManager = GAPIManager.getInstance(); %>
 
     <%
-
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        System.out.println("დაიწყო    " + dateFormat.format(date));
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         String courseId = request.getParameter(Constraints.COURSE_ID);
         UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
@@ -64,6 +65,8 @@
             response.sendRedirect("choose-room.jsp");
             return;
         }
+        date = new Date();
+        System.out.println("შეამოწმა    " + dateFormat.format(date));
         String teacherID = UserDAO.getUserIDsByRole(courseId, UserDAO.Role.Teacher).get(0);
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
         List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
@@ -73,13 +76,19 @@
             HelperClasses.Utilities.sendError(request, response, HttpStatus.SC_NOT_FOUND, "Lecturer hasn't released any assignment to system!");
             return;
         }
+        date = new Date();
+        System.out.println("დავალებები წამოიღო    " + dateFormat.format(date));
 
         SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
         List <User> studentsOnlyID = DAO.getUsersInSection(courseId, user.getUserId());
         List <User> students = new ArrayList<>();
+        date = new Date();
+        System.out.println("სტუდენტების Id ები წამოიღო    " + dateFormat.format(date));
         for (User student: studentsOnlyID) {
             students.add(userStorage.getUserWithID(teacherID, student.getUserId()));
         }
+        date = new Date();
+        System.out.println("სტუდენტები წამოიღო სურათებიანად    " + dateFormat.format(date));
     %>
 
     <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>

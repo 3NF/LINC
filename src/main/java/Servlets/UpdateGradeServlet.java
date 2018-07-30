@@ -16,7 +16,6 @@ public class UpdateGradeServlet extends HttpServlet {
         String grade = request.getParameter("grade");
         String assignmentID = request.getParameter(Constraints.ASSIGNMENT_ID);
         String userID = request.getParameter(Constraints.USER_ID);
-        System.out.println(grade + " " + assignmentID + " " + userID);
         AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(Constraints.ASSIGNMENT_INFO_DAO);
         assignmentInfoDAO.updateGrade(assignmentID , userID , grade);
     }

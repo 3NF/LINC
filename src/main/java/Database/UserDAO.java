@@ -60,7 +60,6 @@ public class UserDAO {
 
 	public static GoogleCredential getGoogleCredentials(String userId) {
 		UserCredential credential = getUserCredential(userId);
-		System.out.println(userId);
 		return new GoogleCredential.Builder().setJsonFactory(GAPIManager.JACKSON_FACTORY).setClientSecrets(GAPIManager.secrets).setTransport(GAPIManager.HTTP_TRANSPORT)
 				.build().setAccessToken(credential.getAccessToken()).setRefreshToken(credential.getRefreshToken());
 	}
