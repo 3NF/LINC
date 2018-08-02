@@ -21,9 +21,8 @@ public class SectionDAO {
      * Returns Users in given users section
      * Must be called from user which has TeacherAssistants privileges
      */
-    public List<User> getUsersInSection(String classroomID, String userID) {
-        ArrayList<User> users = new ArrayList<>();
-
+    public List<String> getUsersInSection(String classroomID, String userID) {
+        ArrayList<String> users = new ArrayList<>();
         String query = "SELECT * FROM Instructors, sections\n" +
                 "WHERE Instructors.classroomID=? AND Instructors.userID=? AND sections.instructorID = Instructors.id;";
 
@@ -38,7 +37,7 @@ public class SectionDAO {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                users.add(new User(result.getString("studentID")));
+                users.add(result.getString("studentID"));
             }
             statement.close();
             connection.close();
@@ -69,7 +68,7 @@ public class SectionDAO {
         return false;
     }
 
-	public String getInstructorDataBaseID(String classroomID, String leaderID) {
+    private String getInstructorDataBaseID(String classroomID, String leaderID) {
         String query = "SELECT id FROM Instructors WHERE classroomID=? AND userID=?";
         try {
             Connection conn = connectionPool.getConnection();

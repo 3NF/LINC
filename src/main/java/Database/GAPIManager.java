@@ -7,6 +7,10 @@ import Models.User;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.*;
+import com.google.api.client.googleapis.batch.BatchRequest;
+import com.google.api.client.googleapis.batch.json.JsonBatchCallback;
+import com.google.api.client.googleapis.json.GoogleJsonError;
+import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -14,8 +18,10 @@ import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.*;
 import com.google.api.services.drive.Drive;
 
+import javax.swing.text.GapContent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -229,7 +235,7 @@ public class GAPIManager {
 	}
 
 
-	public User getUserProfile(String requesterId, String targetId) {
+	User getUserProfile(String requesterId, String targetId) {
 		GoogleCredential credential = UserDAO.getGoogleCredentials(requesterId);
 		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
 		try {
@@ -259,5 +265,40 @@ public class GAPIManager {
 		}
 	}
 
+	List<User> getUsersWithIds(String teacherId, List<String> userIds) {
+		List<User> users = new ArrayList<>();
+
+		GoogleCredential credential = UserDAO.getGoogleCredentials(teacherId);
+		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+
+		BatchRequest batch = service.batch();
+		JsonBatchCallback<UserProfile> callback = new JsonBatchCallback<UserProfile>() {
+			public void onSuccess(UserProfile profile, HttpHeaders responseHeaders) {
+
+				users.add(new User(profile.getEmailAddress(), profile.getName().getGivenName(),
+						profile.getName().getFamilyName(), profile.getId(), profile.getPhotoUrl(), "", ""));
+				/*System.out.printf("User '%s' was added as a student to the course.\n",
+						profile.getName().getFullName());*/
+			}
+
+			public void onFailure(GoogleJsonError error, HttpHeaders responseHeaders) {
+				System.out.printf("Error adding student to the course: %s\n", error.getMessage());
+			}
+		};
+		for (String studentId : userIds) {
+			try {
+				service.userProfiles().get(studentId).queue(batch, callback);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			batch.execute();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return users;
+	}
 
 }

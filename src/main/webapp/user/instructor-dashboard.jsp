@@ -13,6 +13,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.DateFormat" %>
+<%@ page import="com.google.gson.Gson" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,8 +28,6 @@
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/instructor-dashboard.js?newversione"></script>
@@ -47,6 +46,10 @@
     <script src='${pageContext.request.contextPath}/codemirror-5.39.0/lib/codemirror.js'></script>
     <script src='${pageContext.request.contextPath}/codemirror-5.39.0/mode/clike.js'></script>
     <script src='${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/gapi-scripts.js"></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
 
 
@@ -67,33 +70,38 @@
         }
         date = new Date();
         System.out.println("შეამოწმა    " + dateFormat.format(date));
+
+        SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
+        List <String> studentsOnlyID = DAO.getUsersInSection(courseId, user.getUserId());
         String teacherID = UserDAO.getUserIDsByRole(courseId, UserDAO.Role.Teacher).get(0);
+        date = new Date();
+        System.out.println("სტუდენტების Id ები წამოიღო    " + dateFormat.format(date));
+
+        List<User> students = userStorage.getUsersWithIds(teacherID ,studentsOnlyID);
+        System.out.println("სტუდენტები წამოიღო სურათებიანად    " + dateFormat.format(date));
+
+
+        /*for (User student: studentsOnlyID) {
+            students.add(userStorage.getUserWithID(teacherID, student.getUserId()));
+        }*//*
+        date = new Date();
+        System.out.println("სტუდენტები წამოიღო სურათებიანად    " + dateFormat.format(date));*/
+    %>
+    <%
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
         List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
-                .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
+        .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
 
         if (assignments.size() == 0) {
-            HelperClasses.Utilities.sendError(request, response, HttpStatus.SC_NOT_FOUND, "Lecturer hasn't released any assignment to system!");
-            return;
+        HelperClasses.Utilities.sendError(request, response, HttpStatus.SC_NOT_FOUND, "Lecturer hasn't released any assignment to system!");
+        return;
         }
         date = new Date();
         System.out.println("დავალებები წამოიღო    " + dateFormat.format(date));
-
-        SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
-        List <User> studentsOnlyID = DAO.getUsersInSection(courseId, user.getUserId());
-        List <User> students = new ArrayList<>();
-        date = new Date();
-        System.out.println("სტუდენტების Id ები წამოიღო    " + dateFormat.format(date));
-        for (User student: studentsOnlyID) {
-            students.add(userStorage.getUserWithID(teacherID, student.getUserId()));
-        }
-        date = new Date();
-        System.out.println("სტუდენტები წამოიღო სურათებიანად    " + dateFormat.format(date));
     %>
 
     <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-
+    <script>courseID = '<%=courseId%>';</script>
     <title>Section View</title>
 
 </head>
@@ -132,6 +140,10 @@
         <h3 class = "user-name"><%=student.getFirstName() + " " + student.getLastName()%></h3>
     </div>
     <%}%>
-</div>
+    </div>
 </body>
+
+<%--<script> gapi.load('client', get_classroom_list); </script>--%>
+
+
 </html>

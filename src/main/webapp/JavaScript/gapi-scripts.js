@@ -1,9 +1,9 @@
 /**
  * From this method you can ask classroom api
  * @param path  HTTP request path for Classroom Rest api
- * @param succFunc  Function which calls when api returns response
+ * @param sucFunc  Function which calls when api returns response
  */
-function gapi_query(path, succFunc) {
+function gapi_query(path, sucFunc) {
     gapi.client.init({
         'apiKey': 'AIzaSyBKiQttlC5rUqexQiZgXlP2Zmhod5QZJhA',
         client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
@@ -18,7 +18,7 @@ function gapi_query(path, succFunc) {
             'path': path,
         })
     }).then(function (response) {
-        succFunc(response);
+        sucFunc(response);
     }, function (reason) {
         console.log(reason);
         location.href = "/error-page.jsp";
@@ -38,7 +38,7 @@ function get_classroom_list() {
 }
 
 function get_students() {
-    gapi_query('https://classroom.googleapis.com/v1/courses/' + classroomId + '/students', function (response) {
+    gapi_query('https://classroom.googleapis.com/v1/courses/' + courseID + '/students', function (response) {
         students = response.result.students;
         seminarReaders = students.filter(student => seminarReaderIds.includes(student.userId));
         assistants = students.filter(student => assistantIds.includes(student.userId));
