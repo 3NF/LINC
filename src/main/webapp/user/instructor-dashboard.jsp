@@ -14,7 +14,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="com.google.gson.Gson" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.concurrent.*" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -54,16 +55,20 @@
 
 
     <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
-    <% GAPIManager gapiManager = GAPIManager.getInstance(); %>
 
     <%
+
+        SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
+        UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         System.out.println("დაიწყო    " + dateFormat.format(date));
         User user = (User) request.getSession().getAttribute(Constraints.USER);
         String courseId = request.getParameter(Constraints.COURSE_ID);
-        UserStorage userStorage = (UserStorage)request.getServletContext().getAttribute(USER_STORAGE);
         UserDAO.Role userRole = UserDAO.getRoleByCourse(user, courseId);
+
         if (userRole != UserDAO.Role.TeacherAssistant && userRole != UserDAO.Role.SeminarReader) {
             response.sendRedirect("choose-room.jsp");
             return;
@@ -71,30 +76,46 @@
         date = new Date();
         System.out.println("შეამოწმა    " + dateFormat.format(date));
 
-        SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
-        List <String> studentsOnlyID = DAO.getUsersInSection(courseId, user.getUserId());
-        String teacherID = UserDAO.getUserIDsByRole(courseId, UserDAO.Role.Teacher).get(0);
-        date = new Date();
-        System.out.println("სტუდენტების Id ები წამოიღო    " + dateFormat.format(date));
 
-        List<User> students = userStorage.getUsersWithIds(teacherID ,studentsOnlyID);
-        System.out.println("სტუდენტები წამოიღო სურათებიანად    " + dateFormat.format(date));
+        CompletableFuture<List<Assignment>> assignmentsFuture = CompletableFuture.supplyAsync(() ->
+                new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId)), executor)
+                .thenApply(assignedAssIds -> GAPIManager.getInstance().getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
+                        .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList()))
+                .toCompletableFuture();
 
+        Future<String> teacherIdFuture = executor.submit(() -> UserDAO.getUserIDsByRole(courseId, UserDAO.Role.Teacher).get(0));
 
-        /*for (User student: studentsOnlyID) {
-            students.add(userStorage.getUserWithID(teacherID, student.getUserId()));
-        }*//*
-        date = new Date();
-        System.out.println("სტუდენტები წამოიღო სურათებიანად    " + dateFormat.format(date));*/
+        Future<List<String>> studentsOnlyIDFuture = executor.submit(() -> DAO.getUsersInSection(courseId, user.getUserId()));
+
+        CompletableFuture<List<User>> studentsFuture = CompletableFuture.supplyAsync(() -> {
+            try {
+                return studentsOnlyIDFuture.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }, executor).thenApply(strings -> {
+            try {
+                return userStorage.getUsersWithIds(teacherIdFuture.get(), strings);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).toCompletableFuture();
+
     %>
     <%
-        Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
-        List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
-        .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
+        List<Assignment> assignments;
+        try {
+            assignments = assignmentsFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            request.getRequestDispatcher("/error-page").forward(request, response);
+            return;
+        }
 
         if (assignments.size() == 0) {
-        HelperClasses.Utilities.sendError(request, response, HttpStatus.SC_NOT_FOUND, "Lecturer hasn't released any assignment to system!");
-        return;
+            HelperClasses.Utilities.sendError(request, response, HttpStatus.SC_NOT_FOUND, "Lecturer hasn't released any assignment to system!");
+            return;
         }
         date = new Date();
         System.out.println("დავალებები წამოიღო    " + dateFormat.format(date));
@@ -112,18 +133,19 @@
     </button>
 </div>
 
-<div id = "content">
+<div id="content">
     <div id="mySidenav" class="sidenav">
         <div class="sidenav-container" style="margin-top: 10px">
-            <div class="sidenav-item" id = "goHome">
-                <p><span class="glyphicon glyphicon-home"></span>     Classes</p>
+            <div class="sidenav-item" id="goHome">
+                <p><span class="glyphicon glyphicon-home"></span> Classes</p>
             </div>
         </div>
         <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
         <div class="sidenav-container" style="height: 90%">
             <% for (Assignment assignment : assignments) {%>
             <div class="sidenav-item" onclick=getAssignment(<%=assignment.getId()%>)>
-                <p><%=assignment.getName()%></p>
+                <p><%=assignment.getName()%>
+                </p>
             </div>
             <%}%>
         </div>
@@ -134,16 +156,23 @@
             </div>
         </div>
     </div>
-    <% for (User student: students) {%>
-    <div class = "user-box" align = "center" onclick="chooseStudent('<%=student.getUserId()%>')">
-        <img class = "user-img" src="<%=student.getPicturePath()%>">
-        <h3 class = "user-name"><%=student.getFirstName() + " " + student.getLastName()%></h3>
+    <%
+        List<User> students = Collections.emptyList();
+        try {
+            students = studentsFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        date = new Date();
+        System.out.println("სტუდენტები წამოიღო სურათებიანად    " + dateFormat.format(date));
+    %>
+    <% for (User student : students) {%>
+    <div class="user-box" align="center" onclick="chooseStudent('<%=student.getUserId()%>')">
+        <img class="user-img" src="<%=student.getPicturePath()%>">
+        <h3 class="user-name"><%=student.getFirstName() + " " + student.getLastName()%>
+        </h3>
     </div>
     <%}%>
-    </div>
+</div>
 </body>
-
-<%--<script> gapi.load('client', get_classroom_list); </script>--%>
-
-
 </html>
