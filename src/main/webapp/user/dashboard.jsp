@@ -17,6 +17,9 @@
 <%@ page import="javafx.util.Pair" %>
 <%@ page import="Database.UserDAO" %>
 <%@ page import="org.apache.http.HttpStatus" %>
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.concurrent.*" %>
 <html>
 
 <head>
@@ -41,9 +44,9 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script src="${pageContext.request.contextPath}/JavaScript/dashboard.js"></script>
-    <script src="${pageContext.request.contextPath}/jstree/dist/jstree.js"></script>
+    <script src="${pageContext.request.contextPath}/jstree/src/jstree.js"></script>
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/dist/themes/default/style.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/src/themes/default/style.css">
 
     <%--my css--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
@@ -65,8 +68,14 @@
     <% String courseId = request.getParameter(Constraints.COURSE_ID); %>
     <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
     <% GAPIManager gapiManager = GAPIManager.getInstance(); %>
+    <% ExecutorService executor = Executors.newFixedThreadPool(10); %>
+    <% String courseID = request.getParameter(COURSE_ID); %>
 
     <%
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        System.out.println("დაიწყო  დეშბორდი  " + dateFormat.format(date));
+        Future<String> teacherIdFuture = executor.submit(() -> UserDAO.getUserIDsByRole(courseID, UserDAO.Role.Teacher).get(0));
         Set<String> assignedAssIds = new HashSet<>(assignmentInfoDAO.getAssignmentIds(courseId));
         List<Assignment> assignments = gapiManager.getCourseAssignments(user.getAccessToken(), user.getRefreshToken(), courseId).stream()                // convert list to stream
                 .filter(assignment -> assignedAssIds.contains(assignment.getId())).collect(Collectors.toList());
@@ -81,6 +90,9 @@
             response.sendRedirect("dashboard.jsp?" + COURSE_ID + "=" + request.getParameter(COURSE_ID) + "&" + ASSIGNMENT_ID + "=" + firstAssignmentID);
             return;
         }
+
+        date = new Date();
+        System.out.println("დავალებები წამოიღო    " + dateFormat.format(date));
     %>
 
     <%
@@ -88,31 +100,43 @@
         List<String> assignmentHtmlIds = new ArrayList<>();
         Map<String, String> hmp;
         if (isStudent) {
-        	hmp = new HashMap<>();
-            List<Pair<String, String> > grades = assignmentInfoDAO.getUsersGrades(request.getParameter(COURSE_ID), user.getUserId());
+            hmp = new HashMap<>();
+            List<Pair<String, String>> grades = assignmentInfoDAO.getUsersGrades(request.getParameter(COURSE_ID), user.getUserId());
             for (Pair<String, String> grade : grades) {
                 hmp.put(grade.getKey(), grade.getValue());
             }
         } else {
-        	hmp = Collections.emptyMap();
+            hmp = Collections.emptyMap();
         }
 
         for (Assignment assignment : assignments) {
             String grade = hmp.get(assignment.getId());
-            assignmentHtmlIds.add("grade_" + (grade == null? "none" : grade.replaceAll("\\s+","")));
+            assignmentHtmlIds.add("grade_" + (grade == null ? "none" : grade.replaceAll("\\s+", "")));
         }
 
-        String courseID = request.getParameter(COURSE_ID);
-        String teacherID = UserDAO.getUserIDsByRole(courseID, UserDAO.Role.Teacher).get(0);
+        date = new Date();
+        System.out.println("ნიშნები წამოიღო    " + dateFormat.format(date));
+
+        String teacherId = null;
+        try {
+            teacherId = teacherIdFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        date = new Date();
+        System.out.println("მასწავლებელი წამოიღო    " + dateFormat.format(date));
+
 
         if (!isStudent) {%>
             <%--Comment following line if you want to view as Student--%>
             <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js"></script>
         <%}%>
 
-        <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
-        <script>let uid = <%=(String)request.getParameter(USER_ID)%>;</script>
-        <script>let teachID = '<%=teacherID%>';</script>
+
+
+    <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
+    <script>let uid = <%=request.getParameter(USER_ID)%>;</script>
+    <script>let teachID = '<%=teacherId%>';</script>
 
 
     <%
@@ -138,16 +162,17 @@
         <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
         <div class="sidenav-container" style="height: 20%">
             <% for (int i = 0; i < assignments.size(); i++) {
-            	Assignment assignment = assignments.get(i);
-            	String idInHtml = assignmentHtmlIds.get(i);
+                Assignment assignment = assignments.get(i);
+                String idInHtml = assignmentHtmlIds.get(i);
                 System.out.println(idInHtml);
             %>
-                <div class="sidenav-item <%=idInHtml%>" onclick=getAssignment(<%=assignment.getId()%>)>
-                    <% String grade = idInHtml.substring(6); %>
-                    <p onmouseover="mouseOver('<%=grade%>')"
-                       onmouseout="this.innerHTML='<%=assignment.getName()%>';"
-                    ><%=assignment.getName()%></p>
-                </div>
+            <div class="sidenav-item <%=idInHtml%>" onclick=getAssignment(<%=assignment.getId()%>)>
+                <% String grade = idInHtml.substring(6); %>
+                <p onmouseover="mouseOver('<%=grade%>')"
+                   onmouseout="this.innerHTML='<%=assignment.getName()%>';"
+                ><%=assignment.getName()%>
+                </p>
+            </div>
             <%}%>
         </div>
         <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
@@ -157,12 +182,13 @@
             </div>
         </div>
     </div>
-    <div id = "jstree_demo_div_container" >
+    <div id="jstree_demo_div_container">
         <div id="jstree_demo_div">
         </div>
 
     </div>
-    <div id="toggle-project-view" onclick="toggleProjectView()" data-toggle="tooltip" title="Toggle project view"><span id = "file-open" class="glyphicon">&#xe117;</span></div>
+    <div id="toggle-project-view" onclick="toggleProjectView()" data-toggle="tooltip" title="Toggle project view"><span
+            id="file-open" class="glyphicon">&#xe117;</span></div>
     <div id="loader-wrapper">
         <div class="loader"></div>
     </div>
@@ -170,7 +196,7 @@
 
         <div class="panel-body">
             <div id="code-panel">
-                        <textarea readonly id="code-content">
+                <label for="code-content"></label><textarea readonly id="code-content">
 
                         </textarea>
             </div>
@@ -185,24 +211,29 @@
                     </div>
                     <%
                         if (request.getParameter(USER_ID) != null) {
-                            %><button id = "suggestion-remove-btn" type="button" class="btn btn-danger" onclick = "deleteClick()" hidden>Remove</button><%
+                    %>
+                    <button id="suggestion-remove-btn" type="button" class="btn btn-danger" onclick="deleteClick()"
+                            hidden>Remove
+                    </button>
+                    <%
                         }
                     %>
                 </div>
                 <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
                     <form onsubmit="submitSuggestion(); return false;">
-                        <textarea id="comment-editor-content" class="editor-content" name="content"></textarea>
+                        <textarea id="comment-editor-content" class="editor-content" name="content" title="def"></textarea>
                         <br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
                         </button>
                         <button id="suggestion-type" type="button" class="btn btn-warning"
-                                onclick="toggleSuggestionType()">Warning</button>
+                                onclick="toggleSuggestionType()">Warning
+                        </button>
                     </form>
                 </div>
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
                     <form onsubmit="submitReply(); return false;">
-                        <textarea id="reply-editor-content" class="editor-content" name="content"></textarea>
+                        <textarea id="reply-editor-content" class="editor-content" name="content" title="def"></textarea>
                         <br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -211,21 +242,18 @@
         </div>
     </div>
     <div id="instructorButton">
-            <select id='gradeSelector' class="form-control selectpicker show-tick" data-style="btn-primary" name="grade" onchange="updateGrade(this)">
-                <option></option>
-                <option>Plus Plus</option>
-                <option>Plus</option>
-                <option>Check Plus</option>
-                <option>Check</option>
-                <option>Check Minus</option>
-                <option>Minus</option>
-                <option>Minus Minus</option>
-                <option>0</option>
-            </select>
-        </form>
-    </div>
-    <div id="showGrade">
-        <p>Your grade is <%=assignmentInfoDAO.getGrade(userID , assignmentID)%></p>
+        <select id='gradeSelector' class="form-control selectpicker show-tick" data-style="btn-primary" name="grade"
+                onchange="updateGrade(this)" title="def">
+            <option></option>
+            <option>Plus Plus</option>
+            <option>Plus</option>
+            <option>Check Plus</option>
+            <option>Check</option>
+            <option>Check Minus</option>
+            <option>Minus</option>
+            <option>Minus Minus</option>
+            <option>0</option>
+        </select>
     </div>
 </div>
 </body>

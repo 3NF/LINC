@@ -1,13 +1,9 @@
 package Database;
 
-import Models.Reply;
-import Models.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.transform.Result;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +13,6 @@ import static org.junit.Assert.*;
 public class SectionDAOTester {
     private MysqlDataSource source;
     private SectionDAO DAO;
-    private Connection connection;
 
     @Before
     public void createSectionDAO() {
@@ -34,15 +29,13 @@ public class SectionDAOTester {
         String userID = "114260512501360115146";
         String courseID = "15887333289";
 
-        ArrayList <User> students = (ArrayList)DAO.getUsersInSection(courseID, userID);
+        ArrayList <String> students = (ArrayList<String>)DAO.getUsersInSection(courseID, userID);
 
         assertEquals(students.size(), 1);
     }
 
     @Test
     public void test2() {
-        String userID = "";
-        String courseID = "15887333289";
         List <String> usersID = new ArrayList<>();
         usersID.add("23");
         usersID.add("123");

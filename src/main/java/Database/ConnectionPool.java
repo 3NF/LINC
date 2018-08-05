@@ -1,13 +1,13 @@
 package Database;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 
 /**
  * Singleton class for connection pool
  */
 public class ConnectionPool extends MysqlDataSource {
+	private static final long serialVersionUID = 1L;
 	private static final ConnectionPool ourInstance = new ConnectionPool();
 
 	public static ConnectionPool getInstance() {

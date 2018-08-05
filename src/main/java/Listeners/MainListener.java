@@ -3,13 +3,11 @@ package Listeners;
 import Database.*;
 import Database.CodeFilesDAO;
 import Database.ConnectionPool;
-import Models.CodeFile;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import java.sql.Connection;
 
 import static Data.Constraints.*;
 

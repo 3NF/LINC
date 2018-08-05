@@ -2,17 +2,12 @@ package Servlets;
 
 import Database.AssignmentInfoDAO;
 import Database.CodeFilesDAO;
-import Database.SuggestionDAO;
-import Database.ValidateDAO;
 import Models.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,20 +17,17 @@ import java.sql.SQLException;
 
 import static Data.Constraints.*;
 import static Database.Config.*;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TeacherDispatcherTest {
-    private StringWriter response_writer;
+
     private HttpServletRequest request;
     private HttpServletResponse response;
     private ServletContext servletContext;
     private HttpSession session;
     private MysqlDataSource source;
-    private SuggestionDAO DAO;
-    Connection connection;
+
     @Before
     public void doMocks() throws SQLException {
         request = mock(HttpServletRequest.class);
@@ -47,13 +39,12 @@ public class TeacherDispatcherTest {
         source.setDatabaseName(MYSQL_DATABASE_NAME);
         source.setUser(MYSQL_USERNAME);
         source.setPassword(MYSQL_PASSWORD);
-        connection=source.getConnection();
+        source.getConnection();
     }
 
     @Test
-    public void test() throws IOException, ServletException, SQLException, JSONException {
+    public void test() throws IOException {
         String json = "{\"courseID\":15887333289,\"assignmentID\":15917000927}";
-        ValidateDAO valDAO = mock(ValidateDAO.class);
         when(request.getSession()).thenReturn(session);
         when(request.getReader()).thenReturn(
                 new BufferedReader(new StringReader(json)));

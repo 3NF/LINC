@@ -20,12 +20,28 @@ public class Reply implements UserRetriever {
         this.suggestionID = suggestionID;
         this.replyID = replyID;
         this.user = new User(userID);
-        this.content = content;
+        this.setContent(content);
         this.timeStamp = timeStamp;
     }
 
 
-    public Date getDate(){
+    /**
+	 * @return the content
+	 */
+	public String getContent() {
+		return content;
+	}
+
+
+	/**
+	 * @param content the content to set
+	 */
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+
+	public Date getDate(){
         return timeStamp;
     }
     public String getSuggestionID(){

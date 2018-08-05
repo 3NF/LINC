@@ -10,7 +10,7 @@ package Database;
 
 public class CodeFilesDAO {
 
-    public static final Set<String> extentions = new HashSet<String>(Arrays.asList(new String[]{"css","html","cpp","c","cc","h","chudo","java","jsp"}));
+    private static final Set<String> extensions = new HashSet<>(Arrays.asList("css","html","cpp","c","cc","h","chudo","java","jsp"));
     private final MysqlDataSource connectionPool;
 
     public CodeFilesDAO(MysqlDataSource connectionPool) {
@@ -90,27 +90,7 @@ public class CodeFilesDAO {
         connection.close();
     }*/
 
-    private HashMap<String,String> getIdNameMap(UploadedAssignment assignment) throws SQLException {
-        HashMap<String,String> fileId = new HashMap<String,String>();
-        Connection connection = connectionPool.getConnection();
-        String query = "Select assignments.idInClassroom,assignment_files.id,assignment_files.name FROM assignments " +
-                "inner join assignment_files on assignments.id=assignment_files.assignmentID where assignments.idInClassroom=?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1,assignment.getAssignmentID());
-        ResultSet result = statement.executeQuery();
-        while (result.next()){
-            String id = result.getString("id");
-            String name = result.getString("name");
-
-            fileId.put(name,id);
-        }
-        statement.close();
-        connection.close();
-        return fileId;
-    }
-
     public void addAssignments(UploadedAssignment assignment) throws SQLException {
-        HashMap<String,String> fileId = getIdNameMap(assignment);
         Connection connection = connectionPool.getConnection();
         String query = "INSERT INTO code_files(userID,assignmentID,content,path) VALUES(?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -122,7 +102,7 @@ public class CodeFilesDAO {
             String assignmentID = assignment.getAssignmentID();
             int index = fileName.lastIndexOf(".");
             String extention = fileName.substring(index + 1);
-            if (!extentions.contains(extention)) continue;
+            if (!extensions.contains(extention)) continue;
             statement.setString(1, userID);
             statement.setString(2, assignmentID);
             statement.setString(3, ((File)file).getContent());
@@ -142,7 +122,7 @@ public class CodeFilesDAO {
         //connection.createStatement().execute(query);
     }
 
-    public List<CodeFile.Info> getAssignmentCodeNames(String assignmentID) throws SQLException {
+    List<CodeFile.Info> getAssignmentCodeNames(String assignmentID) throws SQLException {
         String query = "Select assignments.idInClassroom,assignment_files.id,assignment_files.name FROM assignments " +
                 "inner join assignment_files on assignments.id=assignment_files.assignmentID where assignments.idInClassroom=?";
         Connection connection = connectionPool.getConnection();

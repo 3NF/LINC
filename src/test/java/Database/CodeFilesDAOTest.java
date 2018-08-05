@@ -2,7 +2,6 @@ package Database;
 
 import Models.CodeFile;
 import Models.File;
-import Models.Suggestion;
 import Models.UploadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
@@ -11,11 +10,9 @@ import org.junit.Test;
 import static Database.Config.*;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static org.junit.Assert.*;
 
 public class CodeFilesDAOTest {
     private MysqlDataSource source;

@@ -1,7 +1,5 @@
 package Database;
 
-import Models.User;
-import org.junit.Before;
 import org.junit.Test;
 
 public class UserDAOTester {
@@ -16,9 +14,7 @@ public class UserDAOTester {
 
     @Test
     public void getUserIDsByRoleTester() {
-        String userID = "TeacherAssistant";
         String courseID = "15887333289";
-
         System.out.println (UserDAO.getUserIDsByRole(courseID, UserDAO.Role.TeacherAssistant));
     }
 

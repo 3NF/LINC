@@ -21,10 +21,10 @@ public class CodeFile implements UserRetriever {
     private String fileId;
     private Lang lang;
     public CodeFile (String code, String fileId, String fileName, List<Suggestion> suggestions,String lang) {
-        this.code = code;
-        this.fileName = fileName;
+        this.setCode(code);
+        this.setFileName(fileName);
         this.suggestions = suggestions;
-        this.fileId = fileId;
+        this.setFileId(fileId);
         try {
             this.lang = Lang.valueOf(lang);
         } catch (IllegalArgumentException e) {
@@ -33,7 +33,49 @@ public class CodeFile implements UserRetriever {
 
     }
 
-    public Lang getLang() {
+    /**
+	 * @return the fileId
+	 */
+	public String getFileId() {
+		return fileId;
+	}
+
+	/**
+	 * @param fileId the fileId to set
+	 */
+	private void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+
+	/**
+	 * @return the fileName
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * @param fileName the fileName to set
+	 */
+	private void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Lang getLang() {
         return lang;
     }
 

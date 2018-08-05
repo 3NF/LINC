@@ -21,11 +21,11 @@ public class UserDAO {
 			this.refreshToken = refreshToken;
 		}
 
-		public String getAccessToken() {
+		String getAccessToken() {
 			return accessToken;
 		}
 
-		public String getRefreshToken() {
+		String getRefreshToken() {
 			return refreshToken;
 		}
 	}
@@ -34,7 +34,7 @@ public class UserDAO {
 	private static final String SELECT_TOKENS_FORMAT = "SELECT aToken, rToken FROM usertokens WHERE sub=?";
 	private static final String INSERT_TOKENS_FORMAT = "INSERT INTO usertokens (sub, aToken, rToken) VALUES (?,?,?)";
 
-	public static UserCredential getUserCredential(String sub) {
+	static UserCredential getUserCredential(String sub) {
 		try {
 			Connection conn = ConnectionPool.getInstance().getConnection();
 			PreparedStatement st = conn.prepareStatement(SELECT_TOKENS_FORMAT);
@@ -58,13 +58,14 @@ public class UserDAO {
 	}
 
 
-	public static GoogleCredential getGoogleCredentials(String userId) {
+	static GoogleCredential getGoogleCredentials(String userId) {
 		UserCredential credential = getUserCredential(userId);
+		assert credential != null;
 		return new GoogleCredential.Builder().setJsonFactory(GAPIManager.JACKSON_FACTORY).setClientSecrets(GAPIManager.secrets).setTransport(GAPIManager.HTTP_TRANSPORT)
 				.build().setAccessToken(credential.getAccessToken()).setRefreshToken(credential.getRefreshToken());
 	}
 
-	public static void saveUserCredentials(String sub, String accessToken, String refreshToken) {
+	static void saveUserCredentials(String sub, String accessToken, String refreshToken) {
 		try {
 			Connection conn = ConnectionPool.getInstance().getConnection();
 			PreparedStatement st = conn.prepareStatement(INSERT_TOKENS_FORMAT);
@@ -94,7 +95,7 @@ public class UserDAO {
 		return Role.valueOf(rtn);
 	}
 
-	public static String getInstructorType(String userID, String courseID) {
+	static String getInstructorType(String userID, String courseID) {
 		try {
 			String query = "SELECT Type FROM Instructors\n" +
 					"WHERE userID=? AND classroomID=?";
@@ -151,7 +152,7 @@ public class UserDAO {
 			statement.setString(1, courseID);
 			statement.setString(2, userID);
 			statement.setString(3, role.toString());
-			int result = statement.executeUpdate();
+			statement.executeUpdate();
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
@@ -167,7 +168,7 @@ public class UserDAO {
 			statement.setString(1, userID);
 			statement.setString(2, courseID);
 			statement.setString(3, role.toString());
-			int result = statement.executeUpdate();
+			statement.executeUpdate();
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {

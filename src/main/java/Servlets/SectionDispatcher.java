@@ -1,12 +1,7 @@
 package Servlets;
 
 import Data.Constraints;
-import Database.ReplyDAO;
 import Database.SectionDAO;
-import Database.UserStorage;
-import Database.ValidateDAO;
-import Models.Reply;
-import Models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -16,20 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 import static Data.Constraints.*;
 
 @WebServlet(name = "SectionDispatcher", urlPatterns = "/user/section_dispatcher")
 public class SectionDispatcher extends HttpServlet
 {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
+    private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         try {
-            User user = (User) session.getAttribute(USER);
 
             //Get request data
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);

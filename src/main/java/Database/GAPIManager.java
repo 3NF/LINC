@@ -18,10 +18,8 @@ import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.*;
 import com.google.api.services.drive.Drive;
 
-import javax.swing.text.GapContent;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,7 +28,7 @@ public class GAPIManager {
 	public static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
 	private static final String CLIENT_SECRET_FILE = "client_secret.json";
 	public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-	private static final String APPNAME = "LINC";
+	private static final String APP_NAME = "LINC";
 
 	private static final GAPIManager instance = new GAPIManager();
 
@@ -121,15 +119,13 @@ public class GAPIManager {
 		Classroom service;
 		try {
 			Credential credential = user.getCredential();
-			service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
-			Teacher teachers = null;
-
+			service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 			try {
-				Student student = service.courses().students().get(courseId, user.getUserId()).execute();
+				service.courses().students().get(courseId, user.getUserId()).execute();
 
 				return UserDAO.Role.Pupil;
 			} catch (Exception e) {
-				Teacher teacher = service.courses().teachers().get(courseId, user.getUserId()).execute();
+				service.courses().teachers().get(courseId, user.getUserId()).execute();
 				return UserDAO.Role.Teacher;
 			}
 
@@ -147,7 +143,7 @@ public class GAPIManager {
 	private List<Course> getUserRooms(User user, boolean activeOnly) {
 		try {
 			Credential credential = user.getCredential();
-			Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+			Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 
 			ListCoursesResponse listCourses =
 					activeOnly ?
@@ -170,9 +166,9 @@ public class GAPIManager {
 	public static UploadedAssignment downloadAssignments(User teacher, String courseID, String assignmentId) throws IOException {
 		Credential credential = teacher.getCredential();
 		Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential)
-				.setApplicationName("LINC")
+				.setApplicationName(APP_NAME)
 				.build();
-		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 		List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
 
 		UploadedAssignment uploadedAssignment = new UploadedAssignment(assignmentId);
@@ -201,7 +197,7 @@ public class GAPIManager {
 		try {
 			Credential credential = user.getCredential();
 
-			Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+			Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 			List<Student> students = service.courses().students().list(courseID).execute().getStudents();
 			if (students == null)
 				return Collections.emptyList();
@@ -222,7 +218,7 @@ public class GAPIManager {
 	public boolean isInRoom(User user, String courseID) {
 		try {
 			Credential credential = user.getCredential();
-			Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+			Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 			try {
 				service.courses().get(courseID).execute();
 				return true;
@@ -237,7 +233,7 @@ public class GAPIManager {
 
 	User getUserProfile(String requesterId, String targetId) {
 		GoogleCredential credential = UserDAO.getGoogleCredentials(requesterId);
-		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 		try {
 			UserProfile profile = service.userProfiles().get(targetId).execute();
 			return new User(profile.getEmailAddress(), profile.getName().getGivenName(), profile.getName().getFamilyName(), profile.getId(), profile.getPhotoUrl(), "-", "-");
@@ -250,7 +246,7 @@ public class GAPIManager {
 
 	public List<Assignment> getCourseAssignments(String accessToken, String refreshToken, String courseId) {
 		GoogleCredential credential = new GoogleCredential.Builder().setJsonFactory(JACKSON_FACTORY).setClientSecrets(secrets).setTransport(HTTP_TRANSPORT).build().setAccessToken(accessToken).setRefreshToken(refreshToken);
-		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 		try {
 			List<Assignment> assignments = new ArrayList<>();
 			List<CourseWork> courseWorks = service.courses().courseWork().list(courseId).execute().getCourseWork();
@@ -269,7 +265,7 @@ public class GAPIManager {
 		List<User> users = new ArrayList<>();
 
 		GoogleCredential credential = UserDAO.getGoogleCredentials(teacherId);
-		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName("LINC").build();
+		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 
 		BatchRequest batch = service.batch();
 		JsonBatchCallback<UserProfile> callback = new JsonBatchCallback<UserProfile>() {

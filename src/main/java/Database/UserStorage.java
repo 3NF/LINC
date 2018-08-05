@@ -3,19 +3,18 @@ package Database;
 import Models.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserStorage {
 
-    private HashMap<String, User> users;
+    private ConcurrentHashMap<String, User> users;
     private GAPIManager gapiManager;
 
     public UserStorage (GAPIManager gapiManager) {
         this.gapiManager = gapiManager;
 
-        users = new HashMap<>();
+        users = new ConcurrentHashMap<>();
     }
 
     public User getUserWithID (String requesterID, String targetId) {

@@ -2,14 +2,10 @@ package HelperClasses;
 
 
 import Models.UploadedAssignment;
-import org.apache.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -48,7 +44,7 @@ public final class Utilities {
 	{
 		String firstChar = source.substring(0,1);
 		if(!firstChar.matches("^[a-zA-Z]+$")) return source;
-		return firstChar.toUpperCase() + source.substring(1,source.length());
+		return firstChar.toUpperCase() + source.substring(1);
 	}
 
 	public static void sendError (HttpServletRequest request, HttpServletResponse response, int code, String message) throws IOException {

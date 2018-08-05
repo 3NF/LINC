@@ -1,11 +1,8 @@
 package Database;
 
-import Models.Assignment;
-import Models.Reply;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javafx.util.Pair;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.*;
 
@@ -110,7 +107,7 @@ public class AssignmentInfoDAO {
             statement.setString(1, assignmentID);
             statement.setString(2, userID);
             statement.setString(3, grade.getName());
-            int result = statement.executeUpdate();
+            statement.executeUpdate();
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -118,7 +115,7 @@ public class AssignmentInfoDAO {
         }
     }
 
-    public String getGrade(String userID, String assignmentID) {
+    String getGrade(String userID, String assignmentID) {
         String grade = "Not graded yet";
         try {
             Connection connection = ConnectionPool.getInstance().getConnection();

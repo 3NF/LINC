@@ -4,7 +4,6 @@ import Database.SuggestionDAO;
 import Database.ValidateDAO;
 import Models.User;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -35,8 +34,7 @@ public class SuggestionDispatcherTest {
     private ServletContext servletContext;
     private HttpSession session;
     private MysqlDataSource source;
-    private SuggestionDAO DAO;
-    Connection connection;
+    private Connection connection;
     @Before
     public void doMocks() throws SQLException {
         request = mock(HttpServletRequest.class);
@@ -52,7 +50,7 @@ public class SuggestionDispatcherTest {
     }
 
     @Test
-    public void test() throws IOException, ServletException, SQLException, JSONException {
+    public void test() throws IOException, SQLException, JSONException {
         String json = "{\"codeFileID\":-12, \"content\":222,\"courseID\":222,\"type\":Warning,\"startInd\":-12,\"endInd\":-12}";
         ValidateDAO valDAO = mock(ValidateDAO.class);
         when(request.getSession()).thenReturn(session);

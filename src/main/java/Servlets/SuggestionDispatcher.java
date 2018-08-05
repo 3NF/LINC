@@ -1,10 +1,7 @@
 package Servlets;
 
-import Database.CodeFilesDAO;
 import Database.SuggestionDAO;
-import Database.UserStorage;
 import Database.ValidateDAO;
-import HelperClasses.Validate;
 import Models.Suggestion;
 import Models.User;
 import com.google.gson.Gson;
@@ -17,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -26,7 +22,9 @@ import static Data.Constraints.*;
 @WebServlet(name = "SuggestionDispatcher", urlPatterns = "/user/suggestion_dispatcher")
 public class SuggestionDispatcher extends HttpServlet
 {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             User user = (User)request.getSession().getAttribute(USER);
 
@@ -58,6 +56,7 @@ public class SuggestionDispatcher extends HttpServlet
             //Send response to client
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF8");
+            assert json != null;
             response.getWriter().write(json);
         } catch (NumberFormatException|NullPointerException|SQLException e) {
             e.printStackTrace();
@@ -83,7 +82,7 @@ public class SuggestionDispatcher extends HttpServlet
             return new GsonBuilder().disableHtmlEscaping().create().toJson(suggestion);
         } catch (ClassCastException|IllegalArgumentException e) {
             e.printStackTrace();
-            return null;
+            return "";
         }
     }
 

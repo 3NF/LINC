@@ -5,7 +5,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import static Database.Config.*;
@@ -14,7 +13,6 @@ import static org.junit.Assert.*;
 public class ValidateDAOTest {
     private MysqlDataSource source;
     private ValidateDAO DAO;
-    private Connection connection;
 
     @Before
     public void createValidateDao() {
@@ -25,7 +23,7 @@ public class ValidateDAOTest {
         source.setPassword(MYSQL_PASSWORD);
         DAO = new ValidateDAO(source);
         try {
-            connection = source.getConnection();
+            source.getConnection();
         } catch (SQLException e) {
             System.err.println("error in getting connection");
         }

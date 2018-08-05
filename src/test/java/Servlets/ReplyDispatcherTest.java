@@ -1,11 +1,8 @@
 package Servlets;
 
-import Data.Constraints;
 import Database.*;
-import Models.Reply;
+
 import Models.User;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +32,6 @@ public class ReplyDispatcherTest {
     private ServletContext servletContext;
     private HttpSession session;
     private MysqlDataSource source;
-    private ReplyDAO DAO;
     Connection connection;
     @Before
     public void doMocks() {
@@ -51,7 +47,7 @@ public class ReplyDispatcherTest {
     }
 
     @Test
-    public void test1() throws ServletException, IOException, SQLException, JSONException {
+    public void test1() throws IOException, SQLException, JSONException {
         ReplyDAO DAO = new ReplyDAO(source);
         DAO.addReply("asdd","105303857051815287047","-12");
         String json = "{\"suggestionID\":-12, \"amount\":222,\"courseID\":222}";
@@ -75,7 +71,7 @@ public class ReplyDispatcherTest {
     }
 
     @Test
-    public void test2() throws ServletException, IOException, SQLException, JSONException {
+    public void test2() throws IOException, SQLException {
         String json = "{\"suggestionID\":-12, \"content\":222,\"courseID\":222}";
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(USER)).thenReturn(new User("105303857051815287047"));

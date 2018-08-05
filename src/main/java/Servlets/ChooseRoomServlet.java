@@ -10,7 +10,9 @@ import java.io.IOException;
 @WebServlet(name = "ChooseRoomServlet", urlPatterns = "/user/ChooseRoom")
 public class ChooseRoomServlet extends HttpServlet
 {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         request.getRequestDispatcher("/user/ChooseRoom.jsp").forward(request,response);
     }

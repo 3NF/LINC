@@ -1,13 +1,11 @@
 package Servlets;
 
-import Data.Constraints;
 import Database.AssignmentInfoDAO;
 import Database.CodeFilesDAO;
 import Database.GAPIManager;
 import Models.UploadedAssignment;
 import Models.User;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
@@ -24,7 +22,9 @@ import static Models.File.USER;
 
 @WebServlet(name = "TeacherDispatcher" ,urlPatterns = "/teacher-dispatcher")
 public class TeacherDispatcher extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
         User user = (User) request.getSession().getAttribute(USER);
         String assignmentID = data.get("assignmentID").getAsString();
@@ -41,7 +41,7 @@ public class TeacherDispatcher extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 
     }
 }

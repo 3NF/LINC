@@ -6,7 +6,6 @@ import Database.CodeFilesDAO;
 import Database.ConnectionPool;
 import Database.UserStorage;
 import Models.User;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.json.JSONArray;
@@ -15,7 +14,6 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.json.Json;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +45,7 @@ public class CodeDispatcherTest {
     }
 
     @Test
-    public void test1() throws ServletException, IOException {
+    public void test1() throws IOException {
         //  create mock
         UserStorage userStorage = mock(UserStorage.class);
         String json = "{\"codeID\":1, \"amount\":222}";
@@ -73,7 +71,7 @@ public class CodeDispatcherTest {
     }
 
     @Test
-    public void test2() throws ServletException, IOException, JSONException {
+    public void test2() throws IOException, JSONException {
         //  create mock
         UserStorage userStorage = mock(UserStorage.class);
         String json = "{\"assignmentID\":123123123123, \"amount\":222}";
@@ -90,7 +88,6 @@ public class CodeDispatcherTest {
         new CodeDispatcher().doPost(request, response);
 
         System.out.println(response_writer.toString());
-        JsonParser parse = new JsonParser();
         JSONArray array = new JSONArray(response_writer.toString());
         JSONObject jsonobject = array.getJSONObject(0);
         String id = jsonobject.getString("key");

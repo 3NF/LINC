@@ -3,17 +3,16 @@ package Models;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 
-public class UploadedAssignment implements Iterable{
+public class UploadedAssignment implements Iterable<File>{
 
 
-    String assignmentID;
+    private String assignmentID;
     public String getAssignmentID() {
         return assignmentID;
     }
 
-    HashMap<String, File> data;
+    private HashMap<String, File> data;
 
     public UploadedAssignment(String assignmentID) {
         data = new HashMap<>();
@@ -28,10 +27,11 @@ public class UploadedAssignment implements Iterable{
         return data.size();
     }
 
+
     @Override
-    public Iterator iterator() {
-        Iterator it = data.keySet().iterator();
-        return new Iterator() {
+    public Iterator<File> iterator() {
+        Iterator<String> it = data.keySet().iterator();
+        return new Iterator<File>() {
             @Override
             public boolean hasNext() {
                 return it.hasNext();
@@ -40,7 +40,7 @@ public class UploadedAssignment implements Iterable{
             @Override
             public File next() {
                 if (it.hasNext()) {
-                    String fileName = (String) it.next();
+                    String fileName = it.next();
                     return new File(fileName, data.get(fileName).getContent(),data.get(fileName).getUserID());
                 } else {
                     return null;

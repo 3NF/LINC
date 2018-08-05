@@ -3,16 +3,16 @@ package Servlets;
 import Data.Constraints;
 import Database.AssignmentInfoDAO;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @WebServlet(name = "UpdateGradeServlet" , urlPatterns = "/user/update_grade")
 public class UpdateGradeServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String grade = request.getParameter("grade");
         String assignmentID = request.getParameter(Constraints.ASSIGNMENT_ID);
         String userID = request.getParameter(Constraints.USER_ID);

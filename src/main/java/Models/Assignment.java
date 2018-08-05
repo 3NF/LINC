@@ -1,6 +1,6 @@
 package Models;
 
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class Assignment {
     private String id;
     private String name;
-    List<String> fileNames;
+    private List<String> fileNames;
 
     public Assignment(String id, String name) {
         fileNames = new ArrayList<>();

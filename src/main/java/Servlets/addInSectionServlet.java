@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +17,16 @@ import java.util.List;
 
 @WebServlet(name = "Servlet",urlPatterns = "/user/addInSectionServlet")
 public class addInSectionServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
         String courseID = data.get("courseID").getAsString();
         String leaderID = data.get("leaderID").getAsString();
         JsonArray array = data.get("sections").getAsJsonArray();
 
         Type listType = new TypeToken<List<String>>() {
+			private static final long serialVersionUID = 1L;
         }.getType();
         List <String> list = new Gson().fromJson(array , listType);
         SectionDAO sectionDAO = (SectionDAO) request.getServletContext().getAttribute(Constraints.SECTION_DAO);

@@ -5,7 +5,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.List;
 

@@ -1,10 +1,8 @@
 package HelperClasses;
 
 import Database.GAPIManager;
-import Models.BasicRoomInfo;
 import Models.User;
 import com.google.api.services.classroom.model.Course;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
