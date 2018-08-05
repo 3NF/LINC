@@ -1,5 +1,7 @@
 package Filters;
 
+import Data.Constraints;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +20,10 @@ public class SessionFilter implements Filter
         {
             HttpServletRequest request = (HttpServletRequest) req;
             HttpServletResponse response = (HttpServletResponse) resp;
-
-            if(request.getSession().isNew())
+            if(request.getSession().isNew() || request.getSession().getAttribute(Constraints.USER) == null)
             {
                 request.getRequestDispatcher("/loginPage.jsp").forward(request,response);
+                return;
             }
         }
         chain.doFilter(req, resp);
