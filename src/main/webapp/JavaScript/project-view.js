@@ -94,6 +94,7 @@ function draw_view_rec(dv, l, r) {
         let lst_file = document.createElement("li");
         lst_file.append(files[i].value);
         lst_file.setAttribute("file-id", files[i].key);
+        lst_file.setAttribute("data-jstree", '{"icon":"glyphicon glyphicon-leaf"}');
         dv.appendChild(lst_file);
     }
 }

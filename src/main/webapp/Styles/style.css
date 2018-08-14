@@ -174,9 +174,16 @@ html, body {
 }
 
 .fill {
-    display: none;
+    margin: 0 auto;
+    max-width: 100%;
+    min-width: 1024px;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
     background-color: white;
-    min-width: 100%;
     text-align: center;
     height: 55px;
     z-index: 101;
@@ -275,6 +282,8 @@ html, body {
 
 .g-signin2{
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
 }
 
 .grade_PlusPlus {
