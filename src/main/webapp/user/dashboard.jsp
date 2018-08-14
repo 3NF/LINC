@@ -53,9 +53,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/dashboard.css">
 
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/codemirror-5.39.0/lib/codemirror.css">
-    <script src='${pageContext.request.contextPath}/codemirror-5.39.0/lib/codemirror.js'></script>
-    <script src='${pageContext.request.contextPath}/codemirror-5.39.0/mode/clike.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/clike/clike.js'></script>
     <script src='${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">

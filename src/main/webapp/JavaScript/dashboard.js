@@ -35,8 +35,7 @@ const codeRepliesSuffix = "_replies";
 
 
 //AJAX successful code loading response callback
-function loadCode(data, reqObj) {
-    var receivedData = data;
+function loadCode(receivedData, reqObj) {
     suggestions = receivedData.suggestions;
 
     console.log(receivedData);
@@ -48,8 +47,14 @@ function loadCode(data, reqObj) {
         codeMirror.setValue(sessionStorage.getItem(reqObj.codeID + codeContentSuffix));
     }
 
+    codeMirror.setOption ("mode", getMode (receivedData.name));
+
     mapCodeLines();
     placeSuggestions();
+}
+
+function getMode (name) {
+    return "text/x-java";
 }
 
 /*
@@ -299,6 +304,7 @@ function onLoad() {
         readOnly: true,
         viewportMargin: Infinity
     });
+
     codeMirror.setSize("100%", "85%");
 
     //Create Bootstrap Markdown editor for suggestion editor
