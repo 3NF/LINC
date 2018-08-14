@@ -1,10 +1,40 @@
 $(document).ready(function () {
-    $('#jstree_demo_div').on("changed.jstree", function (e, data) {
+    $('#jstree_demo_div').on("select_node.jstree", function (e, data) {
         let file_id = data.node.li_attr["file-id"];
         if (file_id !== undefined)
             fetchCode(data.node.li_attr["file-id"]);
+
+        sessionStorage.setItem(assignmentID + "_recentParArr", JSON.stringify(data.node.parents));
+        sessionStorage.setItem(assignmentID + "_recentSelected", data.node.id);
+        // console.log ("e\n" + e);
+        // console.log ("data\n" + data);
+        // var cnt = 5;
+        // var curNode = data.node;
+        // while (cnt > -1) {
+        //     console.log (curNode);
+        //     curNode = curNode.parentNode;
+        // }
     });
 });
+
+function continueRecentView () {
+    var parArr = JSON.parse(sessionStorage.getItem(assignmentID + "_recentParArr"));
+    var recentSelected = sessionStorage.getItem(assignmentID + "_recentSelected");
+
+    if (parArr === null) {
+        return;
+    }
+
+    var jstree = $('#jstree_demo_div').jstree(true);
+    for (let i = parArr.length - 2; i > -1; i--) {
+        jstree.toggle_node(parArr[i]);
+    }
+
+
+    jstree.select_node(recentSelected);
+    projectViewIsVisible = false;
+    toggleProjectView();
+}
 
 let projectViewIsVisible = false;
 function toggleProjectView() {
@@ -21,6 +51,7 @@ function toggleProjectView() {
 
 function build_project_view() {
     $('#jstree_demo_div').jstree();
+    continueRecentView();
 }
 function draw_view_rec(dv, l, r) {
     let new_folder_begins = [];

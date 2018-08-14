@@ -30,15 +30,23 @@ var replyBlock = "                        <div class = \"reply-panel-wrapper\">\
 const errorColor = "#aa6664";
 const warningColor = "#efcf4f";
 
+const codeContentSuffix = "_content";
+const codeRepliesSuffix = "_replies";
+
 
 //AJAX successful code loading response callback
-function loadCode(data) {
+function loadCode(data, reqObj) {
     var receivedData = data;
     suggestions = receivedData.suggestions;
 
     console.log(receivedData);
     activeCodeFileID = receivedData.fileId;
-    codeMirror.setValue(receivedData.code);
+    if (reqObj.needsContent) {
+        codeMirror.setValue(receivedData.code);
+        sessionStorage.setItem(reqObj.codeID + codeContentSuffix, receivedData.code)
+    } else {
+        codeMirror.setValue(sessionStorage.getItem(reqObj.codeID + codeContentSuffix));
+    }
 
     mapCodeLines();
     placeSuggestions();
@@ -174,9 +182,10 @@ function fetchCode(id) {
     let dataObj;
     dataObj = {
         teacherID: teachID,
-        codeID: id
+        codeID: id,
+        needsContent: (sessionStorage.getItem(id + codeContentSuffix) == null)
     };
-
+    console.log (dataObj.needsContent);
 
     $.ajax({
         url: "/user/code_dispatcher",
@@ -185,7 +194,7 @@ function fetchCode(id) {
         data: JSON.stringify(dataObj),
         success: function (data, textStatus, jQxhr) {
             toggleLoading();
-            loadCode(data, textStatus, jQxhr);
+            loadCode(data, dataObj);
             console.log("abc");
             toggleProjectView();
         },
@@ -239,6 +248,8 @@ function clearReplies() {
 
 //Draws one new reply in the suggestion panel
 function drawReply(reply) {
+    replyEditor.setContent("");
+
     var newBlock = $(replyBlock).closest(".reply-panel-wrapper");
     console.log(reply);
 

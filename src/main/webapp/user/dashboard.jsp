@@ -185,7 +185,6 @@
     <div id="jstree_demo_div_container">
         <div id="jstree_demo_div">
         </div>
-
     </div>
     <div id="toggle-project-view" onclick="toggleProjectView()" data-toggle="tooltip" title="Toggle project view"><span
             id="file-open" class="glyphicon">&#xe117;</span></div>
@@ -233,7 +232,7 @@
                 </div>
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
                     <form onsubmit="submitReply(); return false;">
-                        <textarea id="reply-editor-content" class="editor-content" name="content" title="def"></textarea>
+                        <textarea placeholder="Your reply goes here!" id="reply-editor-content" class="editor-content" name="content" title="def"></textarea>
                         <br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

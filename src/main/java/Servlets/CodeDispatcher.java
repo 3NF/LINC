@@ -56,7 +56,7 @@ public class CodeDispatcher extends HttpServlet {
     private String loadCodeWithID(JsonObject data, HttpServletRequest request, String userID, String teacherID) throws SQLException {
         String codeFilesId = data.get(Constraints.CODE_ID).getAsString();
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(Constraints.CODE_FILES_DAO);
-
+        boolean needsContent = data.get("needsContent").getAsBoolean();
 
         UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
 
@@ -65,6 +65,10 @@ public class CodeDispatcher extends HttpServlet {
             System.err.println(teacherID);
             System.err.println(userStorage);
             codeFile.RetrieveUsers(teacherID, userStorage);
+        }
+
+        if (!needsContent) {
+            codeFile.setCode(null);
         }
 
         return new GsonBuilder().create().toJson(codeFile);
