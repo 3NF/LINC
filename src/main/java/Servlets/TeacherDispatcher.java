@@ -1,23 +1,25 @@
 package Servlets;
 
-import Database.AssignmentInfoDAO;
-import Database.CodeFilesDAO;
-import Database.GAPIManager;
-import Models.UploadedAssignment;
-import Models.User;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import static Data.Constraints.ASSIGNMENT_INFO_DAO;
+import static Data.Constraints.CODE_FILES_DAO;
+import static Models.File.USER;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 
-import static Data.Constraints.ASSIGNMENT_INFO_DAO;
-import static Data.Constraints.CODE_FILES_DAO;
-import static Models.File.USER;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import Database.AssignmentInfoDAO;
+import Database.CodeFilesDAO;
+import Database.GAPIManager;
+import Models.UploadedAssignment;
+import Models.User;
 
 @WebServlet(name = "TeacherDispatcher" ,urlPatterns = "/teacher-dispatcher")
 public class TeacherDispatcher extends HttpServlet {

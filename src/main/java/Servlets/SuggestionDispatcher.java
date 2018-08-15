@@ -1,22 +1,29 @@
 package Servlets;
 
-import Database.SuggestionDAO;
-import Database.ValidateDAO;
-import Models.Suggestion;
-import Models.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import org.apache.http.HttpStatus;
+import static Data.Constraints.COURSE_ID;
+import static Data.Constraints.SUGGESTION_DAO;
+import static Data.Constraints.SUGGESTION_ID;
+import static Data.Constraints.USER;
+import static Data.Constraints.VALIDATE_DAO;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 
-import static Data.Constraints.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import org.apache.http.HttpStatus;
+
+import Database.SuggestionDAO;
+import Database.ValidateDAO;
+import Models.Suggestion;
+import Models.User;
 
 @WebServlet(name = "SuggestionDispatcher", urlPatterns = "/user/suggestion_dispatcher")
 public class SuggestionDispatcher extends HttpServlet

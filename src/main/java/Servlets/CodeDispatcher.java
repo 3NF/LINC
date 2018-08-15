@@ -1,22 +1,31 @@
 package Servlets;
 
-import Data.Constraints;
-import Database.*;
-import Models.CodeFile;
-import Models.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import org.apache.http.HttpStatus;
+import static Data.Constraints.SECTION_DAO;
+import static Data.Constraints.TEACHER_ID;
+import static Data.Constraints.USER;
+import static Data.Constraints.USER_STORAGE;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 
-import static Data.Constraints.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import org.apache.http.HttpStatus;
+
+import Data.Constraints;
+import Database.AssignmentInfoDAO;
+import Database.CodeFilesDAO;
+import Database.SectionDAO;
+import Database.UserStorage;
+import Models.CodeFile;
+import Models.User;
 
 @WebServlet(name = "CodeDispatcher", urlPatterns = "/user/code_dispatcher")
 public class CodeDispatcher extends HttpServlet {

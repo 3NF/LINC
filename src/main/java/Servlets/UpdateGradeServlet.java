@@ -1,12 +1,12 @@
 package Servlets;
 
-import Data.Constraints;
-import Database.AssignmentInfoDAO;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import Data.Constraints;
+import Database.AssignmentInfoDAO;
 
 @WebServlet(name = "UpdateGradeServlet" , urlPatterns = "/user/update_grade")
 public class UpdateGradeServlet extends HttpServlet {

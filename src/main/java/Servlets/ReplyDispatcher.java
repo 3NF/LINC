@@ -1,27 +1,30 @@
 package Servlets;
 
-import Data.Constraints;
-import Database.ReplyDAO;
-import Database.UserStorage;
-import Database.ValidateDAO;
-import Models.Reply;
-import Models.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import org.apache.http.HttpStatus;
+import static Data.Constraints.TEACHER_ID;
+import static Data.Constraints.USER;
+import static Data.Constraints.USER_STORAGE;
+
+import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.List;
 
-import static Data.Constraints.TEACHER_ID;
-import static Data.Constraints.USER;
-import static Data.Constraints.USER_STORAGE;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import org.apache.http.HttpStatus;
+
+import Data.Constraints;
+import Database.ReplyDAO;
+import Database.UserStorage;
+import Database.ValidateDAO;
+import Models.Reply;
+import Models.User;
 
 @WebServlet(name = "ReplyDispatcher", urlPatterns = "/user/reply_dispatcher")
 public class ReplyDispatcher extends HttpServlet

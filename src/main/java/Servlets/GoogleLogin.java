@@ -1,17 +1,16 @@
 package Servlets;
 
-import Database.GAPIManager;
+import static Data.Constraints.USER;
 
-import Models.User;
-
+import java.io.IOException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-import static Data.Constraints.USER;
+import Database.GAPIManager;
+import Models.User;
 
 @WebServlet(name = "GoogleLogin", urlPatterns = {"/GoogleLogin"})
 public class GoogleLogin extends HttpServlet {

@@ -13,6 +13,9 @@
 <head>
 
     <meta name="client_id" content="<%=CLIENT_ID%>">
+
+    <title>Choose Room - LINC</title>
+
     <!-- css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="${pageContext.request.contextPath}/Styles/style.css" rel="stylesheet">
@@ -27,14 +30,10 @@
     <script src="${pageContext.request.contextPath}/JavaScript/gapi-scripts.js"></script>
 
 
-    <%
-        User user = (User) session.getAttribute(USER);
-    %>
+    <% User user = (User) session.getAttribute(USER); %>
 
     <script>let userId = '<%=user.getUserId()%>';</script>
-
-
-    <title>Choose Room - LINC</title>
+    
 </head>
 <body>
 <div class="fill">

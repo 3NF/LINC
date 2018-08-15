@@ -1,10 +1,11 @@
 package Models;
 
-import Database.UserStorage;
-import Interfaces.UserRetriever;
+import java.util.List;
+
 import com.google.gson.Gson;
 
-import java.util.List;
+import Database.UserStorage;
+import Interfaces.UserRetriever;
 
 public class CodeFile implements UserRetriever {
 

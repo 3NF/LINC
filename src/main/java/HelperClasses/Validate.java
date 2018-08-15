@@ -1,11 +1,13 @@
 package HelperClasses;
 
-import Database.GAPIManager;
-import Models.User;
-import com.google.api.services.classroom.model.Course;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+
+import com.google.api.services.classroom.model.Course;
+
+import Database.GAPIManager;
+import Models.User;
 
 public class Validate {
 

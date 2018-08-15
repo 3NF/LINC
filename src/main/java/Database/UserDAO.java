@@ -1,14 +1,15 @@
 package Database;
 
-import Models.User;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+
+import Models.User;
 
 public class UserDAO {
 

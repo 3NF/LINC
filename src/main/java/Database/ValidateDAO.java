@@ -1,12 +1,13 @@
 package Database;
 
-import Models.User;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
+import Models.User;
 
 public class ValidateDAO {
 	private final MysqlDataSource connectionPool;
@@ -49,7 +50,7 @@ public class ValidateDAO {
 		return false;
 	}
 
-	public boolean hasAccessInstructor(User user, String suggestionID, String courseID) {
+	private boolean hasAccessInstructor(User user, String suggestionID, String courseID) {
 		String query = "SELECT Instructors.userID,Instructors.classroomID,sections.InstructorID,sections.studentID,suggestions.id FROM Instructors inner join " +
 				"sections on Instructors.id=sections.InstructorID " +
 				"inner join code_files on code_files.userID = sections.studentID " +
@@ -77,7 +78,7 @@ public class ValidateDAO {
 	}
 
 
-	public boolean hasAccessStudent(User user, String suggestionID) {
+	 private boolean hasAccessStudent(User user, String suggestionID) {
 		String query = "SELECT suggestions.id,code_files.userId FROM  code_files " +
 				"inner join suggestions on suggestions.Code_FileID=code_files.id " +
 				"WHERE code_files.userId=? AND suggestions.id=?";

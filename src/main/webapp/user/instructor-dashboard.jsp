@@ -15,7 +15,7 @@
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="java.util.concurrent.*" %>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -23,8 +23,6 @@
     <meta name="client_id" content="<%=CLIENT_ID%>">
 
     <%--bootstrap--%>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="${pageContext.request.contextPath}/Styles/bootstrap-social.css" rel="stylesheet">
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -38,24 +36,23 @@
     <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/instructor-dashboard.css">
+
 
     <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../codemirror-5.39.0/lib/codemirror.css">
-    <script src='${pageContext.request.contextPath}/codemirror-5.39.0/lib/codemirror.js'></script>
-    <script src='${pageContext.request.contextPath}/codemirror-5.39.0/mode/clike.js'></script>
     <script src='${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
     <script src="${pageContext.request.contextPath}/JavaScript/gapi-scripts.js"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script src="https://apis.google.com/js/api.js"></script>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="${pageContext.request.contextPath}/Styles/bootstrap-social.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/instructor-dashboard.css">
 
 
     <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
-
     <%
 
         SectionDAO DAO = (SectionDAO) request.getServletContext().getAttribute(SECTION_DAO);
@@ -85,16 +82,7 @@
 
         Future<String> teacherIdFuture = executor.submit(() -> UserDAO.getUserIDsByRole(courseId, UserDAO.Role.Teacher).get(0));
 
-        Future<List<String>> studentsOnlyIDFuture = executor.submit(() -> DAO.getUsersInSection(courseId, user.getUserId()));
-
-        CompletableFuture<List<User>> studentsFuture = CompletableFuture.supplyAsync(() -> {
-            try {
-                return studentsOnlyIDFuture.get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }, executor).thenApply(strings -> {
+        CompletableFuture<List<User>> studentsFuture = CompletableFuture.supplyAsync(() -> DAO.getUsersInSection(courseId, user.getUserId()), executor).thenApply(strings -> {
             try {
                 return userStorage.getUsersWithIds(teacherIdFuture.get(), strings);
             } catch (InterruptedException | ExecutionException e) {

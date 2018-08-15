@@ -1,19 +1,23 @@
 package Servlets;
 
-import Data.Constraints;
-import Database.SectionDAO;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import org.apache.http.HttpStatus;
+import static Data.Constraints.COURSE_ID;
+import static Data.Constraints.SECTION_DAO;
+
+import java.io.IOException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-import static Data.Constraints.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import org.apache.http.HttpStatus;
+
+import Data.Constraints;
+import Database.SectionDAO;
 
 @WebServlet(name = "SectionDispatcher", urlPatterns = "/user/section_dispatcher")
 public class SectionDispatcher extends HttpServlet
