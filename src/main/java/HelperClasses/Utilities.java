@@ -24,7 +24,6 @@ public final class Utilities {
 		ZipEntry entry;
 		// while there are entries I process them
 		while ((entry = zis.getNextEntry()) != null) {
-		    System.out.println(entry);
 			ByteArrayOutputStream fos = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
 			// consume all the data from this entry
