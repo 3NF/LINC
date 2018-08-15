@@ -84,6 +84,7 @@ function draw_view_rec(dv, l, r) {
         }
         let lst = document.createElement("li");
         lst.append(new_folder_begins[i][1]);
+        lst.setAttribute("data-jstree", `{"icon":"/Images/icons/folder.svg"}`);
         let ul = document.createElement("ul");
         lst.appendChild(ul);
         draw_view_rec(ul, L, R);
@@ -94,7 +95,27 @@ function draw_view_rec(dv, l, r) {
         let lst_file = document.createElement("li");
         lst_file.append(files[i].value);
         lst_file.setAttribute("file-id", files[i].key);
-        lst_file.setAttribute("data-jstree", '{"icon":"glyphicon glyphicon-leaf"}');
+        lst_file.setAttribute("data-jstree", `{"icon":"${getIconForFile(files[i].value)}"}`);
         dv.appendChild(lst_file);
+    }
+}
+
+const iconByExt = {
+    "cpp"   : "cpp.svg",
+    "cc"    : "cpp.svg",
+    "java"  : "java.svg",
+    "js"    : "javascript.svg",
+    "jpg"   : "image.svg",
+    "css"   : "css.svg",
+    "html"  : "html.svg",
+    "py"    : "python.svg"
+};
+
+function getIconForFile(fileName) {
+    let extension = fileName.substr(fileName.lastIndexOf(".") + 1);
+    if (iconByExt.hasOwnProperty(extension)) {
+        return `/Images/icons/${iconByExt[extension]}`;
+    } else {
+        return `/Images/icons/default.svg`;
     }
 }
