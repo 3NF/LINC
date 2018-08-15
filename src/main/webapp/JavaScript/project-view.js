@@ -4,22 +4,14 @@ $(document).ready(function () {
         if (file_id !== undefined)
             fetchCode(data.node.li_attr["file-id"]);
 
-        sessionStorage.setItem(assignmentID + "_recentParArr", JSON.stringify(data.node.parents));
-        sessionStorage.setItem(assignmentID + "_recentSelected", data.node.id);
-        // console.log ("e\n" + e);
-        // console.log ("data\n" + data);
-        // var cnt = 5;
-        // var curNode = data.node;
-        // while (cnt > -1) {
-        //     console.log (curNode);
-        //     curNode = curNode.parentNode;
-        // }
+        localStorage.setItem(assignmentID + "_recentParArr", JSON.stringify(data.node.parents));
+        localStorage.setItem(assignmentID + "_recentSelected", data.node.id);
     });
 });
 
 function continueRecentView () {
-    var parArr = JSON.parse(sessionStorage.getItem(assignmentID + "_recentParArr"));
-    var recentSelected = sessionStorage.getItem(assignmentID + "_recentSelected");
+    var parArr = JSON.parse(localStorage.getItem(assignmentID + "_recentParArr"));
+    var recentSelected = localStorage.getItem(assignmentID + "_recentSelected");
 
     if (parArr === null) {
         return;
