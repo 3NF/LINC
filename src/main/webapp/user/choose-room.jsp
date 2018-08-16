@@ -33,7 +33,7 @@
     <% User user = (User) session.getAttribute(USER); %>
 
     <script>let userId = '<%=user.getUserId()%>';</script>
-    
+
 </head>
 <body>
 <div class="fill">
@@ -49,21 +49,25 @@
         </div>
     </div>
 </div>
+<div id="loader-wrapper">
+    <div class="loader"></div>
+</div>
 <div id="content-wrapper">
     <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose Classroom to Enter:</h1>
 
-
-    <div class="panel" id = "crs_cntr">
+    <div class="panel" id="crs_cntr">
     </div>
 </div>
 </body>
 <script>
+    toggleLoading();
     gapi.load('client', get_classroom_list);
+
     function enterClasroom(teacherId, id) {
         console.log(teacherId);
         console.log(id);
         if (teacherId === userId) {
-            window.location.assign("teacher-dashboard.jsp?" +  '<%=Constraints.COURSE_ID%>' + "=" + id);
+            window.location.assign("teacher-dashboard.jsp?" + '<%=Constraints.COURSE_ID%>' + "=" + id);
             return;
         }
         $.ajax({

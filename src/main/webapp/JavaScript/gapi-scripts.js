@@ -27,7 +27,11 @@ function gapi_query(path, sucFunc) {
 
 
 function get_classroom_list() {
+    console.log("hi");
+    toggleLoading();
     gapi_query('https://classroom.googleapis.com/v1/courses?courseStates=ACTIVE', function (response) {
+        toggleLoading();
+        console.log("hi");
         let lst = response.result.courses;
         console.log(lst);
         for (let i = 0; i < lst.length; i++) {
