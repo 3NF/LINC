@@ -224,11 +224,10 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
                         </button>
-                        <button id="suggestion-type" type="button" class="btn btn-warning"
-                                onclick="toggleSuggestionType()">Warning
-                        </button>
+                        <button id="suggestion-type" type="button" class="btn btn-warning" onclick="toggleSuggestionType()">Warning</button>
                     </form>
                 </div>
+
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
                     <form onsubmit="submitReply(); return false;">
                         <textarea placeholder="Your reply goes here!" id="reply-editor-content" class="editor-content"

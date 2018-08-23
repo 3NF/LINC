@@ -1,4 +1,7 @@
 function changeRole(userId , courseID , role){
+    console.log (userId);
+    console.log (courseID);
+    console.log (role);
     let etarget = event.target;
     let change;
     if ($(etarget).text() === 'Remove') {
@@ -6,6 +9,7 @@ function changeRole(userId , courseID , role){
     } else {
         change = 'add';
     }
+    console.log ("abc " + userId);
     $.ajax({
         url: '/user/change_role',
         data:{"role" : role,

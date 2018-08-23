@@ -41,6 +41,7 @@ function get_classroom_list() {
 
 function get_students() {
     gapi_query('https://classroom.googleapis.com/v1/courses/' + courseID + '/students', function (response) {
+        //debugger;
         students = response.result.students;
         seminarReaders = students.filter(student => seminarReaderIds.includes(student.userId));
         assistants = students.filter(student => assistantIds.includes(student.userId));
@@ -49,6 +50,7 @@ function get_students() {
         console.log(seminarReaders);
         console.log(students);
         document.getElementById("semReadersTable1").innerHTML = seminarReaders.map(instructor_teacher_page_template).join('');
+        console.log (seminarReaders.length);
         document.getElementById("teacherAssTable1").innerHTML = assistants.map(instructor_teacher_page_template).join('');
         document.getElementById("studentsTable1").innerHTML = students.map(stundet_teacher_page_template).join('');
     });

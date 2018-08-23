@@ -80,7 +80,7 @@ public class SuggestionDispatcher extends HttpServlet
             int endInd = data.get("endInd").getAsInt();
 
             //Might throw IllegalArgumentException
-            Suggestion.SuggestionType.valueOf(type);
+            Suggestion.SuggestionType.valueOf (type);
 
             Suggestion suggestion = suggestionDAO.addSuggestion(user, codeFileID, type, content, startInd, endInd);
 

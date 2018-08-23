@@ -35,7 +35,7 @@ public class CodeFilesDAO {
             codeFileId = result.getString("id");
         }
 
-        query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE Code_FileID=?";
+        query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".suggestions WHERE code_fileID=?";
         statement = connection.prepareStatement(query);
         statement.setString(1,codeFileId);
         result = statement.executeQuery();
@@ -55,40 +55,6 @@ public class CodeFilesDAO {
         connection.close();
         return new CodeFile(codeContent,codeFileId,fileName,suggestions,codeLang);
     }
-
-    /*public void tempSaveCodeFile (long userId, long fileID, String content) throws SQLException {
-        Connection connection = connectionPool.getConnection();
-
-        String query = "INSERT INTO code_files (userID, filesID, content) VALUES\n" +
-                "  (?, ?, ?);";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, userId);
-        statement.setLong(2, fileID);
-        statement.setString(3, content);
-
-        statement.executeUpdate();
-        statement.close();
-        connection.close();
-    }*/
-
-    /*public void tempSaveSuggestion (Suggestion suggestion) throws SQLException {
-        Connection connection = connectionPool.getConnection();
-
-        String query = "INSERT INTO suggestions (userID, Code_FileID, text, time, type, startInd, endInd) VALUES\n" +
-                "  (?, ?, ?, ?, ?, ?, ?);";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, suggestion.user.getUserId());
-        statement.setString(2, suggestion.fileID);
-        statement.setString(3, suggestion.content);
-        statement.setTimestamp(4, new java.sql.Timestamp(suggestion.timeStamp.getTime()));
-        statement.setString(5, suggestion.type.toString());
-        statement.setInt(6, suggestion.startInd);
-        statement.setInt(7, suggestion.endInd);
-
-        statement.executeUpdate();
-        statement.close();
-        connection.close();
-    }*/
 
     public void addAssignments(UploadedAssignment assignment) throws SQLException {
         Connection connection = connectionPool.getConnection();

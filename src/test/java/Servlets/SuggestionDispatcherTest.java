@@ -68,6 +68,6 @@ public class SuggestionDispatcherTest {
         JSONObject obj = new JSONObject(response_writer.toString());
         assertEquals(obj.getString("type"),"Warning");
         //assertEquals(obj.getString("user"),"105303857051815287047");
-        connection.createStatement().execute("DELETE FROM suggestions WHERE Code_FIleID=-12");
+        connection.createStatement().execute("DELETE FROM suggestions WHERE code_fileID=-12");
     }
 }

@@ -23,10 +23,10 @@ public class ValidateDAO {
                 "WHERE T.INSID = sections.instructorID) M, code_files WHERE code_files.id=? AND code_files.userID=M.studentID;";
 */
 
-		String q = "SELECT Instructors.userID,Instructors.classroomID,code_files.id FROM Instructors inner join" +
-				" sections on Instructors.id=sections.instructorID inner join code_files " +
+		String q = "SELECT instructors.userID,instructors.classroomID,code_files.id FROM instructors inner join" +
+				" sections on instructors.id=sections.instructorID inner join code_files " +
 				"on code_files.userID=sections.studentID " +
-				"where Instructors.classroomID=?  AND Instructors.userID=? and code_files.id=?";
+				"where instructors.classroomID=?  AND instructors.userID=? and code_files.id=?";
 
 		PreparedStatement statement;
 
@@ -51,11 +51,11 @@ public class ValidateDAO {
 	}
 
 	private boolean hasAccessInstructor(User user, String suggestionID, String courseID) {
-		String query = "SELECT Instructors.userID,Instructors.classroomID,sections.InstructorID,sections.studentID,suggestions.id FROM Instructors inner join " +
-				"sections on Instructors.id=sections.InstructorID " +
+		String query = "SELECT instructors.userID,instructors.classroomID,sections.InstructorID,sections.studentID,suggestions.id FROM instructors inner join " +
+				"sections on instructors.id=sections.InstructorID " +
 				"inner join code_files on code_files.userID = sections.studentID " +
-				"inner join suggestions on suggestions.Code_FileID=code_files.id " +
-				"WHERE Instructors.userID=? AND suggestions.id=? AND Instructors.classroomID=?";
+				"inner join suggestions on suggestions.code_fileID=code_files.id " +
+				"WHERE instructors.userID=? AND suggestions.id=? AND instructors.classroomID=?";
 		try {
 			Connection connection = connectionPool.getConnection();
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -80,7 +80,7 @@ public class ValidateDAO {
 
 	 private boolean hasAccessStudent(User user, String suggestionID) {
 		String query = "SELECT suggestions.id,code_files.userId FROM  code_files " +
-				"inner join suggestions on suggestions.Code_FileID=code_files.id " +
+				"inner join suggestions on suggestions.code_fileID=code_files.id " +
 				"WHERE code_files.userId=? AND suggestions.id=?";
 		try {
 			Connection connection = connectionPool.getConnection();

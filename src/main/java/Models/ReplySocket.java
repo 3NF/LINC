@@ -19,8 +19,6 @@ public class ReplySocket {
     public void onMessage(Session session, String message)
             throws IOException {
         System.out.println(session.getId() + " Socket Message Received");
-        //message.setFrom(users.get(session.getId()));
-        //broadcast(message);
     }
 
     @OnClose

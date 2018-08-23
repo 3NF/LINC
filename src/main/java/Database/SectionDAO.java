@@ -91,11 +91,6 @@ public class SectionDAO {
 	 * Adds students in users section
 	 */
 	public void addUsersInSection(String classroomID, String leaderID, List<String> usersID) {
-        System.out.println("abc");
-
-        for (String userID: usersID) {
-            System.out.println(userID);
-        }
         String instructorID = getInstructorDataBaseID(classroomID, leaderID);
         String query = "INSERT INTO sections(instructorID,studentID) VALUES(?,?)";
         Connection conn;

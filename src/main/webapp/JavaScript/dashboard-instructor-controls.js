@@ -28,7 +28,7 @@ $( document ).ready(function() {
     button from warning to error and vice versa
  */
 function toggleSuggestionType () {
-    if ($(event.target).text() == "Warning") {
+    if ($(event.target).text() === "Warning") {
         $(event.target).html("Error");
         $(event.target).removeClass("btn-warning");
         $(event.target).addClass("btn-danger");
@@ -43,7 +43,7 @@ function toggleSuggestionType () {
     Turns on or off new suggestion editor view
  */
 function adjustView (ind) {
-    if (ind == "newContent") {
+    if (ind === "newContent") {
         $("#notification-div").hide();
         $("#comment-panel").hide();
         $("#comment-editor-wrapper").show();
@@ -69,7 +69,7 @@ function inHover (event) {
     //Get index of line number
     var index = $(event.currentTarget).parent().parent().index()+1;
     var col = $(event.currentTarget).css("background-color");
-    if (col == warningColor || col == errorColor || col == markedColor) {
+    if (col === warningColor || col === errorColor || col === markedColor) {
         col = "";
     }
     oldLineColors[index] = col;
@@ -82,7 +82,7 @@ function inHover (event) {
  */
 function outHover (event) {
     var index = $(event.currentTarget).parent().parent().index()+1;
-    if (index == lastMarker) {
+    if (index === lastMarker) {
         return;
     }
     $(event.currentTarget).css("background-color", oldLineColors[index]);
@@ -193,7 +193,8 @@ function submitSuggestion () {
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(dataObj),
         success: function(data){
-            if (data.type == "Error") {
+            suggestionEditor.setContent("");
+            if (data.type === "Error") {
                 data.color = errorColor;
             } else {
                 data.color = warningColor;

@@ -18,7 +18,7 @@ public class SuggestionDAO {
 	 * Adds suggestion in database
 	 */
 	public Suggestion addSuggestion(User user, String codeFileID, String type, String content, int startInd, int endInd) {
-		String query = "INSERT INTO suggestions(userID, Code_FileID, text, time, type, startInd, endInd) VALUES" +
+		String query = "INSERT INTO suggestions(userID, code_fileID, text, time, type, startInd, endInd) VALUES" +
 				"(?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement statement;
 		String suggestionID;

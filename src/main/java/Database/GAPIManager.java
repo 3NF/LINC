@@ -273,8 +273,6 @@ public class GAPIManager {
 
 				users.add(new User(profile.getEmailAddress(), profile.getName().getGivenName(),
 						profile.getName().getFamilyName(), profile.getId(), profile.getPhotoUrl(), "", ""));
-				/*System.out.printf("User '%s' was added as a student to the course.\n",
-						profile.getName().getFullName());*/
 			}
 
 			public void onFailure(GoogleJsonError error, HttpHeaders responseHeaders) {

@@ -75,7 +75,7 @@ public class ReplyDAO {
             return null;
         }
         PreparedStatement statement;
-        String query = "INSERT INTO replies (userid,text,suggestionid,date) VALUES(?,?,?,?)";
+        String query = "INSERT INTO replies (userID,text,suggestionid,date) VALUES(?,?,?,?)";
         String replyID = "";
         try {
             String generatedColumns[] = { "id" };

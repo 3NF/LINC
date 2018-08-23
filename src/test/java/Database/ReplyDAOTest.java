@@ -33,7 +33,7 @@ public class ReplyDAOTest {
     }
 
     private void insertIntoDataBase(String id, String userId, String text, String suggestionId) throws SQLException {
-        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".replies(id,userid,text,suggestionid,date) VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO " + Config.MYSQL_DATABASE_NAME + ".replies(id,userID,text,suggestionid,date) VALUES(?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, id);
         statement.setString(2, userId);
@@ -94,7 +94,7 @@ public class ReplyDAOTest {
     public void testDeleteReply() throws SQLException {
         insertIntoDataBase("-1", "2323", "232", "-1");
         DAO.deleteReply("-1");
-        String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE userId='-1'";
+        String query = "SELECT * FROM " + Config.MYSQL_DATABASE_NAME + ".replies WHERE userID='-1'";
         ResultSet resultSet = connection.createStatement().executeQuery(query);
         if (resultSet.next()) {
             assertEquals(1, 2);
