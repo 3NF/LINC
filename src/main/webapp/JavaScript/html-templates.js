@@ -9,11 +9,11 @@ function stundet_teacher_page_template(data) {
                             <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-option-vertical"></span></button>
                             <ul class="dropdown-menu" >
-                                <li><button type="button" class="btn btn-light" onclick="changeRole(${model.id} , ${classroomId} , 'SeminarReader')">
+                                <li><button type="button" class="btn btn-light" onclick="changeRole('${model.id}' , '${classroomId}' , 'SeminarReader')">
                                     Add as seminar reader
                                 </button>
                                 </li>
-                                <li><button type="button" class="btn btn-light" onclick="changeRole(${model.id} , ${classroomId} , 'TeacherAssistant')">
+                                <li><button type="button" class="btn btn-light" onclick="changeRole('${model.id}' , '${classroomId}' , 'TeacherAssistant')">
                                     Add as teacher assistant
                                 </button>
                                 </li>
@@ -35,7 +35,7 @@ function instructor_teacher_page_template(data) {
                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-option-vertical"></span></button>
                         <ul class="dropdown-menu">
-                            <li><button type="button" class="btn btn-light" onclick="changeRole(${model.id} , ${classroomId} , 'SeminarReader')">Remove</button>
+                            <li><button type="button" class="btn btn-light" onclick="changeRole('${model.id}' , '${classroomId}' , 'SeminarReader')">Remove</button>
                             </li>
                         </ul>
                     </div>
