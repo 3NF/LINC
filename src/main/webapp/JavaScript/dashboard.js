@@ -34,20 +34,11 @@ const codeContentSuffix = "_content";
 const codeRepliesSuffix = "_replies";
 
 //WebSocket for sending and receiving reply data
-var webSocket = new WebSocket("ws://" + document.location.host + "/reply_socket/abc");
-var webSocketMessageArr= [];
-webSocket.sendMessage = function (data) {
-    webSocketMessageArr[webSocketMessageArr.length] = data;
-};
+var webSocket = new WebSocket("ws://" + document.location.host + "/reply_socket");
 
-setInterval(function () {
-    if (webSocket.readyState) {
-        for (let i = 0; i < webSocketMessageArr.length; i ++) {
-            webSocket.send(webSocketMessageArr[i]);
-        }
-        webSocketMessageArr = [];
-    }
-}, 250);
+webSocket.onopen = function () {
+    console.log ("WebSocket have connected to server endpoint");
+};
 
 //AJAX successful code loading response callback
 function loadCode(receivedData, reqObj) {
@@ -268,7 +259,6 @@ function clearReplies() {
 
 //Draws one new reply in the suggestion panel
 function drawReply(reply) {
-    replyEditor.setContent("");
 
     var newBlock = $(replyBlock).closest(".reply-panel-wrapper");
     console.log(reply);
@@ -365,6 +355,7 @@ function submitReply() {
         }),
         success: function (data) {
             toggleLoading();
+            replyEditor.setContent("");
             drawReply(data);
         },
         error: function (data, textStatus, jQxhr) {
@@ -373,6 +364,27 @@ function submitReply() {
         }
     });
 }
+
+function submitReplyNew() {
+    var data = {
+        courseID: getParameter("courseID"),
+        suggestionID: activeSuggestionID,
+        content: replyEditor.parseContent()
+    };
+
+    console.log (data);
+    webSocket.send(JSON.stringify(data));
+    replyEditor.setContent("");
+}
+
+webSocket.onmessage = function (event) {
+    console.log ("message received");
+    var replyData = JSON.parse(event.data);
+    if (activeSuggestionID == replyData.suggestionID) {
+        console.log(replyData);
+        drawReply(replyData);
+    }
+};
 
 function showReplyAdditionError() {
     alert("Couldn't add new reply, please make sure that correct suggestion is chosen!")

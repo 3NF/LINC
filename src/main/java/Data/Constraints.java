@@ -15,6 +15,7 @@ public class Constraints {
 	public static final String SECTION_DAO = "SectionDAO";
 	public static final String USER_STORAGE = "UserStorage";
 	public static final String TEACHER_ID = "teacherID";
+	public static final String REPLY_SOCKETS = "ReplySockets";
 
 	/**
 	 * Google client ID

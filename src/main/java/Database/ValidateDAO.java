@@ -102,7 +102,42 @@ public class ValidateDAO {
 		return false;
 	}
 
+    private String getStudentIDViaInstructor(User user, String suggestionID, String courseID) {
+        String query = "SELECT instructors.userID,instructors.classroomID,sections.InstructorID,sections.studentID,suggestions.id, code_files.userID FROM instructors inner join " +
+                "sections on instructors.id=sections.InstructorID " +
+                "inner join code_files on code_files.userID = sections.studentID " +
+                "inner join suggestions on suggestions.code_fileID=code_files.id " +
+                "WHERE instructors.userID=? AND suggestions.id=? AND instructors.classroomID=?";
+        try {
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, user.getUserId());
+            statement.setString(2, suggestionID);
+            statement.setString(3, courseID);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                String studentID = result.getString("code_files.userID");
+                statement.close();
+                connection.close();
+                return studentID;
+            }
+            statement.close();
+            connection.close();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 	public boolean isValidate(User user, String suggestionID, String courseID) {
 		return hasAccessInstructor(user, suggestionID, courseID) || hasAccessStudent(user, suggestionID);
 	}
+
+	public String isValidateNew (User user, String suggestionID, String courseID) {
+	    if (hasAccessStudent(user, suggestionID)) {
+	        return user.getUserId();
+        }
+        return getStudentIDViaInstructor(user, suggestionID, courseID);
+    }
 }

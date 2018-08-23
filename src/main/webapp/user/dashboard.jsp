@@ -229,7 +229,7 @@
                 </div>
 
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
-                    <form onsubmit="submitReply(); return false;">
+                    <form onsubmit="submitReplyNew(); return false;">
                         <textarea placeholder="Your reply goes here!" id="reply-editor-content" class="editor-content"
                                   name="content" title="def"></textarea>
                         <br>

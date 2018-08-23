@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Models.Reply;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 import Models.User;
@@ -177,4 +178,30 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
+
+    public static List<String> getLinkedUserIDs(String suggestionID) {
+        ArrayList <String> linkedUserIDs = new ArrayList<String>();
+
+        try {
+            //TODO: 3NFBAGDU, კლასრუმის შემოწმება აკლია
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            String query = "SELECT userID FROM instructors, (SELECT instructorID from sections, (SELECT userID from code_files, (SELECT Code_FileID FROM suggestions where id=?) t\n" +
+                    "WHERE code_files.id=t.Code_FileID) y\n" +
+                    "WHERE studentID=y.userID) u\n" +
+                    "WHERE id = u.instructorID;";
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, suggestionID);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                linkedUserIDs.add(result.getString("userID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return linkedUserIDs;
+    }
 }
