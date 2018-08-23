@@ -33,6 +33,21 @@ const warningColor = "#efcf4f";
 const codeContentSuffix = "_content";
 const codeRepliesSuffix = "_replies";
 
+//WebSocket for sending and receiving reply data
+var webSocket = new WebSocket("ws://" + document.location.host + "/reply_socket/abc");
+var webSocketMessageArr= [];
+webSocket.sendMessage = function (data) {
+    webSocketMessageArr[webSocketMessageArr.length] = data;
+};
+
+setInterval(function () {
+    if (webSocket.readyState) {
+        for (let i = 0; i < webSocketMessageArr.length; i ++) {
+            webSocket.send(webSocketMessageArr[i]);
+        }
+        webSocketMessageArr = [];
+    }
+}, 250);
 
 //AJAX successful code loading response callback
 function loadCode(receivedData, reqObj) {

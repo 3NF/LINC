@@ -22,8 +22,8 @@ public class SectionDAO {
      */
     public List<String> getUsersInSection(String classroomID, String userID) {
         ArrayList<String> users = new ArrayList<>();
-        String query = "SELECT * FROM Instructors, sections\n" +
-                "WHERE Instructors.classroomID=? AND Instructors.userID=? AND sections.instructorID = Instructors.id;";
+        String query = "SELECT * FROM instructors, sections\n" +
+                "WHERE instructors.classroomID=? AND instructors.userID=? AND sections.instructorID = instructors.id;";
 
         PreparedStatement statement;
 
@@ -51,8 +51,8 @@ public class SectionDAO {
      * Checks if student is in users section
      */
     public boolean isInSection(String instructorID, String studentID) {
-            String query = "SELECT Instructors.id,Instructors.userID,sections.studentID FROM Instructors" +
-                    " inner join sections on Instructors.id=sections.instructorID " +
+            String query = "SELECT instructors.id,instructors.userID,sections.studentID FROM instructors" +
+                    " inner join sections on instructors.id=sections.instructorID " +
                     "where sections.instructorID=? AND sections.studentID=?";
         try {
             Connection connection = connectionPool.getConnection();
@@ -68,7 +68,7 @@ public class SectionDAO {
     }
 
     private String getInstructorDataBaseID(String classroomID, String leaderID) {
-        String query = "SELECT id FROM Instructors WHERE classroomID=? AND userID=?";
+        String query = "SELECT id FROM instructors WHERE classroomID=? AND userID=?";
         try {
             Connection conn = connectionPool.getConnection();
             PreparedStatement statement = conn.prepareStatement(query);
@@ -91,6 +91,11 @@ public class SectionDAO {
 	 * Adds students in users section
 	 */
 	public void addUsersInSection(String classroomID, String leaderID, List<String> usersID) {
+        System.out.println("abc");
+
+        for (String userID: usersID) {
+            System.out.println(userID);
+        }
         String instructorID = getInstructorDataBaseID(classroomID, leaderID);
         String query = "INSERT INTO sections(instructorID,studentID) VALUES(?,?)";
         Connection conn;

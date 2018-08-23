@@ -49,7 +49,7 @@
     <script src="https://apis.google.com/js/api.js"></script>
 
 
-    <script src="${pageContext.request.contextPath}/JavaScript/teacher-dashboard.js?newversione"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/teacher-dashboard.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/gapi-scripts.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/html-templates.js"></script>
@@ -160,7 +160,7 @@
                         <tbody id = "teacherAssTable1">
                         </tbody>
                     </table>
-                    <button class = "btn btn-light" style="width:260px;color:black" onclick='randomSections()'> Random sections for teacher assistants </button>
+                    <button class = "btn btn-light" style="width:260px;color:black" onclick='randomSections()'> Randomise sections! </button>
                 </div>
             </div>
         </div>

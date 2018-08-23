@@ -98,7 +98,7 @@ public class UserDAO {
 
 	static String getInstructorType(String userID, String courseID) {
 		try {
-			String query = "SELECT Type FROM Instructors\n" +
+			String query = "SELECT type FROM instructors\n" +
 					"WHERE userID=? AND classroomID=?";
 
 			Connection conn = ConnectionPool.getInstance().getConnection();
@@ -127,14 +127,20 @@ public class UserDAO {
 	public static List<String> getUserIDsByRole(String classroomID, Role role) {
 		List<String> users = new ArrayList<>();
 		try {
+		    System.out.println("getUserIDsByRole");
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String query = "SELECT * FROM Instructors WHERE classroomID=? AND Type=?";
+			String query = "SELECT * FROM instructors WHERE classroomID=? AND type=?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, classroomID);
 			statement.setString(2, role.toString());
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
+            System.out.println("123a");
+
+            ResultSet result = statement.executeQuery();
+            System.out.println("123b");
+
+            while (result.next()) {
 				String userID = result.getString("userID");
+				System.out.println(userID + " anbabababab");
 				users.add(userID);
 			}
 			connection.close();
@@ -147,8 +153,9 @@ public class UserDAO {
 
 	public static void addUser(String userID, Role role, String courseID) {
 		try {
+		    System.out.println(userID);
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String query = "INSERT IGNORE INTO Instructors(`classroomID`, `userID`, `Type`) VALUES (?,?,?)";
+			String query = "INSERT IGNORE INTO instructors(`classroomID`, `userID`, `type`) VALUES (?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, courseID);
 			statement.setString(2, userID);
@@ -163,8 +170,9 @@ public class UserDAO {
 
 	public static void removeUser(String userID, Role role, String courseID) {
 		try {
+            System.out.println(userID);
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String query = "DELETE FROM Instructors WHERE `userID`=? AND`classroomID`=? AND`Type`=?";
+			String query = "DELETE FROM instructors WHERE `userID`=? AND`classroomID`=? AND type=?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, userID);
 			statement.setString(2, courseID);

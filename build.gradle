@@ -35,6 +35,11 @@ dependencies {
 }
 
 dependencies {
+    //WebSocket
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1'
+    compile group: 'org.apache.tomcat', name: 'tomcat-websocket', version: '9.0.1'
+
     //Google Drive API Libraries
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'

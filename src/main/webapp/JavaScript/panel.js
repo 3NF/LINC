@@ -1,4 +1,4 @@
-let manuIsVisible = false;
+let menuIsVisible = false;
 
 function toggleLoading() {
     $("#loader-wrapper").fadeToggle();
@@ -32,11 +32,11 @@ $(document).ready(function () {
 
 
 function toggleNav() {
-    if (!manuIsVisible)
+    if (!menuIsVisible)
         $("#mySidenav")[0].style.width = "250px";
     else
         $("#mySidenav")[0].style.width = "0";
-    manuIsVisible = !manuIsVisible;
+    menuIsVisible = !menuIsVisible;
 }
 
 function signOut() {
@@ -117,9 +117,10 @@ function giveInSection(leaders, students, rem, inSection, courseID) {
             ++r;
             --rem;
         }
+        console.log (leaders.length + " " + students.length + " " + " " +  courseID);
         $.ajax({
             type: 'POST',
-            url: '/user/addInSectionServlet',
+            url: '/user/add_in_section_servlet',
             data: JSON.stringify(
                 {
                     "leaderID": leaders[k],
@@ -151,13 +152,17 @@ function randomSections() {
     let rem = studentsCnt % teacherAssistantCnt;
     let inSectionSemReader = studentsCnt / semReadersCnt;
 
+    console.log ("Hi There!");
+    console.log (teacherAssistantCnt);
+    console.log (studentsCnt);
+    console.log (semReadersCnt);
     giveInSection(assistants_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionAssistant, courseID);
 
     rem = studentsCnt % teacherAssistantCnt;
 
     giveInSection(seminarReaders_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionSemReader, courseID);
 
-    alert("now section,seminarers leaders has their students");
+    alert("Random-Fucking-ised!");
 }
 
 function mouseOver(grade) {

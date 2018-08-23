@@ -128,16 +128,14 @@
 
 
         if (!isStudent) {%>
-            <%--Comment following line if you want to view as Student--%>
-            <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js"></script>
-        <%}%>
-
+    <%--Comment following line if you want to view as Student--%>
+    <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js"></script>
+    <%}%>
 
 
     <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
     <script>let uid = <%=request.getParameter(USER_ID)%>;</script>
     <script>let teachID = '<%=teacherId%>';</script>
-
 
     <%
         String assignmentID = request.getParameter(ASSIGNMENT_ID);
@@ -220,7 +218,8 @@
                 </div>
                 <div id="comment-editor-wrapper" class="editor-wrapper" hidden>
                     <form onsubmit="submitSuggestion(); return false;">
-                        <textarea id="comment-editor-content" class="editor-content" name="content" title="def"></textarea>
+                        <textarea id="comment-editor-content" class="editor-content" name="content"
+                                  title="def"></textarea>
                         <br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="reset" class="btn btn-default" onclick="clearInterval();">Clear Suggestion
@@ -232,7 +231,8 @@
                 </div>
                 <div id="reply-editor-wrapper" class="editor-wrapper" hidden>
                     <form onsubmit="submitReply(); return false;">
-                        <textarea placeholder="Your reply goes here!" id="reply-editor-content" class="editor-content" name="content" title="def"></textarea>
+                        <textarea placeholder="Your reply goes here!" id="reply-editor-content" class="editor-content"
+                                  name="content" title="def"></textarea>
                         <br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
