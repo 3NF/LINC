@@ -33,6 +33,7 @@ const warningColor = "#efcf4f";
 const codeContentSuffix = "_content";
 const codeRepliesSuffix = "_replies";
 
+const recentSuggestionSuffix = "_suggestion";
 //WebSocket for sending and receiving reply data
 var webSocket = new WebSocket("ws://" + document.location.host + "/reply_socket");
 
@@ -100,7 +101,7 @@ function placeSuggestion (ind, suggestion) {
     Adjusts view for suggestion and fetches
     reply data for this suggestion
  */
-function viewSuggestion(eventHandler) {
+function viewSuggestion(ind) {
     /*
         Adjust view.
         If student is logged in following lines
@@ -118,7 +119,7 @@ function viewSuggestion(eventHandler) {
 
 
     //Load suggestion data
-    var suggestion = suggestions[eventHandler];
+    var suggestion = suggestions[ind];
     console.log(suggestion);
     $("#comment-content").css("border-right-color", suggestion.color);
     $("#comment-text").html(suggestion.content);
@@ -126,6 +127,7 @@ function viewSuggestion(eventHandler) {
     $("#comment-profile-picture").attr("src", suggestion.user.picturePath);
     $("#comment-date").html(suggestion.timeStamp);
     activeSuggestionID = suggestion.suggestionID;
+    localStorage.setItem(suggestion.fileID + recentSuggestionSuffix, JSON.stringify(getCacheSuggestionObj(ind)));
     console.log(activeSuggestionID);
 
     fetchReplies(suggestion.suggestionID);
@@ -206,7 +208,7 @@ function fetchCode(id) {
         success: function (data, textStatus, jQxhr) {
             toggleLoading();
             loadCode(data, dataObj);
-            console.log("abc");
+            loadRecentSuggestion (id);
             toggleProjectView();
         },
         error: function (data, textStatus, jQxhr) {
@@ -216,6 +218,28 @@ function fetchCode(id) {
     });
 }
 
+function getCacheSuggestionObj (ind) {
+    return {
+        ind: ind,
+        suggestionID: suggestions[ind].suggestionID
+    };
+}
+
+function loadRecentSuggestion (id) {
+    var recentSuggestion = JSON.parse(localStorage.getItem(id + recentSuggestionSuffix));
+
+    if (recentSuggestion == null) {
+        console.log ("There was no recent suggestion for code with ID " + id);
+        return;
+    }
+
+    if (recentSuggestion.suggestionID !== suggestions[recentSuggestion.ind].suggestionID) {
+        console.log ("Current index references to different suggestion object, deleting recent recent suggestion from LocalStorage");
+        localStorage.removeItem(id + recentSuggestionSuffix);
+        return;
+    }
+    viewSuggestion(recentSuggestion.ind);
+}
 
 //Sends AJAX request to fetch new replies
 function fetchReplies(id) {
