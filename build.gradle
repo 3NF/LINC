@@ -5,8 +5,6 @@ buildscript {
     }
 
     dependencies {
-
-        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
         classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
     }
 }
