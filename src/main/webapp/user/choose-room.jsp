@@ -53,7 +53,7 @@
     <div class="loader"></div>
 </div>
 <div id="content-wrapper">
-    <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose Classroom to Enter:</h1>
+    <h1 class="welcomeText">Welcome <%=user.getFirstName()%>! Choose classroom:</h1>
 
     <div class="panel" id="crs_cntr">
     </div>

@@ -74,7 +74,6 @@
     <%
         List<String> semReaderIds = UserDAO.getUserIDsByRole(courseId, UserDAO.Role.SeminarReader);
         List<String> teacherAssIds = UserDAO.getUserIDsByRole(courseId, UserDAO.Role.TeacherAssistant);
-        Set<String> studentsIds = new HashSet<>();
         String teacherID = ((User) session.getAttribute(Constraints.USER)).getUserId();
         UserDAO.addUser(teacherID,UserDAO.Role.Teacher,courseId);
         String teacherAssistantJson = new Gson().toJson(teacherAssIds);

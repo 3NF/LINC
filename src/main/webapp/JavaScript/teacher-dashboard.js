@@ -120,7 +120,7 @@ function downloadCompleted () {
     // $(assignmentSocket.activeEl).unbind();
     // $(assignmentSocket.activeEl).click(isDownloaded);
 }
-s
+
 function updateProgress(progressBar, progressData) {
     progressBar.animate (progressData, {
         duration: 500,

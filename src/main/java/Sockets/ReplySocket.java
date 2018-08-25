@@ -31,16 +31,14 @@ public class ReplySocket {
     private User user;
     private ValidateDAO validateDAO;
     private ReplyDAO replyDAO;
-    private UserStorage userStorage;
 
 
     @OnOpen
-    public void onOpen(Session session, EndpointConfig config) throws IOException {
+    public void onOpen(Session session, EndpointConfig config) {
         this.session = session;
         this.user = (User) config.getUserProperties().get(USER);
         this.validateDAO = (ValidateDAO) config.getUserProperties().get(VALIDATE_DAO);
         this.replyDAO = (ReplyDAO)  config.getUserProperties().get(REPLY_DAO);
-        this.userStorage = (UserStorage) config.getUserProperties().get(USER_STORAGE);
         this.replySockets = (ConcurrentHashMap<String, Vector<ReplySocket> > ) config.getUserProperties().get(REPLY_SOCKETS);
         Vector <ReplySocket> replySocketVector;
         if (this.replySockets.contains(user.getUserId())) {
@@ -100,8 +98,9 @@ public class ReplySocket {
             userIDs.add(studentID);
 
             //Needs some functional programming
-            for (String userID : userIDs) {
+            userIDs.forEach(userID -> {
                 if (replySockets.containsKey(userID)) {
+                    System.out.println(userID);
                     Vector<ReplySocket> replySocketVector = replySockets.get(userID);
                     synchronized (replySocketVector) {
                         for (ReplySocket replySocket : replySocketVector) {
@@ -109,7 +108,7 @@ public class ReplySocket {
                         }
                     }
                 }
-            }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
