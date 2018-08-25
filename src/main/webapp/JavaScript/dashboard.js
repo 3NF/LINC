@@ -284,7 +284,7 @@ function clearReplies() {
 //Draws one new reply in the suggestion panel
 function drawReply(reply) {
 
-    var newBlock = $(replyBlock).closest(".reply-panel-wrapper");
+    let newBlock = $(replyBlock).closest(".reply-panel-wrapper");
     console.log(reply);
 
     $(newBlock).find(".reply-user-name").html(reply.user.firstName + " " + reply.user.lastName);
@@ -293,6 +293,8 @@ function drawReply(reply) {
     $(newBlock).find(".reply-date").html(reply.timeStamp);
 
     $(newBlock).insertBefore("#reply-editor-wrapper");
+    var parDiv = document.getElementById('comment-panel-wrapper');
+    parDiv.scrollTop = parDiv.scrollHeight;
 }
 
 /*
