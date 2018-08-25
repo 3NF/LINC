@@ -402,7 +402,7 @@ function submitReplyNew() {
 }
 
 webSocket.onmessage = function (event) {
-    console.log ("message received");
+    console.log ("Message received");
     var replyData = JSON.parse(event.data);
     if (activeSuggestionID == replyData.suggestionID) {
         console.log(replyData);

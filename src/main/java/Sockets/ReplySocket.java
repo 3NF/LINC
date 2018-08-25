@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static Data.Constraints.*;
 
-@ServerEndpoint(value = "/reply_socket", configurator = MyServletConfigurator.class)
+@ServerEndpoint(value = "/reply_socket", configurator = ReplySocketConfigurator.class)
 public class ReplySocket {
 
     private ConcurrentHashMap<String, Vector<ReplySocket> > replySockets;

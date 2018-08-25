@@ -44,7 +44,7 @@
     <script src = '${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
     <link rel = "stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
 
-
+    <script src="${pageContext.request.contextPath}/JavaScript/progressbar.min.js"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script src="https://apis.google.com/js/api.js"></script>
 
@@ -90,6 +90,11 @@
     <script>seminarReaderIds = JSON.parse('<%=semReadersJson%>') </script>
 </head>
 <body>
+<div id = "fetch-assignment-div-wrapper">
+    <div id = "fetch-assignment-div" onclick="toggleProgressBar()">
+
+    </div>
+</div>
 <div class="fill">
     <img src=<%=user.getPicturePath()%> class="img-circle" alt="Cinque Terre" id="user-panel-img">
     <button id="menuBar" onclick="toggleNav()"><span></span><span></span><span></span>
@@ -104,13 +109,13 @@
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="height: 90%">
         <% for (Assignment assignment : uploaded) {%>
-        <div class="sidenav-item"  onclick=isDownloaded('<%=assignment.getId()%>')>
+        <div class="sidenav-item" onclick=isDownloaded()>
             <p style="color: green"><%=assignment.getName()%></p>
         </div>
         <%}%>
 
         <% for (Assignment assignment : notUploaded) {%>
-        <div class="sidenav-item"  onclick=sendAssignments('<%=assignment.getId()%>')>
+        <div class="sidenav-item" onclick=sendAssignmentsNew('<%=assignment.getId()%>')>
             <p style="color: red"><%=assignment.getName()%></p>
         </div>
         <%}%>
