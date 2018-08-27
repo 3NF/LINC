@@ -404,7 +404,7 @@ function submitReplyNew() {
 webSocket.onmessage = function (event) {
     console.log ("message received");
     var replyData = JSON.parse(event.data);
-    if (activeSuggestionID == replyData.suggestionID) {
+    if (activeSuggestionID === replyData.suggestionID) {
         console.log(replyData);
         drawReply(replyData);
     }

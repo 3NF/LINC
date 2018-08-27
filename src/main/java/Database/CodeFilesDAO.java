@@ -10,7 +10,7 @@ package Database;
 
 public class CodeFilesDAO {
 
-    private static final Set<String> extensions = new HashSet<>(Arrays.asList("css","html","cpp","c","cc","h","chudo","java","jsp"));
+    private static final Set<String> extensions = new HashSet<String>(Arrays.asList("css","html","cpp","c","cc","h","chudo","java","jsp"));
     private final MysqlDataSource connectionPool;
 
     public CodeFilesDAO(MysqlDataSource connectionPool) {
@@ -23,7 +23,7 @@ public class CodeFilesDAO {
         String query = "SELECT * FROM code_files WHERE id=?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1,codeFilesID);
-        ResultSet result = statement.executeQuery();//
+        ResultSet result = statement.executeQuery();
         String codeContent = null;
         String fileName = null;
         String codeLang = null;
