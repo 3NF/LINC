@@ -30,7 +30,9 @@ public class TeacherDispatcher extends HttpServlet {
         User user = (User) request.getSession().getAttribute(USER);
         String assignmentID = data.get("assignmentID").getAsString();
         String courseID = data.get("courseID").getAsString();
-        UploadedAssignment uploadedAssignment = GAPIManager.downloadAssignments(user,courseID,assignmentID);
+
+        //Not working!
+        UploadedAssignment uploadedAssignment = GAPIManager.downloadAssignments(user,courseID,assignmentID, null);
 
         AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO);
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(CODE_FILES_DAO);

@@ -4,6 +4,7 @@ import HelperClasses.Utilities;
 import Models.Assignment;
 import Models.UploadedAssignment;
 import Models.User;
+import Sockets.DownloadAssignment;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.*;
@@ -163,16 +164,19 @@ public class GAPIManager {
 	 * This method downloads files from google classroom
 	 * Unzips it and adds in database
 	 */
-	public static UploadedAssignment downloadAssignments(User teacher, String courseID, String assignmentId) throws IOException {
+	public static UploadedAssignment downloadAssignments(User teacher, String courseID, String assignmentId, DownloadAssignment socket) throws IOException {
 		Credential credential = teacher.getCredential();
 		Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential)
 				.setApplicationName(APP_NAME)
 				.build();
 		Classroom service = new Classroom.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential).setApplicationName(APP_NAME).build();
 		List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
+		socket.setTotalJobs(assignments.size());
 
 		UploadedAssignment uploadedAssignment = new UploadedAssignment(assignmentId);
 		for (StudentSubmission assignment : assignments) {
+		    System.out.println(assignment.getUserId());
+            socket.increaseCounter();
 			if (assignment.getAssignmentSubmission() == null) continue;
 			if (assignment.getAssignmentSubmission().getAttachments() == null) continue;
 			String actorUserID = assignment.getSubmissionHistory().get(0).getStateHistory().getActorUserId();
@@ -185,6 +189,7 @@ public class GAPIManager {
 			ByteArrayInputStream inStream = Utilities.convertOutputIntoInputStream(outputStream);
 			Utilities.unzipInputStream(inStream, uploadedAssignment, actorUserID);
 		}
+        socket.increaseCounter();
 		return uploadedAssignment;
 	}
 

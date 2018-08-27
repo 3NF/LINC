@@ -14,6 +14,9 @@ let codeInfo = [];
 let activeSuggestionID = -1;
 let activeCodeFileID = -1;
 
+//Button for toggling reply's content
+var replyToggleButton = $('<button type="button" class="btn btn-default btn-xs" onclick = "toggleReplyContent()">See more</button>');
+
 //New reply block
 var replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
     "                            <div class = \"reply-panel\">\n" +
@@ -32,8 +35,9 @@ const warningColor = "#efcf4f";
 
 const codeContentSuffix = "_content";
 const codeRepliesSuffix = "_replies";
-
 const recentSuggestionSuffix = "_suggestion";
+
+const replyContentThreshold = 300;
 //WebSocket for sending and receiving reply data
 var webSocket = new WebSocket("ws://" + document.location.host + "/reply_socket");
 
@@ -281,11 +285,41 @@ function clearReplies() {
     $(".reply-panel-wrapper").remove();
 }
 
+function toggleReplyContent () {
+    let wrapper = $(event.target).closest('.reply-panel-wrapper');
+
+    if ($(wrapper).find('button').text() == 'See more') {
+        let fullData = $(wrapper).attr('data-full');
+        $(wrapper).find('button').text('See less');
+        $(wrapper).find(".reply-text").html(fullData);
+    } else {
+        $(wrapper).find('button').text('See more');
+        let oldText = $(wrapper).find(".reply-text").html();
+        $(wrapper).find(".reply-text").html(oldText.substr(0, replyContentThreshold));
+    }
+
+
+    console.log (fullData);
+
+
+}
+
+function preProcessBigReply (newBlock, reply) {
+    $(newBlock).attr("data-full", reply.content);
+    reply.content = reply.content.substr(0, replyContentThreshold);
+    $(replyToggleButton).insertBefore($(newBlock).find('.reply-date'));
+}
+
 //Draws one new reply in the suggestion panel
 function drawReply(reply) {
 
-    var newBlock = $(replyBlock).closest(".reply-panel-wrapper");
+    let newBlock = $(replyBlock).closest(".reply-panel-wrapper");
     console.log(reply);
+
+    if (reply.content.length > replyContentThreshold) {
+        preProcessBigReply (newBlock, reply);
+    }
+
 
     $(newBlock).find(".reply-user-name").html(reply.user.firstName + " " + reply.user.lastName);
     $(newBlock).find(".reply-profile-picture").attr("src", reply.user.picturePath);
@@ -293,6 +327,8 @@ function drawReply(reply) {
     $(newBlock).find(".reply-date").html(reply.timeStamp);
 
     $(newBlock).insertBefore("#reply-editor-wrapper");
+    var parDiv = document.getElementById('comment-panel-wrapper');
+    parDiv.scrollTop = parDiv.scrollHeight;
 }
 
 /*
@@ -402,7 +438,7 @@ function submitReplyNew() {
 }
 
 webSocket.onmessage = function (event) {
-    console.log ("message received");
+    console.log ("Message received");
     var replyData = JSON.parse(event.data);
     if (activeSuggestionID === replyData.suggestionID) {
         console.log(replyData);

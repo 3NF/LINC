@@ -7,7 +7,7 @@ import javax.websocket.server.ServerEndpointConfig;
 
 import static Data.Constraints.*;
 
-public class MyServletConfigurator extends ServerEndpointConfig.Configurator
+public class ReplySocketConfigurator extends ServerEndpointConfig.Configurator
 {
     @Override
     public void modifyHandshake(ServerEndpointConfig config, HandshakeRequest request, HandshakeResponse response) {

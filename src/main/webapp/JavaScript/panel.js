@@ -61,10 +61,6 @@ function getAssignment(assignmentId) {
 
 }
 
-function isDownloaded(assignmentID) {
-    alert("You have already uploaded the assignment");
-}
-
 function changeParameter(paramName, paramVal) {
     const oldLink = location.href;
     let ind_of_param = oldLink.indexOf(paramName);
