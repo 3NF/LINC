@@ -33,7 +33,7 @@ function get_classroom_list() {
         let lst = response.result.courses;
         console.log(lst);
         for (let i = 0; i < lst.length; i++) {
-            let dv = `<div class="classRoom"  onclick=enterClasroom('${lst[i].ownerId}','${lst[i].id}')><h3>${lst[i].name}</h3></div>`;
+            let dv = `<div class="classroom"  onclick=enterClasroom('${lst[i].ownerId}','${lst[i].id}')><img src="/Images/Logo.svg"><h3 class="classroom-name">${lst[i].name}</h3></div>`;
             $("#crs_cntr").append(dv);
         }
     });

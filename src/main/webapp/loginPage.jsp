@@ -41,7 +41,6 @@
     </div>
     <h2>Welcome! Connect With Google To Start using LINC </h2>
     <div style="text-align: center; margin: 0 auto; width: fit-content">
-        <img id="loading" src="${pageContext.request.contextPath}/Images/loading.gif" style="display: none">
         <div class="g-signin2" data-onsuccess="onSuccess" data-prompt="select_account"></div>
     </div>
 </div>

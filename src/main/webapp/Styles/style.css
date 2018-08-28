@@ -1,3 +1,9 @@
+/* Font definition */
+@font-face {
+    font-family: "BPG_111";
+    src: url("/Styles/fonts/BPG_111.ttf");
+}
+
 html, body {
     margin: 0;
     /*font-family: 'Roboto', Helvetica, Arial, sans-serif;*/
