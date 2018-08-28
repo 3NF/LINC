@@ -36,6 +36,7 @@ function get_classroom_list() {
             let dv = `<div class="classroom"  onclick=enterClasroom('${lst[i].ownerId}','${lst[i].id}')><img src="/Images/Logo.svg"><h3 class="classroom-name">${lst[i].name}</h3></div>`;
             $("#crs_cntr").append(dv);
         }
+        toggleLoading();
     });
 }
 
