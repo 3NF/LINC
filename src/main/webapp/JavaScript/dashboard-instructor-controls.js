@@ -51,11 +51,12 @@ function adjustView (ind) {
         $(".reply-panel").hide();
         $("#suggestion-remove-btn").hide();
     } else {
-        if (!$("#reply-editor-wrapper").is(":visible")) {
+        let editorWrapper = $("#reply-editor-wrapper");
+        if (!editorWrapper.is(":visible")) {
             $("#notification-div").hide();
             $("#comment-panel").show();
             $("#comment-editor-wrapper").hide();
-            $("#reply-editor-wrapper").show();
+            editorWrapper.show();
             $(".reply-panel").show();
             $("#suggestion-remove-btn").show();
         }
@@ -174,10 +175,10 @@ function clearInterval () {
 function submitSuggestion () {
     toggleLoading();
     var suggestionContent = suggestionEditor.parseContent();
-    var suggestionType = $("#suggestion-type").html();
+    var suggestionType = $("#suggestion-type");
 
     var dataObj = {
-        type: $("#suggestion-type").text(),
+        type: suggestionType.text(),
         courseID: getParameter("courseID"),
         codeFileID: activeCodeFileID,
         content: suggestionContent,
@@ -186,7 +187,7 @@ function submitSuggestion () {
     };
 
     console.log(suggestionContent);
-    console.log(suggestionType);
+    console.log(suggestionType.html());
     $.ajax({
         url: "/user/suggestion_dispatcher",
         method: "POST",

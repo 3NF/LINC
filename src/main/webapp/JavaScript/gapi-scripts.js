@@ -1,3 +1,14 @@
+
+const googleApiScopes = [   "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+                            "https://www.googleapis.com/auth/classroom.courses.readonly",
+                            "https://www.googleapis.com/auth/classroom.coursework.students.readonly",
+                            "https://www.googleapis.com/auth/classroom.coursework.students",
+                            "https://www.googleapis.com/auth/classroom.rosters",
+                            "https://www.googleapis.com/auth/classroom.profile.photos",
+                            "https://www.googleapis.com/auth/classroom.profile.emails",
+                            "https://www.googleapis.com/auth/drive"];
+
+
 /**
  * From this method you can ask classroom api
  * @param path  HTTP request path for Classroom Rest api
@@ -7,12 +18,7 @@ function gapi_query(path, sucFunc) {
     gapi.client.init({
         'apiKey': 'AIzaSyBKiQttlC5rUqexQiZgXlP2Zmhod5QZJhA',
         client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
-        scope: "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.courses.readonly " +
-        "https://www.googleapis.com/auth/classroom.coursework.students.readonly https://www.googleapis.com/auth/classroom.coursework.students " +
-        "https://www.googleapis.com/auth/classroom.rosters " +
-        "https://www.googleapis.com/auth/classroom.profile.photos " +
-        "https://www.googleapis.com/auth/classroom.profile.emails  " +
-        "https://www.googleapis.com/auth/drive"
+        scope: googleApiScopes.join(" ")
     }).then(function () {
         return gapi.client.request({
             'path': path,

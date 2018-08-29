@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.net.SocketException;
 import java.sql.SQLException;
 
 import static Data.Constraints.*;

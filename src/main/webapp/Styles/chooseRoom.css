@@ -23,7 +23,7 @@
 .classroom h3 {
     position: absolute;
     text-align: center;
-    font-family: BPG_111;
+    font-family: BPG_111, Roboto, serif;
     padding: 10px;
     width: 272px;
     top: 100px;
@@ -62,8 +62,6 @@
 
 .classroom img {
     background-color: #efefef;
-    border-radius: 7px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border-radius: 7px 7px 0 0;
     border: 10px solid #efefef;
 }
