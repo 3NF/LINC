@@ -1,4 +1,4 @@
-function stundet_teacher_page_template(data) {
+function studentTeacherPageTemplate(data) {
     let model = data.profile;
     return `<tr>
                     <td>${model.name.givenName}</td>
@@ -23,7 +23,7 @@ function stundet_teacher_page_template(data) {
                 </tr>`;
 }
 
-function instructor_teacher_page_template(data) {
+function instructorTeacherPageTemplate(data) {
     let model = data.profile;
     console.log(model);
     return `<tr>

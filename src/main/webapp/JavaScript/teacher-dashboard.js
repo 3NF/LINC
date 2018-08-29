@@ -126,7 +126,7 @@ function updateProgress(progressBar, progressData) {
         duration: 500,
         easing: 'easeInOut'
     }, function () {
-        if (progressData == 1) {
+        if (progressData === 1) {
             progressBar.setText("Saving in database!")
         } else {
             //progressBar.setText(progressData*100 + "%");
@@ -134,3 +134,80 @@ function updateProgress(progressBar, progressData) {
     });
 }
 
+function sendAssignments(assignmentId) {
+    const courseID = getParameter("courseID");
+    if (window.confirm("Do You want to download assignments?")) {
+        $.ajax({
+            type: 'POST',
+            url: '/teacher-dispatcher',
+            data: JSON.stringify(
+                {
+                    "assignmentID": assignmentId,
+                    "courseID": courseID
+                }
+            ),
+            success: function () {
+
+                alert("Successfully downloaded assignment files.");
+            },
+            error: function () {
+                console.log('Service call failed!');
+            }
+        });
+    }
+}
+
+function giveInSection(leaders, students, rem, inSection, courseID) {
+    let l = 0;
+    for (let k = 0; k < leaders.length; ++k) {
+        let r = l + inSection - 1;
+        if (rem > 0) {
+            ++r;
+            --rem;
+        }
+        console.log (leaders.length + " " + students.length + " " + " " +  courseID);
+        $.ajax({
+            type: 'POST',
+            url: '/user/add_in_section_servlet',
+            data: JSON.stringify(
+                {
+                    "leaderID": leaders[k],
+                    "courseID": courseID,
+                    "sections": students.slice(l, r + 1)
+                }
+            ),
+            error: function () {
+                console.log('Service call failed!');
+            }
+        });
+        l = r + 1;
+    }
+}
+
+function randomSections() {
+    let assistants_cln = JSON.parse(JSON.stringify(assistants));
+    let students_cln = JSON.parse(JSON.stringify(students));
+    let seminarReaders_cln = JSON.parse(JSON.stringify(seminarReaders));
+    shuffle(assistants_cln);
+    shuffle(students_cln);
+    shuffle(seminarReaders_cln);
+
+    let teacherAssistantCnt = assistants_cln.length;
+    let studentsCnt = students_cln.length;
+    let semReadersCnt = seminarReaders_cln.length;
+
+    let inSectionAssistant = studentsCnt / teacherAssistantCnt;
+    let rem = studentsCnt % teacherAssistantCnt;
+    let inSectionSemReader = studentsCnt / semReadersCnt;
+
+    console.log (teacherAssistantCnt);
+    console.log (studentsCnt);
+    console.log (semReadersCnt);
+    giveInSection(assistants_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionAssistant, courseID);
+
+    rem = studentsCnt % teacherAssistantCnt;
+
+    giveInSection(seminarReaders_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionSemReader, courseID);
+
+    alert("Random-Fucking-ised!");
+}

@@ -54,6 +54,6 @@ function get_students() {
 
         document.getElementById("semReadersTable1").innerHTML = seminarReaders.map(instructor_teacher_page_template).join('');
         document.getElementById("teacherAssTable1").innerHTML = assistants.map(instructor_teacher_page_template).join('');
-        document.getElementById("studentsTable1").innerHTML = students.map(stundet_teacher_page_template).join('');
+        document.getElementById("studentsTable1").innerHTML = students.map(studentTeacherPageTemplate).join('');
     });
 }

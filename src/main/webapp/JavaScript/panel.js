@@ -70,29 +70,6 @@ function changeParameter(paramName, paramVal) {
     return oldLink.substr(0, old_value_start) + paramVal + oldLink.substr(old_value_end);
 }
 
-function sendAssignments(assignmentId) {
-    const courseID = getParameter("courseID");
-    if (window.confirm("Do You want to download assignments?")) {
-        $.ajax({
-            type: 'POST',
-            url: '/teacher-dispatcher',
-            data: JSON.stringify(
-                {
-                    "assignmentID": assignmentId,
-                    "courseID": courseID
-                }
-            ),
-            success: function () {
-
-                alert("Successfully downloaded assignment files.");
-            },
-            error: function () {
-                console.log('Service call failed!');
-            }
-        });
-    }
-}
-
 /**
  * Shuffles array in place. ES6 version
  * @param {Array} a items An array containing the items.
@@ -103,61 +80,6 @@ function shuffle(a) {
         [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
-}
-
-function giveInSection(leaders, students, rem, inSection, courseID) {
-    let l = 0;
-    for (let k = 0; k < leaders.length; ++k) {
-        let r = l + inSection - 1;
-        if (rem > 0) {
-            ++r;
-            --rem;
-        }
-        console.log (leaders.length + " " + students.length + " " + " " +  courseID);
-        $.ajax({
-            type: 'POST',
-            url: '/user/add_in_section_servlet',
-            data: JSON.stringify(
-                {
-                    "leaderID": leaders[k],
-                    "courseID": courseID,
-                    "sections": students.slice(l, r + 1)
-                }
-            ),
-            error: function () {
-                console.log('Service call failed!');
-            }
-        });
-        l = r + 1;
-    }
-}
-
-function randomSections() {
-    let assistants_cln = JSON.parse(JSON.stringify(assistants));
-    let students_cln = JSON.parse(JSON.stringify(students));
-    let seminarReaders_cln = JSON.parse(JSON.stringify(seminarReaders));
-    shuffle(assistants_cln);
-    shuffle(students_cln);
-    shuffle(seminarReaders_cln);
-
-    let teacherAssistantCnt = assistants_cln.length;
-    let studentsCnt = students_cln.length;
-    let semReadersCnt = seminarReaders_cln.length;
-
-    let inSectionAssistant = studentsCnt / teacherAssistantCnt;
-    let rem = studentsCnt % teacherAssistantCnt;
-    let inSectionSemReader = studentsCnt / semReadersCnt;
-
-    console.log (teacherAssistantCnt);
-    console.log (studentsCnt);
-    console.log (semReadersCnt);
-    giveInSection(assistants_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionAssistant, courseID);
-
-    rem = studentsCnt % teacherAssistantCnt;
-
-    giveInSection(seminarReaders_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionSemReader, courseID);
-
-    alert("Random-Fucking-ised!");
 }
 
 function mouseOver(grade) {
