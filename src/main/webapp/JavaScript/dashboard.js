@@ -40,6 +40,7 @@ const recentSuggestionSuffix = "_suggestion";
 const replyContentThreshold = 300;
 //WebSocket for sending and receiving reply data
 var webSocket = new WebSocket("ws://" + document.location.host + "/reply_socket");
+let maxReplyLength = 16384;
 
 webSocket.onopen = function () {
     console.log ("WebSocket have connected to server endpoint");
@@ -432,9 +433,19 @@ function submitReplyNew() {
         content: replyEditor.parseContent()
     };
 
+    if (data.content.length > maxReplyLength) {
+        alert ("Reply content is too big!");
+        return;
+    }
+
     console.log (data);
+    console.log ("Sending Data");
     webSocket.send(JSON.stringify(data));
     replyEditor.setContent("");
+}
+
+webSocket.onerror = function () {
+    console.log("There was Websotkcet Error");
 }
 
 webSocket.onmessage = function (event) {

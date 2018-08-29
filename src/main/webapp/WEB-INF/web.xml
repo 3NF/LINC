@@ -19,4 +19,9 @@
     <listener>
         <listener-class>Listeners.MainListener</listener-class>
     </listener>
+
+    <context-param>
+        <param-name>org.apache.tomcat.websocket.textBufferSize</param-name>
+        <param-value>65536</param-value>
+    </context-param>
 </web-app>

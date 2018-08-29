@@ -51,21 +51,30 @@ public class ReplySocket {
     @OnMessage
     public void onMessage(String message) {
         try {
+            System.out.println("a1");
             JsonObject data = new Gson().fromJson(message, JsonObject.class);
 
             String courseID = data.get(Constraints.COURSE_ID).getAsString();
             String suggestionID = data.get(Constraints.SUGGESTION_ID).getAsString();
             String studentID = validateDAO.isValidateNew(user, suggestionID, courseID);
+            System.out.println("a2");
+
             if (studentID == null) {
                 System.out.println("User doesn't have permission on suggestion, ID " + suggestionID);
                 //broadcast(new Reply(suggestionID, null, null, null, null), studentID);
                 return;
             }
+            System.out.println("a3");
+
 
             if (data.has("content")) {
+                System.out.println("a4");
+
                 String content = data.get("content").getAsString();
                 Reply reply = replyDAO.addReply(content, user.getUserId(), suggestionID);
                 reply.user = user;
+                System.out.println("a5");
+
                 broadcast(reply, studentID);
             }
         } catch (Exception e) {
