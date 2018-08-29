@@ -7,10 +7,10 @@
 .user-box {
     display: inline-block;
     position: relative;
-    max-width: 200px;
-    min-width: 200px;
-    min-height: 200px;
-    max-height: 200px;
+    max-width: 250px;
+    min-width: 250px;
+    min-height: 250px;
+    max-height: 250px;
     background-color: #F5F5F5;
     margin-left: 10px;
     margin-top: 10px;
@@ -30,4 +30,16 @@
 
 .user-name {
     text-align: center;
+}
+
+.user-point{
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    background: #ffffff;
+    height: 40px;
+    display: block;
+    user-select: none;
+    cursor: pointer;
 }

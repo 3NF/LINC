@@ -1,5 +1,5 @@
-
-const googleApiScopes = [   "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+// Scopes for google API
+const googleAPIScopes = [   "profile email https://www.googleapis.com/auth/classroom.coursework.me.readonly",
                             "https://www.googleapis.com/auth/classroom.courses.readonly",
                             "https://www.googleapis.com/auth/classroom.coursework.students.readonly",
                             "https://www.googleapis.com/auth/classroom.coursework.students",
@@ -18,7 +18,7 @@ function gapi_query(path, sucFunc) {
     gapi.client.init({
         'apiKey': 'AIzaSyBKiQttlC5rUqexQiZgXlP2Zmhod5QZJhA',
         client_id: '108555998588-rcq9m8lel3d81vk93othgsg2tolfk9b9.apps.googleusercontent.com',
-        scope: googleApiScopes.join(" ")
+        scope: googleAPIScopes.join(" ")
     }).then(function () {
         return gapi.client.request({
             'path': path,
@@ -37,7 +37,7 @@ function get_classroom_list() {
     gapi_query('https://classroom.googleapis.com/v1/courses?courseStates=ACTIVE', function (response) {
         let lst = response.result.courses;
         for (let i = 0; i < lst.length; i++) {
-            let dv = `<div class="classroom"  onclick=enterClasroom('${lst[i].ownerId}','${lst[i].id}')><img src="/Images/Logo.svg"><h3 class="classroom-name">${lst[i].name}</h3></div>`;
+            let dv = `<div class="classroom"  onclick=enterClassroom('${lst[i].ownerId}','${lst[i].id}')><img src="/Images/Logo.svg"><h3 class="classroom-name">${lst[i].name}</h3></div>`;
             $("#crs_cntr").append(dv);
         }
         toggleLoading();
@@ -52,8 +52,8 @@ function get_students() {
         students = students.filter(student => !(assistants.includes(student) || seminarReaders.includes(student)));
 
 
-        document.getElementById("semReadersTable1").innerHTML = seminarReaders.map(instructor_teacher_page_template).join('');
-        document.getElementById("teacherAssTable1").innerHTML = assistants.map(instructor_teacher_page_template).join('');
+        document.getElementById("semReadersTable1").innerHTML = seminarReaders.map(instructorTeacherPageTemplate).join('');
+        document.getElementById("teacherAssTable1").innerHTML = assistants.map(instructorTeacherPageTemplate).join('');
         document.getElementById("studentsTable1").innerHTML = students.map(studentTeacherPageTemplate).join('');
     });
 }

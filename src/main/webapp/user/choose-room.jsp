@@ -63,7 +63,7 @@
     toggleLoading();
     gapi.load('client', get_classroom_list);
 
-    function enterClasroom(teacherId, id) {
+    function enterClassroom(teacherId, id) {
         console.log(teacherId);
         console.log(id);
         if (teacherId === userId) {

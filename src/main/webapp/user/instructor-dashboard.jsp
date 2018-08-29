@@ -159,6 +159,7 @@
         <img class="user-img" src="<%=student.getPicturePath()%>">
         <h3 class="user-name"><%=student.getFirstName() + " " + student.getLastName()%>
         </h3>
+        <div class = "user-point grade_Plus">Not Graded</div>
     </div>
     <%}%>
 </div>
