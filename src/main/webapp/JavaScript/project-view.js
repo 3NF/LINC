@@ -95,6 +95,7 @@ function draw_view_rec(dv, l, r) {
 const iconByExt = {
     "cpp"   : "cpp.svg",
     "cc"    : "cpp.svg",
+    "c"     : "c.svg",
     "java"  : "java.svg",
     "js"    : "javascript.svg",
     "jpg"   : "image.svg",

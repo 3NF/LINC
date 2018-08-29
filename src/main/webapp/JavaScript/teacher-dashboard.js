@@ -1,3 +1,4 @@
+// This function is for changing users role
 function changeRole(userId , courseID , role){
     console.log (userId);
     console.log (courseID);
@@ -22,7 +23,7 @@ function changeRole(userId , courseID , role){
             let row = $(etarget).closest("tr").clone();
             $(etarget).closest("tr").remove();
             if (change === 'add') {
-                $("#removeExButton").attr("onclick","changeRole('" +userId+"','"+ courseID +"','" +role+"')");
+                $("#removeExButton").attr("onclick",`changeRole('${userId}', '${courseID}', ${role})`);
                 let button = $('#removeEx').clone();
                 row.find("td:last").empty();
                 row.find("td:last").append(button);
@@ -33,8 +34,8 @@ function changeRole(userId , courseID , role){
                     $("#semReadersTable").append(row);
                 }
             }else{
-                $("#addExButtonSR").attr("onclick","changeRole('" +userId+"','"+ courseID +"','SeminarReader')");
-                $("#addExButtonTA").attr("onclick","changeRole('" +userId+"','"+ courseID +"','TeacherAssistant')");
+                $("#addExButtonSR").attr("onclick", `changeRole('${userId}', '${courseID}', 'SeminarReader')`);
+                $("#addExButtonTA").attr("onclick", `changeRole('${userId}', '${courseID}', 'TeacherAssistant')`);
                 let button = $('#addEx').clone();
                 row.find("td:last").empty();
                 row.find("td:last").append(button);
@@ -47,7 +48,7 @@ function changeRole(userId , courseID , role){
 }
 
 function toggleProgressBar () {
-    var progressBarDiv = $('#fetch-assignment-div-wrapper');
+    let progressBarDiv = $('#fetch-assignment-div-wrapper');
 
     progressBar.set(0);
     progressBar.setText("");
@@ -58,12 +59,7 @@ function toggleProgressBar () {
     }
 }
 
-var proegressBar;
-
-function isDownloaded() {
-    alert("You have already downloaded the assignment");
-}
-
+var progressBar;
 $(document).ready (function () {
     $("#fetch-assignment-div-wrapper").hide();
     progressBar = new ProgressBar.Circle('#fetch-assignment-div', {
@@ -157,7 +153,7 @@ function sendAssignments(assignmentId) {
     }
 }
 
-function giveInSection(leaders, students, rem, inSection, courseID) {
+function appointInSections(leaders, students, rem, inSection, courseID) {
     let l = 0;
     for (let k = 0; k < leaders.length; ++k) {
         let r = l + inSection - 1;
@@ -184,7 +180,7 @@ function giveInSection(leaders, students, rem, inSection, courseID) {
     }
 }
 
-function randomSections() {
+function randomizeSections() {
     let assistants_cln = JSON.parse(JSON.stringify(assistants));
     let students_cln = JSON.parse(JSON.stringify(students));
     let seminarReaders_cln = JSON.parse(JSON.stringify(seminarReaders));
@@ -203,11 +199,16 @@ function randomSections() {
     console.log (teacherAssistantCnt);
     console.log (studentsCnt);
     console.log (semReadersCnt);
-    giveInSection(assistants_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionAssistant, courseID);
+    appointInSections(assistants_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionAssistant, courseID);
 
     rem = studentsCnt % teacherAssistantCnt;
 
-    giveInSection(seminarReaders_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionSemReader, courseID);
+    appointInSections(seminarReaders_cln.map(student => student.userId), students_cln.map(student => student.userId), rem, inSectionSemReader, courseID);
 
     alert("Random-Fucking-ised!");
+}
+
+
+function isDownloaded() {
+    alert("You have already downloaded the assignment");
 }

@@ -164,7 +164,7 @@
                         <tbody id = "teacherAssTable1">
                         </tbody>
                     </table>
-                    <button class = "btn btn-light" style="width:260px;color:black" onclick='randomSections()'> Randomise sections! </button>
+                    <button class = "btn btn-light" style="width:260px;color:black" onclick='randomizeSections()'> Randomise sections! </button>
                 </div>
             </div>
         </div>
