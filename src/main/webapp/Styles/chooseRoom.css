@@ -20,14 +20,18 @@
     border: 3px solid #d4d4d2;
 }
 
-.classRoom h3 {
+.classroom h3 {
     position: absolute;
     text-align: center;
+    font-family: BPG_111;
+    padding: 10px;
     width: 272px;
     top: 100px;
+    transition-duration: 1s;
+    transition-timing-function: ease-out;
 }
 
-.classRoom {
+.classroom {
     position: relative;
     display: inline-block;
     border-radius: 7px;
@@ -35,15 +39,31 @@
     width: 272px;
     margin: 20px 20px;
     height: 200px;
-    background-image: url(https://lh6.googleusercontent.com/-n7VYF50Z47M/VN0onnOtbdI/AAAAAAAAAYQ/lwyObtT3Xfo/w984-h209-no/153_chalkboard_bluegrey.jpg);
-    background-repeat: no-repeat;
-    background-color: grey;
+    background-color: #dedede;
     background-size: 400px;
     transition-duration: 1s;
+    transition-timing-function: ease-out;
 }
 
-.classRoom:hover {
+.classroom:hover {
     cursor: pointer;
     width: 292px;
+    background-color: rgba(0, 103, 0, 0.72);
     height: 218px;
+}
+
+.classroom:hover>h3 {
+    color: white;
+    position: absolute;
+    text-align: center;
+    width: 292px;
+    top: 109px;
+}
+
+.classroom img {
+    background-color: #efefef;
+    border-radius: 7px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 10px solid #efefef;
 }

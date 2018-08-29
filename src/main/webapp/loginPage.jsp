@@ -10,8 +10,11 @@
           content=<%=CLIENT_ID%>>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=start" async defer></script>
     <script>
 
@@ -41,7 +44,6 @@
     </div>
     <h2>Welcome! Connect With Google To Start using LINC </h2>
     <div style="text-align: center; margin: 0 auto; width: fit-content">
-        <img id="loading" src="${pageContext.request.contextPath}/Images/loading.gif" style="display: none">
         <div class="g-signin2" data-onsuccess="onSuccess" data-prompt="select_account"></div>
     </div>
 </div>

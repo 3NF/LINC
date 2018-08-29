@@ -148,7 +148,6 @@ function randomSections() {
     let rem = studentsCnt % teacherAssistantCnt;
     let inSectionSemReader = studentsCnt / semReadersCnt;
 
-    console.log ("Hi There!");
     console.log (teacherAssistantCnt);
     console.log (studentsCnt);
     console.log (semReadersCnt);

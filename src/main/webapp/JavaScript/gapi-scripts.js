@@ -29,28 +29,24 @@ function gapi_query(path, sucFunc) {
 function get_classroom_list() {
     toggleLoading();
     gapi_query('https://classroom.googleapis.com/v1/courses?courseStates=ACTIVE', function (response) {
-        console.log("hi");
         let lst = response.result.courses;
-        console.log(lst);
         for (let i = 0; i < lst.length; i++) {
-            let dv = `<div class="classRoom"  onclick=enterClasroom('${lst[i].ownerId}','${lst[i].id}')><h3>${lst[i].name}</h3></div>`;
+            let dv = `<div class="classroom"  onclick=enterClasroom('${lst[i].ownerId}','${lst[i].id}')><img src="/Images/Logo.svg"><h3 class="classroom-name">${lst[i].name}</h3></div>`;
             $("#crs_cntr").append(dv);
         }
+        toggleLoading();
     });
 }
 
 function get_students() {
     gapi_query('https://classroom.googleapis.com/v1/courses/' + courseID + '/students', function (response) {
-        //debugger;
         students = response.result.students;
         seminarReaders = students.filter(student => seminarReaderIds.includes(student.userId));
         assistants = students.filter(student => assistantIds.includes(student.userId));
         students = students.filter(student => !(assistants.includes(student) || seminarReaders.includes(student)));
-        console.log(seminarReaders);
-        console.log(seminarReaders);
-        console.log(students);
+
+
         document.getElementById("semReadersTable1").innerHTML = seminarReaders.map(instructor_teacher_page_template).join('');
-        console.log (seminarReaders.length);
         document.getElementById("teacherAssTable1").innerHTML = assistants.map(instructor_teacher_page_template).join('');
         document.getElementById("studentsTable1").innerHTML = students.map(stundet_teacher_page_template).join('');
     });
