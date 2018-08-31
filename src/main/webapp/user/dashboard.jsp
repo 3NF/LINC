@@ -46,6 +46,7 @@
     <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/project-view.js"></script>
     <script src="${pageContext.request.contextPath}/jstree/src/jstree.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/html-templates.js"></script>
 
     <%--Local Styles--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">

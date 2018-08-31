@@ -8,12 +8,12 @@
     Line colors are stored in following arrays
     once hover-in is made on code lines
  */
-var oldLineColors = [];
+let oldLineColors = [];
 
 /*
     First and last intervals for new suggestions
  */
-var firstMarker = -1, lastMarker = -1;
+let firstMarker = -1, lastMarker = -1;
 
 // Marked line color
 const markedColor = "#DBDBDB";
@@ -68,8 +68,8 @@ function adjustView (ind) {
  */
 function inHover (event) {
     //Get index of line number
-    var index = $(event.currentTarget).parent().parent().index()+1;
-    var col = $(event.currentTarget).css("background-color");
+    let index = $(event.currentTarget).parent().parent().index()+1;
+    let col = $(event.currentTarget).css("background-color");
     if (col === warningColor || col === errorColor || col === markedColor) {
         col = "";
     }
@@ -82,7 +82,7 @@ function inHover (event) {
     Line number hover-out function
  */
 function outHover (event) {
-    var index = $(event.currentTarget).parent().parent().index()+1;
+    let index = $(event.currentTarget).parent().parent().index()+1;
     if (index === lastMarker) {
         return;
     }
@@ -93,7 +93,7 @@ function outHover (event) {
     Helps creating new interval
  */
 function lineOnClick (eventHandler) {
-    var lineNumber = eventHandler.data;
+    let lineNumber = eventHandler.data;
     console.log(lineNumber);
 
     /*
@@ -138,7 +138,7 @@ function markSuggestion () {
     Marks all lines in new interval
  */
 function markLines (col) {
-    for (var i = firstMarker; i < lastMarker + 1; i ++) {
+    for (let i = firstMarker; i < lastMarker + 1; i ++) {
         console .log(i);
         $(lines[i]).css("background-color", col);
     }
@@ -151,7 +151,7 @@ function isValidSuggestion () {
     if (firstMarker > lastMarker) {
         return false;
     }
-    for (var i = 0; i < suggestions.length; i ++) {
+    for (let i = 0; i < suggestions.length; i ++) {
         if (!(suggestions[i].startInd < firstMarker || suggestions[i].endInd > lastMarker)) {
             return false;
         }
@@ -174,8 +174,8 @@ function clearInterval () {
 
 function submitSuggestion () {
     toggleLoading();
-    var suggestionContent = suggestionEditor.parseContent();
-    var suggestionType = $("#suggestion-type");
+    let suggestionContent = suggestionEditor.parseContent();
+    let suggestionType = $("#suggestion-type");
 
     if (suggestionContent.length === 0) {
         alert("You can't submit empty suggestion!");
@@ -183,7 +183,7 @@ function submitSuggestion () {
         return;
     }
 
-    var dataObj = {
+    let dataObj = {
         type: suggestionType.text(),
         courseID: getParameter("courseID"),
         codeFileID: activeCodeFileID,
@@ -219,7 +219,7 @@ function submitSuggestion () {
 }
 
 function getInd (id) {
-    for (var i = 0; i < suggestions.length; i ++) {
+    for (let i = 0; i < suggestions.length; i ++) {
         if (suggestions[i].suggestionID === id) {
             return i;
         }
@@ -228,9 +228,9 @@ function getInd (id) {
 }
 
 function removeSuggestion (id) {
-    var ind = getInd (id);
-    var start = suggestions[ind].startInd;
-    var end = suggestions[ind].endInd;
+    let ind = getInd (id);
+    let start = suggestions[ind].startInd;
+    let end = suggestions[ind].endInd;
 
     suggestions[ind].startInd = -1;
     suggestions[ind].endInd = -1;

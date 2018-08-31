@@ -60,6 +60,7 @@
 </div>
 </body>
 <script>
+
     toggleLoading();
     gapi.load('client', get_classroom_list);
 

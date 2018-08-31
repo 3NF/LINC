@@ -42,3 +42,18 @@ function instructorTeacherPageTemplate(data) {
                 </td>
             </tr>`
 }
+
+function dashboardReplyTemplate(data) {
+    return `<div class = "reply-panel-wrapper" data-full = "${data.content}">
+                <div class = "reply-panel">
+                    <img class = "reply-profile-picture" src="${data.user.picturePath}">
+                    <div class = "reply-content">
+                        <p class = "reply-user-name">${data.user.firstName + ' ' + data.user.lastName}</p>
+                        <p class = "reply-text">${data.content.substr(0, Math.min(data.content.length, replyContentThreshold))}</p>
+                        ${data.content.length > replyContentThreshold ? '<button type = "button" class="btn btn-default btn-xs" onclick = "toggleReplyContent()">See more</button>'
+                                                                        : ''}
+                        <p class = "reply-date">${data.timeStamp}</p>
+                    </div>
+                </div>
+            </div>`;
+}

@@ -17,18 +17,6 @@ let activeCodeFileID = -1;
 //Button for toggling reply's content
 var replyToggleButton = $('<button type="button" class="btn btn-default btn-xs" onclick = "toggleReplyContent()">See more</button>');
 
-//New reply block
-var replyBlock = "                        <div class = \"reply-panel-wrapper\">\n" +
-    "                            <div class = \"reply-panel\">\n" +
-    "                                <img class = \"reply-profile-picture\" src=\"../Images/temp_user_icon.svg\">\n" +
-    "                                <div class = \"reply-content\">\n" +
-    "                                    <p class = \"reply-user-name\">Fname Lname</p>\n" +
-    "                                    <p class = \"reply-text\">placeHolder</p>\n" +
-    "                                    <p class = \"reply-date\">Here goes Precise Date</p>\n" +
-    "                                </div>\n" +
-    "                            </div>\n" +
-    "                        </div>";
-
 //Error and warning line colorings
 const errorColor = "#aa6664";
 const warningColor = "#efcf4f";
@@ -369,45 +357,29 @@ function clearReplies() {
 //Shortens or extends reply data
 function toggleReplyContent() {
     let wrapper = $(event.target).closest('.reply-panel-wrapper');
+    let fullData = $(wrapper).attr('data-full');
 
     if ($(wrapper).find('button').text() == 'See more') {
-        let fullData = $(wrapper).attr('data-full');
         $(wrapper).find('button').text('See less');
         $(wrapper).find(".reply-text").html(fullData);
     } else {
         $(wrapper).find('button').text('See more');
-        let oldText = $(wrapper).find(".reply-text").html();
-        $(wrapper).find(".reply-text").html(oldText.substr(0, replyContentThreshold));
+        $(wrapper).find(".reply-text").html(fullData.substr(0, replyContentThreshold));
     }
 
-
-    console.log(fullData);
-}
-
-function preProcessBigReply(newBlock, reply) {
-    $(newBlock).attr("data-full", reply.content);
-    reply.content = reply.content.substr(0, replyContentThreshold);
-    $(replyToggleButton).insertBefore($(newBlock).find('.reply-date'));
+    console.log( $(wrapper).find(".reply-text").text().length);
 }
 
 //Draws one new reply in the suggestion panel
 function drawReply(reply) {
 
-    let newBlock = $(replyBlock).closest(".reply-panel-wrapper");
-    console.log(reply);
-
-    if (reply.content.length > replyContentThreshold) {
-        preProcessBigReply(newBlock, reply);
-    }
-
-
-    $(newBlock).find(".reply-user-name").html(reply.user.firstName + " " + reply.user.lastName);
-    $(newBlock).find(".reply-profile-picture").attr("src", reply.user.picturePath);
-    $(newBlock).find(".reply-text").html(reply.content);
-    $(newBlock).find(".reply-date").html(reply.timeStamp);
-
+    let newBlock = $(dashboardReplyTemplate(reply)).closest(".reply-panel-wrapper");
+    console.log("newBlock");
+    console.log(dashboardReplyTemplate(reply));
     $(newBlock).insertBefore("#reply-editor-wrapper");
-    var parDiv = document.getElementById('comment-panel-wrapper');
+
+    //Scroll to bottom
+    let parDiv = document.getElementById('comment-panel-wrapper');
     parDiv.scrollTop = parDiv.scrollHeight;
 }
 
