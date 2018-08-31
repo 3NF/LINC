@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import javafx.util.Pair;
@@ -181,5 +183,17 @@ public class AssignmentInfoDAO {
         }
         return Collections.emptyList();
     }
+
+	/**
+	 * Gets grades for current assignment
+	 * @param classroomId   identifier of classroom
+	 * @param userId  identifier of assignment
+	 * @return  list of <UserId, Grade>
+	 */
+	public JsonElement GetAssignmentsGrades(String classroomId, String userId) {
+		JsonObject result = new JsonObject();
+		
+		return result;
+	}
 
 }
