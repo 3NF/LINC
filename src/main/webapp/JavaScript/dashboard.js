@@ -34,17 +34,94 @@ const errorColor = "#aa6664";
 const warningColor = "#efcf4f";
 
 const codeContentSuffix = "_content";
-const codeRepliesSuffix = "_replies";
+/const codeRepliesSuffix = "_replies";
 const recentSuggestionSuffix = "_suggestion";
 
 const replyContentThreshold = 300;
-//WebSocket for sending and receiving reply data
-var webSocket = new WebSocket("ws://" + document.location.host + "/reply_socket");
 let maxReplyLength = 16384;
 
-webSocket.onopen = function () {
-    console.log ("WebSocket have connected to server endpoint");
+/*
+    Creates CodeMirror and Bootstrap Markdown editors
+ */
+function onLoad() {
+    //Create CodeMirror editor
+    codeMirror = CodeMirror.fromTextArea($("#code-content").get(0), {
+        lineNumbers: true,
+        mode: "text/x-c++src",
+        readOnly: true,
+        viewportMargin: Infinity
+    });
+
+    codeMirror.setSize("100%", "85%");
+
+    //Create Bootstrap Markdown editor for suggestion editor
+    $("#comment-editor-content").markdown({
+        autofocus: true,
+        saveable: true,
+        onShow: function (e) {
+            suggestionEditor = e;
+        }
+    });
+
+    //Create Bootstrap Markdown editor for reply editor
+    $("#reply-editor-content").markdown({
+        autofocus: true,
+        saveable: true,
+        onShow: function (e) {
+            replyEditor = e;
+        }
+    });
+    /*
+    Gets initial data for already
+    activated code
+    */
+    fetchCodesInfo();
+    toggleLoading();
+
+}
+
+//WebSocket for sending and receiving reply data
+let replySocket = new WebSocket("ws://" + document.location.host + "/reply_socket");
+
+replySocket.onopen = function () {
+    console.log("WebSocket have connected to server endpoint");
 };
+
+replySocket.onmessage = function (event) {
+    console.log("Reply received");
+    var replyData = JSON.parse(event.data);
+    if (activeSuggestionID === replyData.suggestionID) {
+        console.log(replyData);
+        drawReply(replyData);
+    }
+};
+
+replySocket.onerror = function () {
+    alert("Couldn't add new reply, please make sure that correct suggestion is chosen!")
+};
+
+function submitReply() {
+    var data = {
+        courseID: getParameter("courseID"),
+        suggestionID: activeSuggestionID,
+        content: replyEditor.parseContent()
+    };
+
+    if (data.content.length === 0) {
+        alert("You can't submit empty reply!");
+        toggleLoading();
+        return;
+    }
+
+    if (data.content.length > maxReplyLength) {
+        alert("Reply content is too big!");
+        return;
+    }
+
+    replySocket.send(JSON.stringify(data));
+    console.log("Reply submited");
+    replyEditor.setContent("");
+}
 
 //AJAX successful code loading response callback
 function loadCode(receivedData, reqObj) {
@@ -59,13 +136,14 @@ function loadCode(receivedData, reqObj) {
         codeMirror.setValue(sessionStorage.getItem(reqObj.codeID + codeContentSuffix));
     }
 
-    codeMirror.setOption ("mode", getMode (receivedData.name));
+    codeMirror.setOption("mode", getMode(receivedData.name));
 
     mapCodeLines();
     placeSuggestions();
 }
 
-function getMode (name) {
+//TODO: Implementation for other modes
+function getMode(name) {
     return "text/x-java";
 }
 
@@ -81,11 +159,11 @@ function placeSuggestions() {
             suggestions[i].color = warningColor;
         }
 
-        placeSuggestion (i, suggestions[i]);
+        placeSuggestion(i, suggestions[i]);
     }
 }
 
-function placeSuggestion (ind, suggestion) {
+function placeSuggestion(ind, suggestion) {
     const start = suggestion.startInd;
     const end = suggestion.endInd;
 
@@ -96,7 +174,9 @@ function placeSuggestion (ind, suggestion) {
         $(lines[lineIterator]).css("background-color", suggestion.color);
         $(lines[lineIterator]).css("color", "#ffffff");
         $(lines[lineIterator]).unbind("click");
-        $(lines[lineIterator]).click(function () {viewSuggestion(ind);});
+        $(lines[lineIterator]).click(function () {
+            viewSuggestion(ind);
+        });
     }
 }
 
@@ -173,6 +253,10 @@ function fetchCodesInfo() {
     });
 }
 
+function loadCodeInfoError() {
+    alert("Error in loading file information");
+}
+
 //AJAX successful code info loading response callback
 function loadCodesInfo(data) {
     codeInfo = data;
@@ -190,10 +274,6 @@ function addCodes() {
     build_project_view();
 }
 
-function loadCodeInfoError() {
-    alert("Error in loading file information");
-}
-
 //Sends AJAX request to load code
 function fetchCode(id) {
     toggleLoading();
@@ -203,43 +283,43 @@ function fetchCode(id) {
         codeID: id,
         needsContent: (sessionStorage.getItem(id + codeContentSuffix) == null)
     };
-    console.log (dataObj.needsContent);
+    console.log(dataObj.needsContent);
 
     $.ajax({
         url: "/user/code_dispatcher",
         method: "POST",
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(dataObj),
-        success: function (data, textStatus, jQxhr) {
+        success: function (data) {
             toggleLoading();
             loadCode(data, dataObj);
-            loadRecentSuggestion (id);
+            loadRecentSuggestion(id);
             toggleProjectView();
         },
         error: function (data, textStatus, jQxhr) {
             toggleLoading();
-            loadCodeError(data, textStatus, jQxhr);
+            loadCodeError();
         }
     });
 }
 
-function getCacheSuggestionObj (ind) {
+function getCacheSuggestionObj(ind) {
     return {
         ind: ind,
         suggestionID: suggestions[ind].suggestionID
     };
 }
 
-function loadRecentSuggestion (id) {
+function loadRecentSuggestion(id) {
     var recentSuggestion = JSON.parse(localStorage.getItem(id + recentSuggestionSuffix));
 
     if (recentSuggestion == null) {
-        console.log ("There was no recent suggestion for code with ID " + id);
+        console.log("There was no recent suggestion for code with ID " + id);
         return;
     }
 
     if (recentSuggestion.suggestionID !== suggestions[recentSuggestion.ind].suggestionID) {
-        console.log ("Current index references to different suggestion object, deleting recent recent suggestion from LocalStorage");
+        console.log("Current index references to different suggestion object, deleting recent recent suggestion from LocalStorage");
         localStorage.removeItem(id + recentSuggestionSuffix);
         return;
     }
@@ -286,7 +366,8 @@ function clearReplies() {
     $(".reply-panel-wrapper").remove();
 }
 
-function toggleReplyContent () {
+//Shortens or extends reply data
+function toggleReplyContent() {
     let wrapper = $(event.target).closest('.reply-panel-wrapper');
 
     if ($(wrapper).find('button').text() == 'See more') {
@@ -300,12 +381,10 @@ function toggleReplyContent () {
     }
 
 
-    console.log (fullData);
-
-
+    console.log(fullData);
 }
 
-function preProcessBigReply (newBlock, reply) {
+function preProcessBigReply(newBlock, reply) {
     $(newBlock).attr("data-full", reply.content);
     reply.content = reply.content.substr(0, replyContentThreshold);
     $(replyToggleButton).insertBefore($(newBlock).find('.reply-date'));
@@ -318,7 +397,7 @@ function drawReply(reply) {
     console.log(reply);
 
     if (reply.content.length > replyContentThreshold) {
-        preProcessBigReply (newBlock, reply);
+        preProcessBigReply(newBlock, reply);
     }
 
 
@@ -357,108 +436,6 @@ function mapCodeLines() {
 //AJAX error callback for receiving code data
 function loadCodeError() {
     alert("Couldn't load requested file!");
-}
-
-/*
-    Creates CodeMirror and Bootstrap Markdown editors
- */
-function onLoad() {
-    //Create CodeMirror editor
-    codeMirror = CodeMirror.fromTextArea($("#code-content").get(0), {
-        lineNumbers: true,
-        mode: "text/x-c++src",
-        readOnly: true,
-        viewportMargin: Infinity
-    });
-
-    codeMirror.setSize("100%", "85%");
-
-    //Create Bootstrap Markdown editor for suggestion editor
-    $("#comment-editor-content").markdown({
-        autofocus: true,
-        saveable: true,
-        onShow: function (e) {
-            suggestionEditor = e;
-        }
-    });
-
-    //Create Bootstrap Markdown editor for reply editor
-    $("#reply-editor-content").markdown({
-        autofocus: true,
-        saveable: true,
-        onShow: function (e) {
-            replyEditor = e;
-        }
-    });
-    /*
-    Gets initial data for already
-    activated code
-    */
-    fetchCodesInfo();
-    toggleLoading();
-
-}
-
-function submitReply() {
-    toggleLoading();
-    var replyContent = replyEditor.parseContent();
-    console.log(replyContent);
-    $("#reply-editor-content").html("");
-
-    $.ajax({
-        url: "/user/reply_dispatcher",
-        method: "POST",
-        contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify({
-            courseID: getParameter("courseID"),
-            suggestionID: activeSuggestionID,
-            content: replyEditor.parseContent()
-        }),
-        success: function (data) {
-            toggleLoading();
-            replyEditor.setContent("");
-            drawReply(data);
-        },
-        error: function (data, textStatus, jQxhr) {
-            toggleLoading();
-            showReplyAdditionError(data, textStatus, jQxhr);
-        }
-    });
-}
-
-function submitReplyNew() {
-    var data = {
-        courseID: getParameter("courseID"),
-        suggestionID: activeSuggestionID,
-        content: replyEditor.parseContent()
-    };
-
-    if (data.content.length > maxReplyLength) {
-        alert ("Reply content is too big!");
-        return;
-    }
-
-    console.log (data);
-    console.log ("Sending Data");
-    webSocket.send(JSON.stringify(data));
-    replyEditor.setContent("");
-}
-
-webSocket.onerror = function () {
-    console.log("There was Websotkcet Error");
-}
-
-webSocket.onmessage = function (event) {
-    console.log ("Message received");
-    var replyData = JSON.parse(event.data);
-    if (activeSuggestionID === replyData.suggestionID) {
-        console.log(replyData);
-        drawReply(replyData);
-    }
-};
-
-function showReplyAdditionError() {
-    alert("Couldn't add new reply, please make sure that correct suggestion is chosen!")
 }
 
 function getParameter(name) {

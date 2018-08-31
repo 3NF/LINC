@@ -177,6 +177,12 @@ function submitSuggestion () {
     var suggestionContent = suggestionEditor.parseContent();
     var suggestionType = $("#suggestion-type");
 
+    if (suggestionContent.length === 0) {
+        alert("You can't submit empty suggestion!");
+        toggleLoading();
+        return;
+    }
+
     var dataObj = {
         type: suggestionType.text(),
         courseID: getParameter("courseID"),
