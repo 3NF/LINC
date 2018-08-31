@@ -28,8 +28,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="client_id" content="<%=CLIENT_ID%>">
 
-    <%--bootstrap and Jquery --%>
-    <script src="--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <%--Bootstrap and Jquery --%>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -38,31 +37,33 @@
     <link href="../Styles/bootstrap-social.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <%--Google api--%>
+    <%--Google API--%>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
+    <%--Local Scripts--%>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
     <script src="${pageContext.request.contextPath}/JavaScript/dashboard.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/project-view.js"></script>
     <script src="${pageContext.request.contextPath}/jstree/src/jstree.js"></script>
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/src/themes/default/style.css">
-
-    <%--my css--%>
+    <%--Local Styles--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/dashboard.css">
 
-
+    <%--CodeMirror--%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.css">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/clike/clike.js'></script>
+
+    <%--BootstrapMarkdown--%>
     <script src='${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
 
+    <%--JSTree--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-    <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
-    <script src="${pageContext.request.contextPath}/JavaScript/project-view.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jstree/src/themes/default/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
 
     <% User user = (User) request.getSession().getAttribute(USER);%>
     <% String courseId = request.getParameter(Constraints.COURSE_ID); %>

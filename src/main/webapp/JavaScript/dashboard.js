@@ -34,7 +34,7 @@ const errorColor = "#aa6664";
 const warningColor = "#efcf4f";
 
 const codeContentSuffix = "_content";
-/const codeRepliesSuffix = "_replies";
+//const codeRepliesSuffix = "_replies";
 const recentSuggestionSuffix = "_suggestion";
 
 const replyContentThreshold = 300;
