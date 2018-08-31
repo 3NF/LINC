@@ -180,7 +180,7 @@ public class UserDAO {
 	}
 
     public static List<String> getLinkedUserIDs(String suggestionID) {
-        ArrayList <String> linkedUserIDs = new ArrayList<String>();
+        ArrayList <String> linkedUserIDs = new ArrayList<>();
 
         try {
             //TODO: 3NFBAGDU, კლასრუმის შემოწმება აკლია

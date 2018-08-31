@@ -326,6 +326,7 @@ html, body {
 
 #loader-wrapper {
     margin-top: 10px;
+    z-index: 200;
 }
 
 .loader {
