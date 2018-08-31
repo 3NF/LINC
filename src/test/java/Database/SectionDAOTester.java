@@ -41,4 +41,9 @@ public class SectionDAOTester {
         usersID.add("123");
         DAO.addUsersInSection("15887333289","104406936880731130000",usersID);
     }
+
+    @Test
+    public void test3(){
+        DAO.removeSections("15924932251");
+    }
 }

@@ -31,7 +31,7 @@ public class ValidateDAOTest {
 
     @Test
     public void testValidation(){
-       System.err.println(DAO.isValidate(new User("114260512501360115146"),"9","15887333289"));
+       System.err.println(DAO.checkSuggestionAccess(new User("114260512501360115146"),"9","15887333289"));
     }
 
     @Test

@@ -21,6 +21,9 @@ import Database.GAPIManager;
 import Models.UploadedAssignment;
 import Models.User;
 
+
+@Deprecated
+//Will be deleted in future commits ;)
 @WebServlet(name = "TeacherDispatcher" ,urlPatterns = "/teacher-dispatcher")
 public class TeacherDispatcher extends HttpServlet {
     private static final long serialVersionUID = 1L;

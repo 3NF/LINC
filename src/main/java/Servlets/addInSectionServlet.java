@@ -30,6 +30,7 @@ public class addInSectionServlet extends HttpServlet {
         }.getType();
         List <String> list = new Gson().fromJson(array , listType);
         SectionDAO sectionDAO = (SectionDAO) request.getServletContext().getAttribute(Constraints.SECTION_DAO);
+        sectionDAO.removeSections(courseID);
         sectionDAO.addUsersInSection(courseID,leaderID,list);
     }
 

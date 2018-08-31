@@ -117,4 +117,20 @@ public class SectionDAO {
             e.printStackTrace();
         }
     }
+
+    public void removeSections(String classroomID){
+	    String query = " DELETE sections FROM sections " +
+                                "INNER JOIN instructors " +
+                                    "ON sections.instructorID=instructors.id " +
+                                        "where instructors.classroomID=?";
+        Connection conn;
+        try {
+            conn = connectionPool.getConnection();
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, classroomID);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
