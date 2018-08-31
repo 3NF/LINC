@@ -42,6 +42,8 @@ public class ReplyDispatcher extends HttpServlet {
             String courseID = data.get(Constraints.COURSE_ID).getAsString();
             String teacherID = data.get(TEACHER_ID).getAsString();
             String suggestionID = data.get(Constraints.SUGGESTION_ID).getAsString();
+
+            //Get necessary objects from ServletContext
             ValidateDAO validateDAO = (ValidateDAO) request.getServletContext().getAttribute(Constraints.VALIDATE_DAO);
             ReplyDAO replyDAO = (ReplyDAO) request.getServletContext().getAttribute(Constraints.REPLY_DAO);
             UserStorage userStorage = (UserStorage) request.getServletContext().getAttribute(USER_STORAGE);
@@ -52,7 +54,7 @@ public class ReplyDispatcher extends HttpServlet {
                 return;
             }
 
-            //Convert file data into JSON
+            //Convert get replies and convert them to JSON
             List <Reply> replies = getReplies(suggestionID, teacherID, userStorage, replyDAO);
             json = new GsonBuilder().disableHtmlEscaping().create().toJson(replies);
 
