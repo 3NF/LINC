@@ -16,7 +16,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 @WebServlet(name = "Servlet",urlPatterns = "/user/add_in_section_servlet")
-public class addInSectionServlet extends HttpServlet {
+public class AddInSectionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
