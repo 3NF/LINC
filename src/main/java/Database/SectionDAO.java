@@ -48,7 +48,7 @@ public class SectionDAO {
     }
 
     /**
-     * Checks if student is in users section
+     * Checks if student is in this instructor's section
      */
     public boolean isInSection(String instructorID, String studentID) {
             String query = "SELECT instructors.id,instructors.userID,sections.studentID FROM instructors" +
@@ -67,7 +67,11 @@ public class SectionDAO {
         return false;
     }
 
-    private String getInstructorDataBaseID(String classroomID, String leaderID) {
+    /*
+        TODO: გიორგი, აქ ამ ფუნქციას გადახედე, მგონი არაა საჭირო და უბრალოდ addUsersInSection-ის გადაკეთება მოგვიწევს
+     */
+
+    private String getInstructorID(String classroomID, String leaderID) {
         String query = "SELECT id FROM instructors WHERE classroomID=? AND userID=?";
         try {
             Connection conn = connectionPool.getConnection();
@@ -88,10 +92,10 @@ public class SectionDAO {
     }
 
 	/**
-	 * Adds students in users section
+	 * Adds students in instructor's section
 	 */
-	public void addUsersInSection(String classroomID, String leaderID, List<String> usersID) {
-        String instructorID = getInstructorDataBaseID(classroomID, leaderID);
+	public void addUsersInSection(String classroomID, String userID, List<String> userIDs) {
+        String instructorID = getInstructorID(classroomID, userID);
         String query = "INSERT INTO sections(instructorID,studentID) VALUES(?,?)";
         Connection conn;
         try {
@@ -99,9 +103,9 @@ public class SectionDAO {
             PreparedStatement statement = conn.prepareStatement(query);
             boolean isToBeInserted = true;
             int i = 0;
-            for (String userID : usersID) {
+            for (String studentID : userIDs) {
                 statement.setString(1,instructorID);
-                statement.setString(2,userID);
+                statement.setString(2,studentID);
                 statement.addBatch();
                 ++i;
                 if (i % 1000 == 0){

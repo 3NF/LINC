@@ -14,9 +14,6 @@ let codeInfo = [];
 let activeSuggestionID = -1;
 let activeCodeFileID = -1;
 
-//Button for toggling reply's content
-var replyToggleButton = $('<button type="button" class="btn btn-default btn-xs" onclick = "toggleReplyContent()">See more</button>');
-
 //Error and warning line colorings
 const errorColor = "#aa6664";
 const warningColor = "#efcf4f";
@@ -284,7 +281,7 @@ function fetchCode(id) {
             loadRecentSuggestion(id);
             toggleProjectView();
         },
-        error: function (data, textStatus, jQxhr) {
+        error: function () {
             toggleLoading();
             loadCodeError();
         }
