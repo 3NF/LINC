@@ -14,6 +14,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import javafx.util.Pair;
 
+import javax.json.Json;
+
 public class AssignmentInfoDAO {
 
     private MysqlDataSource connectionPool;
@@ -187,12 +189,33 @@ public class AssignmentInfoDAO {
 	/**
 	 * Gets grades for current assignment
 	 * @param classroomId   identifier of classroom
-	 * @param userId  identifier of assignment
+	 * @param instructorId  identifier of assignment
 	 * @return  list of <UserId, Grade>
 	 */
-	public JsonElement GetAssignmentsGrades(String classroomId, String userId) {
+	public JsonElement getAssignmentsGrades(String classroomId, String instructorId) {
 		JsonObject result = new JsonObject();
-		
+		String assignments = "SELECT idInClassroom FROM assignments WHERE courseID=?";
+		String users = "SELECT studentID FROM instructors, sections " + "WHERE instructors.classroomID=? AND instructors.userID=? AND sections.instructorID = instructors.id";
+		String query = "SELECT * FROM grades WHERE userID IN (" + users + ") AND assignmentID IN (" + assignments + ");";
+        try {
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, classroomId);
+            statement.setString(2, instructorId);
+            statement.setString(3, classroomId);
+			ResultSet resultSet = statement.executeQuery();
+	        while (resultSet.next()) {
+		        String assignmentID = resultSet.getString("grades.assignmentID");
+		        String grade = resultSet.getString("grades.grade");
+		        String userId = resultSet.getString("grades.userId");
+		        if (!result.has(assignmentID)) {
+		            result.add(assignmentID, new JsonObject());
+		        }
+		        ((JsonObject)result.get(assignmentID)).addProperty(userId, grade);
+	        }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 		return result;
 	}
 

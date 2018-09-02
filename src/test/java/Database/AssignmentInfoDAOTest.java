@@ -46,4 +46,37 @@ public class AssignmentInfoDAOTest {
     }
 
 
+    @Test
+    public void getAssignmentFilesPath() {
+    }
+
+    @Test
+    public void getAssignmentIds() {
+    }
+
+    @Test
+    public void addAssignment() {
+    }
+
+    @Test
+    public void addGrade() {
+    }
+
+    @Test
+    public void getGrade() {
+    }
+
+    @Test
+    public void updateGrade() {
+    }
+
+    @Test
+    public void getUsersGrades() {
+    }
+
+    @Test
+    public void getAssignmentsGrades() {
+        AssignmentInfoDAO dao = new AssignmentInfoDAO(source);
+	    System.out.println(dao.getAssignmentsGrades("15924932251", "106052993686948851837"));
+    }
 }
