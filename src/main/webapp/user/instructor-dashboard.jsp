@@ -31,8 +31,9 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/instructor-dashboard.js?newversione"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/html-templates.js"></script>
 
-    <%--Comment following line if you want to view as Student--%>
+<%--Comment following line if you want to view as Student--%>
     <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
@@ -50,6 +51,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/instructor-dashboard.css">
+
 
 
     <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
@@ -109,7 +111,7 @@
         System.out.println("დავალებები წამოიღო    " + dateFormat.format(date));
     %>
 
-    <script>let assignmentID = <%=assignments.get(0).getId()%>;</script>
+    <script>let assignmentID = '<%=assignments.get(0).getId()%>';</script>
     <script>courseID = '<%=courseId%>';</script>
     <title>Section View</title>
 
@@ -154,14 +156,21 @@
         date = new Date();
         System.out.println("სტუდენტები წამოიღო სურათებიანად    " + dateFormat.format(date));
     %>
+    <script> let studentsCount = <%= students.size() %>;</script>
     <% for (User student : students) {%>
-    <div class="user-box" align="center" onclick="chooseStudent('<%=student.getUserId()%>')">
+    <div class="user-box" align="center" studentId = '<%=student.getUserId()%>' onclick="chooseStudent('<%=student.getUserId()%>')">
         <img class="user-img" src="<%=student.getPicturePath()%>">
         <h3 class="user-name"><%=student.getFirstName() + " " + student.getLastName()%>
         </h3>
-        <div class = "user-point grade_Plus">Not Graded</div>
     </div>
     <%}%>
 </div>
+<br>
+<br>
+<br>
+<button type="button" id = "submit-button" class="btn btn-primary btn-lg">Submit Grades</button>
+<script>
+    getAssignmentScores();
+</script>
 </body>
 </html>

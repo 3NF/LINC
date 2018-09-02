@@ -57,3 +57,9 @@ function dashboardReplyTemplate(data) {
                 </div>
             </div>`;
 }
+
+function gradeContainerTemplate(data) {
+    return `<div class="grade_${data}">
+                <p>${data}</p>
+            </div>`;
+}

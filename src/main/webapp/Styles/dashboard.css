@@ -155,5 +155,5 @@ html {
 }
 
 .jstree-anchor {
-    font-family: "consolas" !important;
+    font-family: "consolas", serif !important;
 }

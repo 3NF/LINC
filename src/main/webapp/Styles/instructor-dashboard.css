@@ -43,3 +43,8 @@
     user-select: none;
     cursor: pointer;
 }
+
+#submit-button {
+    margin: 0 auto;
+    display: block;
+}

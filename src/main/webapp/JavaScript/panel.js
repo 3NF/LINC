@@ -57,6 +57,7 @@ function getAssignment(assignmentId) {
         location.href = changeParameter("assignmentID", assignmentId);
     } else {
         assignmentID = assignmentId;
+        fillGrades(1);
     }
 
 }
