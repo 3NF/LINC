@@ -49,7 +49,7 @@
     <link href="${pageContext.request.contextPath}/Styles/bootstrap-social.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/instructor-dashboard.css">
+    <link rel="style sheet" href="${pageContext.request.contextPath}/Styles/instructor-dashboard.css">
 
 
 
