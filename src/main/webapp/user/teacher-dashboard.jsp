@@ -127,6 +127,7 @@
     </div>
 </div>
 <div id="content">
+    <button id = "random-button" class = "btn btn-light" style="width:260px;color:black" onclick='randomizeSections()'> Randomise sections! </button>
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -164,7 +165,6 @@
                         <tbody id = "teacherAssTable1">
                         </tbody>
                     </table>
-                    <button class = "btn btn-light" style="width:260px;color:black" onclick='randomizeSections()'> Randomise sections! </button>
                 </div>
             </div>
         </div>

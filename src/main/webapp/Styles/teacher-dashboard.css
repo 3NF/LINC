@@ -1,9 +1,7 @@
 #empty-tr {
     display: none;
 }
-.btn {
-    width : 100%;
-}
+
 .table {
     width : 100%;
 }
@@ -34,4 +32,9 @@
     left: 0;
     right: 0;
     z-index: 105;
+}
+
+#random-button {
+    margin: 10px;
+    width: 200px !important;
 }
