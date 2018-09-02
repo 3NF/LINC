@@ -187,10 +187,10 @@ public class AssignmentInfoDAO {
     }
 
 	/**
-	 * Gets grades for current assignment
+	 * Gets grades for all student in all assignment
+	 * For given instructor
 	 * @param classroomId   identifier of classroom
 	 * @param instructorId  identifier of assignment
-	 * @return  list of <UserId, Grade>
 	 */
 	public JsonElement getAssignmentsGrades(String classroomId, String instructorId) {
 		JsonObject result = new JsonObject();
