@@ -14,6 +14,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.util.concurrent.*" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="org.mortbay.util.ajax.JSON" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -32,7 +34,7 @@
     <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/html-templates.js"></script>
 
-<%--Comment following line if you want to view as Student--%>
+    <%--Comment following line if you want to view as Student--%>
     <script src="${pageContext.request.contextPath}/JavaScript/dashboard-instructor-controls.js?newversion"></script>
 
     <%--my css--%>
@@ -50,7 +52,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Styles/instructor-dashboard.css">
-
 
 
     <% AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO); %>
@@ -82,6 +83,7 @@
                 .toCompletableFuture();
 
         Future<String> teacherIdFuture = executor.submit(() -> UserDAO.getUserIDsByRole(courseId, UserDAO.Role.Teacher).get(0));
+        Future<List<String>> checkedAssignmentsFuture = executor.submit(() -> assignmentInfoDAO.getSubmittedAssignments(courseId, user.getUserId()));
 
         CompletableFuture<List<User>> studentsFuture = CompletableFuture.supplyAsync(() -> DAO.getUsersInSection(courseId, user.getUserId()), executor).thenApply(strings -> {
             try {
@@ -157,18 +159,43 @@
     %>
     <script> let studentsCount = <%= students.size() %>;</script>
     <% for (User student : students) {%>
-    <div class="user-box" align="center" studentId = '<%=student.getUserId()%>' onclick="chooseStudent('<%=student.getUserId()%>')">
+    <div class="user-box" align="center" studentId='<%=student.getUserId()%>'
+         onclick="chooseStudent('<%=student.getUserId()%>')">
         <img class="user-img" src="<%=student.getPicturePath()%>">
         <h3 class="user-name"><%=student.getFirstName() + " " + student.getLastName()%>
         </h3>
     </div>
     <%}%>
 </div>
-<br>
-<br>
-<br>
-<button type="button" id = "submit-button" class="btn btn-primary btn-lg">Submit Grades</button>
+
+<div id='progress-container'>
+    <button type="button" id="submit-button" class="btn btn-primary btn-lg">
+        Submit Grades
+    </button>
+    <div class="progress" style="display: none;">
+        <div id='checked-percentage' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"
+             aria-valuemin="0" aria-valuemax="100" style="width:50%">
+            შეფასებულია 0%
+        </div>
+    </div>
+</div>
+<%
+    String checkedAssignmentsJson = "";
+    try {
+        checkedAssignmentsJson = new Gson().toJson(checkedAssignmentsFuture.get());
+    } catch (InterruptedException | ExecutionException e) {
+        e.printStackTrace();
+    }
+%>
 <script>
+    let checkedAssignments = JSON.parse('<%= checkedAssignmentsJson %>');
+</script>
+<script>
+    $(document).on('click', "#submit-button", function () {
+        if (window.confirm("Do you want to upload grades?")) {
+            uploadGrades(assignmentID);
+        }
+    });
     getAssignmentScores();
 </script>
 </body>

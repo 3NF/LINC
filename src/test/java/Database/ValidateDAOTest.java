@@ -51,4 +51,11 @@ public class ValidateDAOTest {
 
         assertFalse(DAO.hasSuggestionWritePermission(user, courseID, codeFileID));
     }
+
+    @Test
+    public void isInstructorTest() {
+        assertTrue(DAO.isInstructor("15924932251","106052993686948851837", "105866623450691913059"));
+        assertFalse(DAO.isInstructor("15924932251","106052993686948851837", "10586662345069191309"));
+    }
+
 }

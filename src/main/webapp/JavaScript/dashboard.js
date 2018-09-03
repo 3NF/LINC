@@ -356,7 +356,7 @@ function toggleReplyContent() {
     let wrapper = $(event.target).closest('.reply-panel-wrapper');
     let fullData = $(wrapper).attr('data-full');
 
-    if ($(wrapper).find('button').text() == 'See more') {
+    if ($(wrapper).find('button').text() === 'See more') {
         $(wrapper).find('button').text('See less');
         $(wrapper).find(".reply-text").html(fullData);
     } else {

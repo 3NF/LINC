@@ -48,3 +48,15 @@
     margin: 0 auto;
     display: block;
 }
+
+.progress {
+    height: 75px;
+}
+.progress-bar{
+    font-size: 25px;
+    line-height: 277%;
+}
+
+#progress-container {
+    margin-top: 100px;
+}
