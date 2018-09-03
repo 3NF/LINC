@@ -183,4 +183,19 @@ public class ValidateDAO {
 		return false;
 	}
 
+
+    public Boolean isTeacher(String UserID, String classroomID){
+        String query =  "SELECT * FROM instructors WHERE userID=? AND classroomID=? AND type='Teacher'";
+        try {
+            Connection conn  = connectionPool.getConnection();
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, UserID);
+            statement.setString(2, classroomID);
+            ResultSet result = statement.executeQuery();
+            return result.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

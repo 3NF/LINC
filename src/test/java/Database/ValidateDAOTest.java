@@ -58,4 +58,11 @@ public class ValidateDAOTest {
         assertFalse(DAO.isInstructor("15924932251","106052993686948851837", "10586662345069191309"));
     }
 
+
+    @Test
+    public void test1 () {
+        String courseID = "15924932251";
+        String userId = "104176062122048371294";
+        System.out.println(DAO.isTeacher(userId, courseID));
+    }
 }
