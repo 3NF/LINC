@@ -51,4 +51,11 @@ public class ValidateDAOTest {
 
         assertFalse(DAO.hasSuggestionWritePermission(user, courseID, codeFileID));
     }
+
+    @Test
+    public void test1 () {
+        String courseID = "15924932251";
+        String userId = "104176062122048371294";
+        System.out.println(DAO.isTeacher(userId, courseID));
+    }
 }

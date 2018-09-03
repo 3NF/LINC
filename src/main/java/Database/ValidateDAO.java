@@ -9,6 +9,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import Models.User;
 
+import javax.jws.soap.SOAPBinding;
+
 public class ValidateDAO {
     private final MysqlDataSource connectionPool;
 
@@ -149,5 +151,20 @@ public class ValidateDAO {
             return user.getUserId();
         }
         return getStudentIDViaInstructor(user.getUserId(), suggestionID, courseID);
+    }
+
+    public Boolean isTeacher(String UserID, String classroomID){
+        String query =  "SELECT * FROM instructors WHERE userID=? AND classroomID=? AND type='Teacher'";
+        try {
+            Connection conn  = connectionPool.getConnection();
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, UserID);
+            statement.setString(2, classroomID);
+            ResultSet result = statement.executeQuery();
+            return result.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
