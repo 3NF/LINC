@@ -20,7 +20,6 @@ import java.util.List;
 
 import static Data.Constraints.USER;
 import static Data.Constraints.VALIDATE_DAO;
-import static com.sun.deploy.net.protocol.ProtocolType.HTTP;
 
 @WebServlet(name = "Servlet",urlPatterns = "/user/add_in_section_servlet")
 public class AddInSectionServlet extends HttpServlet {
