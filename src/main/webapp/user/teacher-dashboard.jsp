@@ -44,7 +44,7 @@
     <script src = '${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
     <link rel = "stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
 
-    <script src="${pageContext.request.contextPath}/JavaScript/progressbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/JavaScript/Libraries/progressbar.min.js"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script src="https://apis.google.com/js/api.js"></script>
 
