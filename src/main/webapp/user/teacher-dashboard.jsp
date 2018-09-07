@@ -13,10 +13,8 @@
 <%@ page import="java.util.Set" %>
 <%@ page import="Models.Assignment" %>
 <%@ page import="java.util.stream.Collectors" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="static Data.Constraints.CLIENT_ID" %>
 <%@ page import="com.google.gson.Gson" %>
-<%@ page import="static Data.Constraints.USER_ID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -41,8 +39,8 @@
 
     <script src = "--https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src = '${pageContext.request.contextPath}/bootstrap-markdown/js/bootstrap-markdown.js'></script>
-    <link rel = "stylesheet" href="${pageContext.request.contextPath}/bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <script src = '${pageContext.request.contextPath}/JavaScript/Libraries/bootstrap-markdown/js/bootstrap-markdown.js'></script>
+    <link rel = "stylesheet" href="${pageContext.request.contextPath}/JavaScript/Libraries/bootstrap-markdown/css/bootstrap-markdown.min.css">
 
     <script src="${pageContext.request.contextPath}/JavaScript/Libraries/progressbar.min.js"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>

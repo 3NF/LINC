@@ -181,9 +181,15 @@ function appointInSections(leaders, students, rem, inSection, courseID) {
 }
 
 function randomizeSections() {
+    console.log('abc');
+    console.log(assistants_cln.length);
+    console.log(students_cln.length);
+    console.log('abc');
+
     let assistants_cln = JSON.parse(JSON.stringify(assistants));
     let students_cln = JSON.parse(JSON.stringify(students));
     let seminarReaders_cln = JSON.parse(JSON.stringify(seminarReaders));
+
     shuffle(assistants_cln);
     shuffle(students_cln);
     shuffle(seminarReaders_cln);
