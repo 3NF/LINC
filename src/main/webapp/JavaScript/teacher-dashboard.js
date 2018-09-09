@@ -1,4 +1,4 @@
-// This function is for changing users role
+// This function is for changing user's role
 function changeRole(userId , courseID , role){
     console.log (userId);
     console.log (courseID);
@@ -84,9 +84,7 @@ assignmentSocket.onopen = function () {
     console.log ("WebSocket have connected to server endpoint");
 };
 
-function sendAssignmentsNew (assignmentID) {
-    // assignmentSocket.activeEl = $(event.target).parent();
-    // console.log(assignmentSocket.activeEl);
+function downloadAssignment (assignmentID) {
 
     toggleProgressBar();
     var dataObj = {

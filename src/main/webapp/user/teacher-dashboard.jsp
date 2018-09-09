@@ -108,7 +108,7 @@
         <%}%>
 
         <% for (Assignment assignment : notUploaded) {%>
-        <div class="sidenav-item" onclick=sendAssignmentsNew('<%=assignment.getId()%>')>
+        <div class="sidenav-item" onclick=downloadAssignment('<%=assignment.getId()%>')>
             <p style="color: red"><%=assignment.getName()%></p>
         </div>
         <%}%>
