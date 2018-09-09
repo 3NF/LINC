@@ -1,12 +1,8 @@
 <%@ page import="Data.Constraints" %>
 <%@ page import="Database.GAPIManager" %>
-<%@ page import="HelperClasses.Validate" %>
 <%@ page import="Models.User" %>
-<%@ page import="com.google.api.services.classroom.model.Teacher" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.google.api.services.classroom.model.Student" %>
 <%@ page import="Database.UserDAO" %>
-<%@ page import="com.google.api.services.classroom.model.UserProfile" %>
 <%@ page import="Database.AssignmentInfoDAO" %>
 <%@ page import="static Data.Constraints.ASSIGNMENT_INFO_DAO" %>
 <%@ page import="java.util.HashSet" %>

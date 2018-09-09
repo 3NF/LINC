@@ -71,18 +71,6 @@ function changeParameter(paramName, paramVal) {
     return oldLink.substr(0, old_value_start) + paramVal + oldLink.substr(old_value_end);
 }
 
-/**
- * Shuffles array in place. ES6 version
- * @param {Array} a items An array containing the items.
- */
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-}
-
 function mouseOver(grade) {
     let etarget = event.target;
     etarget.innerHTML = gradeMap[grade];

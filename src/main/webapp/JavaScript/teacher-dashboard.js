@@ -130,29 +130,6 @@ function updateProgress(progressBar, progressData) {
     });
 }
 
-function sendAssignments(assignmentId) {
-    const courseID = getParameter("courseID");
-    if (window.confirm("Do You want to download assignments?")) {
-        $.ajax({
-            type: 'POST',
-            url: '/teacher-dispatcher',
-            data: JSON.stringify(
-                {
-                    "assignmentID": assignmentId,
-                    "courseID": courseID
-                }
-            ),
-            success: function () {
-
-                alert("Successfully downloaded assignment files.");
-            },
-            error: function () {
-                console.log('Service call failed!');
-            }
-        });
-    }
-}
-
 function appointInSections(leaders, students, rem, inSection, courseID) {
     let l = 0;
     for (let k = 0; k < leaders.length; ++k) {
@@ -178,6 +155,18 @@ function appointInSections(leaders, students, rem, inSection, courseID) {
         });
         l = r + 1;
     }
+}
+
+/**
+ * Shuffles array in place. ES6 version
+ * @param {Array} a items An array containing the items.
+ */
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
 }
 
 function randomizeSections() {
