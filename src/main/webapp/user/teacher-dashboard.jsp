@@ -43,10 +43,10 @@
     <script src="https://apis.google.com/js/api.js"></script>
 
 
+    <script src="${pageContext.request.contextPath}/JavaScript/html-templates.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/teacher-dashboard.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/panel.js"></script>
     <script src="${pageContext.request.contextPath}/JavaScript/gapi-scripts.js"></script>
-    <script src="${pageContext.request.contextPath}/JavaScript/html-templates.js"></script>
 
 
     <%
@@ -84,7 +84,7 @@
 </head>
 <body>
 <div id = "fetch-assignment-div-wrapper">
-    <div id = "fetch-assignment-div" onclick="toggleProgressBar()">
+    <div id = "fetch-assignment-div">
 
     </div>
 </div>
@@ -102,7 +102,8 @@
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="height: 90%">
         <div id = "downloaded-assignments">
-            <% for (Assignment assignment : uploaded) {%>
+            <%
+                for (Assignment assignment : uploaded) {%>
             <div class="sidenav-item" onclick=isDownloaded()>
                 <p style="color: green"><%=assignment.getName()%></p>
             </div>
@@ -110,11 +111,14 @@
         </div>
 
         <div id = "remaining-assignments">
-            <% for (Assignment assignment : notUploaded) {%>
-            <div class="sidenav-item" onclick=downloadAssignment('<%=assignment.getId()%>')>
+            <%
+                int cnt = 0;
+                for (Assignment assignment : notUploaded) {%>
+            <div class="sidenav-item" id = "remaining-<%=cnt%>" onclick=downloadAssignment('<%=assignment.getId()%>')>
                 <p style="color: red"><%=assignment.getName()%></p>
             </div>
-            <%}%>
+            <%      cnt ++;
+                }%>
         </div>
     </div>
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>

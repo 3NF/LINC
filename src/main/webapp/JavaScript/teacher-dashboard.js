@@ -59,7 +59,8 @@ function toggleProgressBar () {
     }
 }
 
-var progressBar;
+let progressBar;
+let assignmentDivId;
 $(document).ready (function () {
     $("#fetch-assignment-div-wrapper").hide();
     progressBar = new ProgressBar.Circle('#fetch-assignment-div', {
@@ -78,16 +79,19 @@ $(document).ready (function () {
     });
 });
 
-var assignmentSocket = new WebSocket("ws://" + document.location.host + "/download_assignment");
+let assignmentSocket = new WebSocket("ws://" + document.location.host + "/download_assignment");
 
 assignmentSocket.onopen = function () {
-    console.log ("WebSocket have connected to server endpoint");
+    console.log ("WebSocket has connected to server endpoint");
 };
 
 function downloadAssignment (assignmentID) {
+    console.log($(event.target).closest("sidenav-item"));
+    assignmentDivId = ($(event.target).closest(".sidenav-item")).attr('id');
+    $("#fetch-assignment-div").unbind();
 
     toggleProgressBar();
-    var dataObj = {
+    let dataObj = {
         assignmentID: assignmentID,
         courseID: courseID
     };
@@ -98,7 +102,7 @@ function downloadAssignment (assignmentID) {
 assignmentSocket.onmessage = function (event) {
     console.log ("Message received");
 
-    var progressData = event.data;
+    let progressData = event.data;
     console.log (progressData);
 
     if (progressData !== "Completed") {
@@ -109,21 +113,31 @@ assignmentSocket.onmessage = function (event) {
 };
 
 function downloadCompleted () {
+    $("#fetch-assignment-div").on("click", toggleProgressBar);
     progressBar.setText("Completed, Click to hide!");
+
+    $("#downloaded-assignments").append($(getAssignmentTemplate({
+        name: $("#" + assignmentDivId).text().trim()
+    })));
+    $("#" + assignmentDivId).remove();
     // $(assignmentSocket.activeEl).css("color", "green");
     // $(assignmentSocket.activeEl).unbind();
     // $(assignmentSocket.activeEl).click(isDownloaded);
 }
 
 function updateProgress(progressBar, progressData) {
+    if (progressData === "Completed") {
+        downloadCompleted();
+        return;
+    }
+
     progressBar.animate (progressData, {
         duration: 500,
         easing: 'easeInOut'
     }, function () {
-        if (progressData === 1) {
-            progressBar.setText("Saving in database!")
-        } else {
-            //progressBar.setText(progressData*100 + "%");
+        console.log(Number(progressData));
+        if (Number(progressData) == 1) {
+            progressBar.setText("Saving in database");
         }
     });
 }

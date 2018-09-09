@@ -51,7 +51,7 @@ function dashboardReplyTemplate(data) {
                         <p class = "reply-user-name">${data.user.firstName + ' ' + data.user.lastName}</p>
                         <p class = "reply-text">${data.content.substr(0, Math.min(data.content.length, replyContentThreshold))}</p>
                         ${data.content.length > replyContentThreshold ? '<button type = "button" class="btn btn-default btn-xs" onclick = "toggleReplyContent()">See more</button>'
-                                                                        : ''}
+        : ''}
                         <p class = "reply-date">${data.timeStamp}</p>
                     </div>
                 </div>
@@ -61,5 +61,11 @@ function dashboardReplyTemplate(data) {
 function gradeContainerTemplate(data) {
     return `<div class="grade_${data}">
                 <p>${data}</p>
+            </div>`;
+}
+
+function getAssignmentTemplate (data) {
+    return `            <div class="sidenav-item" onclick=isDownloaded()>
+                <p style="color: green">${data.name}</p>
             </div>`;
 }

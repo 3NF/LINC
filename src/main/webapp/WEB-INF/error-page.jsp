@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <!---->
-    <title><%=request.getAttribute("code") +" Error"%></title>
+    <title><%=(request.getAttribute("code") != null ?  request.getAttribute("code") : "Unknown") + " Error"%></title>
 </head>
 <body>
     <h1>LINC Team is saying hi from the error page!</h1>
