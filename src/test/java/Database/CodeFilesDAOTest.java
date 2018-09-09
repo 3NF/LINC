@@ -2,7 +2,7 @@ package Database;
 
 import Models.CodeFile;
 import Models.File;
-import Models.UploadedAssignment;
+import Models.DownloadedAssignment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class CodeFilesDAOTest {
     public void testAddAssigment() {
         try {
 
-            UploadedAssignment assignment = new UploadedAssignment("15888564981");
+            DownloadedAssignment assignment = new DownloadedAssignment("15888564981");
             assignment.addAssignmentFile(new File("temp_code1.cpp","sdsdsdsdss","-1"));
             assignment.addAssignmentFile(new File("temp_code2.cpp","sdsdsdsssdss","-1"));
             DAO.addAssignments(assignment);

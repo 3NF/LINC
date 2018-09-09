@@ -18,7 +18,7 @@ import com.google.gson.JsonObject;
 import Database.AssignmentInfoDAO;
 import Database.CodeFilesDAO;
 import Database.GAPIManager;
-import Models.UploadedAssignment;
+import Models.DownloadedAssignment;
 import Models.User;
 
 
@@ -35,13 +35,13 @@ public class TeacherDispatcher extends HttpServlet {
         String courseID = data.get("courseID").getAsString();
 
         //Not working!
-        UploadedAssignment uploadedAssignment = GAPIManager.downloadAssignments(user,courseID,assignmentID, null);
+        DownloadedAssignment downloadedAssignment = GAPIManager.downloadAssignments(user,courseID,assignmentID, null);
 
         AssignmentInfoDAO assignmentInfoDAO = (AssignmentInfoDAO) request.getServletContext().getAttribute(ASSIGNMENT_INFO_DAO);
         CodeFilesDAO codeFilesDAO = (CodeFilesDAO) request.getServletContext().getAttribute(CODE_FILES_DAO);
         assignmentInfoDAO.addAssignment(assignmentID,courseID);
         try {
-            codeFilesDAO.addAssignments(uploadedAssignment);
+            codeFilesDAO.addAssignments(downloadedAssignment);
         } catch (SQLException e) {
             e.printStackTrace();
         }

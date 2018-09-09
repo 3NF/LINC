@@ -4,7 +4,7 @@ package Models;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class UploadedAssignment implements Iterable<File>{
+public class DownloadedAssignment implements Iterable<File>{
 
 
     private String assignmentID;
@@ -14,7 +14,7 @@ public class UploadedAssignment implements Iterable<File>{
 
     private HashMap<String, File> data;
 
-    public UploadedAssignment(String assignmentID) {
+    public DownloadedAssignment(String assignmentID) {
         data = new HashMap<>();
         this.assignmentID = assignmentID;
     }

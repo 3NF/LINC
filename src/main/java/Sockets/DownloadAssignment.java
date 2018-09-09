@@ -2,7 +2,7 @@ package Sockets;
 
 import Data.Constraints;
 import Database.*;
-import Models.UploadedAssignment;
+import Models.DownloadedAssignment;
 import Models.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -36,7 +36,7 @@ public class DownloadAssignment {
     }
 
     @OnOpen
-    public void onOpen(Session session, EndpointConfig config) throws IOException {
+    public void onOpen(Session session, EndpointConfig config){
         this.counter = -1;
 
         this.session = session;
@@ -48,18 +48,18 @@ public class DownloadAssignment {
     }
 
     @OnMessage
-    public void onMessage(String message) throws IOException, EncodeException {
+    public void onMessage(String message) {
         try {
             JsonObject data = new Gson().fromJson(message, JsonObject.class);
 
             String assignmentID = data.get(Constraints.ASSIGNMENT_ID).getAsString();
             String courseID = data.get(Constraints.COURSE_ID).getAsString();
 
-            UploadedAssignment uploadedAssignment = GAPIManager.downloadAssignments(user, courseID, assignmentID, this);
+            DownloadedAssignment downloadedAssignment = GAPIManager.downloadAssignments(user, courseID, assignmentID, this);
 
             assignmentInfoDAO.addAssignment(assignmentID, courseID);
             try {
-                codeFilesDAO.addAssignments(uploadedAssignment);
+                codeFilesDAO.addAssignments(downloadedAssignment);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -70,7 +70,7 @@ public class DownloadAssignment {
     }
 
     @OnClose
-    public void onClose(Session session) throws IOException {
+    public void onClose(Session session) {
         System.out.println(session.getId() + " Socket Closed");
     }
 
@@ -80,7 +80,7 @@ public class DownloadAssignment {
     }
 
     private void broadcastCounter() {
-        System.out.println("Broadcasting counter -" + counter);
+        System.out.println("Broadcasting counter: " + counter);
         try {
             this.session.getAsyncRemote().sendText((1.0*counter)/totalJobs + " ");
         } catch (Exception e) {

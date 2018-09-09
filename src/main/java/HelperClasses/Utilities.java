@@ -11,7 +11,7 @@ import java.util.zip.ZipInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Models.UploadedAssignment;
+import Models.DownloadedAssignment;
 
 
 /**
@@ -19,7 +19,7 @@ import Models.UploadedAssignment;
  */
 public final class Utilities {
 
-	public static void unzipInputStream(ByteArrayInputStream inStream, UploadedAssignment uploadedAssignment, String actorUserID) throws IOException {
+	public static void unzipInputStream(ByteArrayInputStream inStream, DownloadedAssignment downloadedAssignment, String actorUserID) throws IOException {
 		ZipInputStream zis = new ZipInputStream(inStream);
 		ZipEntry entry;
 		// while there are entries I process them
@@ -32,7 +32,7 @@ public final class Utilities {
 				fos.write(buffer, 0, read);
 			}
 			String result = fos.toString("UTF-8");
-			uploadedAssignment.addAssignmentFile(new Models.File(entry.getName(), result, actorUserID));
+			downloadedAssignment.addAssignmentFile(new Models.File(entry.getName(), result, actorUserID));
 			fos.close();
 		}
 	}

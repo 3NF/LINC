@@ -2,7 +2,7 @@ package Database;
 
 import HelperClasses.Utilities;
 import Models.Assignment;
-import Models.UploadedAssignment;
+import Models.DownloadedAssignment;
 import Models.User;
 import Sockets.DownloadAssignment;
 import com.google.api.client.auth.oauth2.Credential;
@@ -164,7 +164,7 @@ public class GAPIManager {
 	 * This method downloads files from google classroom
 	 * Unzips it and adds in database
 	 */
-	public static UploadedAssignment downloadAssignments(User teacher, String courseID, String assignmentId, DownloadAssignment socket) throws IOException {
+	public static DownloadedAssignment downloadAssignments(User teacher, String courseID, String assignmentId, DownloadAssignment socket) throws IOException {
 		Credential credential = teacher.getCredential();
 		Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JACKSON_FACTORY, credential)
 				.setApplicationName(APP_NAME)
@@ -173,7 +173,7 @@ public class GAPIManager {
 		List<StudentSubmission> assignments = service.courses().courseWork().studentSubmissions().list(courseID, assignmentId).execute().getStudentSubmissions();
 		socket.setTotalJobs(assignments.size());
 
-		UploadedAssignment uploadedAssignment = new UploadedAssignment(assignmentId);
+		DownloadedAssignment downloadedAssignment = new DownloadedAssignment(assignmentId);
 		for (StudentSubmission assignment : assignments) {
 		    System.out.println(assignment.getUserId());
             socket.increaseCounter();
@@ -187,10 +187,10 @@ public class GAPIManager {
 					.executeMediaAndDownloadTo(outputStream);
 
 			ByteArrayInputStream inStream = Utilities.convertOutputIntoInputStream(outputStream);
-			Utilities.unzipInputStream(inStream, uploadedAssignment, actorUserID);
+			Utilities.unzipInputStream(inStream, downloadedAssignment, actorUserID);
 		}
         socket.increaseCounter();
-		return uploadedAssignment;
+		return downloadedAssignment;
 	}
 
 

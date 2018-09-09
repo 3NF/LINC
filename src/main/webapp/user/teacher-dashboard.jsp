@@ -11,7 +11,7 @@
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="static Data.Constraints.CLIENT_ID" %>
 <%@ page import="com.google.gson.Gson" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <link rel="stylesheet" href="../Styles/style.css">
@@ -101,17 +101,21 @@
     </div>
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="height: 90%">
-        <% for (Assignment assignment : uploaded) {%>
-        <div class="sidenav-item" onclick=isDownloaded()>
-            <p style="color: green"><%=assignment.getName()%></p>
+        <div id = "downloaded-assignments">
+            <% for (Assignment assignment : uploaded) {%>
+            <div class="sidenav-item" onclick=isDownloaded()>
+                <p style="color: green"><%=assignment.getName()%></p>
+            </div>
+            <%}%>
         </div>
-        <%}%>
 
-        <% for (Assignment assignment : notUploaded) {%>
-        <div class="sidenav-item" onclick=downloadAssignment('<%=assignment.getId()%>')>
-            <p style="color: red"><%=assignment.getName()%></p>
+        <div id = "remaining-assignments">
+            <% for (Assignment assignment : notUploaded) {%>
+            <div class="sidenav-item" onclick=downloadAssignment('<%=assignment.getId()%>')>
+                <p style="color: red"><%=assignment.getName()%></p>
+            </div>
+            <%}%>
         </div>
-        <%}%>
     </div>
     <div class="sprt" aria-disabled="true" role="separator" style="user-select: none;"></div>
     <div class="sidenav-container" style="margin-top: 10px">

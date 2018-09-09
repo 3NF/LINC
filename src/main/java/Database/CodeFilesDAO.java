@@ -56,7 +56,7 @@ public class CodeFilesDAO {
         return new CodeFile(codeContent,codeFileId,fileName,suggestions,codeLang);
     }
 
-    public void addAssignments(UploadedAssignment assignment) throws SQLException {
+    public void addAssignments(DownloadedAssignment assignment) throws SQLException {
         Connection connection = connectionPool.getConnection();
         String query = "INSERT INTO code_files(userID,assignmentID,content,path) VALUES(?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
